@@ -20,47 +20,35 @@
 <FindBugsFilter>
     <!--carbon.stream.processor.core;-->
     <Match>
-        <Class name="org.wso2.carbon.stream.processor.core.ha.HACoordinationSinkHandler"/>
+        <Class name="io.siddhi.distribution.core.core.ha.HACoordinationSinkHandler"/>
         <Bug pattern="UW_UNCOND_WAIT, WA_NOT_IN_LOOP"/>
     </Match>
     <Match>
-        <Class name="org.wso2.carbon.stream.processor.core.persistence.dto.RDBMSQueryConfiguration"/>
+        <Class name="io.siddhi.distribution.core.core.persistence.dto.RDBMSQueryConfigurationEntry"/>
         <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2"/>
     </Match>
     <Match>
-        <Class name="org.wso2.carbon.stream.processor.core.persistence.DBPersistenceStore"/>
+        <Class name="io.siddhi.distribution.core.core.persistence.DBPersistenceStore"/>
         <Bug pattern="OBL_UNSATISFIED_OBLIGATION"/>
     </Match>
     <Match>
-        <Class name="org.wso2.carbon.siddhi.editor.core.internal.EditorMicroservice"/>
+        <Class name="io.siddhi.distribution.editor.core.core.internal.EditorMicroservice"/>
         <Bug pattern="OBL_UNSATISFIED_OBLIGATION"/>
     </Match>
     <Match>
-        <Class name="org.wso2.carbon.business.rules.templates.editor.core.internal.TemplatesEditorMicroservice"/>
-        <Bug pattern="OBL_UNSATISFIED_OBLIGATION"/>
-    </Match>
-    <Match>
-        <Class name="org.wso2.carbon.business.rules.core.datasource.QueryExecutor"/>
-        <Bug pattern="OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE"/>
-    </Match>
-    <Match>
-        <Class name="org.wso2.carbon.status.dashboard.core.bean.MetricsLineCharts"/>
+        <Class name="DataSetMetadata"/>
         <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2"/>
     </Match>
     <Match>
-        <Class name="org.wso2.carbon.data.provider.bean.DataSetMetadata"/>
+        <Class name="DataModel"/>
         <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2"/>
     </Match>
     <Match>
-        <Class name="org.wso2.carbon.data.provider.bean.DataModel"/>
-        <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2"/>
-    </Match>
-    <Match>
-        <Class name="org.wso2.carbon.data.provider.rdbms.AbstractRDBMSDataProvider"/>
+        <Class name="AbstractRDBMSDataProvider"/>
         <Bug pattern="OBL_UNSATISFIED_OBLIGATION"/>
     </Match>
     <Match>
-        <Class name="org.wso2.carbon.data.provider.rdbms.bean.RDBMSDataProviderConfBean"/>
+        <Class name="RDBMSDataProviderConfBean"/>
         <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2, OBL_UNSATISFIED_OBLIGATION"/>
     </Match>
     <!--<Match>-->

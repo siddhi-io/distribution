@@ -24,56 +24,34 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.wso2.carbon.analytics</groupId>
-    <artifactId>org.wso2.carbon.analytics.parent</artifactId>
+    <groupId>io.siddhi.distribution</groupId>
+    <artifactId>io.siddhi.distribution.parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <version>2.0.488-SNAPSHOT</version>
-    <name>WSO2 Carbon Analytics - Parent</name>
+    <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>components/org.wso2.carbon.stream.processor.common</module>
-        <module>components/org.wso2.carbon.stream.processor.core</module>
-        <module>components/org.wso2.carbon.event.simulator.core</module>
-        <module>components/org.wso2.carbon.editor.log.appender</module>
-        <module>components/org.wso2.carbon.sp.jobmanager.core</module>
-        <module>components/org.wso2.carbon.sp.distributed.resource.core</module>
-        <module>components/org.wso2.carbon.siddhi.editor.core</module>
-        <module>components/org.wso2.carbon.business.rules.templates.editor.core</module>
-        <module>components/org.wso2.carbon.business.rules.core</module>
-        <module>components/org.wso2.carbon.business.rules.web</module>
-        <module>components/org.wso2.carbon.siddhi.metrics.core</module>
-        <module>components/org.wso2.carbon.stream.processor.statistics</module>
-        <module>components/org.wso2.carbon.status.dashboard.core</module>
-        <module>components/org.wso2.carbon.status.dashboard.web</module>
-        <module>components/org.wso2.carbon.siddhi.store.api.rest</module>
-        <module>components/org.wso2.carbon.analytics.auth.rest.api</module>
-        <module>components/org.wso2.carbon.permissions.rest.api</module>
-        <module>components/org.wso2.carbon.data.provider</module>
-        <module>components/org.wso2.carbon.analytics.msf4j.interceptor.common</module>
+        <module>components/io.siddhi.distribution.common</module>
+        <module>components/io.siddhi.distribution.core</module>
+        <module>components/io.siddhi.distribution.event.simulator.core</module>
+        <module>components/io.siddhi.distribution.editor.log.appender</module>
+        <module>components/io.siddhi.distribution.editor.core</module>
+        <module>components/io.siddhi.distribution.metrics.core</module>
+        <module>components/io.siddhi.distribution.store.api.rest</module>
+        <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
 
-        <module>features/org.wso2.carbon.stream.processor.core.feature</module>
-        <module>features/org.wso2.carbon.stream.processor.common.feature</module>
-        <module>features/org.wso2.carbon.event.simulator.core.feature</module>
-        <module>features/org.wso2.carbon.sp.jobmanager.core.feature</module>
-        <module>features/org.wso2.carbon.sp.distributed.resource.core.feature</module>
-        <module>features/org.wso2.carbon.siddhi.editor.core.feature</module>
-        <module>features/org.wso2.carbon.business.rules.templates.editor.core.feature</module>
-        <module>features/org.wso2.carbon.business.rules.core.feature</module>
-        <module>features/org.wso2.carbon.business.rules.web.feature</module>
-        <module>features/org.wso2.siddhi.feature</module>
-        <module>features/org.wso2.carbon.siddhi.metrics.core.feature</module>
-        <module>features/org.wso2.carbon.stream.processor.statistics.feature</module>
-        <module>features/org.wso2.carbon.status.dashboard.core.feature</module>
-        <module>features/org.wso2.carbon.status.dashboard.web.feature</module>
-        <module>features/org.wso2.carbon.siddhi.store.api.rest.feature</module>
-        <module>features/org.wso2.carbon.analytics.auth.rest.api.feature</module>
-        <module>features/org.wso2.carbon.permissions.rest.api.feature</module>
-        <module>features/org.wso2.carbon.data.provider.feature</module>
-        <module>features/org.wso2.carbon.analytics.msf4j.interceptor.common.feature</module>
+        <module>features/io.siddhi.distribution.core.feature</module>
+        <module>features/io.siddhi.distribution.common.feature</module>
+        <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
+        <module>features/io.siddhi.distribution.editor.core.feature</module>
+        <module>features/io.siddhi.distribution.siddhi.feature</module>
+        <module>features/io.siddhi.distribution.metrics.core.feature</module>
+        <module>features/io.siddhi.distribution.store.api.rest.feature</module>
+        <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
 
         <module>components/distribution</module>
-        <module>components/osgi-tests</module>
+        <!--<module>components/osgi-tests</module>-->
 
-        <module>coverage-reports</module>
+        <!--<module>coverage-reports</module>-->
     </modules>
 
     <build>
@@ -568,40 +546,6 @@
                 <version>${carbon.datasources.version}</version>
             </dependency>
 
-            <!-- Clustering Dependencies -->
-            <dependency>
-                <groupId>org.wso2.carbon.coordination</groupId>
-                <artifactId>org.wso2.carbon.cluster.coordinator.service</artifactId>
-                <version>${carbon.coordination.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.coordination</groupId>
-                <artifactId>org.wso2.carbon.cluster.coordinator.commons</artifactId>
-                <version>${carbon.coordination.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.coordination</groupId>
-                <artifactId>org.wso2.carbon.cluster.coordinator.rdbms</artifactId>
-                <version>${carbon.coordination.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.coordination</groupId>
-                <artifactId>org.wso2.carbon.cluster.coordinator.service.feature</artifactId>
-                <version>${carbon.coordination.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.coordination</groupId>
-                <artifactId>org.wso2.carbon.cluster.coordinator.commons.feature</artifactId>
-                <version>${carbon.coordination.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.coordination</groupId>
-                <artifactId>org.wso2.carbon.cluster.coordinator.rdbms.feature</artifactId>
-                <version>${carbon.coordination.version}</version>
-                <type>zip</type>
-            </dependency>
             <!-- child module dependencies-->
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
@@ -874,68 +818,55 @@
 
             <!-- Stream Processor related-->
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.stream.processor.core</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.stream.processor.common</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.common</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.stream.processor.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.siddhi.store.api.rest</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.store.api.rest</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.siddhi.store.api.rest.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.store.api.rest.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
 
             <!-- Siddhi Editor related -->
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.siddhi.editor.core</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.editor.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.siddhi.editor.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.editor.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.stream.processor.common.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.common.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
                 <groupId>commons-io.wso2</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
-            </dependency>
-
-            <!-- Business Rules Templates Editor related -->
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.business.rules.templates.editor.core</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.business.rules.templates.editor.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
             </dependency>
 
             <!--siddhi dependencies start-->
@@ -1145,76 +1076,29 @@
 
             <!--Event simulator as a feature-->
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.event.simulator.core</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.event.simulator.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.event.simulator.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.event.simulator.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
 
-            <!--Business rules as a feature-->
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.business.rules.core</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.business.rules.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.business.rules.web.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.analytics.auth.rest.api</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
 
             <!--Editor log appender as a feature-->
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.editor.log.appender</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
             </dependency>
 
-            <!-- Distributed deployment features -->
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.sp.jobmanager.core</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.sp.jobmanager.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.sp.distributed.resource.core</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.sp.distributed.resource.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.siddhi.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.siddhi.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
@@ -1243,9 +1127,9 @@
                 <version>${org.apache.commons.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.analytics.test.distribution</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.distribution</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
                 <scope>test</scope>
             </dependency>
@@ -1329,48 +1213,15 @@
 
             <!-- Siddhi Metrics related -->
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.stream.processor.statistics.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.metrics.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.metrics.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.stream.processor.statistics</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.siddhi.metrics.core</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.siddhi.metrics.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.status.dashboard.web.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.status.dashboard.web</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.status.dashboard.core.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.status.dashboard.core</artifactId>
-                <version>${carbon.analytics.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.felix</groupId>
@@ -1416,20 +1267,14 @@
                 <type>zip</type>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.analytics.msf4j.interceptor.common</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.msf4j.interceptor.common</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.analytics.msf4j.interceptor.common.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.analytics.auth.rest.api.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.msf4j.interceptor.common.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
             <!--Carbon UI Server-->
@@ -1444,13 +1289,6 @@
                 <groupId>org.wso2.carbon.analytics-common</groupId>
                 <artifactId>org.wso2.carbon.analytics.permissions.feature</artifactId>
                 <version>${carbon.analytics-common.version}</version>
-                <type>zip</type>
-            </dependency>
-            <!-- Data Provider -->
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.data.provider.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
                 <type>zip</type>
             </dependency>
             <!-- Permission provider -->
@@ -1473,24 +1311,6 @@
                 <groupId>org.wso2.orbit.org.owasp.encoder</groupId>
                 <artifactId>encoder</artifactId>
                 <version>${owasp.encoder.version}</version>
-            </dependency>
-            <!--Permissions REST API related-->
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.permissions.rest.api</artifactId>
-                <version>${carbon.analytics.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.permissions.rest.api.feature</artifactId>
-                <version>${carbon.analytics.version}</version>
-                <type>zip</type>
-            </dependency>
-            <!--dataprovider feature -->
-            <dependency>
-                <groupId>org.wso2.carbon.analytics</groupId>
-                <artifactId>org.wso2.carbon.data.provider</artifactId>
-                <version>${carbon.analytics.version}</version>
             </dependency>
             <!--UI Server-->
             <dependency>
@@ -1548,17 +1368,48 @@
                 <version>${org.testcontainers.version}</version>
                 <scope>test</scope>
             </dependency>
+
+
+            <dependency>
+                <groupId>org.wso2.carbon.utils</groupId>
+                <artifactId>org.wso2.carbon.utils.feature</artifactId>
+                <version>${carbon.utils.version}</version>
+                <type>zip</type>
+            </dependency>
+
+            <!-- MSF4J related -->
+            <dependency>
+                <groupId>org.wso2.msf4j</groupId>
+                <artifactId>org.wso2.msf4j.feature</artifactId>
+                <version>${msf4j.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>javax.ws.rs</groupId>
+                <artifactId>javax.ws.rs-api</artifactId>
+                <version>${javax.ws.rs-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.servlet</groupId>
+                <artifactId>javax.servlet-api</artifactId>
+                <version>${javax.servlet.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>1.3.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <properties>
-        <carbon.analytics.version>2.0.488-SNAPSHOT</carbon.analytics.version>
+        <io.siddhi.distribution.version>1.0.0-SNAPSHOT</io.siddhi.distribution.version>
         <siddhi.version>4.4.0</siddhi.version>
         <siddhi.bundle.version>4.4.0</siddhi.bundle.version>
         <siddhi.version.range>[4.0.0, 5.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.0.73</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.0.66, 6.1.0)</carbon.analytics-common.version.range>
-        <carbon.analytics.version.range>[2.0.0, 3.0.0)</carbon.analytics.version.range>
+        <io.siddhi.distribution.version.range>[1.0.0, 3.0.0)</io.siddhi.distribution.version.range>
 
         <geronimo.jms.spec.version>1.1.1</geronimo.jms.spec.version>
         <apache.activemq.version>5.7.0</apache.activemq.version>
@@ -1642,7 +1493,7 @@
 
         <!-- Dependencies -->
         <carbon.kernel.version>5.2.8</carbon.kernel.version>
-        <carbon.kernel.package.import.version.range>[5.2.6, 6.0.0)</carbon.kernel.package.import.version.range>
+        <carbon.kernel.package.import.version.range>[5.2.0, 6.0.0)</carbon.kernel.package.import.version.range>
         <carbon.kernel.pax.version>5.2.8</carbon.kernel.pax.version>
 
         <org.wso2.transport.http.netty.version>6.0.163</org.wso2.transport.http.netty.version>
@@ -1662,8 +1513,8 @@
         <carbon.touchpoint.version>1.1.1</carbon.touchpoint.version>
         <carbon.utils.version>2.0.8</carbon.utils.version>
         <carbon.config.version>2.1.5</carbon.config.version>
-        <carbon.config.version.range>[2.1.5, 3.0.0)</carbon.config.version.range>
-        <carbon.securevault.version>5.0.11</carbon.securevault.version>
+        <carbon.config.version.range>[2.1.0, 3.0.0)</carbon.config.version.range>
+        <carbon.securevault.version>5.0.12</carbon.securevault.version>
 
         <!-- Clustering Dependencies -->
         <carbon.coordination.version>2.0.18</carbon.coordination.version>

@@ -20,6 +20,8 @@ wso2.carbon:
   id: wso2-sp
     # server name
   name: WSO2 Stream Processor
+    # server type
+#  type: wso2-sp
     # ports used by this server
   ports:
       # port offset
@@ -180,9 +182,9 @@ data.agent.config:
         # Secure min idle time in pool
       secureMinIdleTimeInPool: 5000
         # SSL enabled protocols
-      sslEnabledProtocols: TLSv1,TLSv1.1,TLSv1.2
+      sslEnabledProtocols: TLSv1.1,TLSv1.2
         # Ciphers
-      ciphers: SSL_RSA_WITH_RC4_128_MD5,SSL_RSA_WITH_RC4_128_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_DSS_WITH_AES_128_CBC_SHA,SSL_RSA_WITH_3DES_EDE_CBC_SHA,SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA,SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+      ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
   -
       # Data agent configuration
     agentConfiguration:
@@ -229,9 +231,9 @@ data.agent.config:
         # Secure min idle time in pool
       secureMinIdleTimeInPool: 5000
         # SSL enabled protocols
-      sslEnabledProtocols: TLSv1,TLSv1.1,TLSv1.2
+      sslEnabledProtocols: TLSv1.1,TLSv1.2
         # Ciphers
-      ciphers: SSL_RSA_WITH_RC4_128_MD5,SSL_RSA_WITH_RC4_128_SHA,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_DSS_WITH_AES_128_CBC_SHA,SSL_RSA_WITH_3DES_EDE_CBC_SHA,SSL_DHE_RSA_WITH_3DES_EDE_CBC_SHA,SSL_DHE_DSS_WITH_3DES_EDE_CBC_SHA
+      ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
 
 # This is the main configuration for metrics
 wso2.metrics:
@@ -262,10 +264,10 @@ wso2.metrics.jdbc:
       # Deleting data older than seven days should be sufficient.
       scheduledCleanup:
         # Enable scheduled cleanup to delete Metrics data in the database.
-        enabled: false
+        enabled: true
 
         # The scheduled job will cleanup all data older than the specified days
-        daysToKeep: 7
+        daysToKeep: 3
 
         # This is the period for each cleanup operation in seconds.
         scheduledCleanupPeriod: 86400
@@ -278,7 +280,7 @@ wso2.metrics.jdbc:
         name: JDBC
 
         # Enable JDBC Reporter
-        enabled: false
+        enabled: true
 
         # Source of Metrics, which will be used to identify each metric in database -->
         # Commented to use the hostname by default
@@ -322,20 +324,20 @@ wso2.securevault:
 wso2.datasources:
   dataSources:
     -
+      name: WSO2_CLUSTER_DB
+      description: "The datasource used by cluster coordinators in HA deployment"
       definition:
+        type: RDBMS
         configuration:
           connectionTestQuery: "SELECT 1"
           driverClassName: org.h2.Driver
           idleTimeout: 60000
           isAutoCommit: false
-          jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000"
-          maxPoolSize: 50
+          jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CLUSTER_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE"
+          maxPoolSize: 10
           password: wso2carbon
           username: wso2carbon
           validationTimeout: 30000
-        type: RDBMS
-      description: "The datasource used for registry and user manager"
-      name: WSO2_CARBON_DB
 
     # carbon metrics data source
     - name: WSO2_METRICS_DB
@@ -349,12 +351,52 @@ wso2.datasources:
           username: wso2carbon
           password: wso2carbon
           driverClassName: org.h2.Driver
-          maxPoolSize: 50
+          maxPoolSize: 30
           idleTimeout: 60000
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
           isAutoCommit: false
 
+    - name: WSO2_PERMISSIONS_DB
+      description: The datasource used for permission feature
+      jndiConfig:
+        name: jdbc/PERMISSION_DB
+        useJndiReference: true
+      definition:
+        type: RDBMS
+        configuration:
+          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
+          username: wso2carbon
+          password: wso2carbon
+          driverClassName: org.h2.Driver
+          maxPoolSize: 10
+          idleTimeout: 60000
+          connectionTestQuery: SELECT 1
+          validationTimeout: 30000
+          isAutoCommit: false
+
+siddhi:
+  extensions:
+    -
+      extension:
+        name: 'findCountryFromIP'
+        namespace: 'geo'
+        properties:
+          geoLocationResolverClass: org.wso2.extension.siddhi.execution.geo.internal.impl.DefaultDBBasedGeoLocationResolver
+          isCacheEnabled: true
+          cacheSize: 10000
+          isPersistInDatabase: true
+          datasource: GEO_LOCATION_DATA
+    -
+      extension:
+        name: 'findCityFromIP'
+        namespace: 'geo'
+        properties:
+          geoLocationResolverClass: org.wso2.extension.siddhi.execution.geo.internal.impl.DefaultDBBasedGeoLocationResolver
+          isCacheEnabled: true
+          cacheSize: 10000
+          isPersistInDatabase: true
+          datasource: GEO_LOCATION_DATA
 
   # Cluster Configuration
 cluster.config:
@@ -362,25 +404,45 @@ cluster.config:
   groupId:  sp
   coordinationStrategyClass: org.wso2.carbon.cluster.coordinator.rdbms.RDBMSCoordinationStrategy
   strategyConfig:
-    datasource: WSO2_CARBON_DB
+    datasource: WSO2_CLUSTER_DB
     heartbeatInterval: 1000
     heartbeatMaxRetry: 2
     eventPollingInterval: 1000
 
+# Authentication configuration
+auth.configs:
+  type: 'local'        # Type of the IdP client used
+  userManager:
+    adminRole: admin   # Admin role which is granted all permissions
+    userStore:         # User store
+      users:
+       -
+         user:
+           username: admin
+           password: YWRtaW4=
+           roles: 1
+      roles:
+       -
+         role:
+           id: 1
+           displayName: admin
+
   # Sample of deployment.config for Two node HA
 #deployment.config:
 #  type: ha
-#  liveSync:
-#    enabled: true
+#  eventSyncServer:
+#    host: localhost
+#    port: 9893
 #    advertisedHost: localhost
-#    advertisedPort: 9090
-#    username: admin
-#    password: admin
-#  outputSyncInterval: 10000
-#  stateSyncGracePeriod: 60000
-#  sinkQueueCapacity: 20000
-#  sourceQueueCapacity: 20000
-#  retryAppSyncPeriod: 60000
+#    advertisedPort: 9893
+#    bossThreads: 10
+#    workerThreads: 10
+#  eventSyncClientPool:
+#    maxActive: 10
+#    maxTotal: 10
+#    maxIdle: 10
+#    maxWait: 60000
+#    minEvictableIdleTimeMillis: 120000
 
   # Sample of deployment.config for Distributed deployment
 #deployment.config:
@@ -400,3 +462,9 @@ cluster.config:
 #      port: 9543
 #      username: admin
 #      password: admin
+
+  # Configuration for enabling analytics solutions when server type in Carbon Configuration is set as 'wso2-sp'.
+#analytics.solutions:
+#  IS-analytics.enabled: true
+#  APIM-analytics.enabled: true
+#  EI-analytics.enabled: true
