@@ -49,13 +49,13 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>carbon-home/conf/worker</directory>
-            <outputDirectory>conf/worker</outputDirectory>
+            <directory>carbon-home/conf/siddhi-runner</directory>
+            <outputDirectory>conf/siddhi-runner</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>carbon-home/conf/transports/worker</directory>
-            <outputDirectory>wso2/worker/conf/transports</outputDirectory>
+            <directory>carbon-home/conf/transports/siddhi-runner</directory>
+            <outputDirectory>wso2/siddhi-runner/conf/transports</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
@@ -72,8 +72,8 @@
             <directory>carbon-home/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>worker.sh</include>
-                <include>worker.bat</include>
+                <include>siddhi-runner.sh</include>
+                <include>siddhi-runner.bat</include>
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
@@ -87,7 +87,7 @@
         </fileSet>
         <fileSet>
             <directory>carbon-home/deployment/siddhi-files</directory>
-            <outputDirectory>wso2/worker/deployment/siddhi-files</outputDirectory>
+            <outputDirectory>wso2/siddhi-runner/deployment/siddhi-files</outputDirectory>
             <fileMode>644</fileMode>
             <excludes>
                 <exclude>empty.txt</exclude>
@@ -95,7 +95,7 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/worker/deployment/csv-files</outputDirectory>
+            <outputDirectory>wso2/siddhi-runner/deployment/csv-files</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -103,7 +103,7 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/worker/deployment/simulation-configs</outputDirectory>
+            <outputDirectory>wso2/siddhi-runner/deployment/simulation-configs</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -121,20 +121,20 @@
 
         <!--Forget me tool-->
         <!--This includes only the relevant dependencies -->
-        <fileSet>
-            <directory>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/</directory>
-            <outputDirectory>wso2/tools/identity-anonymization-tool/</outputDirectory>
-            <excludes>
-                <exclude>**/forget-me</exclude>
-                <exclude>**/forget-me.bat</exclude>
-            </excludes>
-            <includes>
-                <include>**/log4j.properties</include>
-                <include>**/conf/log-config/sp-patterns.xml</include>
-                <include>**/lib/**</include>
-            </includes>
-            <fileMode>644</fileMode>
-        </fileSet>
+        <!--<fileSet>-->
+            <!--<directory>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/</directory>-->
+            <!--<outputDirectory>wso2/tools/identity-anonymization-tool/</outputDirectory>-->
+            <!--<excludes>-->
+                <!--<exclude>**/forget-me</exclude>-->
+                <!--<exclude>**/forget-me.bat</exclude>-->
+            <!--</excludes>-->
+            <!--<includes>-->
+                <!--<include>**/log4j.properties</include>-->
+                <!--<include>**/conf/log-config/sp-patterns.xml</include>-->
+                <!--<include>**/lib/**</include>-->
+            <!--</includes>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</fileSet>-->
     </fileSets>
     <files>
         <file>
@@ -176,54 +176,54 @@
         <!--TODO: Workaround for issue trustStore and keystore certificate system properties
         fixed-->
         <file>
-            <source>carbon-home/runtime/worker/carbon.sh</source>
-            <outputDirectory>wso2/worker/bin/</outputDirectory>
+            <source>carbon-home/runtime/siddhi-runner/carbon.sh</source>
+            <outputDirectory>wso2/siddhi-runner/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
         </file>
         <file>
-            <source>carbon-home/runtime/worker/carbon.bat</source>
-            <outputDirectory>wso2/worker/bin/</outputDirectory>
+            <source>carbon-home/runtime/siddhi-runner/carbon.bat</source>
+            <outputDirectory>wso2/siddhi-runner/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
         </file>
         <file>
-            <source>carbon-home/conf/worker/log4j2.xml</source>
-            <outputDirectory>conf/worker/</outputDirectory>
+            <source>carbon-home/conf/siddhi-runner/log4j2.xml</source>
+            <outputDirectory>conf/siddhi-runner/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
 
         <!--Forget me tool-->
-        <file>
-            <source>src/scripts/forgetme.sh</source>
-            <outputDirectory>bin/</outputDirectory>
-            <fileMode>744</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>src/scripts/forgetme.sh</source>-->
+            <!--<outputDirectory>bin/</outputDirectory>-->
+            <!--<fileMode>744</fileMode>-->
+        <!--</file>-->
 
-        <file>
-            <source>src/scripts/forgetme.bat</source>
-            <outputDirectory>bin/</outputDirectory>
-            <fileMode>744</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>src/scripts/forgetme.bat</source>-->
+            <!--<outputDirectory>bin/</outputDirectory>-->
+            <!--<fileMode>744</fileMode>-->
+        <!--</file>-->
 
-        <file>
-            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.sh</source>
-            <outputDirectory>wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
-            <fileMode>744</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.sh</source>-->
+            <!--<outputDirectory>wso2/tools/identity-anonymization-tool/bin/</outputDirectory>-->
+            <!--<fileMode>744</fileMode>-->
+        <!--</file>-->
 
-        <file>
-            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.bat</source>
-            <outputDirectory>wso2/tools/identity-anonymization-tool/bin/</outputDirectory>
-            <fileMode>744</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/bin/forgetme.bat</source>-->
+            <!--<outputDirectory>wso2/tools/identity-anonymization-tool/bin/</outputDirectory>-->
+            <!--<fileMode>744</fileMode>-->
+        <!--</file>-->
 
-        <file>
-            <source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/product-config/config-sp.json</source>
-            <outputDirectory>wso2/tools/identity-anonymization-tool/conf/</outputDirectory>
-            <destName>config.json</destName>
-            <fileMode>644</fileMode>
-        </file>
+        <!--<file>-->
+            <!--<source>target/forget-me/identity-anonymization-tool-${forgetme.tool.version}/conf/product-config/config-sp.json</source>-->
+            <!--<outputDirectory>wso2/tools/identity-anonymization-tool/conf/</outputDirectory>-->
+            <!--<destName>config.json</destName>-->
+            <!--<fileMode>644</fileMode>-->
+        <!--</file>-->
     </files>
 </assembly>
