@@ -49,13 +49,13 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>carbon-home/conf/siddhi-runner</directory>
-            <outputDirectory>conf/siddhi-runner</outputDirectory>
+            <directory>carbon-home/conf/worker</directory>
+            <outputDirectory>conf/worker</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>carbon-home/conf/transports/siddhi-runner</directory>
-            <outputDirectory>wso2/siddhi-runner/conf/transports</outputDirectory>
+            <directory>carbon-home/conf/transports/worker</directory>
+            <outputDirectory>wso2/worker/conf/transports</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
@@ -72,8 +72,8 @@
             <directory>carbon-home/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>siddhi-runner.sh</include>
-                <include>siddhi-runner.bat</include>
+                <include>worker.sh</include>
+                <include>worker.bat</include>
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
@@ -87,7 +87,7 @@
         </fileSet>
         <fileSet>
             <directory>carbon-home/deployment/siddhi-files</directory>
-            <outputDirectory>wso2/siddhi-runner/deployment/siddhi-files</outputDirectory>
+            <outputDirectory>wso2/worker/deployment/siddhi-files</outputDirectory>
             <fileMode>644</fileMode>
             <excludes>
                 <exclude>empty.txt</exclude>
@@ -95,7 +95,7 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/siddhi-runner/deployment/csv-files</outputDirectory>
+            <outputDirectory>wso2/worker/deployment/csv-files</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -103,7 +103,7 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/siddhi-runner/deployment/simulation-configs</outputDirectory>
+            <outputDirectory>wso2/worker/deployment/simulation-configs</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -176,20 +176,20 @@
         <!--TODO: Workaround for issue trustStore and keystore certificate system properties
         fixed-->
         <file>
-            <source>carbon-home/runtime/siddhi-runner/carbon.sh</source>
-            <outputDirectory>wso2/siddhi-runner/bin/</outputDirectory>
+            <source>carbon-home/runtime/worker/carbon.sh</source>
+            <outputDirectory>wso2/worker/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
         </file>
         <file>
-            <source>carbon-home/runtime/siddhi-runner/carbon.bat</source>
-            <outputDirectory>wso2/siddhi-runner/bin/</outputDirectory>
+            <source>carbon-home/runtime/worker/carbon.bat</source>
+            <outputDirectory>wso2/worker/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
         </file>
         <file>
-            <source>carbon-home/conf/siddhi-runner/log4j2.xml</source>
-            <outputDirectory>conf/siddhi-runner/</outputDirectory>
+            <source>carbon-home/conf/worker/log4j2.xml</source>
+            <outputDirectory>conf/worker/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
