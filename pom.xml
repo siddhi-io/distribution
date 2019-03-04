@@ -50,7 +50,6 @@
 
         <module>components/distribution</module>
         <!--<module>components/osgi-tests</module>-->
-
         <!--<module>coverage-reports</module>-->
     </modules>
 

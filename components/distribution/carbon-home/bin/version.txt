@@ -1,1 +1,1 @@
-WSO2 Stream Processor v${project.version}
+Siddhi Distribution v${project.version}
