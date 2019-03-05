@@ -26,11 +26,11 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <artifactId>io.siddhi.distribution.runner</artifactId>
+    <artifactId>io.siddhi.distribution.runtime</artifactId>
     <packaging>pom</packaging>
-    <name>WSO2 Stream Processor - Distribution</name>
-    <description>WSO2 Stream Processor - Distribution</description>
-    <url>http://wso2.org</url>
+    <name>Siddhi Distribution - Runtime</name>
+    <description>Siddhi Distribution - Runtime</description>
+    <url>http://siddhi.io</url>
 
     <dependencies>
         <dependency>
