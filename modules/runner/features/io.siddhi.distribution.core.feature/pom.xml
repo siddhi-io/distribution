@@ -23,7 +23,7 @@
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../../pom.xml</relativePath>
     </parent>
 
     <artifactId>io.siddhi.distribution.core.feature</artifactId>
@@ -116,7 +116,7 @@
 
         <resources>
             <resource>
-                <directory>${project.build.directory}/lib/</directory>
+                <directory>target/lib</directory>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>

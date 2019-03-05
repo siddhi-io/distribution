@@ -30,25 +30,27 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>components/io.siddhi.distribution.common</module>
-        <module>components/io.siddhi.distribution.core</module>
-        <module>components/io.siddhi.distribution.event.simulator.core</module>
-        <module>components/io.siddhi.distribution.editor.log.appender</module>
-        <module>components/io.siddhi.distribution.editor.core</module>
-        <module>components/io.siddhi.distribution.metrics.core</module>
-        <module>components/io.siddhi.distribution.store.api.rest</module>
-        <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
+        <module>modules/runner/components/io.siddhi.distribution.common</module>
+        <module>modules/runner/components/io.siddhi.distribution.core</module>
+        <module>modules/runner/components/io.siddhi.distribution.event.simulator.core</module>
+        <module>modules/runner/components/io.siddhi.distribution.metrics.core</module>
+        <module>modules/runner/components/io.siddhi.distribution.store.api.rest</module>
+        <module>modules/runner/components/io.siddhi.distribution.msf4j.interceptor.common</module>
 
-        <module>features/io.siddhi.distribution.core.feature</module>
-        <module>features/io.siddhi.distribution.common.feature</module>
-        <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
-        <module>features/io.siddhi.distribution.editor.core.feature</module>
-        <module>features/io.siddhi.distribution.siddhi.feature</module>
-        <module>features/io.siddhi.distribution.metrics.core.feature</module>
-        <module>features/io.siddhi.distribution.store.api.rest.feature</module>
-        <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
+        <module>modules/tooling/components/io.siddhi.distribution.editor.log.appender</module>
+        <module>modules/tooling/components/io.siddhi.distribution.editor.core</module>
 
-        <module>components/distribution</module>
+        <module>modules/runner/features/io.siddhi.distribution.core.feature</module>
+        <module>modules/runner/features/io.siddhi.distribution.common.feature</module>
+        <module>modules/runner/features/io.siddhi.distribution.event.simulator.core.feature</module>
+        <module>modules/runner/features/io.siddhi.distribution.siddhi.feature</module>
+        <module>modules/runner/features/io.siddhi.distribution.metrics.core.feature</module>
+        <module>modules/runner/features/io.siddhi.distribution.store.api.rest.feature</module>
+        <module>modules/runner/features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
+
+        <module>modules/tooling/features/io.siddhi.distribution.editor.core.feature</module>
+
+        <module>modules/runtime</module>
         <!--<module>components/osgi-tests</module>-->
         <!--<module>coverage-reports</module>-->
     </modules>
