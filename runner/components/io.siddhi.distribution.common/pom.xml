@@ -22,14 +22,14 @@
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>io.siddhi.distribution.common</artifactId>
     <packaging>bundle</packaging>
 
-    <name>WSO2 Stream Processor - Common</name>
+    <name>Siddhi Distribution - Common</name>
     <url>http://wso2.org</url>
 
     <dependencies>

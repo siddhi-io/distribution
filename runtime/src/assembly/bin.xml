@@ -86,6 +86,22 @@
             <fileMode>444</fileMode>
         </fileSet>
         <fileSet>
+            <directory>target/extensions</directory>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>664</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>carbon-home/external-libs</directory>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>664</fileMode>
+        </fileSet>
+        <fileSet>
             <directory>carbon-home/deployment/siddhi-files</directory>
             <outputDirectory>wso2/worker/deployment/siddhi-files</outputDirectory>
             <fileMode>644</fileMode>
