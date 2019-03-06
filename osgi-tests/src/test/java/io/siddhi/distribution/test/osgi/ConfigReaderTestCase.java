@@ -15,8 +15,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
 import org.ops4j.pax.exam.Option;
@@ -26,8 +28,6 @@ import org.ops4j.pax.exam.testng.listener.PaxExam;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.wso2.carbon.analytics.test.osgi.util.HTTPResponseMessage;
-import org.wso2.carbon.analytics.test.osgi.util.TestUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
 
@@ -60,7 +60,7 @@ public class ConfigReaderTestCase {
         return new Option[]{
                 copyCarbonYAMLOption(),
                 carbonDistribution(
-                        Paths.get("target", "wso2das-" + System.getProperty("carbon.analytic.version")),
+                        Paths.get("target", "wso2sp-" + System.getProperty("io.siddhi.distribution.version")),
                         "worker")
         };
     }
@@ -127,7 +127,7 @@ public class ConfigReaderTestCase {
         logger.info("Store reference support -  Configuring unknown extension");
         HTTPResponseMessage httpResponseMessage = sendRequest(body, baseURI, path, contentType, method,
                 true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
-                Assert.assertEquals(httpResponseMessage.getResponseCode(), 400);
+        Assert.assertEquals(httpResponseMessage.getResponseCode(), 400);
     }
 
     @Test
@@ -165,7 +165,7 @@ public class ConfigReaderTestCase {
     }
 
     private HTTPResponseMessage sendRequest(String body, URI baseURI, String path, String contentType,
-                                             String methodType, Boolean auth, String userName, String password) {
+                                            String methodType, Boolean auth, String userName, String password) {
         TestUtil testUtil = new TestUtil(baseURI, path, auth, false, methodType,
                 contentType, userName, password);
         testUtil.addBodyContent(body);

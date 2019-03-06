@@ -21,11 +21,11 @@
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>siddhi-distribution-osgi-tests</artifactId>
+    <artifactId>io-siddhi-distribution-osgi-tests</artifactId>
     <name>WSO2 Carbon Analytics - OSGi Tests</name>
     <description>OSGi Tests for WSO2 Carbon Analytics</description>
     <url>http://wso2.com</url>
@@ -110,8 +110,8 @@
             <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.carbon.analytics</groupId>
-            <artifactId>org.wso2.carbon.analytics.test.distribution</artifactId>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.runtime</artifactId>
             <type>zip</type>
             <scope>test</scope>
         </dependency>
@@ -123,12 +123,6 @@
         <dependency>
             <groupId>org.awaitility</groupId>
             <artifactId>awaitility</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon.analytics</groupId>
-            <artifactId>org.wso2.carbon.status.dashboard.core</artifactId>
-            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -201,8 +195,8 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>org.wso2.carbon.analytics</groupId>
-                                            <artifactId>org.wso2.carbon.analytics.test.distribution</artifactId>
+                                            <groupId>io.siddhi.distribution</groupId>
+                                            <artifactId>io.siddhi.distribution.runtime</artifactId>
                                             <type>zip</type>
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -307,12 +301,12 @@
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
                                 </org.ops4j.pax.url.mvn.localRepository>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
-                                <org.wso2.carbon.test.default.distribution>
-                                    org.wso2.carbon.analytics:org.wso2.carbon.analytics.test.distribution
-                                </org.wso2.carbon.test.default.distribution>
+                                <io.siddhi.distribution.runtime>
+                                    io.siddhi.distribution:io.siddhi.distribution.runtime
+                                </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <carbon.analytic.version>${carbon.analytics.version}</carbon.analytic.version>
+                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}</io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <DATABASE_TYPE>MySQL</DATABASE_TYPE>
@@ -417,8 +411,8 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>org.wso2.carbon.analytics</groupId>
-                                            <artifactId>org.wso2.carbon.analytics.test.distribution</artifactId>
+                                            <groupId>io.siddhi.distribution</groupId>
+                                            <artifactId>io.siddhi.distribution.runtime</artifactId>
                                             <type>zip</type>
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -524,12 +518,12 @@
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
                                 </org.ops4j.pax.url.mvn.localRepository>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
-                                <org.wso2.carbon.test.default.distribution>
-                                    org.wso2.carbon.analytics:org.wso2.carbon.analytics.test.distribution
-                                </org.wso2.carbon.test.default.distribution>
+                                <io.siddhi.distribution>
+                                    io.siddhi.distribution:io.siddhi.distribution.runtime
+                                </io.siddhi.distribution>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <carbon.analytic.version>${carbon.analytics.version}</carbon.analytic.version>
+                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}</io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <DATABASE_TYPE>POSTGRES</DATABASE_TYPE>
@@ -642,8 +636,8 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>org.wso2.carbon.analytics</groupId>
-                                            <artifactId>org.wso2.carbon.analytics.test.distribution</artifactId>
+                                            <groupId>io.siddhi.distribution</groupId>
+                                            <artifactId>io.siddhi.distribution.runtime</artifactId>
                                             <type>zip</type>
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -739,12 +733,12 @@
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
                                 </org.ops4j.pax.url.mvn.localRepository>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
-                                <org.wso2.carbon.test.default.distribution>
-                                    org.wso2.carbon.analytics:org.wso2.carbon.analytics.test.distribution
-                                </org.wso2.carbon.test.default.distribution>
+                                <io.siddhi.distribution>
+                                    io.siddhi.distribution:io.siddhi.distribution.runtime
+                                </io.siddhi.distribution>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <carbon.analytic.version>${carbon.analytics.version}</carbon.analytic.version>
+                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}</io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <DATABASE_TYPE>MSSQL</DATABASE_TYPE>
@@ -858,8 +852,8 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>org.wso2.carbon.analytics</groupId>
-                                            <artifactId>org.wso2.carbon.analytics.test.distribution</artifactId>
+                                            <groupId>io.siddhi.distribution</groupId>
+                                            <artifactId>io.siddhi.distribution.runtime</artifactId>
                                             <type>zip</type>
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -950,12 +944,12 @@
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
                                 </org.ops4j.pax.url.mvn.localRepository>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
-                                <org.wso2.carbon.test.default.distribution>
-                                    org.wso2.carbon.analytics:org.wso2.carbon.analytics.test.distribution
-                                </org.wso2.carbon.test.default.distribution>
+                                <io.siddhi.distribution.runtime>
+                                    io.siddhi.distribution:io.siddhi.distribution.runtime
+                                </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <carbon.analytic.version>${carbon.analytics.version}</carbon.analytic.version>
+                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}</io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
                                 <DATABASE_TYPE>ORACLE</DATABASE_TYPE>
@@ -1006,10 +1000,10 @@
                                             </executiondata>
                                             <structure name="Stream processor core OSGi Tests">
                                                 <classfiles>
-                                                    <fileset dir="../org.wso2.carbon.stream.processor.core/target/classes" />
+                                                    <fileset dir="../runner/io.siddhi.distribution.core/target/classes" />
                                                 </classfiles>
                                                 <sourcefiles encoding="UTF-8">
-                                                    <fileset dir="../org.wso2.carbon.stream.processor.core/src" />
+                                                    <fileset dir="./runner/io.siddhi.distribution.core/src" />
                                                 </sourcefiles>
                                             </structure>
                                             <html destdir="${project.build.directory}/coverage-reports" />
@@ -1055,8 +1049,8 @@
                                 <configuration>
                                     <artifactItems>
                                         <artifactItem>
-                                            <groupId>org.wso2.carbon.analytics</groupId>
-                                            <artifactId>org.wso2.carbon.analytics.test.distribution</artifactId>
+                                            <groupId>io.siddhi.distribution</groupId>
+                                            <artifactId>io.siddhi.distribution.runtime</artifactId>
                                             <type>zip</type>
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -1088,12 +1082,12 @@
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
                                 </org.ops4j.pax.url.mvn.localRepository>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
-                                <org.wso2.carbon.test.default.distribution>
-                                    org.wso2.carbon.analytics:org.wso2.carbon.analytics.test.distribution
-                                </org.wso2.carbon.test.default.distribution>
+                                <io.siddhi.distribution.runtime>
+                                    io.siddhi.distribution:io.siddhi.distribution.runtime
+                                </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <carbon.analytic.version>${carbon.analytics.version}</carbon.analytic.version>
+                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}</io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <suiteXmlFiles>
                                 <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
@@ -1139,18 +1133,14 @@
                                             </executiondata>
                                             <structure name="Stream processor core OSGi Tests">
                                                 <classfiles>
-                                                    <fileset dir="../org.wso2.carbon.stream.processor.core/target/classes" />
-                                                    <fileset dir="../org.wso2.carbon.stream.processor.statistics/target/classes" />
-                                                    <fileset dir="../org.wso2.carbon.siddhi.store.api.rest/target/classes" />
-                                                    <fileset dir="../org.wso2.carbon.sp.jobmanager.core/target/classes" />
-                                                    <fileset dir="../org.wso2.carbon.event.simulator.core/target/classes" />
+                                                    <fileset dir="../runner/components/io.siddhi.distribution.core/target/classes" />
+                                                    <fileset dir="../runner/components/io.siddhi.distribution.store.api.rest/target/classes" />
+                                                    <fileset dir="../runner/components/io.siddhi.distribution.event.simulator.core/target/classes" />
                                                 </classfiles>
                                                 <sourcefiles encoding="UTF-8">
-                                                    <fileset dir="../org.wso2.carbon.stream.processor.core/src" />
-                                                    <fileset dir="../org.wso2.carbon.stream.processor.statistics/src" />
-                                                    <fileset dir="../org.wso2.carbon.siddhi.store.api.rest/src" />
-                                                    <fileset dir="../org.wso2.carbon.sp.jobmanager.core/src" />
-                                                    <fileset dir="../org.wso2.carbon.event.simulator.core/src" />
+                                                    <fileset dir="../runner/components/io.siddhi.distribution.core/src" />
+                                                    <fileset dir="../runner/components/io.siddhi.distribution.store.api.rest/src" />
+                                                    <fileset dir="../runner/components/io.siddhi.distribution.event.simulator.core/src" />
                                                 </sourcefiles>
                                             </structure>
                                             <html destdir="${project.build.directory}/coverage-reports" />

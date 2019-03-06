@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi.util;
+package io.siddhi.distribution.test.osgi.util;
 
 
 public class HTTPResponseMessage {

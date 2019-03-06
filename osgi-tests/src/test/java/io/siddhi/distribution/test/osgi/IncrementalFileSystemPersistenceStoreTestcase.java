@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
+import io.siddhi.distribution.core.core.internal.StreamProcessorDataHolder;
 import org.apache.log4j.Logger;
 import org.awaitility.Awaitility;
 import org.ops4j.pax.exam.Configuration;
@@ -28,9 +29,8 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.wso2.carbon.analytics.test.osgi.util.SiddhiAppUtil;
+import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
-import org.wso2.carbon.stream.processor.core.internal.StreamProcessorDataHolder;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.exception.CannotRestoreSiddhiAppStateException;
@@ -79,8 +79,8 @@ public class IncrementalFileSystemPersistenceStoreTestcase {
         return new Option[]{
                 copyCarbonYAMLOption(),
                 carbonDistribution(
-                        Paths.get("target", "wso2das-" + System.getProperty("carbon.analytic.version")),
-                        "worker")
+                        Paths.get("target", "wso2sp-"
+                                + System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
 

@@ -22,14 +22,14 @@
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>io.siddhi.distribution.core</artifactId>
     <packaging>bundle</packaging>
 
-    <name>WSO2 Stream Processor - Core</name>
+    <name>Siddhi Distribution - Core</name>
     <url>http://wso2.org</url>
 
     <dependencies>
@@ -237,7 +237,6 @@
             org.apache.commons.codec.*
         </private.package>
         <export.package>
-            <!--!org.wso2.carbon.stream.processor.core.internal,-->
             io.siddhi.distribution.core.*
         </export.package>
         <import.package>

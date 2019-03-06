@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
 import com.zaxxer.hikari.HikariDataSource;
+import io.siddhi.distribution.core.core.internal.StreamProcessorDataHolder;
 import org.apache.log4j.Logger;
 import org.awaitility.Awaitility;
 import org.awaitility.Duration;
@@ -30,14 +31,13 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.wso2.carbon.analytics.test.osgi.util.RDBMSConfig;
-import org.wso2.carbon.analytics.test.osgi.util.SiddhiAppUtil;
+import io.siddhi.distribution.test.osgi.util.RDBMSConfig;
+import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.container.options.CarbonDistributionOption;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.kernel.CarbonServerInfo;
-import org.wso2.carbon.stream.processor.core.internal.StreamProcessorDataHolder;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.exception.CannotRestoreSiddhiAppStateException;
@@ -124,8 +124,8 @@ public class IncrementalDBPersistenceStoreTestcase {
                         "org.postgresql", "postgresql").versionAsInProject()),
                 CarbonDistributionOption.copyOSGiLibBundle(maven(
                         "com.microsoft.sqlserver", "mssql-jdbc").versionAsInProject()),
-                carbonDistribution(Paths.get("target", "wso2das-" +
-                        System.getProperty("carbon.analytic.version")), "worker")
+                carbonDistribution(Paths.get("target", "wso2sp-" +
+                        System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
 
