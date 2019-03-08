@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -25,8 +25,8 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.wso2.carbon.analytics.test.osgi.util.HTTPResponseMessage;
-import org.wso2.carbon.analytics.test.osgi.util.TestUtil;
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
 
@@ -77,8 +77,8 @@ public class SimulatorAPITestcase {
     @Configuration
     public Option[] createConfiguration() {
         return new Option[]{
-                carbonDistribution(Paths.get("target", "wso2das-" +
-                        System.getProperty("carbon.analytic.version")), "editor"),
+                carbonDistribution(Paths.get("target", "wso2sp-" +
+                        System.getProperty("io.siddhi.distribution.version")), "editor"),
                 copySiddhiFileOption(),
                 copyCSVFileOption(),
         };

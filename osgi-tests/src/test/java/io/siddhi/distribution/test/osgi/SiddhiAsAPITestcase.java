@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
+import io.siddhi.distribution.common.common.EventStreamService;
+import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import org.awaitility.Duration;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -26,12 +28,10 @@ import org.ops4j.pax.exam.testng.listener.PaxExam;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.wso2.carbon.analytics.test.osgi.util.TestUtil;
-import org.wso2.carbon.analytics.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
-import org.wso2.carbon.stream.processor.common.EventStreamService;
-import org.wso2.carbon.stream.processor.common.SiddhiAppRuntimeService;
 
 import java.net.URI;
 import java.nio.file.Path;
@@ -73,9 +73,8 @@ public class SiddhiAsAPITestcase {
                 copyCarbonYAMLOption(),
                 copySiddhiFileOption(),
                 carbonDistribution(
-                        Paths.get("target", "wso2das-" + System.getProperty("carbon.analytic.version")),
-                        "worker")
-                //CarbonDistributionOption.debug(5005)
+                        Paths.get("target", "wso2sp-"
+                                + System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
 
