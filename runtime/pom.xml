@@ -342,12 +342,19 @@
                                     <version>${siddhi.io.twitter.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.extension.siddhi.io.ibmmq</groupId>
-                                    <artifactId>siddhi-io-ibmmq</artifactId>
-                                    <version>${siddhi.io.ibmmq.version}</version>
-                                    <type>jar</type>
-                                </artifactItem>
+                              <!--  //Temperory avoid bundling NATS and IBMMQ extensions due to dependency errors-->
+                                <!--<artifactItem>-->
+                                    <!--<groupId>org.wso2.extension.siddhi.io.ibmmq</groupId>-->
+                                    <!--<artifactId>siddhi-io-ibmmq</artifactId>-->
+                                    <!--<version>${siddhi.io.ibmmq.version}</version>-->
+                                    <!--<type>jar</type>-->
+                                <!--</artifactItem>-->
+                                <!--<artifactItem>-->
+                                    <!--<groupId>org.wso2.extension.siddhi.io.nats</groupId>-->
+                                    <!--<artifactId>siddhi-io-nats</artifactId>-->
+                                    <!--<version>${siddhi.io.nats.version}</version>-->
+                                    <!--<type>jar</type>-->
+                                <!--</artifactItem>-->
                                 <artifactItem>
                                     <groupId>org.wso2.extension.siddhi.io.cdc</groupId>
                                     <artifactId>siddhi-io-cdc</artifactId>
@@ -358,12 +365,6 @@
                                     <groupId>org.wso2.extension.siddhi.io.prometheus</groupId>
                                     <artifactId>siddhi-io-prometheus</artifactId>
                                     <version>${siddhi.io.prometheus.version}</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.wso2.extension.siddhi.io.nats</groupId>
-                                    <artifactId>siddhi-io-nats</artifactId>
-                                    <version>${siddhi.io.nats.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
                                 <!--Map Extensions-->
