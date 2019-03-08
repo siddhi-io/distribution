@@ -63,7 +63,7 @@ public class SiddhiStoreAPITestcase {
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SiddhiStoreAPITestcase.class);
     private static final String APP_NAME = "StoreApiTest";
     private static final String SIDDHI_EXTENSION = ".siddhi";
-    private static final String STORE_API_BUNDLE_NAME = "org.wso2.carbon.siddhi.store.api.rest";
+    private static final String STORE_API_BUNDLE_NAME = "io.siddhi.distribution.store.api.rest";
     private static final int HTTP_PORT = 7070;
     private static final String HOSTNAME = TestConstants.HOSTNAME_LOCALHOST;
     private static final String API_CONTEXT_PATH = "/stores/query";

@@ -126,6 +126,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.pax.exam.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
             <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
             <scope>provided</scope>
@@ -1037,6 +1042,29 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.wso2.carbon.maven</groupId>
+                        <artifactId>carbon-feature-plugin</artifactId>
+                        <version>${carbon.feature.plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>p2-repo-generation</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>generate-repo</goal>
+                                </goals>
+                                <configuration>
+                                    <targetRepository>file:${basedir}/target/p2-repo</targetRepository>
+                                    <features>
+                                        <feature>
+                                            <id>org.wso2.carbon.pax.exam.feature</id>
+                                            <version>${carbon.kernel.version}</version>
+                                        </feature>
+                                    </features>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
@@ -1071,8 +1099,49 @@
                                     <stripVersion>true</stripVersion>
                                 </configuration>
                             </execution>
+                            <execution>
+                                <id>copy</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <dependency>
+                                            <groupId>org.awaitility</groupId>
+                                            <artifactId>awaitility</artifactId>
+                                            <version>${awaitility.version}</version>
+                                            <type>jar</type>
+                                        </dependency>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/wso2sp-1.0.0-SNAPSHOT/lib</outputDirectory>
+                                    <overWriteReleases>false</overWriteReleases>
+                                    <overWriteSnapshots>true</overWriteSnapshots>
+                                </configuration>
+                            </execution>
                         </executions>
                     </plugin>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>target/wso2sp-${project.version}/lib</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>target/p2-repo/plugins</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>

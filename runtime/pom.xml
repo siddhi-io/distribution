@@ -201,11 +201,6 @@
             <artifactId>org.wso2.carbon.analytics.permissions.feature</artifactId>
             <type>zip</type>
         </dependency>
-        <dependency>
-            <groupId>org.wso2.carbon</groupId>
-            <artifactId>org.wso2.carbon.pax.exam.feature</artifactId>
-            <type>zip</type>
-        </dependency>
     </dependencies>
 
     <build>
@@ -633,10 +628,6 @@
                                     <id>org.wso2.carbon.databridge.commons.feature</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.pax.exam.feature</id>
-                                    <version>${carbon.kernel.version}</version>
-                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -798,10 +789,6 @@
                                 <feature>
                                     <id>org.wso2.carbon.analytics.permissions.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>org.wso2.carbon.pax.exam.feature</id>
-                                    <version>${carbon.kernel.version}</version>
                                 </feature>
                             </features>
                         </configuration>
