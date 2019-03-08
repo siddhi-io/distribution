@@ -289,9 +289,9 @@
     </profiles>
 
     <scm>
-        <url>https://github.com/wso2/carbon-analytics.git</url>
-        <developerConnection>scm:git:https://github.com/wso2/carbon-analytics.git</developerConnection>
-        <connection>scm:git:https://github.com/wso2/carbon-analytics.git</connection>
+        <url>https://github.com/siddhi-io/distribution.git</url>
+        <developerConnection>scm:git:https://github.com/siddhi-io/distribution.git</developerConnection>
+        <connection>scm:git:https://github.com/siddhi-io/distribution.git</connection>
         <tag>HEAD</tag>
     </scm>
 
