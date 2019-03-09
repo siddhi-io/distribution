@@ -392,7 +392,8 @@ public class SiddhiEditorTestCase {
         Assert.assertEquals(httpResponseMessage.getContentType(), "application/json");
     }
 
-    @Test
+    //@Test
+    // TODO: 3/8/19 commenting until samples are migrated to siddhi runtime distribution
     public void testReadingSample() throws Exception {
         String path = "/editor/workspace/read/sample";
         String contentType = "text/plain";

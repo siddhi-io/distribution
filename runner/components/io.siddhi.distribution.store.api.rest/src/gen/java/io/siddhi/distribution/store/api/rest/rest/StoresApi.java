@@ -19,13 +19,10 @@
 
 package io.siddhi.distribution.store.api.rest.rest;
 
-import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.config.ConfigurationException;
-import org.wso2.carbon.config.provider.ConfigProvider;
 import io.siddhi.distribution.store.api.rest.rest.factories.StoresApiServiceFactory;
 import io.siddhi.distribution.store.api.rest.rest.model.ModelApiResponse;
 import io.siddhi.distribution.store.api.rest.rest.model.Query;
@@ -38,20 +35,20 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 import io.swagger.annotations.ApiParam;
-import org.wso2.msf4j.MicroservicesRunner;
-import org.wso2.transport.http.netty.config.TransportsConfiguration;
+import org.wso2.msf4j.Microservice;
 
+@Component(
+        name = "siddhi-store-query-service",
+        service = Microservice.class,
+        immediate = true
+)
 @Path("/stores")
 @io.swagger.annotations.Api(description = "The stores API")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-01T11:26:25.925Z")
-public class StoresApi {
+public class StoresApi implements Microservice {
     private Logger log = LoggerFactory.getLogger(StoresApi.class);
     private final StoresApiService delegate = StoresApiServiceFactory.getStoresApi();
-    private static TransportsConfiguration transportsConfiguration;
-    private static MicroservicesRunner microservicesRunner;
-    private static volatile boolean microserviceActive;
-    private static final String ROOT_CONFIG_ELEMENT = "siddhi.stores.query.api";
 
     @POST
     @Path("/query")
@@ -82,33 +79,6 @@ public class StoresApi {
     @Activate
     protected void start(BundleContext bundleContext) throws Exception {
         log.debug("Siddhi Store REST API activated.");
-        microservicesRunner = new MicroservicesRunner(transportsConfiguration);
-        if (SiddhiStoreDataHolder.getInstance().getAuthenticationInterceptor() != null) {
-            microservicesRunner.addGlobalRequestInterceptor(SiddhiStoreDataHolder.getInstance().
-                    getAuthenticationInterceptor());
-        }
-        microservicesRunner.deploy(new StoresApi());
-        startStoresApiMicroservice();
-    }
-
-    /**
-     * This is the activation method of Stores Api Microservice.
-     */
-    public static void startStoresApiMicroservice() {
-        if (microservicesRunner != null && !microserviceActive) {
-            microservicesRunner.start();
-            microserviceActive = true;
-        }
-    }
-
-    /**
-     * This is the deactivate method of Stores Api Microservice.
-     */
-    public static void stopStoresApiMicroservice() {
-        if (microservicesRunner != null && microserviceActive) {
-            microservicesRunner.stop();
-            microserviceActive = false;
-        }
     }
 
     /**
@@ -120,7 +90,6 @@ public class StoresApi {
     @Deactivate
     protected void stop() throws Exception {
         log.debug("Siddhi Store REST API deactivated.");
-        stopStoresApiMicroservice();
     }
 
     @Reference(
@@ -136,41 +105,5 @@ public class StoresApi {
 
     protected void unsetSiddhiAppRuntimeService(SiddhiAppRuntimeService siddhiAppRuntimeService) {
         SiddhiStoreDataHolder.getInstance().setSiddhiAppRuntimeService(null);
-    }
-
-    @Reference(
-            name = "carbon.config.provider",
-            service = ConfigProvider.class,
-            cardinality = ReferenceCardinality.MANDATORY,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unregisterConfigProvider"
-    )
-    protected void registerConfigProvider(ConfigProvider configProvider) {
-        SiddhiStoreDataHolder.getInstance().setConfigProvider(configProvider);
-        try {
-            transportsConfiguration = configProvider.getConfigurationObject(ROOT_CONFIG_ELEMENT,
-                    TransportsConfiguration.class);
-        } catch (ConfigurationException e) {
-            log.error("Error while loading TransportsConfiguration for " + ROOT_CONFIG_ELEMENT, e);
-        }
-    }
-
-    protected void unregisterConfigProvider(ConfigProvider configProvider) {
-        SiddhiStoreDataHolder.getInstance().setConfigProvider(null);
-    }
-
-    @Reference(
-            name = "io.siddhi.distribution.msf4j.interceptor.common.AuthenticationInterceptor",
-            service = AuthenticationInterceptor.class,
-            cardinality = ReferenceCardinality.MANDATORY,
-            policy = ReferencePolicy.DYNAMIC,
-            unbind = "unregisterAuthenticationInterceptor"
-    )
-    protected void registerAuthenticationInterceptor(AuthenticationInterceptor authenticationInterceptor) {
-        SiddhiStoreDataHolder.getInstance().setAuthenticationInterceptor(authenticationInterceptor);
-    }
-
-    protected void unregisterAuthenticationInterceptor(AuthenticationInterceptor authenticationInterceptor) {
-        SiddhiStoreDataHolder.getInstance().setAuthenticationInterceptor(null);
     }
 }
