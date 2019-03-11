@@ -50,7 +50,8 @@
 
         <module>tooling/features/io.siddhi.distribution.editor.core.feature</module>
 
-        <module>runtime</module>
+        <module>runner</module>
+        <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>
@@ -1395,7 +1396,14 @@
             </dependency>
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.runtime</artifactId>
+                <artifactId>io.siddhi.runner</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.tooling</artifactId>
                 <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
                 <scope>test</scope>
