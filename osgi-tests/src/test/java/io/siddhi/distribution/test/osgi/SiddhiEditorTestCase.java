@@ -103,7 +103,7 @@ public class SiddhiEditorTestCase {
                 copySiddhiAppFileOption(),
                 //copySampleFileOption(),
                 copyImportingFileOption(),
-                carbonDistribution(Paths.get("target", "wso2sp-" +
+                carbonDistribution(Paths.get("target", "siddhi-tooling-" +
                         System.getProperty("io.siddhi.distribution.version")), "editor")/*,
                 CarbonDistributionOption.debug(5005)*/
                 };

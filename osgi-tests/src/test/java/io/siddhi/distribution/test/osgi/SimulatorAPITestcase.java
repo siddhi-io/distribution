@@ -77,7 +77,7 @@ public class SimulatorAPITestcase {
     @Configuration
     public Option[] createConfiguration() {
         return new Option[]{
-                carbonDistribution(Paths.get("target", "wso2sp-" +
+                carbonDistribution(Paths.get("target", "siddhi-tooling-" +
                         System.getProperty("io.siddhi.distribution.version")), "editor"),
                 copySiddhiFileOption(),
                 copyCSVFileOption(),

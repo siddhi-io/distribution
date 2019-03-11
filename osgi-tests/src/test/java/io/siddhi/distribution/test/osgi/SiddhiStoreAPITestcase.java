@@ -95,7 +95,7 @@ public class SiddhiStoreAPITestcase {
         return new Option[]{
                 copySiddhiFileOption(),
                 carbonDistribution(
-                        Paths.get("target", "wso2sp-"
+                        Paths.get("target", "siddhi-runner-"
                                 + System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }

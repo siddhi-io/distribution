@@ -111,7 +111,13 @@
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.runtime</artifactId>
+            <artifactId>io.siddhi.runner</artifactId>
+            <type>zip</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.tooling</artifactId>
             <type>zip</type>
             <scope>test</scope>
         </dependency>
@@ -1069,7 +1075,7 @@
                         <artifactId>maven-dependency-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>unpack-distribution</id>
+                                <id>unpack-runner-distribution</id>
                                 <phase>compile</phase>
                                 <goals>
                                     <goal>unpack</goal>
@@ -1078,7 +1084,27 @@
                                     <artifactItems>
                                         <artifactItem>
                                             <groupId>io.siddhi.distribution</groupId>
-                                            <artifactId>io.siddhi.distribution.runtime</artifactId>
+                                            <artifactId>io.siddhi.runner</artifactId>
+                                            <version>${project.version}</version>
+                                            <type>zip</type>
+                                            <overWrite>true</overWrite>
+                                            <outputDirectory>${project.build.directory}</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>unpack-tooling-distribution</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>unpack</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <artifactItem>
+                                            <groupId>io.siddhi.distribution</groupId>
+                                            <artifactId>io.siddhi.tooling</artifactId>
+                                            <version>${project.version}</version>
                                             <type>zip</type>
                                             <overWrite>true</overWrite>
                                             <outputDirectory>${project.build.directory}</outputDirectory>
@@ -1100,7 +1126,7 @@
                                 </configuration>
                             </execution>
                             <execution>
-                                <id>copy</id>
+                                <id>copy-to-runner</id>
                                 <phase>compile</phase>
                                 <goals>
                                     <goal>copy</goal>
@@ -1114,7 +1140,27 @@
                                             <type>jar</type>
                                         </dependency>
                                     </artifactItems>
-                                    <outputDirectory>${project.build.directory}/wso2sp-1.0.0-SNAPSHOT/lib</outputDirectory>
+                                    <outputDirectory>${project.build.directory}/siddhi-runner-${project.version}/lib</outputDirectory>
+                                    <overWriteReleases>false</overWriteReleases>
+                                    <overWriteSnapshots>true</overWriteSnapshots>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-to-tooling</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <dependency>
+                                            <groupId>org.awaitility</groupId>
+                                            <artifactId>awaitility</artifactId>
+                                            <version>${awaitility.version}</version>
+                                            <type>jar</type>
+                                        </dependency>
+                                    </artifactItems>
+                                    <outputDirectory>${project.build.directory}/siddhi-tooling-${project.version}/lib</outputDirectory>
                                     <overWriteReleases>false</overWriteReleases>
                                     <overWriteSnapshots>true</overWriteSnapshots>
                                 </configuration>
@@ -1125,13 +1171,28 @@
                         <artifactId>maven-resources-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>copy-resources</id>
+                                <id>copy-resources-to-runner</id>
                                 <phase>compile</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
                                 </goals>
                                 <configuration>
-                                    <outputDirectory>target/wso2sp-${project.version}/lib</outputDirectory>
+                                    <outputDirectory>target/siddhi-runner-${project.version}/lib</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>target/p2-repo/plugins</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-resources-to-tooling</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>target/siddhi-tooling-${project.version}/lib</outputDirectory>
                                     <resources>
                                         <resource>
                                             <directory>target/p2-repo/plugins</directory>
@@ -1141,7 +1202,6 @@
                             </execution>
                         </executions>
                     </plugin>
-
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>

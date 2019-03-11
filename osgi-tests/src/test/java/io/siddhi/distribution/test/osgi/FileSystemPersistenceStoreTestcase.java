@@ -79,7 +79,7 @@ public class FileSystemPersistenceStoreTestcase {
         return new Option[]{
                 copyCarbonYAMLOption(),
                 carbonDistribution(
-                        Paths.get("target", "wso2sp-"
+                        Paths.get("target", "siddhi-runner-"
                                 + System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
