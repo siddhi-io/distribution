@@ -50,7 +50,8 @@
 
         <module>tooling/features/io.siddhi.distribution.editor.core.feature</module>
 
-        <module>runtime</module>
+        <module>runner</module>
+        <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>
