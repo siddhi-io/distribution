@@ -51,8 +51,8 @@
         <module>tooling/features/io.siddhi.distribution.editor.core.feature</module>
 
         <module>runtime</module>
-        <!--<module>components/osgi-tests</module>-->
-        <!--<module>coverage-reports</module>-->
+        <module>osgi-tests</module>
+        <module>coverage-reports</module>
     </modules>
 
     <build>
@@ -289,9 +289,9 @@
     </profiles>
 
     <scm>
-        <url>https://github.com/wso2/carbon-analytics.git</url>
-        <developerConnection>scm:git:https://github.com/wso2/carbon-analytics.git</developerConnection>
-        <connection>scm:git:https://github.com/wso2/carbon-analytics.git</connection>
+        <url>https://github.com/siddhi-io/distribution.git</url>
+        <developerConnection>scm:git:https://github.com/siddhi-io/distribution.git</developerConnection>
+        <connection>scm:git:https://github.com/siddhi-io/distribution.git</connection>
         <tag>HEAD</tag>
     </scm>
 
@@ -1278,13 +1278,6 @@
                 <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
-            <!--Carbon UI Server-->
-            <dependency>
-                <groupId>org.wso2.carbon.uiserver</groupId>
-                <artifactId>org.wso2.carbon.uiserver.feature</artifactId>
-                <version>${carbon.uiserver.version}</version>
-                <type>zip</type>
-            </dependency>
 
             <dependency>
                 <groupId>org.wso2.carbon.analytics-common</groupId>
@@ -1616,18 +1609,50 @@
         <servlet-api-version>2.5</servlet-api-version>
 
         <!--Siddhi Extension Versions-->
+        <siddhi.execution.math.version>4.1.0</siddhi.execution.math.version>
+        <siddhi.execution.unitconversion.version>1.1.0</siddhi.execution.unitconversion.version>
+        <siddhi.execution.regex.version>4.1.0</siddhi.execution.regex.version>
+        <siddhi.execution.streamingml.version>1.1.0</siddhi.execution.streamingml.version>
+        <siddhi.execution.string.version>4.1.0</siddhi.execution.string.version>
+        <siddhi.execution.time.version>4.1.0</siddhi.execution.time.version>
+        <siddhi.execution.map.version>4.1.0</siddhi.execution.map.version>
+        <siddhi.execution.json.version>1.1.0</siddhi.execution.json.version>
 
-        <siddhi.io.tcp.version>2.0.20</siddhi.io.tcp.version>
-        <siddhi.io.email.version>1.0.22</siddhi.io.email.version>
-        <siddhi.io.kafka.version>4.1.17</siddhi.io.kafka.version>
-        <siddhi.io.http.version>1.0.37</siddhi.io.http.version>
 
-        <siddhi.map.json.version>4.0.31</siddhi.map.json.version>
-        <siddhi.map.binary.version>1.0.15</siddhi.map.binary.version>
-        <siddhi.map.xml.version>4.0.19</siddhi.map.xml.version>
+        <siddhi.io.file.version>1.1.0</siddhi.io.file.version>
+        <siddhi.io.tcp.version>2.1.0</siddhi.io.tcp.version>
+        <siddhi.io.jms.version>1.1.0</siddhi.io.jms.version>
+        <siddhi.io.email.version>1.1.0</siddhi.io.email.version>
+        <siddhi.io.rabbitmq.version>1.1.0</siddhi.io.rabbitmq.version>
+        <siddhi.io.mqtt.version>1.0.22</siddhi.io.mqtt.version>
+        <siddhi.io.kafka.version>4.2.0</siddhi.io.kafka.version>
+        <siddhi.io.wso2event.version>4.0.17</siddhi.io.wso2event.version>
+        <siddhi.io.http.version>1.1.0</siddhi.io.http.version>
+        <siddhi.io.twitter.version>1.0.12</siddhi.io.twitter.version>
+        <siddhi.io.sqs.version>1.0.8</siddhi.io.sqs.version>
+        <siddhi.io.websocket.version>1.0.11</siddhi.io.websocket.version>
+        <siddhi.io.ibmmq.version>1.0.7</siddhi.io.ibmmq.version>
+        <siddhi.io.cdc.version>1.0.9</siddhi.io.cdc.version>
+        <siddhi.io.prometheus.version>1.0.3</siddhi.io.prometheus.version>
+        <siddhi.io.nats.version>1.0.3</siddhi.io.nats.version>
 
-        <siddhi.store.rdbms.version>4.0.33</siddhi.store.rdbms.version>
-        <siddhi.store.solr.version>1.0.21</siddhi.store.solr.version>
+        <siddhi.map.json.version>4.1.0</siddhi.map.json.version>
+        <siddhi.map.avro.version>1.0.66</siddhi.map.avro.version>
+        <siddhi.map.wso2event.version>4.1.0</siddhi.map.wso2event.version>
+        <siddhi.map.binary.version>1.1.0</siddhi.map.binary.version>
+        <siddhi.map.text.version>1.1.0</siddhi.map.text.version>
+        <siddhi.map.xml.version>4.1.0</siddhi.map.xml.version>
+        <siddhi.map.keyvalue.version>1.1.0</siddhi.map.keyvalue.version>
+        <siddhi.map.csv.version>1.1.0</siddhi.map.csv.version>
+
+        <siddhi.store.mongodb.version>1.1.0</siddhi.store.mongodb.version>
+        <siddhi.store.rdbms.version>5.1.1</siddhi.store.rdbms.version>
+        <siddhi.store.solr.version>1.1.0</siddhi.store.solr.version>
+        <siddhi.store.hbase.version>4.1.0</siddhi.store.hbase.version>
+        <siddhi.store.cassandra.version>1.1.0</siddhi.store.cassandra.version>
+        <siddhi.store.redis.version>2.1.0</siddhi.store.redis.version>
+        <siddhi.store.elasticsearch.version>1.0.5</siddhi.store.elasticsearch.version>
+
 
         <zkclient.version>0.10</zkclient.version>
 

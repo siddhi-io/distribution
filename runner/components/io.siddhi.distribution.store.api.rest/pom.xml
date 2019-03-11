@@ -23,14 +23,14 @@
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>io.siddhi.distribution.store.api.rest</artifactId>
     <packaging>bundle</packaging>
 
-    <name>WSO2 Stream Processor - Siddhi Store Query REST API</name>
+    <name>Siddhi Distribution - Store Query REST API</name>
     <url>http://wso2.org</url>
 
     <dependencies>
@@ -124,22 +124,6 @@
             <groupId>org.wso2.siddhi</groupId>
             <artifactId>siddhi-annotations</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.msf4j.interceptor.common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.transport.http</groupId>
-            <artifactId>org.wso2.transport.http.netty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.wso2.msf4j</groupId>
-            <artifactId>msf4j-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.msf4j.interceptor.common</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
@@ -195,10 +179,11 @@
             org.wso2.carbon.kernel;version="${carbon.kernel.package.import.version.range}",
             org.wso2.msf4j.*;version="${msf4j.import.version.range}",
             org.wso2.siddhi.*;version="${siddhi.version.range}",
-            org.wso2.transport.http.netty.config.*;version="${carbon.transport.package.import.version.range}",
             io.siddhi.distribution.common.*;version="${io.siddhi.distribution.version.range}",
-            io.siddhi.distribution.msf4j.interceptor.common.*;version="${io.siddhi.distribution.version.range}",
             *;resolution:=optional
         </import.package>
+        <carbon.component>
+            osgi.service; objectClass="org.wso2.msf4j.Microservice"; serviceCount="1"
+        </carbon.component>
     </properties>
 </project>

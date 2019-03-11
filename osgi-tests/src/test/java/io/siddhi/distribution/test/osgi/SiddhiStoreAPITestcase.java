@@ -17,9 +17,14 @@
  *
  */
 
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
 import com.google.gson.Gson;
+import io.siddhi.distribution.common.common.EventStreamService;
+import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
+import io.siddhi.distribution.store.api.rest.rest.ApiResponseMessage;
+import io.siddhi.distribution.store.api.rest.rest.model.ModelApiResponse;
+import io.siddhi.distribution.store.api.rest.rest.model.Query;
 import org.awaitility.Duration;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -32,16 +37,11 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.wso2.carbon.analytics.test.osgi.util.HTTPResponseMessage;
-import org.wso2.carbon.analytics.test.osgi.util.TestConstants;
-import org.wso2.carbon.analytics.test.osgi.util.TestUtil;
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestConstants;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
-import org.wso2.carbon.siddhi.store.api.rest.ApiResponseMessage;
-import org.wso2.carbon.siddhi.store.api.rest.model.ModelApiResponse;
-import org.wso2.carbon.siddhi.store.api.rest.model.Query;
-import org.wso2.carbon.stream.processor.common.EventStreamService;
-import org.wso2.carbon.stream.processor.common.SiddhiAppRuntimeService;
 import org.wso2.msf4j.MicroservicesRegistry;
 import org.wso2.siddhi.core.event.Event;
 
@@ -63,8 +63,8 @@ public class SiddhiStoreAPITestcase {
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SiddhiStoreAPITestcase.class);
     private static final String APP_NAME = "StoreApiTest";
     private static final String SIDDHI_EXTENSION = ".siddhi";
-    private static final String STORE_API_BUNDLE_NAME = "org.wso2.carbon.siddhi.store.api.rest";
-    private static final int HTTP_PORT = 7070;
+    private static final String STORE_API_BUNDLE_NAME = "io.siddhi.distribution.store.api.rest";
+    private static final int HTTP_PORT = 9090;
     private static final String HOSTNAME = TestConstants.HOSTNAME_LOCALHOST;
     private static final String API_CONTEXT_PATH = "/stores/query";
     private static final String CONTENT_TYPE_JSON = TestConstants.CONTENT_TYPE_JSON;
@@ -95,8 +95,8 @@ public class SiddhiStoreAPITestcase {
         return new Option[]{
                 copySiddhiFileOption(),
                 carbonDistribution(
-                        Paths.get("target", "wso2das-" + System.getProperty("carbon.analytic.version")),
-                        "worker")
+                        Paths.get("target", "wso2sp-"
+                                + System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
 

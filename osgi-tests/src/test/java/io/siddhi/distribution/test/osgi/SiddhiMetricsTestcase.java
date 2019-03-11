@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
+import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
 import org.ops4j.pax.exam.Option;
@@ -32,7 +33,6 @@ import org.wso2.carbon.kernel.CarbonServerInfo;
 import org.wso2.carbon.metrics.core.MetricManagementService;
 import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.jmx.MetricsMXBean;
-import org.wso2.carbon.stream.processor.common.SiddhiAppRuntimeService;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.core.stream.input.InputHandler;
@@ -106,8 +106,8 @@ public class SiddhiMetricsTestcase {
                 copyCarbonYAMLOption(),
                 copySiddhiFileOption(),
                 carbonDistribution(
-                        Paths.get("target", "wso2das-" + System.getProperty("carbon.analytic.version")),
-                        "worker")
+                        Paths.get("target", "wso2sp-"
+                                + System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
 

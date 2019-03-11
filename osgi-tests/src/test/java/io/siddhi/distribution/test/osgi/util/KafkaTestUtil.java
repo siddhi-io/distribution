@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi.util;
+package io.siddhi.distribution.test.osgi.util;
 
 import kafka.admin.AdminUtils;
 import kafka.admin.RackAwareMode;

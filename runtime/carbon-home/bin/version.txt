@@ -1,0 +1,1 @@
+Siddhi Distribution v${project.version}

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi.util;
+package io.siddhi.distribution.test.osgi.util;
 
+import io.siddhi.distribution.test.osgi.DBPersistenceStoreTestcase;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.wso2.carbon.analytics.test.osgi.DBPersistenceStoreTestcase;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

@@ -55,32 +55,6 @@ wso2.transport.http:
     -
       id: "http-sender"
 
-siddhi.stores.query.api:
-  transportProperties:
-    -
-      name: "server.bootstrap.socket.timeout"
-      value: 60
-    -
-      name: "client.bootstrap.socket.timeout"
-      value: 60
-    -
-      name: "latency.metrics.enabled"
-      value: true
-
-  listenerConfigurations:
-    -
-      id: "default"
-      host: "0.0.0.0"
-      port: 7070
-    -
-      id: "msf4j-https"
-      host: "0.0.0.0"
-      port: 7443
-      scheme: https
-      keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
-      keyStorePassword: wso2carbon
-      certPass: wso2carbon
-
   # Configuration used for the databridge communication
 databridge.config:
     # No of worker threads to consume events
@@ -241,7 +215,7 @@ wso2.artifact.deployment:
   # HA Configuration
 state.persistence:
   enabled: true
-  persistenceStore: org.wso2.carbon.stream.processor.core.persistence.FileSystemPersistenceStore
+  persistenceStore: io.siddhi.distribution.core.core.persistence.FileSystemPersistenceStore
   config:
 
   # Secure Vault Configuration

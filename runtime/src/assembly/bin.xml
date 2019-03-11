@@ -54,8 +54,18 @@
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
+            <directory>carbon-home/conf/editor</directory>
+            <outputDirectory>conf/editor</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
             <directory>carbon-home/conf/transports/worker</directory>
             <outputDirectory>wso2/worker/conf/transports</outputDirectory>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>carbon-home/conf/transports/editor</directory>
+            <outputDirectory>wso2/editor/conf/transports</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
@@ -74,6 +84,8 @@
             <includes>
                 <include>worker.sh</include>
                 <include>worker.bat</include>
+                <include>editor.sh</include>
+                <include>editor.bat</include>
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
@@ -84,6 +96,22 @@
                 <include>**/*.txt</include>
             </includes>
             <fileMode>444</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>target/extensions</directory>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>664</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>carbon-home/external-libs</directory>
+            <outputDirectory>lib</outputDirectory>
+            <includes>
+                <include>**/*.jar</include>
+            </includes>
+            <fileMode>664</fileMode>
         </fileSet>
         <fileSet>
             <directory>carbon-home/deployment/siddhi-files</directory>
@@ -109,10 +137,33 @@
             </excludes>
             <fileMode>644</fileMode>
         </fileSet>
-
         <fileSet>
             <directory>.</directory>
             <outputDirectory>deployment/siddhi-files</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>wso2/editor/deployment/workspace</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>wso2/editor/deployment/csv-files</outputDirectory>
+            <excludes>
+                <exclude>*/**</exclude>
+            </excludes>
+            <fileMode>644</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>.</directory>
+            <outputDirectory>wso2/editor/deployment/simulation-configs</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -192,6 +243,18 @@
             <outputDirectory>conf/worker/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>carbon-home/runtime/editor/carbon.sh</source>
+            <outputDirectory>wso2/editor/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>755</fileMode>
+        </file>
+        <file>
+            <source>carbon-home/runtime/editor/carbon.bat</source>
+            <outputDirectory>wso2/editor/bin/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>755</fileMode>
         </file>
 
         <!--Forget me tool-->

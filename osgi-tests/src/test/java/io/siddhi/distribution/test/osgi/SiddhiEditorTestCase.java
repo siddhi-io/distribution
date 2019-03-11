@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.wso2.carbon.analytics.test.osgi;
+package io.siddhi.distribution.test.osgi;
 
 import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonDistribution;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
@@ -28,8 +28,8 @@ import org.ops4j.pax.exam.testng.listener.PaxExam;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import org.wso2.carbon.analytics.test.osgi.util.HTTPResponseMessage;
-import org.wso2.carbon.analytics.test.osgi.util.TestUtil;
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.container.options.CarbonDistributionOption;
 import org.wso2.carbon.kernel.CarbonServerInfo;
@@ -103,8 +103,8 @@ public class SiddhiEditorTestCase {
                 copySiddhiAppFileOption(),
                 //copySampleFileOption(),
                 copyImportingFileOption(),
-                carbonDistribution(Paths.get("target", "wso2das-" +
-                        System.getProperty("carbon.analytic.version")), "editor")/*,
+                carbonDistribution(Paths.get("target", "wso2sp-" +
+                        System.getProperty("io.siddhi.distribution.version")), "editor")/*,
                 CarbonDistributionOption.debug(5005)*/
                 };
     }
@@ -392,7 +392,8 @@ public class SiddhiEditorTestCase {
         Assert.assertEquals(httpResponseMessage.getContentType(), "application/json");
     }
 
-    @Test
+    //@Test
+    // TODO: 3/8/19 commenting until samples are migrated to siddhi runtime distribution
     public void testReadingSample() throws Exception {
         String path = "/editor/workspace/read/sample";
         String contentType = "text/plain";
