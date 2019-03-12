@@ -20,9 +20,7 @@ package io.siddhi.distribution.event.simulator.core.internal.generator.generator
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.EventGenerationException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InsufficientAttributesException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
@@ -30,7 +28,9 @@ import io.siddhi.distribution.event.simulator.core.internal.bean.bean.SingleEven
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventConverter;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
@@ -141,8 +141,8 @@ public class SingleEventGenerator {
                 }
             }
             if (checkAvailabilityOfArray(singleEventConfig, EventSimulatorConstants.SINGLE_EVENT_DATA)) {
-                ArrayList dataValues = new ObjectMapper().readValue(singleEventConfig.getJSONArray(EventSimulatorConstants
-                        .SINGLE_EVENT_DATA).toString(), ArrayList.class);
+                ArrayList dataValues = new ObjectMapper().readValue(singleEventConfig.
+                        getJSONArray(EventSimulatorConstants.SINGLE_EVENT_DATA).toString(), ArrayList.class);
                 if (dataValues.size() != streamAttributes.size()) {
                     log.error("Simulation of stream '" + singleEventConfig.getString(EventSimulatorConstants
                             .STREAM_NAME) + "' requires " + streamAttributes.size() + " attribute(s). Single event " +

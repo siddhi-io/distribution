@@ -18,22 +18,13 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.random;
 
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util.CustomBasedAttrGenerator;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util.PrimitiveBasedAttrGenerator;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util.PropertyBasedAttrGenerator;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util.RegexBasedAttrGenerator;
-import org.json.JSONObject;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+
+import org.json.JSONObject;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
  * RandomAttributeGenerator interface defines common methods used by all random attribute generators
- * This interface is implemented by
- *
- * @see CustomBasedAttrGenerator
- * @see PrimitiveBasedAttrGenerator
- * @see PropertyBasedAttrGenerator
- * @see RegexBasedAttrGenerator
  */
 public interface RandomAttributeGenerator {
 

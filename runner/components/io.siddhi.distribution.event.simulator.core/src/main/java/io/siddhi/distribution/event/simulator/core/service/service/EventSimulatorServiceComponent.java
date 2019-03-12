@@ -24,6 +24,9 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.analytics.permissions.PermissionManager;
 
+/**
+ * Event simulator service component.
+ */
 @Component(
         name = "Event-Simulator-Service Component",
         immediate = true

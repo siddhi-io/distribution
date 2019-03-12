@@ -25,6 +25,9 @@ import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.store.api.rest.rest.ApiResponseMessage;
 import io.siddhi.distribution.store.api.rest.rest.model.ModelApiResponse;
 import io.siddhi.distribution.store.api.rest.rest.model.Query;
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestConstants;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.awaitility.Duration;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -37,9 +40,6 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
-import io.siddhi.distribution.test.osgi.util.TestConstants;
-import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
 import org.wso2.msf4j.MicroservicesRegistry;
@@ -54,7 +54,6 @@ import javax.ws.rs.core.Response;
 import static org.awaitility.Awaitility.await;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonDistribution;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
-import static org.wso2.carbon.container.options.CarbonDistributionOption.debug;
 
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
@@ -70,8 +69,8 @@ public class SiddhiStoreAPITestcase {
     private static final String CONTENT_TYPE_JSON = TestConstants.CONTENT_TYPE_JSON;
     private static final String HTTP_METHOD_POST = TestConstants.HTTP_METHOD_POST;
     private static final String TABLENAME = "SmartHomeTable";
-    private final String DEFAULT_USER_NAME = TestConstants.DEFAULT_USERNAME;
-    private final String DEFAULT_PASSWORD = TestConstants.DEFAULT_PASSWORD;
+    private static final String DEFAULT_USER_NAME = TestConstants.DEFAULT_USERNAME;
+    private static final String DEFAULT_PASSWORD = TestConstants.DEFAULT_PASSWORD;
     private final Gson gson = new Gson();
 
     @Inject

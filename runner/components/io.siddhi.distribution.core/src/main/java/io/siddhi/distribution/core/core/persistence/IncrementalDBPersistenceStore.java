@@ -30,7 +30,6 @@ import io.siddhi.distribution.core.core.persistence.util.PersistenceConstants;
 import io.siddhi.distribution.core.core.persistence.util.RDBMSConfiguration;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
-
 import org.wso2.siddhi.core.exception.CannotClearSiddhiAppStateException;
 import org.wso2.siddhi.core.util.persistence.IncrementalPersistenceStore;
 import org.wso2.siddhi.core.util.persistence.util.IncrementalSnapshotInfo;
@@ -50,6 +49,9 @@ import java.util.Map;
 import javax.sql.DataSource;
 import javax.sql.rowset.serial.SerialBlob;
 
+/**
+ * Implementation class of DB based persistence store.
+ */
 public class IncrementalDBPersistenceStore implements IncrementalPersistenceStore {
     private static final Logger log = Logger.getLogger(IncrementalDBPersistenceStore.class);
 
@@ -100,11 +102,13 @@ public class IncrementalDBPersistenceStore implements IncrementalPersistenceStor
             stmt.executeUpdate();
             con.commit();
             if (log.isDebugEnabled()) {
-                log.debug("Periodic persistence of " + incrementalSnapshotInfo.getSiddhiAppId() + " persisted successfully.");
+                log.debug("Periodic persistence of " + incrementalSnapshotInfo.getSiddhiAppId() +
+                        " persisted successfully.");
             }
         } catch (SQLException e) {
-            log.error("Error while saving revision" + incrementalSnapshotInfo.getRevision() + " of the siddhiApp " +
-                    incrementalSnapshotInfo.getSiddhiAppId() + " to the database with datasource name " + datasourceName, e);
+            log.error("Error while saving revision" + incrementalSnapshotInfo.getRevision() +
+                    " of the siddhiApp " + incrementalSnapshotInfo.getSiddhiAppId() +
+                    " to the database with datasource name " + datasourceName, e);
         } finally {
             DBPersistenceStoreUtils.cleanupConnections(stmt, con);
         }
@@ -196,15 +200,16 @@ public class IncrementalDBPersistenceStore implements IncrementalPersistenceStor
                     try {
                         decompressedSnapshot = CompressionUtil.decompressGZIP(blobAsBytes);
                     } catch (IOException e) {
-                        throw new RuntimeException("Error occurred while trying to decompress the snapshot. Failed to " +
-                                "load revision: " + incrementalSnapshotInfo.getRevision() + " of Siddhi app: " +
-                                incrementalSnapshotInfo.getSiddhiAppId(), e);
+                        throw new RuntimeException("Error occurred while trying to decompress the snapshot. " +
+                                "Failed to load revision: " + incrementalSnapshotInfo.getRevision() +
+                                " of Siddhi app: " + incrementalSnapshotInfo.getSiddhiAppId(), e);
                     }
                 }
             }
         } catch (SQLException e) {
-            log.error("Error while retrieving revision " + incrementalSnapshotInfo.getRevision() + " of siddhiApp: " +
-                    incrementalSnapshotInfo.getSiddhiAppId() + " from the database with datasource " + datasourceName, e);
+            log.error("Error while retrieving revision " + incrementalSnapshotInfo.getRevision() +
+                    " of siddhiApp: " + incrementalSnapshotInfo.getSiddhiAppId() +
+                    " from the database with datasource " + datasourceName, e);
         } finally {
             DBPersistenceStoreUtils.cleanupConnections(stmt, con);
         }

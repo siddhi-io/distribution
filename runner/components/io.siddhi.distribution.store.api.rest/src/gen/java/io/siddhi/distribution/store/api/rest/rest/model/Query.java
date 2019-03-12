@@ -20,7 +20,6 @@
 package io.siddhi.distribution.store.api.rest.rest.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -49,20 +48,20 @@ public class Query {
     }
 
     @ApiModelProperty(example = "@PrimaryKey('firstname','lastname', 'age')" +
-                                "@store(type='solr', url='localhost:9983', collection='StudentStore', " +
-                                "base.config='baseconfig', shards='2', replicas='2', schema='firstname string stored," +
-                                "lastname string stored, age int stored', commit.async='true')" +
-                                "define table FooTable(firstname string, lastname string, age int);")
+            "@store(type='solr', url='localhost:9983', collection='StudentStore', " +
+            "base.config='baseconfig', shards='2', replicas='2', schema='firstname string stored," +
+            "lastname string stored, age int stored', commit.async='true')" +
+            "define table FooTable(firstname string, lastname string, age int);")
     public String getAppName() {
         return appName;
     }
 
-    public String getQuery() {
-        return query;
+    public void setAppName(String appName) {
+        this.appName = appName;
     }
 
-    public void setAppName(String appName){
-        this.appName = appName;
+    public String getQuery() {
+        return query;
     }
 
     public void setQuery(String query) {

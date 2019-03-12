@@ -32,7 +32,8 @@ public class StreamProcessorUtil implements EventStreamService {
     private HashMap<String, HashMap<String, List<Attribute>>> streamAttributesMap = new HashMap<>();
     private LinkedList<EventData> eventsReceived = new LinkedList<>();
 
-    public StreamProcessorUtil() { }
+    public StreamProcessorUtil() {
+    }
 
     @Override
     public List<String> getStreamNames(String streamName) {
@@ -83,12 +84,12 @@ public class StreamProcessorUtil implements EventStreamService {
         return eventsReceived;
     }
 
-    public void resetEvents() {
-        eventsReceived.clear();
-    }
-
     public void setEventsReceived(LinkedList<EventData> eventsReceived) {
         this.eventsReceived = eventsReceived;
+    }
+
+    public void resetEvents() {
+        eventsReceived.clear();
     }
 
     public void addStreamAttributes(String siddhiAppName, String streamName, List<Attribute> attributes) {

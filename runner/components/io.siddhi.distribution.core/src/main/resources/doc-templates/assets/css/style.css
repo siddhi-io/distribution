@@ -7,7 +7,7 @@
 /* Toggle Styles */
 
 #wrapper {
-    margin-top:87px;
+    margin-top: 87px;
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
@@ -74,7 +74,7 @@
 .sidebar-nav li a:hover {
     text-decoration: none;
     color: #fff;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .sidebar-nav li a:active,
@@ -97,7 +97,7 @@
     background: none;
 }
 
-@media(min-width:768px) {
+@media (min-width: 768px) {
     #wrapper {
         padding-left: 280px;
     }
@@ -133,14 +133,14 @@
     position: relative;
 }
 
-.bs-docs-sidebar > ul{
+.bs-docs-sidebar > ul {
     width: 250px;
     overflow-y: auto;
     height: 100%;
 }
 
 /* all links */
-.bs-docs-sidebar .nav>li>a {
+.bs-docs-sidebar .nav > li > a {
     border-right: 2px solid transparent;
     padding: 4px 20px;
     font-size: 1em;
@@ -148,7 +148,7 @@
 }
 
 /* nested links */
-.bs-docs-sidebar .nav .nav>li>a {
+.bs-docs-sidebar .nav .nav > li > a {
     color: #666;
     padding-top: 1px;
     padding-bottom: 1px;
@@ -157,28 +157,31 @@
 }
 
 /* active & hover links */
-.bs-docs-sidebar .nav>.active>a,
-.bs-docs-sidebar .nav>li>a:focus {
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > li > a:focus {
     background-color: transparent;
     border-right-color: #2b2b2b;
     color: #2b2b2b;
     font-weight: bold;
 }
-.bs-docs-sidebar .nav>li>a:hover {
+
+.bs-docs-sidebar .nav > li > a:hover {
     background-color: transparent;
     border-right-color: #666;
     text-decoration: underline;
 }
+
 /* all active links */
-.bs-docs-sidebar .nav>.active>a, 
-.bs-docs-sidebar .nav>.active:hover>a,
-.bs-docs-sidebar .nav>.active:focus>a {
+.bs-docs-sidebar .nav > .active > a,
+.bs-docs-sidebar .nav > .active:hover > a,
+.bs-docs-sidebar .nav > .active:focus > a {
     font-weight: bold;
 }
+
 /* nested active links */
-.bs-docs-sidebar .nav .nav>.active>a, 
-.bs-docs-sidebar .nav .nav>.active:hover>a,
-.bs-docs-sidebar .nav .nav>.active:focus>a {
+.bs-docs-sidebar .nav .nav > .active > a,
+.bs-docs-sidebar .nav .nav > .active:hover > a,
+.bs-docs-sidebar .nav .nav > .active:focus > a {
     font-weight: bold;
 }
 
@@ -215,6 +218,7 @@ a:hover {
     background-color: transparent;
     text-decoration: none;
 }
+
 a:focus {
     color: #2b2b2b;
     background-color: transparent;

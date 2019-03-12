@@ -20,6 +20,9 @@ package io.siddhi.distribution.editor.log.appender.appender;
 import io.siddhi.distribution.editor.log.appender.appender.internal.CircularBuffer;
 import io.siddhi.distribution.editor.log.appender.appender.internal.ConsoleLogEvent;
 
+/**
+ * Circular buffer data holder.
+ */
 public class DataHolder {
     private static CircularBuffer circularBuffer;
 

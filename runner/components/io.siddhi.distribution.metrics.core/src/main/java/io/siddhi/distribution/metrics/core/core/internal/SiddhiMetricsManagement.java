@@ -33,10 +33,10 @@ import static org.wso2.carbon.metrics.core.Level.OFF;
  * Manages the statistics management functions.
  */
 public class SiddhiMetricsManagement {
+    private static SiddhiMetricsManagement instance = new SiddhiMetricsManagement();
     private Map<String, List<String>> componentMap;
     private MetricManagementService metricManagementService;
     private MetricService metricService;
-    private static SiddhiMetricsManagement instance = new SiddhiMetricsManagement();
 
     private SiddhiMetricsManagement() {
         metricManagementService = SiddhiMetricsDataHolder.getInstance().getMetricManagementService();

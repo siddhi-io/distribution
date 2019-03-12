@@ -64,13 +64,13 @@ public class StreamProcessorDeployer implements Deployer {
 
 
     private static final Logger log = LoggerFactory.getLogger(StreamProcessorDeployer.class);
-    private ArtifactType artifactType = new ArtifactType<>("siddhi");
-    private SimulationDependencyListener simulationDependencyListener;
-    private URL directoryLocation;
     private static ServerType serverType = ServerType.SP; // Default server type
     private static boolean isAnalyticsEnabledOnSP = false;
     private static boolean apimAnalyticsEnabledOnSP = false;
     private static boolean eiAnalyticsEnabledOnSP = false;
+    private ArtifactType artifactType = new ArtifactType<>("siddhi");
+    private SimulationDependencyListener simulationDependencyListener;
+    private URL directoryLocation;
 
     public static void deploySiddhiQLFile(File file) throws Exception {
         InputStream inputStream = null;
@@ -272,14 +272,6 @@ public class StreamProcessorDeployer implements Deployer {
         }
     }
 
-    public enum SiddhiAppType {
-        EI, IS, APIM, OTHER
-    }
-
-    public enum ServerType {
-        EI, IS, APIM, SP
-    }
-
     @Activate
     protected void activate(BundleContext bundleContext) {
         // Nothing to do.
@@ -418,20 +410,34 @@ public class StreamProcessorDeployer implements Deployer {
         this.simulationDependencyListener = null;
     }
 
-
     @Reference(service = MicroservicesServer.class,
             cardinality = ReferenceCardinality.MANDATORY,
             policy = ReferencePolicy.DYNAMIC,
             unbind = "unsetMicroservicesServer")
     protected void setMicroservicesServer(MicroservicesServer microservicesServer) {
-        if(log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             log.debug("@(bind) MicroservicesServer ");
         }
     }
+
     protected void unsetMicroservicesServer(MicroservicesServer microservicesServer) {
-        if(log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             log.debug(" @(unbind) MicroservicesServer ");
         }
+    }
+
+    /**
+     * Enum which hold Siddhi app types.
+     */
+    public enum SiddhiAppType {
+        EI, IS, APIM, OTHER
+    }
+
+    /**
+     * Enum which hold server types.
+     */
+    public enum ServerType {
+        EI, IS, APIM, SP
     }
 }
 

@@ -18,16 +18,6 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util;
 
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttrGenAbstractImpl;
-import org.joda.time.DateTime;
-import org.json.JSONObject;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
-import io.siddhi.distribution.event.simulator.core.internal.bean.bean.PropertyBasedAttributeDTO;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import org.wso2.siddhi.query.api.definition.Attribute;
-
 import fabricator.Calendar;
 import fabricator.Contact;
 import fabricator.Fabricator;
@@ -36,6 +26,15 @@ import fabricator.Internet;
 import fabricator.Location;
 import fabricator.Words;
 import fabricator.enums.DateFormat;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.internal.bean.bean.PropertyBasedAttributeDTO;
+import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttrGenAbstractImpl;
+import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;
+import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
+import org.joda.time.DateTime;
+import org.json.JSONObject;
+import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.security.SecureRandom;
 
@@ -47,22 +46,22 @@ import static io.siddhi.distribution.event.simulator.core.internal.util.util.Com
  */
 public class PropertyBasedAttrGenerator extends RandomAttrGenAbstractImpl {
 
-//    Initialize contact to generate contact related data
+    //    Initialize contact to generate contact related data
     private static final Contact contact = Fabricator.contact();
 
-//    Initialize calendar to generate calendar related data
+    //    Initialize calendar to generate calendar related data
     private static final Calendar calendar = Fabricator.calendar();
 
-//    Initialize Finance to generate finance related data
+    //    Initialize Finance to generate finance related data
     private static final Finance finance = Fabricator.finance();
 
-//    Initialize internet to generate internet related data
+    //    Initialize internet to generate internet related data
     private static final Internet internet = Fabricator.internet();
 
-//    Initialize location to generate location related data
+    //    Initialize location to generate location related data
     private static final Location location = Fabricator.location();
 
-//    Initialize words to generate words related data
+    //    Initialize words to generate words related data
     private static final Words words = Fabricator.words();
 
     private PropertyBasedAttributeDTO propertyBasedAttrConfig = new PropertyBasedAttributeDTO();
@@ -90,17 +89,17 @@ public class PropertyBasedAttrGenerator extends RandomAttrGenAbstractImpl {
                 DataParser.parse(attributeType, generateAttribute());
             } catch (NumberFormatException e) {
                 throw new InvalidConfigException(
-                                ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                                attributeConfig.getString(EventSimulatorConstants.ATTRIBUTE_CONFIGURATION),
-                                "Property type '" + propertyType + "' cannot be parsed to " +
+                        ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                        attributeConfig.getString(EventSimulatorConstants.ATTRIBUTE_CONFIGURATION),
+                        "Property type '" + propertyType + "' cannot be parsed to " +
                                 "attribute type '" + attributeType + "'. Invalid " +
                                 "attribute configuration provided : " + attributeConfig.toString());
             }
         } else {
             throw new InvalidConfigException(
-                            ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                            attributeConfig.getString(EventSimulatorConstants.ATTRIBUTE_CONFIGURATION),
-                            "Property value is required for " +
+                    ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                    attributeConfig.getString(EventSimulatorConstants.ATTRIBUTE_CONFIGURATION),
+                    "Property value is required for " +
                             RandomAttributeGenerator.RandomDataGeneratorType.PROPERTY_BASED +
                             " attribute generation. Invalid attribute configuration provided : " +
                             attributeConfig.toString());

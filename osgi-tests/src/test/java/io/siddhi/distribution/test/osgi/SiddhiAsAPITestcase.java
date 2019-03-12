@@ -18,6 +18,8 @@ package io.siddhi.distribution.test.osgi;
 
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.awaitility.Duration;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -28,8 +30,6 @@ import org.ops4j.pax.exam.testng.listener.PaxExam;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import io.siddhi.distribution.test.osgi.util.TestUtil;
-import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
 
@@ -718,7 +718,7 @@ public class SiddhiAsAPITestcase {
     /**
      * Persistence clearing of existing Siddhi App
      */
-    @Test (dependsOnMethods = {"testValidSiddhiAPPDeployment"})
+    @Test(dependsOnMethods = {"testValidSiddhiAPPDeployment"})
     public void testSiddhiAppPersistenceStoreClear() throws Exception {
 
         URI baseURI = URI.create(String.format("http://%s:%d", "localhost", 9090));
@@ -736,10 +736,9 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     *
      * Persistence clearing of non-existing Siddhi App
      */
-    @Test (dependsOnMethods = {"testValidSiddhiAPPDeployment"})
+    @Test(dependsOnMethods = {"testValidSiddhiAPPDeployment"})
     public void testInvalidSiddhiAppPersistenceStoreClear() throws Exception {
 
         URI baseURI = URI.create(String.format("http://%s:%d", "localhost", 9090));

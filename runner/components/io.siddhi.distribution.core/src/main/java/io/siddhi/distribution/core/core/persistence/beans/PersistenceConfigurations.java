@@ -21,7 +21,9 @@ package io.siddhi.distribution.core.core.persistence.beans;
 import io.siddhi.distribution.core.core.persistence.FileSystemPersistenceStore;
 import org.wso2.carbon.config.annotation.Configuration;
 
-
+/**
+ * Class which hold state persistence related configuration.
+ */
 @Configuration(namespace = "state.persistence", description = "Query configurations for state persistence")
 public class PersistenceConfigurations {
     private boolean enabled = false;

@@ -18,6 +18,9 @@
 
 package io.siddhi.distribution.core.core.util;
 
+/**
+ * Enum which hold deployment modes.
+ */
 public enum DeploymentMode {
     DISTRIBUTED, OTHER
 }

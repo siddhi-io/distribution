@@ -17,7 +17,8 @@
   ~ under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
@@ -97,14 +98,14 @@
         <!-- Dependencies for CSV event simulation ends here-->
 
         <!--Dependencies for random event simulation begins here-->
-         <dependency>
-             <groupId>org.wso2.orbit.com.github.azakordonets</groupId>
-             <artifactId>fabricator_2.10</artifactId>
-         </dependency>
-         <dependency>
-             <groupId>org.wso2.orbit.com.github.mifmif</groupId>
-             <artifactId>generex</artifactId>
-         </dependency>
+        <dependency>
+            <groupId>org.wso2.orbit.com.github.azakordonets</groupId>
+            <artifactId>fabricator_2.10</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.orbit.com.github.mifmif</groupId>
+            <artifactId>generex</artifactId>
+        </dependency>
         <!--Dependencies for random event simulation ends here-->
 
         <!--Dependencies for database feed simulation begins here-->

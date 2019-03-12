@@ -51,7 +51,7 @@ public class BinaryEventConverter {
 
             String[] trpSyncProperties = queuedEvent.getTransportSyncProperties();
             if (trpSyncProperties != null) {
-                for(String property : trpSyncProperties){
+                for (String property : trpSyncProperties) {
                     allTrpSyncPropertiesByteLength += property.length();
                     messageSize += 4;
                 }
@@ -71,7 +71,7 @@ public class BinaryEventConverter {
             if (trpSyncProperties != null) {
                 messageBuffer.putInt(trpSyncProperties.length);
                 if (trpSyncProperties.length != 0) {
-                    for(String property : trpSyncProperties){
+                    for (String property : trpSyncProperties) {
                         messageBuffer.putInt(property.length());
                         messageBuffer.put((property.getBytes(Charset.defaultCharset())));
                     }

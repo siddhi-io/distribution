@@ -15,6 +15,8 @@
  */
 package io.siddhi.distribution.test.osgi;
 
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
 import org.ops4j.pax.exam.Option;
@@ -25,8 +27,6 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
-import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
 
@@ -47,11 +47,6 @@ public class SimulatorAPITestcase {
 
     private static final int HTTP_PORT = 9390;
     private static final String HOSTNAME = "localhost";
-    private URI baseURI = URI.create(String.format("http://%s:%d", HOSTNAME, HTTP_PORT));
-
-    private final String DEFAULT_USER_NAME = "admin";
-    private final String DEFAULT_PASSWORD = "admin";
-
     private static final String VALID_SINGLE_EVENT_CONFIG = "{\n" +
             "  \"streamName\": \"CountStream\",\n" +
             "  \"siddhiAppName\": \"ReceiveAndCount\",\n" +
@@ -61,18 +56,18 @@ public class SimulatorAPITestcase {
             "  \"streamName\": \"CountStream\",\n" +
             "  \"data\": ['Customer1', 26, 'USA', 15 ]\n" +
             "}";
-
     private static final String VALID_FEED_EVENT_CONFIG = "{\"properties\":{\"simulationName\":\"FeedSimulation\"," +
             "\"startTimestamp\":\"\",\"endTimestamp\":\"\",\"noOfEvents\":\"\",\"description\":\"\"," +
             "\"timeInterval\":\"1000\"},\"sources\":[{\"siddhiAppName\":\"ReceiveAndCount\",\"streamName\":" +
             "\"CountStream\",\"timestampInterval\":\"1000\",\"simulationType\":\"CSV_SIMULATION\",\"fileName\":" +
             "\"sampleCSV.csv\",\"delimiter\":\",\",\"isOrdered\":true,\"indices\":\"0,1,2,3\"}]}";
-
-    @Inject
-    private CarbonServerInfo carbonServerInfo;
-
+    private static final String DEFAULT_USER_NAME = "admin";
+    private static final String DEFAULT_PASSWORD = "admin";
     @Inject
     protected BundleContext bundleContext;
+    private URI baseURI = URI.create(String.format("http://%s:%d", HOSTNAME, HTTP_PORT));
+    @Inject
+    private CarbonServerInfo carbonServerInfo;
 
     @Configuration
     public Option[] createConfiguration() {

@@ -1,5 +1,3 @@
-package io.siddhi.distribution.core.core.impl.utils;
-
 /*
  * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
@@ -18,6 +16,7 @@ package io.siddhi.distribution.core.core.impl.utils;
  * under the License.
  */
 
+package io.siddhi.distribution.core.core.impl.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

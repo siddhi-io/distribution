@@ -21,6 +21,9 @@ package io.siddhi.distribution.core.core.event.queue;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import org.wso2.siddhi.core.event.Event;
 
+/**
+ * Class which represents Queued event.
+ */
 public class QueuedEvent {
     private String sourceHandlerElementId;
     private long sequenceID;

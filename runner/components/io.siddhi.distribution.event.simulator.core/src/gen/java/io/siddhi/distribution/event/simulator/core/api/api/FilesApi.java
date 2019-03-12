@@ -1,22 +1,24 @@
 package io.siddhi.distribution.event.simulator.core.api.api;
 
-import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
 import io.siddhi.distribution.event.simulator.core.factories.factories.FilesApiServiceFactory;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.model.model.InlineResponse2001;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorMap;
+import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
+import io.swagger.annotations.ApiParam;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.utils.Utils;
 import org.wso2.msf4j.Microservice;
 import org.wso2.msf4j.Request;
 import org.wso2.msf4j.formparam.FileInfo;
 import org.wso2.msf4j.formparam.FormDataParam;
+import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
 
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -31,9 +33,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-import io.swagger.annotations.ApiParam;
-import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
-
 
 @Component(
         name = "simulator-core-file-services",
@@ -46,8 +45,8 @@ import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-07-20T09:30:14.336Z")
 public class FilesApi implements Microservice {
-    private final FilesApiService delegate = FilesApiServiceFactory.getFilesApi();
     private static final Logger log = LoggerFactory.getLogger(FilesApi.class);
+    private final FilesApiService delegate = FilesApiServiceFactory.getFilesApi();
 
     @DELETE
     @Path("/{fileName}")

@@ -52,6 +52,10 @@ public class SiddhiAppProcessorConstants {
     public static final String PERSISTENCE_STORE_CLEAR_ENABLED = "persistenceStoreClearEnabled";
     public static final String SIDDHI_APP = "siddhiApp";
 
+    private SiddhiAppProcessorConstants() {
+        // Prevents instantiation.
+    }
+
     /**
      * Runtime modes of Stream Processor engine
      */
@@ -62,9 +66,5 @@ public class SiddhiAppProcessorConstants {
         SERVER,
         // Represents VALIDATION_ERROR Condition.
         ERROR
-    }
-
-    private SiddhiAppProcessorConstants() {
-        // Prevents instantiation.
     }
 }

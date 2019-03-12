@@ -22,12 +22,13 @@ import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.common.common.utils.config.FileConfigManager;
 import io.siddhi.distribution.core.core.DeploymentMode;
 import io.siddhi.distribution.core.core.NodeInfo;
-import io.siddhi.distribution.core.core.distribution.DistributionService;
 import io.siddhi.distribution.core.core.internal.util.SiddhiAppProcessorConstants;
 import io.siddhi.distribution.core.core.persistence.PersistenceManager;
 import io.siddhi.distribution.core.core.persistence.beans.PersistenceConfigurations;
 import io.siddhi.distribution.core.core.persistence.exception.PersistenceStoreConfigurationException;
 import io.siddhi.distribution.core.core.persistence.util.PersistenceConstants;
+import io.siddhi.distribution.metrics.core.core.SiddhiMetricsFactory;
+import io.siddhi.distribution.metrics.core.core.internal.service.MetricsServiceComponent;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
@@ -39,14 +40,11 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.analytics.permissions.PermissionManager;
-import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.databridge.commons.ServerEventListener;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.kernel.CarbonRuntime;
 import org.wso2.carbon.kernel.config.model.CarbonConfiguration;
-import io.siddhi.distribution.metrics.core.core.SiddhiMetricsFactory;
-import io.siddhi.distribution.metrics.core.core.internal.service.MetricsServiceComponent;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.config.StatisticsConfiguration;
 import org.wso2.siddhi.core.util.SiddhiComponentActivator;
@@ -190,7 +188,7 @@ public class ServiceComponent {
 
         NodeInfo nodeInfo = new NodeInfo(DeploymentMode.SINGLE_NODE, configProvider.getConfigurationObject(
                 CarbonConfiguration.class).getId());
-        bundleContext.registerService(NodeInfo.class.getName(), nodeInfo,null);
+        bundleContext.registerService(NodeInfo.class.getName(), nodeInfo, null);
         StreamProcessorDataHolder.setNodeInfo(nodeInfo);
         StreamProcessorDataHolder.getInstance().setBundleContext(bundleContext);
 

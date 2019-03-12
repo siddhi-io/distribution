@@ -18,8 +18,8 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import org.json.JSONObject;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
+import org.json.JSONObject;
 
 /**
  * CommonOperations class is used to perform functions common to all validations

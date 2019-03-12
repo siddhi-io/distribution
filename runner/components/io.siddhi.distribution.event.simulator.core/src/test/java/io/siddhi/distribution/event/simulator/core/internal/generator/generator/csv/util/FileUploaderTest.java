@@ -19,15 +19,15 @@
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util;
 
 
+import io.siddhi.distribution.event.simulator.core.exception.exception.FileAlreadyExistsException;
+import io.siddhi.distribution.event.simulator.core.exception.exception.FileLimitExceededException;
+import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidFileException;
+import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileAlreadyExistsException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileLimitExceededException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidFileException;
-import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
 import org.wso2.msf4j.formparam.FileInfo;
 
 import java.io.File;
@@ -71,7 +71,7 @@ public class FileUploaderTest {
 
     }
 
-    @Test (dependsOnMethods = "testUploadValidCSV")
+    @Test(dependsOnMethods = "testUploadValidCSV")
     public void testDeleteCSVFIle() throws Exception {
         uploadFile(sampleOrderedCSVFile);
         boolean deleted = FileUploader.getFileUploaderInstance().deleteFile(FilenameUtils.getName(sampleOrderedCSVFile),
@@ -98,7 +98,7 @@ public class FileUploaderTest {
         uploadFile(sampleOrderedCSVFile);
     }
 
-    @Test (dependsOnMethods = "testValidateFileSize")
+    @Test(dependsOnMethods = "testValidateFileSize")
     public void testDeleteFileNotExist() throws Exception {
         boolean deleted = FileUploader.getFileUploaderInstance()
                 .deleteFile(FilenameUtils.getName(sampleOrderedCSVFile), FilenameUtils.concat(testDir.toString(),
@@ -106,10 +106,9 @@ public class FileUploaderTest {
         Assert.assertFalse(deleted);
     }
 
-    @Test (dependsOnMethods = "testDeleteFileNotExist")
+    @Test(dependsOnMethods = "testDeleteFileNotExist")
     public void testCaseSensitiveFileUpload() throws Exception {
-        String OSName = System.getProperty("os.name");
-        System.out.println(OSName);
+        String operatingSystemName = System.getProperty("os.name");
         try {
             uploadFile(sampleOrderedCSVFile);
             uploadFile(sampleORDEREDcsv);
@@ -118,7 +117,7 @@ public class FileUploaderTest {
             Assert.assertTrue(new File(Paths.get(testDir.toString(), "tempCSVFolder", FilenameUtils.getName
                     (sampleORDEREDcsv)).toString()).exists());
         } catch (FileAlreadyExistsException ex) {
-            if (!"Mac OS X".equals(OSName)) {
+            if (!"Mac OS X".equals(operatingSystemName)) {
                 throw ex;
             }
         }

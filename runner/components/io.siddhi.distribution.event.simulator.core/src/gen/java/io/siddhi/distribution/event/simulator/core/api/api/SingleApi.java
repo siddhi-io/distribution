@@ -1,6 +1,8 @@
 package io.siddhi.distribution.event.simulator.core.api.api;
 
 import io.siddhi.distribution.common.common.EventStreamService;
+import io.siddhi.distribution.event.simulator.core.factories.factories.SingleApiServiceFactory;
+import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import io.swagger.annotations.ApiParam;
 import org.osgi.service.component.annotations.Activate;
@@ -11,17 +13,14 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.siddhi.distribution.event.simulator.core.factories.factories.SingleApiServiceFactory;
-
-
-import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
-
 import org.wso2.msf4j.Microservice;
 import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.*;
 
 @Component(
         name = "simulator-core-single-event-services",
@@ -32,21 +31,22 @@ import javax.ws.rs.*;
 @RequestInterceptor(AuthenticationInterceptor.class)
 @io.swagger.annotations.Api(description = "the single API")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
-                            date = "2017-07-20T09:30:14.336Z")
+        date = "2017-07-20T09:30:14.336Z")
 public class SingleApi implements Microservice {
-    private final SingleApiService delegate = SingleApiServiceFactory.getSingleApi();
     private static final Logger log = LoggerFactory.getLogger(SingleApi.class);
+    private final SingleApiService delegate = SingleApiServiceFactory.getSingleApi();
+
     @POST
     @Consumes({"text/plain"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Send single event for simulation", notes = "", response = void.class,
-                                         tags = {"simulator",})
+            tags = {"simulator",})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Single Event simulation started successfully",
-                                                response = void.class),
+                    response = void.class),
             @io.swagger.annotations.ApiResponse(code = 500,
-                                                message = "Exception occurred while starting event simulation",
-                                                response = void.class)})
+                    message = "Exception occurred while starting event simulation",
+                    response = void.class)})
     public Response runSingleSimulation(
             @ApiParam(value = "Simulation object which is need to be run", required = true) String body)
             throws io.siddhi.distribution.event.simulator.core.api.api.NotFoundException {

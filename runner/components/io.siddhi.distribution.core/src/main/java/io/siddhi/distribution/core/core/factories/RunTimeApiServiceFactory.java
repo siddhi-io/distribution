@@ -23,7 +23,8 @@ import io.siddhi.distribution.core.core.impl.RunTimeApiServiceImpl;
  * Factory class for run time apis.
  */
 public class RunTimeApiServiceFactory {
-    private final static RunTimeApiService service = new RunTimeApiServiceImpl();
+
+    private static final RunTimeApiService service = new RunTimeApiServiceImpl();
 
     public static RunTimeApiService getRunTimeApi() {
         return service;

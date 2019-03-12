@@ -18,8 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import org.json.JSONObject;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InsufficientAttributesException;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
@@ -27,7 +26,7 @@ import io.siddhi.distribution.event.simulator.core.internal.generator.generator.
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.database.core.DatabaseEventGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.core.RandomEventGenerator;
 import io.siddhi.distribution.event.simulator.core.util.util.SourceConfigLogger;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import org.json.JSONObject;
 
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
 
@@ -57,12 +56,12 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
                         getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE));
             } catch (IllegalArgumentException e) {
                 throw new InvalidConfigException(
-                                ResourceNotFoundException.ResourceType.SIMULATION,
-                                sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
-                                "Simulation type must be either '" + EventGenerator.GeneratorType.CSV_SIMULATION +
+                        ResourceNotFoundException.ResourceType.SIMULATION,
+                        sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
+                        "Simulation type must be either '" + EventGenerator.GeneratorType.CSV_SIMULATION +
                                 "' or '" + EventGenerator.GeneratorType.DATABASE_SIMULATION + "' or '" +
                                 EventGenerator.GeneratorType.RANDOM_DATA_SIMULATION + "'. Invalid source " +
-                                "configuration in "  + simulationName + "' simulation.\n" +
+                                "configuration in " + simulationName + "' simulation.\n" +
                                 SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
             }
             //initialize generators for sources
@@ -84,13 +83,13 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
             return eventGenerator;
         } else {
             throw new InvalidConfigException(
-                            ResourceNotFoundException.ResourceType.SIMULATION,
-                            sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
-                            "Simulation type must be specified as either '" +
+                    ResourceNotFoundException.ResourceType.SIMULATION,
+                    sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
+                    "Simulation type must be specified as either '" +
                             EventGenerator.GeneratorType.CSV_SIMULATION + "' or '" +
                             EventGenerator.GeneratorType.DATABASE_SIMULATION + "' or '" +
                             EventGenerator.GeneratorType.RANDOM_DATA_SIMULATION + "'. Invalid source configuration " +
-                            "in "  + simulationName + "' simulation.\n" +
+                            "in " + simulationName + "' simulation.\n" +
                             SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
         }
     }
@@ -101,9 +100,6 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
      * @param sourceConfig json object containing source configuration used for simulation
      * @throws InvalidConfigException          if the simulation type is not specified or if an invalid generator type
      *                                         is specified
-     * @throws InsufficientAttributesException if the number of attributes produced by generator is not equal to the
-     *                                         number of attributes in the stream being simulated
-     * @throws ResourceNotFoundException       if a resource required for simulation is not found
      */
     @Override
     public void validateGeneratorConfiguration(JSONObject sourceConfig, String simulationName)
@@ -115,13 +111,13 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
                         getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE));
             } catch (IllegalArgumentException e) {
                 throw new InvalidConfigException(
-                                ResourceNotFoundException.ResourceType.SIMULATION,
-                                sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
-                                "Simulation type must be either '" +
-                                EventGenerator.GeneratorType.CSV_SIMULATION +  "' or '" +
+                        ResourceNotFoundException.ResourceType.SIMULATION,
+                        sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
+                        "Simulation type must be either '" +
+                                EventGenerator.GeneratorType.CSV_SIMULATION + "' or '" +
                                 EventGenerator.GeneratorType.DATABASE_SIMULATION + "' or '" +
                                 EventGenerator.GeneratorType.RANDOM_DATA_SIMULATION + "'. Invalid source " +
-                                "configuration in "  + simulationName + "' simulation.\n" +
+                                "configuration in " + simulationName + "' simulation.\n" +
                                 SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
             }
             switch (generatorType) {
@@ -137,9 +133,9 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
             }
         } else {
             throw new InvalidConfigException(
-                            ResourceNotFoundException.ResourceType.SIMULATION,
-                            sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
-                            "Simulation type must be specified either '" +
+                    ResourceNotFoundException.ResourceType.SIMULATION,
+                    sourceConfig.getString(EventSimulatorConstants.EVENT_SIMULATION_TYPE),
+                    "Simulation type must be specified either '" +
                             EventGenerator.GeneratorType.CSV_SIMULATION + "' or '" +
                             EventGenerator.GeneratorType.DATABASE_SIMULATION + "' or '" +
                             EventGenerator.GeneratorType.RANDOM_DATA_SIMULATION + "'. Invalid source " +

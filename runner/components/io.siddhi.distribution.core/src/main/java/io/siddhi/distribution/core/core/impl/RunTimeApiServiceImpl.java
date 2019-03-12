@@ -46,8 +46,10 @@ public class RunTimeApiServiceImpl extends RunTimeApiService {
 
     @Override
     public Response getRunTime(Request request) throws NotFoundException {
-        if (getUserName(request) != null && !(StreamProcessorDataHolder.getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, VIEW_SIDDHI_APP_PERMISSION_STRING)) || StreamProcessorDataHolder.getPermissionProvider()
+        if (getUserName(request) != null &&
+                !(StreamProcessorDataHolder.getPermissionProvider().hasPermission(getUserName(request),
+                        new Permission(PERMISSION_APP_NAME, VIEW_SIDDHI_APP_PERMISSION_STRING)) ||
+                        StreamProcessorDataHolder.getPermissionProvider()
                 .hasPermission(getUserName(request), new Permission(PERMISSION_APP_NAME,
                         MANAGE_SIDDHI_APP_PERMISSION_STRING)))) {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permissions to get the" +

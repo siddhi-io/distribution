@@ -24,13 +24,15 @@ import java.util.List;
  * This is a Circular Buffer implementation. In this implementaion it is assumed that items
  * will never be removed from this buffer. This can be used for a case such as a Rolling Log.
  * A client can request the latest 'n' number of items that are stored in this buffer.
+ *
+ * @param <E> Circular buffer constraint type.
  */
 public class CircularBuffer<E> {
-    private List<E> bufferList;
     private static final int MAX_ALLOWED_SIZE = 10000;
+    private final int size;
+    private List<E> bufferList;
     private int startIndex;
     private int endIndex;
-    private final int size;
 
     /**
      * Create a circular buffer with the given size
@@ -124,8 +126,6 @@ public class CircularBuffer<E> {
     }
 
 
-
-
     /**
      * This method is added for backward compatibility.
      *
@@ -146,7 +146,7 @@ public class CircularBuffer<E> {
         endIndex = -1;
     }
 
-    public int getAmount(){
+    public int getAmount() {
         return bufferList.size();
     }
 

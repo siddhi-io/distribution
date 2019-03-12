@@ -30,23 +30,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Class which generates html dynamically.
+ */
 public class DynamicHtmlGen extends StaticDocCodegen {
-    
+
     private Map<String, String> tagToSanitizedMap;
-    
+
     public DynamicHtmlGen() {
         tagToSanitizedMap = new HashMap<>();
     }
-    
+
     @Override
     public String toApiName(String name) {
         if (tagToSanitizedMap.containsKey(name)) {
-            return tagToSanitizedMap.get(name);   
+            return tagToSanitizedMap.get(name);
         } else {
             return name;
         }
     }
-    
+
     @Override
     public String sanitizeTag(String tag) {
         String sanitizedTag = super.sanitizeTag(tag);
@@ -61,7 +64,7 @@ public class DynamicHtmlGen extends StaticDocCodegen {
 
     @Override
     public CodegenOperation fromOperation(String path, String httpMethod, Operation operation,
-            Map<String, Model> definitions, Swagger swagger) {
+                                          Map<String, Model> definitions, Swagger swagger) {
         CodegenOperation op = super.fromOperation(path, httpMethod, operation, definitions, swagger);
         op.summary = operation.getSummary();
         op.notes = operation.getDescription();

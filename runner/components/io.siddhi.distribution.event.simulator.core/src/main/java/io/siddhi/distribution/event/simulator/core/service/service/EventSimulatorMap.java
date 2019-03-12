@@ -18,14 +18,14 @@
 
 package io.siddhi.distribution.event.simulator.core.service.service;
 
-import io.siddhi.distribution.event.simulator.core.service.service.bean.ActiveSimulatorData;
-import io.siddhi.distribution.event.simulator.core.service.service.bean.ResourceDependencyData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.SimulationConfigUploader;
+import io.siddhi.distribution.event.simulator.core.service.service.bean.ActiveSimulatorData;
+import io.siddhi.distribution.event.simulator.core.service.service.bean.ResourceDependencyData;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.carbon.utils.Utils;
 
 import java.nio.file.Paths;
@@ -68,7 +68,7 @@ public class EventSimulatorMap {
     /**
      * retryInActiveSimulatorDeployment() retries to create simulator objects from inactive simulation
      * configurations which resulted in ResourceNotFoundException
-     * */
+     */
     public void retryInActiveSimulatorDeployment(boolean isTriggeredFromDeploy) {
         inActiveSimulatorMap.forEach((simulationName, resourceData) -> {
             try {
@@ -78,7 +78,7 @@ public class EventSimulatorMap {
                                 EventSimulatorConstants.DIRECTORY_SIMULATION_CONFIGS)).toString());
                 if (!simulationConfig.isEmpty()) {
                     EventSimulator eventSimulator = new EventSimulator(simulationName, simulationConfig,
-                                                                       isTriggeredFromDeploy);
+                            isTriggeredFromDeploy);
                     inActiveSimulatorMap.remove(simulationName);
                     activeSimulatorMap.put(simulationName, new ActiveSimulatorData(eventSimulator, simulationConfig));
                     log.info("Changed status of simulation '" + simulationName + "' from inactive to active.");
@@ -104,7 +104,7 @@ public class EventSimulatorMap {
     /**
      * retryActiveSimulatorDeployment() validates whether the active simulation configurations are still
      * valid.
-     * */
+     */
     public void checkValidityOfActiveSimAfterDependency(boolean isTriggeredFromDeploy) {
         activeSimulatorMap.forEach((simulationName, simulatorData) -> {
             try {
@@ -123,7 +123,7 @@ public class EventSimulatorMap {
 
     /**
      * retrySimulatorDeployment() revalidates active simulations and retries inactive simulations
-     * */
+     */
     public void checkValidityAfterDependency() {
         checkValidityOfActiveSimAfterDependency(true);
         retryInActiveSimulatorDeployment(true);
@@ -132,7 +132,7 @@ public class EventSimulatorMap {
 
     /**
      * stopAllActiveSimulations() stops all active simulations
-     * */
+     */
     public void stopAllActiveSimulations() {
         activeSimulatorMap.forEach((simulationName, simulatorData) -> simulatorData.getEventSimulator().stop());
     }

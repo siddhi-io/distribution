@@ -17,6 +17,7 @@
 package io.siddhi.distribution.test.osgi;
 
 import io.siddhi.distribution.core.core.internal.StreamProcessorDataHolder;
+import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.apache.log4j.Logger;
 import org.awaitility.Awaitility;
 import org.ops4j.pax.exam.Configuration;
@@ -29,7 +30,6 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
@@ -75,7 +75,7 @@ public class FileSystemPersistenceStoreTestcase {
 
     @Configuration
     public Option[] createConfiguration() {
-        log.info("Running - "+ this.getClass().getName());
+        log.info("Running - " + this.getClass().getName());
         return new Option[]{
                 copyCarbonYAMLOption(),
                 carbonDistribution(
@@ -163,7 +163,7 @@ public class FileSystemPersistenceStoreTestcase {
             Assert.fail("File revisions are already deleted");
         }
 
-        log.info("Deleting all the revisions of the persistence store of Siddhi App : " + SIDDHIAPP_NAME );
+        log.info("Deleting all the revisions of the persistence store of Siddhi App : " + SIDDHIAPP_NAME);
         siddhiAppRuntime.clearAllRevisions();
         Assert.assertEquals(file.list().length, 0, "All the revisions should be deleted");
     }

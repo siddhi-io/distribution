@@ -19,20 +19,12 @@
 package io.siddhi.distribution.core.core.persistence;
 
 import io.siddhi.distribution.core.core.internal.StreamProcessorDataHolder;
-import io.siddhi.distribution.core.core.internal.beans.DeploymentConfig;
-import org.apache.commons.pool.impl.GenericKeyedObjectPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
-import org.wso2.siddhi.core.exception.ConnectionUnavailableException;
 import org.wso2.siddhi.core.util.snapshot.PersistenceReference;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Class that manages the periodic persistence of Siddhi Applications
@@ -46,7 +38,7 @@ public class PersistenceManager implements Runnable {
 
     @Override
     public void run() {
-            persist();
+        persist();
     }
 
     private void persist() {

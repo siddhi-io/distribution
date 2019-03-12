@@ -40,14 +40,14 @@ import org.wso2.siddhi.core.stream.output.StreamCallback;
 import org.wso2.siddhi.core.util.EventPrinter;
 import org.wso2.siddhi.core.util.SiddhiTestHelper;
 
-import javax.inject.Inject;
-import javax.management.JMX;
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
 import java.lang.management.ManagementFactory;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.atomic.AtomicInteger;
+import javax.inject.Inject;
+import javax.management.JMX;
+import javax.management.MalformedObjectNameException;
+import javax.management.ObjectName;
 
 import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonDistribution;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
@@ -200,7 +200,7 @@ public class SiddhiMetricsTestcase {
 //        siddhiAppRuntime.shutdown();
 //    }
 
-    private void testMBean(String MBeanName) throws Exception {
+    private void testMBean(String mBeanName) throws Exception {
 
         SiddhiAppRuntime siddhiAppRuntime = siddhiAppRuntimeService.getActiveSiddhiAppRuntimes().get("MetricsTestApp2");
         siddhiAppRuntime.enableStats(true);
@@ -221,7 +221,7 @@ public class SiddhiMetricsTestcase {
 
         MetricsMXBean metricsMXBean = null;
         try {
-            ObjectName n = new ObjectName(MBeanName);
+            ObjectName n = new ObjectName(mBeanName);
 
             metricsMXBean = JMX.newMXBeanProxy(ManagementFactory.getPlatformMBeanServer(), n, MetricsMXBean.class);
         } catch (MalformedObjectNameException e) {

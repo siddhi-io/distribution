@@ -18,11 +18,11 @@
  */
 package io.siddhi.distribution.metrics.core.core;
 
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsManagement;
 import org.wso2.carbon.metrics.core.Gauge;
 import org.wso2.carbon.metrics.core.Level;
 import org.wso2.carbon.metrics.core.MetricService;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsManagement;
 import org.wso2.siddhi.core.util.statistics.MemoryUsageTracker;
 import org.wso2.siddhi.core.util.statistics.memory.ObjectSizeCalculator;
 
@@ -40,13 +40,13 @@ public class SiddhiMemoryUsageMetric implements MemoryUsageTracker {
     private MetricService metricService;
     private String siddhiAppName;
     private boolean statisticEnabled;
-    
+
     public SiddhiMemoryUsageMetric(MetricService metricService, String siddhiAppName, boolean isStatisticEnabled) {
         this.metricService = metricService;
         this.siddhiAppName = siddhiAppName;
         this.statisticEnabled = isStatisticEnabled;
     }
-    
+
     /**
      * Register the object that needs to be measured the memory usage.
      *
@@ -60,7 +60,7 @@ public class SiddhiMemoryUsageMetric implements MemoryUsageTracker {
             SiddhiMetricsManagement.getInstance().addComponent(siddhiAppName, memoryTrackerId);
         }
     }
-    
+
     /**
      * @return Name of the memory usage tracker.
      */
@@ -72,21 +72,21 @@ public class SiddhiMemoryUsageMetric implements MemoryUsageTracker {
             return null;
         }
     }
-    
+
     class ObjectMetric {
         private final Object object;
         private String name;
-        
+
         public ObjectMetric(final Object object, String name) {
             this.object = object;
             this.name = name;
             initMetric();
         }
-        
+
         public String getName() {
             return name;
         }
-        
+
         private void initMetric() {
             metricService.gauge(
                     name,
