@@ -18,6 +18,7 @@
  */
 package io.siddhi.distribution.metrics.core.core.internal.service;
 
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -29,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.metrics.core.MetricManagementService;
 import org.wso2.carbon.metrics.core.MetricService;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
 
 /**
  * Service component for getting the wso2 carbon metrics service.
@@ -41,22 +41,22 @@ import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder
 )
 public class MetricsServiceComponent {
     private static final Logger log = LoggerFactory.getLogger(MetricsServiceComponent.class);
-    
+
     public MetricsServiceComponent() {
     }
-    
+
     @Activate
     protected void start(BundleContext bundleContext) {
         log.debug("MetricsServiceComponent has been activated.");
     }
-    
-    
+
+
     @Deactivate
     protected void stop() throws Exception {
         log.debug("MetricsServiceComponent has been stop.");
     }
-    
-    
+
+
     /**
      * This is the bind method which gets called at the registration of {@link MetricService}.
      *
@@ -75,7 +75,7 @@ public class MetricsServiceComponent {
             log.debug("@Reference(bind) CarbonMetricsService");
         }
     }
-    
+
     /**
      * This is the unbind method which gets called at the un-registration of {@link MetricService}.
      *
@@ -87,7 +87,7 @@ public class MetricsServiceComponent {
             log.debug("@Reference(unbind) EventStreamService");
         }
     }
-    
+
     @Reference(
             name = "carbon.metrics.management.service",
             service = MetricManagementService.class,
@@ -98,7 +98,7 @@ public class MetricsServiceComponent {
     protected void setMetricManagementService(MetricManagementService metricManagementService) {
         SiddhiMetricsDataHolder.getInstance().setMetricManagementService(metricManagementService);
     }
-    
+
     /**
      * This is the unbind method for unbound carbon metrics MetricManagementService.
      *

@@ -23,7 +23,8 @@ import io.siddhi.distribution.core.core.impl.SiddhiAppsApiServiceImpl;
  * Siddhi API Service factory Class
  */
 public class SiddhiAppsApiServiceFactory {
-    private final static SiddhiAppsApiService service = new SiddhiAppsApiServiceImpl();
+
+    private static final SiddhiAppsApiService service = new SiddhiAppsApiServiceImpl();
 
     public static SiddhiAppsApiService getSiddhiAppsApi() {
         return service;

@@ -1,8 +1,6 @@
 package io.siddhi.distribution.event.simulator.core.impl.impl;
 
-import org.apache.commons.io.FilenameUtils;
-import org.wso2.carbon.analytics.permissions.PermissionProvider;
-import org.wso2.carbon.analytics.permissions.bean.Permission;
+import io.siddhi.distribution.common.common.exception.ResponseMapper;
 import io.siddhi.distribution.event.simulator.core.api.api.FilesApiService;
 import io.siddhi.distribution.event.simulator.core.api.api.NotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileAlreadyExistsException;
@@ -12,25 +10,34 @@ import io.siddhi.distribution.event.simulator.core.internal.generator.generator.
 import io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
-import io.siddhi.distribution.common.common.exception.ResponseMapper;
+import org.apache.commons.io.FilenameUtils;
+import org.wso2.carbon.analytics.permissions.PermissionProvider;
+import org.wso2.carbon.analytics.permissions.bean.Permission;
 import org.wso2.carbon.utils.Utils;
 import org.wso2.msf4j.Request;
 import org.wso2.msf4j.formparam.FileInfo;
 
-import javax.ws.rs.core.Response;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javax.ws.rs.core.Response;
 
+/**
+ * File API service implementation class.
+ */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
-                            date = "2017-07-20T09:30:14.336Z")
+        date = "2017-07-20T09:30:14.336Z")
 public class FilesApiServiceImpl extends FilesApiService {
-    private final Path CSV_BASE_PATH = Paths.get(Utils.getRuntimePath().toString(),
-            EventSimulatorConstants.DIRECTORY_DEPLOYMENT, EventSimulatorConstants.DIRECTORY_CSV_FILES);
-
     private static final String PERMISSION_APP_NAME = "SIM";
     private static final String MANAGE_SIMULATOR_PERMISSION_STRING = "simulator.manage";
     private static final String VIEW_SIMULATOR_PERMISSION_STRING = "simulator.view";
+    private static final Path CSV_BASE_PATH = Paths.get(Utils.getRuntimePath().toString(),
+            EventSimulatorConstants.DIRECTORY_DEPLOYMENT, EventSimulatorConstants.DIRECTORY_CSV_FILES);
+
+    private static String getUserName(Request request) {
+        Object username = request.getProperty("username");
+        return username != null ? username.toString() : null;
+    }
 
     public Response deleteFile(String fileName) throws NotFoundException, FileOperationsException {
         FileUploader fileUploader = FileUploader.getFileUploaderInstance();
@@ -74,7 +81,7 @@ public class FilesApiServiceImpl extends FilesApiService {
                     .entity(
                             FileUploader.getFileUploaderInstance()
                                     .retrieveFileNameList(EventSimulatorConstants.CSV_FILE_EXTENSION, CSV_BASE_PATH)
-                           )
+                    )
                     .build();
         } catch (FileOperationsException e) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
@@ -203,11 +210,6 @@ public class FilesApiServiceImpl extends FilesApiService {
                     .build();
         }
         return uploadFile(fileInputStream, fileDetail);
-    }
-
-    private static String getUserName(Request request) {
-        Object username = request.getProperty("username");
-        return username != null ? username.toString() : null;
     }
 
     private PermissionProvider getPermissionProvider() {

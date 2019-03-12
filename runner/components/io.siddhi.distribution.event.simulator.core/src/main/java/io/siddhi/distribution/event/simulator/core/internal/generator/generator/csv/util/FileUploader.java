@@ -17,10 +17,6 @@
  */
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util;
 
-import org.apache.commons.io.FileExistsException;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileAlreadyExistsException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileLimitExceededException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
@@ -29,6 +25,10 @@ import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimul
 import io.siddhi.distribution.event.simulator.core.internal.util.util.ValidatedInputStream;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.util.util.LogEncoder;
+import org.apache.commons.io.FileExistsException;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.wso2.msf4j.formparam.FileInfo;
 
 import java.io.File;
@@ -131,7 +131,8 @@ public class FileUploader {
 
     /**
      * Method to delete an uploaded file.
-     * @param fileName name of CSV file to be deleted
+     *
+     * @param fileName    name of CSV file to be deleted
      * @param baseDirPath base path directory
      * @return
      * @throws FileOperationsException if an IOException occurs while deleting file
@@ -158,7 +159,7 @@ public class FileUploader {
     /**
      * validateFileSource() is used to validate that the CSV file exists
      *
-     * @param fileName    name of file being validated
+     * @param fileName name of file being validated
      */
     public boolean validateFileExists(String fileName) {
         return fileStore.checkExists(fileName);

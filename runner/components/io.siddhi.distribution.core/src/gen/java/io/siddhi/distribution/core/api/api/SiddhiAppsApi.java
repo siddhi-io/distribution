@@ -24,7 +24,6 @@ import io.siddhi.distribution.core.model.model.StatsEnable;
 import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import io.swagger.annotations.ApiParam;
 import org.osgi.service.component.annotations.Component;
-
 import org.wso2.msf4j.Microservice;
 import org.wso2.msf4j.Request;
 import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
@@ -238,12 +237,12 @@ public class SiddhiAppsApi implements Microservice {
     @Path("/revisions")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Deletes all revisions of the periodic state of all Siddhi Applications.",
-            notes = "Deletes all revisions of the periodic state of all Siddhi Applications. ", response = InlineResponse400.class, tags={ "State",})
+            notes = "Deletes all revisions of the periodic state of all Siddhi Applications. ", response = InlineResponse400.class, tags = {"State",})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "All revisions of the periodic state of all the siddhi applicationa " +
                     "are deleted succussfully.", response = InlineResponse400.class),
             @io.swagger.annotations.ApiResponse(code = 500, message = "An unexpected error occured.",
-                    response = InlineResponse400.class) })
+                    response = InlineResponse400.class)})
     public Response siddhiAppsRevisionsDelete(
             @Context Request request,
             @ApiParam(value = "Whether the redeployment enable or not", required = false)

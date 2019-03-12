@@ -18,8 +18,8 @@
 
 package io.siddhi.distribution.event.simulator.core.exception.exception;
 
-import org.osgi.service.component.annotations.Component;
 import io.siddhi.distribution.common.common.exception.ResponseMapper;
+import org.osgi.service.component.annotations.Component;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
@@ -40,7 +40,7 @@ public class EventSimulatorExceptionMapper implements ExceptionMapper<Exception>
      *
      * @param e exception
      * @return response
-     * */
+     */
     @Override
     public Response toResponse(Exception e) {
 

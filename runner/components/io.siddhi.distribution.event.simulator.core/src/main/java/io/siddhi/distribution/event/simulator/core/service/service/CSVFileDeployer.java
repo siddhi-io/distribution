@@ -19,6 +19,9 @@
 package io.siddhi.distribution.event.simulator.core.service.service;
 
 import io.siddhi.distribution.common.common.EventStreamService;
+import io.siddhi.distribution.common.common.SimulationDependencyListener;
+import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.FileStore;
+import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
 import org.apache.commons.io.FilenameUtils;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -32,9 +35,6 @@ import org.wso2.carbon.deployment.engine.Artifact;
 import org.wso2.carbon.deployment.engine.ArtifactType;
 import org.wso2.carbon.deployment.engine.Deployer;
 import org.wso2.carbon.deployment.engine.exception.CarbonDeploymentException;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.FileStore;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.common.common.SimulationDependencyListener;
 
 import java.io.File;
 import java.net.MalformedURLException;

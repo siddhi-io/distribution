@@ -42,22 +42,22 @@ import javax.ws.rs.core.Response;
 @RequestInterceptor(AuthenticationInterceptor.class)
 @io.swagger.annotations.Api(description = "the runTime API")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
-                            date = "2018-02-20T10:49:25.745Z")
+        date = "2018-02-20T10:49:25.745Z")
 public class RunTimeApi implements Microservice {
     private final RunTimeApiService delegate = RunTimeApiServiceFactory.getRunTimeApi();
 
     @Path("/runTime")
     @GET
     @io.swagger.annotations.ApiOperation(value = "Returns the runtime of the stream processor.",
-                                         notes = "Returns the run time given in the carbon.sh.", response = void.class,
-                                         tags = {"RunTime",})
+            notes = "Returns the run time given in the carbon.sh.", response = void.class,
+            tags = {"RunTime",})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "OK.", response = void.class),
 
             @io.swagger.annotations.ApiResponse(code = 404, message = "Not Found.", response = void.class),
 
             @io.swagger.annotations.ApiResponse(code = 500, message = "An unexpected error occured.",
-                                                response = void.class)})
+                    response = void.class)})
     public Response getRunTime(@Context Request request) throws NotFoundException {
         return delegate.getRunTime(request);
     }

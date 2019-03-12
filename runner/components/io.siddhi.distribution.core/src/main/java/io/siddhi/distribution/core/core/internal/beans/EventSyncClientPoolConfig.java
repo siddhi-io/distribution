@@ -20,16 +20,26 @@ package io.siddhi.distribution.core.core.internal.beans;
 
 import org.wso2.carbon.config.annotation.Element;
 
+/**
+ * Event synchronization client pool configuration.
+ */
 public class EventSyncClientPoolConfig {
+
     @Element(description = "Number of active connections in the event sync client pool", required = false)
     private int maxActive = 10;
+
     @Element(description = "Number of total connections in the event sync client pool", required = false)
     private int maxTotal = 10;
+
     @Element(description = "Number of idle connections in the event sync client pool", required = false)
     private int maxIdle = 10;
-    @Element(description = " the maximum amount of time to wait for an idle object when the pool is exhausted", required = false)
+
+    @Element(description = " the maximum amount of time to wait for an idle object when the pool is exhausted",
+            required = false)
     private long maxWait = 60000;
-    @Element(description = "he minimum number of milliseconds an object can sit idle in the pool before it is eligible for eviction", required = false)
+
+    @Element(description = "he minimum number of milliseconds an object can sit idle in the pool before it is " +
+            "eligible for eviction", required = false)
     private long minEvictableIdleTimeMillis = 120000;
 
     public int getMaxActive() {

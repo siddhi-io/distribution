@@ -1,5 +1,6 @@
 package io.siddhi.distribution.event.simulator.core.api.api;
 
+import io.siddhi.distribution.event.simulator.core.factories.factories.DatabaseApiServiceFactory;
 import io.siddhi.distribution.event.simulator.core.model.model.DBConnectionModel;
 import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import io.swagger.annotations.ApiParam;
@@ -8,17 +9,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import io.siddhi.distribution.event.simulator.core.factories.factories.DatabaseApiServiceFactory;
-
-
 import org.wso2.msf4j.Microservice;
 import org.wso2.msf4j.Request;
 import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.*;
 
 @Component(
         name = "simulator-core-database-services",
@@ -31,8 +32,8 @@ import javax.ws.rs.*;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-07-20T09:30:14.336Z")
 public class DatabaseApi implements Microservice {
-    private final DatabaseApiService delegate = DatabaseApiServiceFactory.getConnectToDatabaseApi();
     private static final Logger log = LoggerFactory.getLogger(DatabaseApi.class);
+    private final DatabaseApiService delegate = DatabaseApiServiceFactory.getConnectToDatabaseApi();
 
     @POST
     @Path("/{tableName}/retrieveColumnNames")

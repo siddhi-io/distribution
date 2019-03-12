@@ -17,12 +17,15 @@
  */
 package io.siddhi.distribution.editor.log.appender.appender.internal;
 
+/**
+ * Class represents the console log event.
+ */
 public class ConsoleLogEvent {
     private String timeStamp;
     private String level;
     private String message;
-    private String Fqcn;
-    private String Stacktrace;
+    private String fqcn;
+    private String stacktrace;
 
     public String getTimeStamp() {
         return timeStamp;
@@ -49,18 +52,18 @@ public class ConsoleLogEvent {
     }
 
     public String getFqcn() {
-        return Fqcn;
+        return fqcn;
     }
 
     public void setFqcn(String fqcn) {
-        Fqcn = fqcn;
+        this.fqcn = fqcn;
     }
 
     public String getStacktrace() {
-        return Stacktrace;
+        return stacktrace;
     }
 
     public void setStacktrace(String stacktrace) {
-        Stacktrace = stacktrace;
+        this.stacktrace = stacktrace;
     }
 }

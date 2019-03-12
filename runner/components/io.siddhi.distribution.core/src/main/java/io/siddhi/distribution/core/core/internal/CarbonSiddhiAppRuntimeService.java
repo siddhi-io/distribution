@@ -49,7 +49,7 @@ public class CarbonSiddhiAppRuntimeService implements SiddhiAppRuntimeService {
     @Override
     public void enableSiddhiAppStatistics(boolean statsEnabled) {
         Map<String, SiddhiAppRuntime> siddhiAppRuntimes = getActiveSiddhiAppRuntimes();
-        for (Map.Entry<String, SiddhiAppRuntime> siddhiRuntimeEntry: siddhiAppRuntimes.entrySet()) {
+        for (Map.Entry<String, SiddhiAppRuntime> siddhiRuntimeEntry : siddhiAppRuntimes.entrySet()) {
             if ((statsEnabled && !siddhiRuntimeEntry.getValue().isStatsEnabled()) || (!statsEnabled &&
                     siddhiRuntimeEntry.getValue().isStatsEnabled())) {
                 siddhiRuntimeEntry.getValue().enableStats(statsEnabled);

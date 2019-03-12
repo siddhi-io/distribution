@@ -18,14 +18,14 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import org.apache.log4j.Logger;
-import org.json.JSONException;
-import org.json.JSONObject;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileAlreadyExistsException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.util.util.LogEncoder;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import org.apache.log4j.Logger;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -59,9 +59,9 @@ public class SimulationConfigUploader {
      *
      * @param simulationConfig simulation configuration being uploaded
      * @param destination      destination where the simulation configuration must be stored
-     * @throws FileOperationsException if an IOException occurs while copying uploaded stream to
-     *                                 'destination' directory
-     * @throws InvalidConfigException if the simulation configuration doesn't have a simulation name
+     * @throws FileOperationsException    if an IOException occurs while copying uploaded stream to
+     *                                    'destination' directory
+     * @throws InvalidConfigException     if the simulation configuration doesn't have a simulation name
      * @throws FileAlreadyExistsException if a simulation already exists under the specified simulation name
      */
     public void uploadSimulationConfig(String simulationConfig, String destination) throws FileOperationsException,
@@ -146,22 +146,22 @@ public class SimulationConfigUploader {
             JSONObject configuration = new JSONObject(simulationConfig);
             if (configuration.has(EventSimulatorConstants.EVENT_SIMULATION_PROPERTIES)
                     && !configuration.isNull(EventSimulatorConstants.EVENT_SIMULATION_PROPERTIES)) {
-                if (CommonOperations.checkAvailability(configuration.getJSONObject(EventSimulatorConstants.EVENT_SIMULATION_PROPERTIES),
-                        EventSimulatorConstants.EVENT_SIMULATION_NAME)) {
+                if (CommonOperations.checkAvailability(configuration.getJSONObject(EventSimulatorConstants.
+                                EVENT_SIMULATION_PROPERTIES), EventSimulatorConstants.EVENT_SIMULATION_NAME)) {
                     return configuration.getJSONObject(EventSimulatorConstants.EVENT_SIMULATION_PROPERTIES)
                             .getString(EventSimulatorConstants.EVENT_SIMULATION_NAME);
                 } else {
                     throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.SIMULATION,
-                                    EventSimulatorConstants.EVENT_SIMULATION_NAME,
-                                    "Simulation name is required for event simulation. Invalid " +
+                            ResourceNotFoundException.ResourceType.SIMULATION,
+                            EventSimulatorConstants.EVENT_SIMULATION_NAME,
+                            "Simulation name is required for event simulation. Invalid " +
                                     "simulation configuration provided : " + configuration.toString());
                 }
             } else {
                 throw new InvalidConfigException(
-                                ResourceNotFoundException.ResourceType.SIMULATION,
-                                EventSimulatorConstants.PROPERTIES_RESOURCE_NAME,
-                                "Simulation properties are required for event simulation. Invalid " +
+                        ResourceNotFoundException.ResourceType.SIMULATION,
+                        EventSimulatorConstants.PROPERTIES_RESOURCE_NAME,
+                        "Simulation properties are required for event simulation. Invalid " +
                                 "simulation configuration provided : " + configuration.toString());
             }
         } catch (JSONException e) {
@@ -172,7 +172,7 @@ public class SimulationConfigUploader {
     /**
      * checkSimulationExists() is used to validate that the simulation config file exists
      *
-     * @param simulationName name of the simulation config file
+     * @param simulationName    name of the simulation config file
      * @param directoryLocation directory where the file is saved
      * @return true is simulation config file exists in directory, else return false
      */

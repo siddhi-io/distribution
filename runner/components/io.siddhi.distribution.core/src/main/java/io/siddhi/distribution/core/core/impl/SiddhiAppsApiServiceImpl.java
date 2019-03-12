@@ -85,6 +85,11 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     private static final String MANAGE_SIDDHI_APP_PERMISSION_STRING = "siddhiApp.manage";
     private static final String VIEW_SIDDHI_APP_PERMISSION_STRING = "siddhiApp.view";
 
+    private static String getUserName(Request request) {
+        Object username = request.getProperty("username");
+        return username != null ? username.toString() : null;
+    }
+
     public Response siddhiAppsPost(String body) throws NotFoundException {
         String jsonString;
         Response.Status status;
@@ -314,15 +319,18 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
         return Response.status(status).entity(jsonString).build();
     }
 
-    public Response siddhiAppsAppNamePersistenceDelete(String appName, String enabledRedeployment) throws NotFoundException {
+    public Response siddhiAppsAppNamePersistenceDelete(String appName, String enabledRedeployment)
+            throws NotFoundException {
         String jsonString;
         Response.Status status = Response.Status.OK;
 
         try {
-            SiddhiAppRuntime siddhiAppRuntime = StreamProcessorDataHolder.getSiddhiManager().getSiddhiAppRuntime(appName);
+            SiddhiAppRuntime siddhiAppRuntime = StreamProcessorDataHolder.getSiddhiManager().
+                    getSiddhiAppRuntime(appName);
 
             if (siddhiAppRuntime != null) {
-                Map<String, SiddhiAppData> siddhiAppMap = StreamProcessorDataHolder.getStreamProcessorService().getSiddhiAppMap();
+                Map<String, SiddhiAppData> siddhiAppMap = StreamProcessorDataHolder.getStreamProcessorService().
+                        getSiddhiAppMap();
                 SiddhiAppData siddhiAppContent = siddhiAppMap.get(appName);
 
                 if (enabledRedeployment == null || "true".equals(enabledRedeployment)) {
@@ -391,7 +399,8 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
             if (enabledRedeployment == null || "true".equals(enabledRedeployment)) {
                 for (Map.Entry<String, SiddhiAppData> entry : storedSiddhiApps.entrySet()) {
                     if (entry.getValue() != null && entry.getValue().getSiddhiAppRuntime() != null) {
-                        StreamProcessorDataHolder.getStreamProcessorService().deploySiddhiApp(entry.getValue().getSiddhiApp(), entry.getKey());
+                        StreamProcessorDataHolder.getStreamProcessorService().deploySiddhiApp(entry.getValue().
+                                getSiddhiApp(), entry.getKey());
 
                     }
                 }
@@ -1013,11 +1022,6 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                     "stats for all Siddhi App").build();
         }
         return siddhiAppElementsGet(appName);
-    }
-
-    private static String getUserName(Request request) {
-        Object username = request.getProperty("username");
-        return username != null ? username.toString() : null;
     }
 
     private PermissionProvider getPermissionProvider() {

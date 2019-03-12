@@ -16,6 +16,9 @@
 
 package io.siddhi.distribution.core.core.persistence.exception;
 
+/**
+ * Database unsupported exception class.
+ */
 public class DatabaseUnsupportedException extends RuntimeException {
 
     public DatabaseUnsupportedException(String message) {

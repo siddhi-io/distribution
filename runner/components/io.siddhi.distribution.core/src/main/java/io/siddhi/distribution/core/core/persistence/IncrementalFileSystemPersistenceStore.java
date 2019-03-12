@@ -118,7 +118,8 @@ public class IncrementalFileSystemPersistenceStore implements IncrementalPersist
             decompressedSnapshot = CompressionUtil.decompressGZIP(bytes);
         } catch (IOException e) {
             throw new RuntimeException("Error occurred while trying to decompress the snapshot. Failed to " +
-                    "load revision: " + snapshotInfo.getRevision() + " of Siddhi app: " + snapshotInfo.getSiddhiAppId(), e);
+                    "load revision: " + snapshotInfo.getRevision() + " of Siddhi app: " +
+                    snapshotInfo.getSiddhiAppId(), e);
         }
         return decompressedSnapshot;
     }

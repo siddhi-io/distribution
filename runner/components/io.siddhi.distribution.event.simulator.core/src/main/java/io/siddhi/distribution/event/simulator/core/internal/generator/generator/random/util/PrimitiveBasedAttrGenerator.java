@@ -18,18 +18,17 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util;
 
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import fabricator.Alphanumeric;
+import fabricator.Fabricator;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.PrimitiveBasedAttributeDTO;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.siddhi.query.api.definition.Attribute;
-
-import fabricator.Alphanumeric;
-import fabricator.Fabricator;
 
 import java.text.DecimalFormat;
 
@@ -80,9 +79,9 @@ public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
                 if (!checkAvailability(attributeConfig,
                         EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_LENGTH)) {
                     throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                                    attributeConfig.getString(EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_LENGTH),
-                                    "Property 'Length' is required for generation of" +
+                            ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                            attributeConfig.getString(EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_LENGTH),
+                            "Property 'Length' is required for generation of" +
                                     " attributes of type '" + attributeType + "' in " + RandomDataGeneratorType
                                     .PRIMITIVE_BASED + " attribute generation. Invalid attribute configuration " +
                                     "provided : " + attributeConfig.toString());
@@ -93,9 +92,9 @@ public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
                 if (!checkAvailability(attributeConfig, EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_MIN)
                         || !checkAvailability(attributeConfig, EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_MAX)) {
                     throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                                    attributeConfig.getString(EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_MAX),
-                                    "Properties 'Min' and 'Max' are required " +
+                            ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                            attributeConfig.getString(EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_MAX),
+                            "Properties 'Min' and 'Max' are required " +
                                     "for generation of attributes of  type '" + attributeType + "' in" +
                                     RandomDataGeneratorType.PRIMITIVE_BASED +
                                     " attribute generation. Invalid attribute configuration provided" +
@@ -109,10 +108,10 @@ public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
                         || !checkAvailability(attributeConfig,
                         EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_PRECISION)) {
                     throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                                    attributeConfig.
-                                            getString(EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_PRECISION),
-                                    "Properties 'Min','Max' and 'Precision' are " +
+                            ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                            attributeConfig.
+                                    getString(EventSimulatorConstants.PRIMITIVE_BASED_ATTRIBUTE_PRECISION),
+                            "Properties 'Min','Max' and 'Precision' are " +
                                     "required for generation of attributes of type '" + attributeType + "' in " +
                                     RandomDataGeneratorType.PRIMITIVE_BASED +
                                     " attribute generation. Invalid attribute configuration provided : " +
@@ -219,7 +218,7 @@ public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
         } catch (NumberFormatException e) {
             log.error("Error occurred when creating a primitive based random data attribute " +
                     "of primitive type '" + primitiveBasedAttrConfig.getAttrType() + "' for attribute" +
-                            " configuration:" + primitiveBasedAttrConfig.toString() + "'. ", e);
+                    " configuration:" + primitiveBasedAttrConfig.toString() + "'. ", e);
 //            throw new EventGenerationException("Error occurred when creating a primitive based random " +
 //                    "data attribute of primitive type '" + primitiveBasedAttrConfig.getAttrType() + "' for" +
 //                    " attribute configuration:" + primitiveBasedAttrConfig.toString() + "'. ", e);

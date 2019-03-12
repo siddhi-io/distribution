@@ -16,6 +16,9 @@
 
 package io.siddhi.distribution.core.core.persistence.exception;
 
+/**
+ * Exception class for Datasource configuration.
+ */
 public class DatasourceConfigurationException extends RuntimeException {
 
     public DatasourceConfigurationException(String message, Throwable cause) {

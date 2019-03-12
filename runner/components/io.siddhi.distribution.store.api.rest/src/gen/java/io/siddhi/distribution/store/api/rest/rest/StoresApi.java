@@ -19,23 +19,27 @@
 
 package io.siddhi.distribution.store.api.rest.rest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.store.api.rest.rest.factories.StoresApiServiceFactory;
 import io.siddhi.distribution.store.api.rest.rest.model.ModelApiResponse;
 import io.siddhi.distribution.store.api.rest.rest.model.Query;
-import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
+import io.swagger.annotations.ApiParam;
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.wso2.msf4j.Microservice;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-
-import io.swagger.annotations.ApiParam;
-import org.wso2.msf4j.Microservice;
 
 @Component(
         name = "siddhi-store-query-service",
@@ -47,8 +51,8 @@ import org.wso2.msf4j.Microservice;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-01T11:26:25.925Z")
 public class StoresApi implements Microservice {
-    private Logger log = LoggerFactory.getLogger(StoresApi.class);
     private final StoresApiService delegate = StoresApiServiceFactory.getStoresApi();
+    private Logger log = LoggerFactory.getLogger(StoresApi.class);
 
     @POST
     @Path("/query")

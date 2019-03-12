@@ -20,8 +20,6 @@
 package io.siddhi.distribution.store.api.rest.rest.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
 
 /**
  * This class represents the bean class forthe returned event/record from the table

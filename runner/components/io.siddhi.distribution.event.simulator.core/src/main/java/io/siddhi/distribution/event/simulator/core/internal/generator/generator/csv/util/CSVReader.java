@@ -18,17 +18,17 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.EventGenerationException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CSVSimulationDTO;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventConverter;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
@@ -62,6 +62,7 @@ public class CSVReader {
      * Constructor CSVReader is used to initialize an instance of class CSVReader
      * Initialize a file reader for the CSV file.
      * If the CSV file is ordered by timestamp it will create a bufferedReader for the file reader.
+     *
      * @throws ResourceNotFoundException if the CSV file is not found
      */
     public CSVReader(String fileName, boolean isOrdered) throws ResourceNotFoundException {
@@ -138,7 +139,7 @@ public class CSVReader {
                          * */
                         try {
                             timestamp = Long.parseLong(attributes.get(timestampPosition).replaceAll("(^\\h*)|(\\h*$)" +
-                                    "",""));
+                                    "", ""));
                             if (timestamp >= startTimestamp) {
                                 if (endTimestamp != -1 && timestamp > endTimestamp) {
                                     continue;
@@ -166,7 +167,7 @@ public class CSVReader {
                         eventNumber++;
                         break;
                     } catch (IndexOutOfBoundsException e) {
-                        log.warn("Cannot retrieve data elements from line " + lineNumber + " for all indices "  +
+                        log.warn("Cannot retrieve data elements from line " + lineNumber + " for all indices " +
                                 indices + ". Line content : " + attributes + ". Ignore line and read next line." +
                                 " Source configuration : " + csvConfig.toString());
                     } catch (EventGenerationException e) {
@@ -297,7 +298,7 @@ public class CSVReader {
                             "attribute in line " + lineNumber + ". Line content : " + attributes + ". " +
                             "Ignore line and read next line. Source configuration : " + csvConfig.toString());
                 } catch (IndexOutOfBoundsException e) {
-                    log.warn("Cannot retrieve data elements from line " + lineNumber + " for all indices "  +
+                    log.warn("Cannot retrieve data elements from line " + lineNumber + " for all indices " +
                             indices + ". Line content : " + attributes + ". Ignore line and read next line." +
                             " Source configuration : " + csvConfig.toString());
                 }

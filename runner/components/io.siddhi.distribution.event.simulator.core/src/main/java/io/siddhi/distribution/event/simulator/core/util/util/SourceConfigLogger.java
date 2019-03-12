@@ -19,13 +19,16 @@
 package io.siddhi.distribution.event.simulator.core.util.util;
 
 
-import org.json.JSONObject;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
+import org.json.JSONObject;
 
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailabilityOfArray;
 
+/**
+ * Source configuration logger class.
+ */
 public class SourceConfigLogger {
     public static String getLoggedEnabledSourceConfig(JSONObject sourceConfig) {
         EventGenerator.GeneratorType generatorType =
@@ -186,7 +189,7 @@ public class SourceConfigLogger {
                  i++) {
                 JSONObject attributeConfig =
                         sourceConfig.getJSONArray(EventSimulatorConstants.ATTRIBUTE_CONFIGURATION).getJSONObject(i);
-                builder.append("\t").append(i+1).append(": ");
+                builder.append("\t").append(i + 1).append(": ");
                 if (checkAvailability(attributeConfig, EventSimulatorConstants.RANDOM_DATA_GENERATOR_TYPE)) {
                     String generatorType =
                             attributeConfig.getString(EventSimulatorConstants.RANDOM_DATA_GENERATOR_TYPE);

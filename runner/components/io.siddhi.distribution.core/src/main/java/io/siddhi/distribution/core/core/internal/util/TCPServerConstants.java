@@ -18,6 +18,9 @@
 
 package io.siddhi.distribution.core.core.internal.util;
 
+/**
+ * Class to hold TCP server related constants.
+ */
 public final class TCPServerConstants {
 
     public static final int DEFAULT_BOSS_THREADS = 10;

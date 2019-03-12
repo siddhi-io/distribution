@@ -25,9 +25,8 @@ import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
  * This class holds the services referenced by the store api micro services {@link StoresApi}
  */
 public class SiddhiStoreDataHolder {
+    private static SiddhiStoreDataHolder instance = new SiddhiStoreDataHolder();
     private SiddhiAppRuntimeService siddhiAppRuntimeService;
-
-    private static SiddhiStoreDataHolder  instance = new SiddhiStoreDataHolder();
 
     private SiddhiStoreDataHolder() {
     }

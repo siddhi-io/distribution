@@ -32,7 +32,9 @@ public class FileLimitExceededException extends RuntimeException {
     public FileLimitExceededException(String message) {
         super(message);
 
-    } public FileLimitExceededException(String message, Throwable cause) {
+    }
+
+    public FileLimitExceededException(String message, Throwable cause) {
         super(message, cause);
     }
 }

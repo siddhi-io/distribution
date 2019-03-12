@@ -18,10 +18,10 @@
  */
 package io.siddhi.distribution.metrics.core.core;
 
-import org.wso2.carbon.metrics.core.MetricService;
 import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
 import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsManagement;
 import io.siddhi.distribution.metrics.core.core.internal.SiddhiStatisticsManager;
+import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.siddhi.core.util.statistics.BufferedEventsTracker;
 import org.wso2.siddhi.core.util.statistics.LatencyTracker;
 import org.wso2.siddhi.core.util.statistics.MemoryUsageTracker;
@@ -38,12 +38,12 @@ import java.util.List;
 public class SiddhiMetricsFactory implements StatisticsTrackerFactory {
     private MetricService metricService;
     private SiddhiMetricsManagement metricsManagement;
-    
+
     public SiddhiMetricsFactory() {
         this.metricService = SiddhiMetricsDataHolder.getInstance().getMetricService();
         this.metricsManagement = SiddhiMetricsManagement.getInstance();
     }
-    
+
     public LatencyTracker createLatencyTracker(String name, StatisticsManager statisticsManager) {
         SiddhiStatisticsManager siddhiStatisticsManager = (SiddhiStatisticsManager) statisticsManager;
         SiddhiLatencyMetric siddhiLatencyMetric = new SiddhiLatencyMetric(name, this.metricService,
@@ -51,7 +51,7 @@ public class SiddhiMetricsFactory implements StatisticsTrackerFactory {
         this.metricsManagement.addComponent(siddhiStatisticsManager.getSiddhiAppName(), siddhiLatencyMetric.getName());
         return siddhiLatencyMetric;
     }
-    
+
     public ThroughputTracker createThroughputTracker(String name, StatisticsManager statisticsManager) {
         SiddhiStatisticsManager siddhiStatisticsManager = (SiddhiStatisticsManager) statisticsManager;
         SiddhiThroughputMetric siddhiThroughputMetric = new SiddhiThroughputMetric(name, this.metricService,
@@ -60,19 +60,19 @@ public class SiddhiMetricsFactory implements StatisticsTrackerFactory {
                 siddhiThroughputMetric.getName());
         return siddhiThroughputMetric;
     }
-    
+
     public BufferedEventsTracker createBufferSizeTracker(StatisticsManager statisticsManager) {
         SiddhiStatisticsManager siddhiStatisticsManager = (SiddhiStatisticsManager) statisticsManager;
         return new SiddhiBufferedEventsMetric(this.metricService, siddhiStatisticsManager.getSiddhiAppName(),
                 siddhiStatisticsManager.isStatisticEnabled());
     }
-    
+
     public MemoryUsageTracker createMemoryUsageTracker(StatisticsManager statisticsManager) {
         SiddhiStatisticsManager siddhiStatisticsManager = (SiddhiStatisticsManager) statisticsManager;
         return new SiddhiMemoryUsageMetric(this.metricService, siddhiStatisticsManager.getSiddhiAppName(),
                 siddhiStatisticsManager.isStatisticEnabled());
     }
-    
+
     @Override
     public StatisticsManager createStatisticsManager(String prefix, String siddhiAppName, List<Element> elements) {
         if (elements.size() > 0) {

@@ -18,18 +18,18 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util;
 
+import com.mifmif.common.regex.Generex;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.internal.bean.bean.RegexBasedAttributeDTO;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttrGenAbstractImpl;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;
+import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
-import io.siddhi.distribution.event.simulator.core.internal.bean.bean.RegexBasedAttributeDTO;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
-import com.mifmif.common.regex.Generex;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -67,26 +67,26 @@ public class RegexBasedAttrGenerator extends RandomAttrGenAbstractImpl {
                         RandomAttributeGenerator.RandomDataGeneratorType.REGEX_BASED + " attribute generation." +
                         " Invalid attribute configuration : " + attributeConfig.toString() + "'. ", e);
                 throw new InvalidConfigException(
-                                ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                                EventSimulatorConstants.REGEX_BASED_ATTRIBUTE_PATTERN,
-                                "Invalid regular expression '" + attributeConfig.getString(
+                        ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                        EventSimulatorConstants.REGEX_BASED_ATTRIBUTE_PATTERN,
+                        "Invalid regular expression '" + attributeConfig.getString(
                                 EventSimulatorConstants.REGEX_BASED_ATTRIBUTE_PATTERN) + "' provided for " +
                                 RandomAttributeGenerator.RandomDataGeneratorType.REGEX_BASED + " attribute " +
                                 "generation. Invalid attribute configuration : " + attributeConfig.toString() + "'. ",
                         e);
             } catch (NumberFormatException e) {
                 throw new InvalidConfigException(
-                                ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                                EventSimulatorConstants.REGEX_BASED_ATTRIBUTE_PATTERN,
-                                "Regex pattern '" + regexPattern +
+                        ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                        EventSimulatorConstants.REGEX_BASED_ATTRIBUTE_PATTERN,
+                        "Regex pattern '" + regexPattern +
                                 "' cannot be parsed to attribute type '" + attributeType + "'. Invalid " +
                                 "attribute configuration provided : " + attributeConfig.toString());
             }
         } else {
             throw new InvalidConfigException(
-                            ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                            EventSimulatorConstants.REGEX_BASED_ATTRIBUTE_PATTERN,
-                            "Pattern is required for " +
+                    ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                    EventSimulatorConstants.REGEX_BASED_ATTRIBUTE_PATTERN,
+                    "Pattern is required for " +
                             RandomAttributeGenerator.RandomDataGeneratorType.REGEX_BASED +
                             " simulation. Invalid attribute configuration : " + attributeConfig.toString());
         }

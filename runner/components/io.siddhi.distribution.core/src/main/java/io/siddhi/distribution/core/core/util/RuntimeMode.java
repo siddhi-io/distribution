@@ -18,6 +18,9 @@
 
 package io.siddhi.distribution.core.core.util;
 
+/**
+ * Enum which hold runtime modes.
+ */
 public enum RuntimeMode {
     MANAGER, RESOURCE
 }

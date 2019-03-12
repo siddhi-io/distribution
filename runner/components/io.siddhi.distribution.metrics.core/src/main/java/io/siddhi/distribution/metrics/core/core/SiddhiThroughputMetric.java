@@ -18,10 +18,10 @@
  */
 package io.siddhi.distribution.metrics.core.core;
 
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
 import org.wso2.carbon.metrics.core.Level;
 import org.wso2.carbon.metrics.core.Meter;
 import org.wso2.carbon.metrics.core.MetricService;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
 import org.wso2.siddhi.core.util.statistics.ThroughputTracker;
 
 import static org.wso2.carbon.metrics.core.Level.INFO;
@@ -33,7 +33,7 @@ import static org.wso2.carbon.metrics.core.Level.OFF;
 public class SiddhiThroughputMetric implements ThroughputTracker {
     private Meter eventMeter = null;
     private String throughputTrackerId;
-    
+
     public SiddhiThroughputMetric(String throughputTrackerId, MetricService metricService, boolean isStatisticEnabled) {
         this.throughputTrackerId = throughputTrackerId;
         eventMeter = metricService.meter(this.throughputTrackerId, Level.INFO);
@@ -45,7 +45,7 @@ public class SiddhiThroughputMetric implements ThroughputTracker {
                     .throughputTrackerId, OFF);
         }
     }
-    
+
     /**
      * This method is to notify receive of events to calculate the throughput.
      */
@@ -53,7 +53,7 @@ public class SiddhiThroughputMetric implements ThroughputTracker {
     public void eventIn() {
         eventMeter.mark();
     }
-    
+
     /**
      * This method is to notify receive of events to calculate the throughput.
      *
@@ -63,7 +63,7 @@ public class SiddhiThroughputMetric implements ThroughputTracker {
     public void eventsIn(int eventCount) {
         eventMeter.mark(eventCount);
     }
-    
+
     /**
      * @return Name of the memory usage tracker.
      */
@@ -71,5 +71,5 @@ public class SiddhiThroughputMetric implements ThroughputTracker {
     public String getName() {
         return throughputTrackerId;
     }
-    
+
 }

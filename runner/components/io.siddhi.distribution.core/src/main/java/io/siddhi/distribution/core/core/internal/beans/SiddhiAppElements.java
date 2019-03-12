@@ -46,6 +46,7 @@ public class SiddhiAppElements {
     private String sink;
     private String sinkStream;
     private String sinkSiddhiApp;
+    private Map<String, PartitionType> partition;
 
     public String getPartitions() {
         return partitions;
@@ -54,8 +55,6 @@ public class SiddhiAppElements {
     public void setPartitions(String partitions) {
         this.partitions = partitions;
     }
-
-    private Map<String, PartitionType> partition;
 
     public String getInputStreamId() {
         return inputStreamId;

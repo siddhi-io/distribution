@@ -20,14 +20,14 @@ package io.siddhi.distribution.event.simulator.core.impl.impl;
 
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.PoolInitializationException;
-import org.wso2.carbon.analytics.permissions.PermissionProvider;
-import org.wso2.carbon.analytics.permissions.bean.Permission;
+import io.siddhi.distribution.common.common.exception.ResponseMapper;
 import io.siddhi.distribution.event.simulator.core.api.api.DatabaseApiService;
 import io.siddhi.distribution.event.simulator.core.api.api.NotFoundException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.database.util.DatabaseConnector;
 import io.siddhi.distribution.event.simulator.core.model.model.DBConnectionModel;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
-import io.siddhi.distribution.common.common.exception.ResponseMapper;
+import org.wso2.carbon.analytics.permissions.PermissionProvider;
+import org.wso2.carbon.analytics.permissions.bean.Permission;
 import org.wso2.msf4j.Request;
 
 import java.sql.Connection;
@@ -35,14 +35,21 @@ import java.sql.SQLException;
 import java.util.List;
 import javax.ws.rs.core.Response;
 
-
+/**
+ * Database API service implementataion class.
+ */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
-                            date = "2017-07-20T09:30:14.336Z")
+        date = "2017-07-20T09:30:14.336Z")
 public class DatabaseApiServiceImpl extends DatabaseApiService {
 
     private static final String PERMISSION_APP_NAME = "SIM";
     private static final String MANAGE_SIMULATOR_PERMISSION_STRING = "simulator.manage";
     private static final String VIEW_SIMULATOR_PERMISSION_STRING = "simulator.view";
+
+    private static String getUserName(Request request) {
+        Object username = request.getProperty("username");
+        return username != null ? username.toString() : null;
+    }
 
     public Response getDatabaseTableColumns(DBConnectionModel connectionDetails,
                                             String tableName) throws NotFoundException {
@@ -102,7 +109,8 @@ public class DatabaseApiServiceImpl extends DatabaseApiService {
     }
 
     @Override
-    public Response getDatabaseTableColumns(DBConnectionModel body, String tableName, Request request) throws NotFoundException {
+    public Response getDatabaseTableColumns(DBConnectionModel body, String tableName, Request request)
+            throws NotFoundException {
         if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
                 (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
                 (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
@@ -132,11 +140,6 @@ public class DatabaseApiServiceImpl extends DatabaseApiService {
                     .build();
         }
         return testDBConnection(body);
-    }
-
-    private static String getUserName(Request request) {
-        Object username = request.getProperty("username");
-        return username != null ? username.toString() : null;
     }
 
     private PermissionProvider getPermissionProvider() {

@@ -18,6 +18,8 @@ package io.siddhi.distribution.test.osgi;
 
 import com.zaxxer.hikari.HikariDataSource;
 import io.siddhi.distribution.core.core.internal.StreamProcessorDataHolder;
+import io.siddhi.distribution.test.osgi.util.RDBMSConfig;
+import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.apache.log4j.Logger;
 import org.awaitility.Awaitility;
 import org.awaitility.Duration;
@@ -31,8 +33,6 @@ import org.osgi.framework.BundleContext;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import io.siddhi.distribution.test.osgi.util.RDBMSConfig;
-import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.container.options.CarbonDistributionOption;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
@@ -62,22 +62,18 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @ExamFactory(CarbonContainerFactory.class)
 public class DBPersistenceStoreTestcase {
 
-    @Inject
-    protected BundleContext bundleContext;
-
-    @Inject
-    private CarbonServerInfo carbonServerInfo;
-
-    @Inject
-    private DataSourceService dataSourceService;
-
     private static final Logger log = Logger.getLogger(DBPersistenceStoreTestcase.class);
     private static final String CARBON_YAML_FILENAME = "deployment.yaml";
     private static final String TABLE_NAME = "PERSISTENCE_TABLE";
     private static final String SIDDHIAPP_NAME = "SiddhiAppPersistence";
     private static final String OJDBC6_OSGI_DEPENDENCY = "ojdbc6_12.1.0.1_atlassian_hosted_1.0.0.jar";
-
     private final String selectLastQuery = "SELECT siddhiAppName FROM " + TABLE_NAME + " WHERE siddhiAppName = ?";
+    @Inject
+    protected BundleContext bundleContext;
+    @Inject
+    private CarbonServerInfo carbonServerInfo;
+    @Inject
+    private DataSourceService dataSourceService;
 
     /**
      * Replace the existing deployment.yaml file with populated deployment.yaml file.
@@ -125,7 +121,7 @@ public class DBPersistenceStoreTestcase {
                 CarbonDistributionOption.copyOSGiLibBundle(maven(
                         "com.microsoft.sqlserver", "mssql-jdbc").versionAsInProject()),
                 carbonDistribution(Paths.get("target", "siddhi-runner-" +
-                                System.getProperty("io.siddhi.distribution.version")), "worker")
+                        System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
 

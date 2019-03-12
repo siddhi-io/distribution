@@ -19,6 +19,10 @@
 package io.siddhi.distribution.event.simulator.core.service.service;
 
 import io.siddhi.distribution.common.common.EventStreamService;
+import io.siddhi.distribution.common.common.SimulationDependencyListener;
+import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
+import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
+import io.siddhi.distribution.event.simulator.core.internal.util.util.SimulationConfigUploader;
 import io.siddhi.distribution.event.simulator.core.service.service.bean.ActiveSimulatorData;
 import io.siddhi.distribution.event.simulator.core.service.service.bean.ResourceDependencyData;
 import org.apache.commons.io.FilenameUtils;
@@ -35,10 +39,6 @@ import org.wso2.carbon.deployment.engine.Artifact;
 import org.wso2.carbon.deployment.engine.ArtifactType;
 import org.wso2.carbon.deployment.engine.Deployer;
 import org.wso2.carbon.deployment.engine.exception.CarbonDeploymentException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.SimulationConfigUploader;
-import io.siddhi.distribution.common.common.SimulationDependencyListener;
 import org.wso2.carbon.utils.Utils;
 
 import java.io.File;
@@ -99,7 +99,7 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
                 }
             } else {
                 log.error("Simulation '" + file.getName() + "' has an invalid content type. File type supported is '."
-                                  + EventSimulatorConstants.SIMULATION_FILE_EXTENSION + "'.");
+                        + EventSimulatorConstants.SIMULATION_FILE_EXTENSION + "'.");
             }
         }
     }

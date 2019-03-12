@@ -18,9 +18,10 @@
 
 package io.siddhi.distribution.core.core.persistence.util;
 
+/**
+ * Class which hold constants related to persistence.
+ */
 public class PersistenceConstants {
-
-    private PersistenceConstants(){}
 
     public static final String PLACEHOLDER_TABLE_NAME = "{{TABLE_NAME}}";
     public static final String STATE_PERSISTENCE_NS = "state.persistence";
@@ -40,5 +41,8 @@ public class PersistenceConstants {
     public static final String DELETE_OLD_REVISIONS = "DELETE_OLD_REVISIONS";
     public static final String COUNT_NUMBER_REVISIONS = "COUNT_NUMBER_REVISIONS";
     public static final String DELETE_ALL_REVISIONS = "DELETE_ALL_REVISIONS";
+
+    private PersistenceConstants() {
+    }
 
 }

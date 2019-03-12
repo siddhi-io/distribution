@@ -19,15 +19,12 @@
 package io.siddhi.distribution.core.core.internal;
 
 
-import io.siddhi.distribution.core.core.distribution.DeploymentStatus;
 import io.siddhi.distribution.core.core.distribution.DistributionService;
 import io.siddhi.distribution.core.core.internal.exception.SiddhiAppAlreadyExistException;
 import io.siddhi.distribution.core.core.internal.exception.SiddhiAppConfigurationException;
 import io.siddhi.distribution.core.core.internal.exception.SiddhiAppDeploymentException;
 import io.siddhi.distribution.core.core.internal.util.SiddhiAppFilesystemInvoker;
 import io.siddhi.distribution.core.core.internal.util.SiddhiAppProcessorConstants;
-import io.siddhi.distribution.core.core.util.DeploymentMode;
-import io.siddhi.distribution.core.core.util.RuntimeMode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
@@ -35,23 +32,15 @@ import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.exception.CannotRestoreSiddhiAppStateException;
 import org.wso2.siddhi.core.exception.ConnectionUnavailableException;
 import org.wso2.siddhi.core.stream.input.InputHandler;
-import org.wso2.siddhi.core.stream.input.source.Source;
-import org.wso2.siddhi.core.stream.output.sink.Sink;
-import org.wso2.siddhi.core.table.Table;
 import org.wso2.siddhi.core.util.transport.BackoffRetryCounter;
 import org.wso2.siddhi.query.api.SiddhiApp;
 import org.wso2.siddhi.query.api.annotation.Element;
 import org.wso2.siddhi.query.api.util.AnnotationHelper;
 import org.wso2.siddhi.query.compiler.SiddhiCompiler;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 
 /**

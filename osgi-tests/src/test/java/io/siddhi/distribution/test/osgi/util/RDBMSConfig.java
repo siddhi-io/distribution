@@ -95,36 +95,36 @@ public class RDBMSConfig {
     }
 
     private static void updateDeploymentYaml(String folderName) {
-        try (BufferedReader br = new BufferedReader(new FileReader("src" + File.separator + "test" + File.separator +
-                "resources" + File.separator + "conf" + File.separator + "persistence" + File.separator + folderName
-                + File.separator + "deployment-structure.yaml"));
-             BufferedWriter bw = new BufferedWriter(new FileWriter("src" + File.separator + "test" + File.separator +
-                     "resources" + File.separator + "conf" + File.separator + "persistence" + File.separator + folderName
-                     + File.separator + "deployment.yaml"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src" + File.separator + "test" +
+                File.separator + "resources" + File.separator + "conf" + File.separator + "persistence" +
+                File.separator + folderName + File.separator + "deployment-structure.yaml"));
+             BufferedWriter bw = new BufferedWriter(new FileWriter("src" + File.separator + "test" +
+                     File.separator + "resources" + File.separator + "conf" + File.separator + "persistence" +
+                     File.separator + folderName + File.separator + "deployment.yaml"))) {
 
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_URL))
+                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_URL)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_JDBC_URL, YAML_DATASOURCE_CONFIG_JDBC_URL +
                             " " + url);
-                if (line.contains(YAML_DATASOURCE_CONFIG_USERNAME))
+                }
+                if (line.contains(YAML_DATASOURCE_CONFIG_USERNAME)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_USERNAME, YAML_DATASOURCE_CONFIG_USERNAME +
                             " " + username);
-                if (line.contains(YAML_DATASOURCE_CONFIG_PASSWORD))
+                }
+                if (line.contains(YAML_DATASOURCE_CONFIG_PASSWORD)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_PASSWORD, YAML_DATASOURCE_CONFIG_PASSWORD +
                             " " + password);
-                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_DRIVER))
+                }
+                if (line.contains(YAML_DATASOURCE_CONFIG_JDBC_DRIVER)) {
                     line = line.replace(YAML_DATASOURCE_CONFIG_JDBC_DRIVER, YAML_DATASOURCE_CONFIG_JDBC_DRIVER +
                             " " + driverClassName);
+                }
                 bw.write(line + "\n");
             }
         } catch (IOException e) {
             log.error("Error in getting configuration file ready for " + DBPersistenceStoreTestcase.class.getName());
         }
-    }
-
-    private enum RDBMSType {
-        MySQL, H2, ORACLE, MSSQL, POSTGRES
     }
 
     /**
@@ -145,6 +145,10 @@ public class RDBMSConfig {
             }
         }
         return ip;
+    }
+
+    private enum RDBMSType {
+        MySQL, H2, ORACLE, MSSQL, POSTGRES
     }
 }
 

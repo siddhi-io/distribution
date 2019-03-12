@@ -24,28 +24,28 @@ import org.wso2.siddhi.core.stream.input.InputHandler;
 import java.util.Map;
 
 /**
- * Class which contains information about Siddhi App File
+ * Class which contains information about Siddhi App File.
  */
 public class SiddhiAppData {
 
-    private String SiddhiApp;
+    private String siddhiApp;
     private boolean isActive;
     private Map<String, InputHandler> inputHandlerMap;
     private SiddhiAppRuntime siddhiAppRuntime;
     private long deploymentTimeInMillis;
 
     public SiddhiAppData(String siddhiApp) {
-        SiddhiApp = siddhiApp;
+        this.siddhiApp = siddhiApp;
     }
 
     public SiddhiAppData(String siddhiApp, boolean isActive) {
-        SiddhiApp = siddhiApp;
+        this.siddhiApp = siddhiApp;
         this.isActive = isActive;
     }
 
     public SiddhiAppData(String siddhiApp, boolean isActive, Map<String, InputHandler> inputHandlerMap,
                          SiddhiAppRuntime siddhiAppRuntime) {
-        SiddhiApp = siddhiApp;
+        this.siddhiApp = siddhiApp;
         this.isActive = isActive;
         this.inputHandlerMap = inputHandlerMap;
         this.siddhiAppRuntime = siddhiAppRuntime;
@@ -68,11 +68,11 @@ public class SiddhiAppData {
     }
 
     public String getSiddhiApp() {
-        return SiddhiApp;
+        return siddhiApp;
     }
 
     public void setSiddhiApp(String siddhiApp) {
-        SiddhiApp = siddhiApp;
+        this.siddhiApp = siddhiApp;
     }
 
     public boolean isActive() {

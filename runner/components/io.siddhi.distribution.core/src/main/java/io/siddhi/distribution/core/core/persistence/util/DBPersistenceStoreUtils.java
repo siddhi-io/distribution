@@ -26,6 +26,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.sql.DataSource;
 
+/**
+ * Util class for DB persistence store.
+ */
 public class DBPersistenceStoreUtils {
     private static final Logger log = Logger.getLogger(DBPersistenceStoreUtils.class);
 
@@ -33,7 +36,7 @@ public class DBPersistenceStoreUtils {
      * Method that would create the persistence table
      */
     public static void createTableIfNotExist(ExecutionInfo executionInfo, DataSource dataSource, String dataSourceName,
-                                       String tableName) {
+                                             String tableName) {
         if (!executionInfo.isTableExist()) {
             Statement stmt = null;
             Connection con = null;

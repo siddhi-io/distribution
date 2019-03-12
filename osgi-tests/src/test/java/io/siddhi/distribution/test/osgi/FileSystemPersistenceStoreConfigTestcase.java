@@ -73,7 +73,7 @@ public class FileSystemPersistenceStoreConfigTestcase {
 
     @Configuration
     public Option[] createConfiguration() {
-        log.info("Running - "+ this.getClass().getName());
+        log.info("Running - " + this.getClass().getName());
         return new Option[]{
                 copyCarbonYAMLOption(),
                 carbonDistribution(Paths.get("target", "siddhi-runner-" +

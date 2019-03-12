@@ -1,9 +1,7 @@
 package io.siddhi.distribution.event.simulator.core.api.api;
 
 import io.siddhi.distribution.event.simulator.core.model.model.DBConnectionModel;
-
 import org.wso2.msf4j.Request;
-
 
 import javax.ws.rs.core.Response;
 

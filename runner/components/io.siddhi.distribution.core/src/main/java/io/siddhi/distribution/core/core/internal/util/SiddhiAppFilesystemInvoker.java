@@ -22,7 +22,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.config.provider.ConfigProvider;
-
 import org.wso2.carbon.utils.Utils;
 
 import java.io.File;
@@ -31,6 +30,9 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.LinkedHashMap;
 
+/**
+ * Class that used to dealt with filesystem.
+ */
 public class SiddhiAppFilesystemInvoker {
     private static final Log log = LogFactory.getLog(SiddhiAppFilesystemInvoker.class);
     private static String directoryPath;

@@ -37,10 +37,10 @@ import java.util.Properties;
 
 public class KafkaTestUtil {
     private static final Logger log = Logger.getLogger(KafkaTestUtil.class);
-    private static TestingServer zkTestServer;
-    private static KafkaServerStartable kafkaServer;
     private static final String kafkaLogDir = "tmp_kafka_dir";
     private static final long CLEANER_BUFFER_SIZE = 2 * 1024 * 1024L;
+    private static TestingServer zkTestServer;
+    private static KafkaServerStartable kafkaServer;
 
     public static void cleanLogDir() {
         try {

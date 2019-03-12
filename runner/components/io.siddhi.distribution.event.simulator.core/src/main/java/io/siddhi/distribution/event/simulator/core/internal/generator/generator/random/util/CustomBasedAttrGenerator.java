@@ -19,12 +19,12 @@
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util;
 
 import com.google.gson.Gson;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttrGenAbstractImpl;
-import org.json.JSONObject;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CustomBasedAttributeDTO;
+import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttrGenAbstractImpl;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import org.json.JSONObject;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.security.SecureRandom;
@@ -64,16 +64,16 @@ public class CustomBasedAttrGenerator extends RandomAttrGenAbstractImpl {
                                 ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
                                 attributeConfig.getString(EventSimulatorConstants.RANDOM_DATA_GENERATOR_TYPE),
                                 "Data list element '" + element + "' cannot be parsed to " +
-                                "attribute type '" + attributeType + "'. Invalid " +
-                                "attribute configuration provided : " + attributeConfig.toString());
+                                        "attribute type '" + attributeType + "'. Invalid " +
+                                        "attribute configuration provided : " + attributeConfig.toString());
                     }
                 }
             }
         } else {
             throw new InvalidConfigException(
-                            ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
-                            attributeConfig.getString(EventSimulatorConstants.RANDOM_DATA_GENERATOR_TYPE),
-                            "Data list is not given for " +
+                    ResourceNotFoundException.ResourceType.RANDOM_SIMULATION,
+                    attributeConfig.getString(EventSimulatorConstants.RANDOM_DATA_GENERATOR_TYPE),
+                    "Data list is not given for " +
                             RandomDataGeneratorType.CUSTOM_DATA_BASED + " simulation. Invalid " +
                             "attribute configuration provided : " + attributeConfig.toString());
         }
