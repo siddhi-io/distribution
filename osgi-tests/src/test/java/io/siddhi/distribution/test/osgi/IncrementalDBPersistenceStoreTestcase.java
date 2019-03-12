@@ -124,7 +124,7 @@ public class IncrementalDBPersistenceStoreTestcase {
                         "org.postgresql", "postgresql").versionAsInProject()),
                 CarbonDistributionOption.copyOSGiLibBundle(maven(
                         "com.microsoft.sqlserver", "mssql-jdbc").versionAsInProject()),
-                carbonDistribution(Paths.get("target", "wso2sp-" +
+                carbonDistribution(Paths.get("target", "siddhi-runner-" +
                         System.getProperty("io.siddhi.distribution.version")), "worker")
         };
     }
