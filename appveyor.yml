@@ -22,7 +22,7 @@ environment:
   APPVEYOR: true
   matrix:
     - JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-    nodejs_version: "8"
+    - nodejs_version: "8"
 install:
   - ps: |
       Add-Type -AssemblyName System.IO.Compression.FileSystem
