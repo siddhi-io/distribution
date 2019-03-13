@@ -1051,9 +1051,6 @@
             <id>with-tests</id>
             <activation>
                 <property>
-                    <name>!maven.test.skip</name>
-                </property>
-                <property>
                     <name>!skipTests</name>
                 </property>
             </activation>
