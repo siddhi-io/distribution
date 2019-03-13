@@ -26,10 +26,10 @@ import org.wso2.carbon.analytics.permissions.PermissionProvider;
  */
 public class EventSimulatorDataHolder {
     private static EventSimulatorDataHolder instance = new EventSimulatorDataHolder();
+    private static PermissionProvider permissionProvider;
     private long maximumFileSize;
     private String csvFileDirectory;
     private EventStreamService eventStreamService;
-    private static PermissionProvider permissionProvider;
 
 
     private EventSimulatorDataHolder() {
@@ -37,6 +37,14 @@ public class EventSimulatorDataHolder {
 
     public static EventSimulatorDataHolder getInstance() {
         return instance;
+    }
+
+    public static PermissionProvider getPermissionProvider() {
+        return EventSimulatorDataHolder.permissionProvider;
+    }
+
+    public static void setPermissionProvider(PermissionProvider permissionProvider) {
+        EventSimulatorDataHolder.permissionProvider = permissionProvider;
     }
 
     public long getMaximumFileSize() {
@@ -61,13 +69,5 @@ public class EventSimulatorDataHolder {
 
     public void setCsvFileDirectory(String csvFileDirectory) {
         this.csvFileDirectory = csvFileDirectory;
-    }
-
-    public static PermissionProvider getPermissionProvider() {
-        return EventSimulatorDataHolder.permissionProvider;
-    }
-
-    public static void setPermissionProvider(PermissionProvider permissionProvider) {
-        EventSimulatorDataHolder.permissionProvider = permissionProvider;
     }
 }

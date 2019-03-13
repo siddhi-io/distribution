@@ -19,32 +19,43 @@
 
 package io.siddhi.distribution.store.api.rest.rest.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import io.siddhi.distribution.store.api.rest.rest.NotFoundException;
+import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.store.api.rest.rest.ApiResponseMessage;
+import io.siddhi.distribution.store.api.rest.rest.NotFoundException;
 import io.siddhi.distribution.store.api.rest.rest.SiddhiStoreDataHolder;
 import io.siddhi.distribution.store.api.rest.rest.StoresApiService;
 import io.siddhi.distribution.store.api.rest.rest.model.ModelApiResponse;
 import io.siddhi.distribution.store.api.rest.rest.model.Query;
 import io.siddhi.distribution.store.api.rest.rest.model.Record;
 import io.siddhi.distribution.store.api.rest.rest.model.RecordDetail;
-import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
-import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import javax.ws.rs.core.Response;
 
+/**
+ * Store API service implementation.
+ */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-01T11:26:25.925Z")
 public class StoresApiServiceImpl extends StoresApiService {
 
     private static final Logger log = LoggerFactory.getLogger(StoresApiServiceImpl.class);
+
+    private static String removeCRLFCharacters(String str) {
+        if (str != null) {
+            str = str.replace('\n', '_').replace('\r', '_');
+        }
+        return str;
+    }
+
     @Override
     public Response query(Query body) throws NotFoundException {
         if (body.getQuery() == null || body.getQuery().isEmpty()) {
@@ -80,7 +91,7 @@ public class StoresApiServiceImpl extends StoresApiService {
                         removeCRLFCharacters(e.getMessage()), e);
                 return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                         .entity(new ApiResponseMessage(ApiResponseMessage.ERROR,
-                                                       "Cannot query: " + e.getMessage())).build();
+                                "Cannot query: " + e.getMessage())).build();
             }
         }
     }
@@ -111,12 +122,5 @@ public class StoresApiServiceImpl extends StoresApiService {
             }
         }
         return records;
-    }
-
-    private static String removeCRLFCharacters(String str) {
-        if (str != null) {
-            str = str.replace('\n', '_').replace('\r', '_');
-        }
-        return str;
     }
 }

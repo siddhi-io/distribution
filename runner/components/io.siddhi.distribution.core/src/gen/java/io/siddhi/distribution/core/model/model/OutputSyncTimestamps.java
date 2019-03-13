@@ -31,92 +31,94 @@ import java.util.Objects;
         date = "2017-09-21T09:31:22.101Z")
 public class OutputSyncTimestamps {
 
-  @JsonProperty("id")
-  private String id = null;
+    @JsonProperty("id")
+    private String id = null;
 
-  @JsonProperty("timestamp")
-  private String timestamp = null;
+    @JsonProperty("timestamp")
+    private String timestamp = null;
 
-  public OutputSyncTimestamps id(String id) {
-    this.id = id;
-    return this;
-  }
-
-  public OutputSyncTimestamps(String id, String timestamp) {
-    this.id = id;
-    this.timestamp = timestamp;
-  }
-
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public OutputSyncTimestamps timestamp(String timestamp) {
-    this.timestamp = timestamp;
-    return this;
-  }
-
-   /**
-   * Get timestamp
-   * @return timestamp
-  **/
-  @ApiModelProperty(value = "")
-  public Long getTimestamp() {
-    return Long.parseLong(timestamp);
-  }
-
-  public void setTimestamp(String timestamp) {
-    this.timestamp = timestamp;
-  }
-
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
+    public OutputSyncTimestamps(String id, String timestamp) {
+        this.id = id;
+        this.timestamp = timestamp;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    public OutputSyncTimestamps id(String id) {
+        this.id = id;
+        return this;
     }
-    OutputSyncTimestamps outputSyncTimestamps = (OutputSyncTimestamps) o;
-    return Objects.equals(this.id, outputSyncTimestamps.id) &&
-        Objects.equals(this.timestamp, outputSyncTimestamps.timestamp);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, timestamp);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class OutputSyncTimestamps {\n");
-
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
+    /**
+     * Get id
+     *
+     * @return id
+     **/
+    @ApiModelProperty(value = "")
+    public String getId() {
+        return id;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public OutputSyncTimestamps timestamp(String timestamp) {
+        this.timestamp = timestamp;
+        return this;
+    }
+
+    /**
+     * Get timestamp
+     *
+     * @return timestamp
+     **/
+    @ApiModelProperty(value = "")
+    public Long getTimestamp() {
+        return Long.parseLong(timestamp);
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        OutputSyncTimestamps outputSyncTimestamps = (OutputSyncTimestamps) o;
+        return Objects.equals(this.id, outputSyncTimestamps.id) &&
+                Objects.equals(this.timestamp, outputSyncTimestamps.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, timestamp);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class OutputSyncTimestamps {\n");
+
+        sb.append("    id: ").append(toIndentedString(id)).append("\n");
+        sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 }
 

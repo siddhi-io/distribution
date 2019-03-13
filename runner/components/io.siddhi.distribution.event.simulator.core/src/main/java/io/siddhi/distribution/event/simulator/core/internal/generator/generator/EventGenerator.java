@@ -18,9 +18,9 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator;
 
-import org.json.JSONObject;
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
+import org.json.JSONObject;
 import org.wso2.siddhi.core.event.Event;
 
 /**

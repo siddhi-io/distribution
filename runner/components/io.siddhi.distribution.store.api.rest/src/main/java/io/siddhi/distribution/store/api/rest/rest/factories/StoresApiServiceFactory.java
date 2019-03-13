@@ -22,8 +22,11 @@ package io.siddhi.distribution.store.api.rest.rest.factories;
 import io.siddhi.distribution.store.api.rest.rest.StoresApiService;
 import io.siddhi.distribution.store.api.rest.rest.impl.StoresApiServiceImpl;
 
+/**
+ * Factory class for store API service.
+ */
 public class StoresApiServiceFactory {
-    private final static StoresApiService service = new StoresApiServiceImpl();
+    private static final StoresApiService service = new StoresApiServiceImpl();
 
     public static StoresApiService getStoresApi() {
         return service;

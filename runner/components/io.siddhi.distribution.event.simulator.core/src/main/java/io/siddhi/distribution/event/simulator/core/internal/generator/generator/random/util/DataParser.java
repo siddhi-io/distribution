@@ -29,8 +29,9 @@ public class DataParser {
      * parse() parses the provided data element to the attribute type specified
      *
      * @param attributeType type to be parsed to
-     * @param dataItem data element to be parsed
-     * @throws NumberFormatException if the data element cannot be parsed to the attribute type*/
+     * @param dataItem      data element to be parsed
+     * @throws NumberFormatException if the data element cannot be parsed to the attribute type
+     */
     public static void parse(Attribute.Type attributeType, Object dataItem) throws NumberFormatException {
         switch (attributeType) {
             case INT:

@@ -18,11 +18,11 @@
  */
 package io.siddhi.distribution.metrics.core.core;
 
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsManagement;
 import org.wso2.carbon.metrics.core.Gauge;
 import org.wso2.carbon.metrics.core.Level;
 import org.wso2.carbon.metrics.core.MetricService;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsManagement;
 import org.wso2.siddhi.core.util.statistics.BufferedEventsTracker;
 import org.wso2.siddhi.core.util.statistics.EventBufferHolder;
 
@@ -40,13 +40,13 @@ public class SiddhiBufferedEventsMetric implements BufferedEventsTracker {
     private MetricService metricService;
     private String siddhiAppName;
     private boolean statisticEnabled;
-    
+
     public SiddhiBufferedEventsMetric(MetricService metricService, String siddhiAppName, boolean isStatisticEnabled) {
         this.metricService = metricService;
         this.siddhiAppName = siddhiAppName;
         this.statisticEnabled = isStatisticEnabled;
     }
-    
+
     /**
      * Register the object that needs to be measured the buffered events count usage.
      *
@@ -60,7 +60,7 @@ public class SiddhiBufferedEventsMetric implements BufferedEventsTracker {
             SiddhiMetricsManagement.getInstance().addComponent(siddhiAppName, bufferedEventsTrackerId);
         }
     }
-    
+
     /**
      * @return Name of the buffered event tracker.
      */
@@ -72,21 +72,21 @@ public class SiddhiBufferedEventsMetric implements BufferedEventsTracker {
             return null;
         }
     }
-    
+
     class ObjectMetric {
         private final EventBufferHolder eventBufferHolder;
         private String name;
-        
+
         public ObjectMetric(final EventBufferHolder eventBufferHolder, String name) {
             this.eventBufferHolder = eventBufferHolder;
             this.name = name;
             initMetric();
         }
-        
+
         public String getName() {
             return name;
         }
-        
+
         private void initMetric() {
             metricService.gauge(
                     name,

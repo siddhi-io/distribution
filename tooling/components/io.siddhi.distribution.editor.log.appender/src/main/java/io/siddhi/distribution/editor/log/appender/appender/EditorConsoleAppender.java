@@ -74,13 +74,6 @@ public final class EditorConsoleAppender extends AbstractAppender {
     }
 
     /**
-     * Taken from the previous EditorConsoleAppender
-     */
-    public void activateOptions() {
-        this.circularBuffer = DataHolder.getBuffer(BUFFER_SIZE);
-    }
-
-    /**
      * Creates a EditorConsoleAppender instance with
      * attributes configured in log4j2.properties.
      *
@@ -106,6 +99,21 @@ public final class EditorConsoleAppender extends AbstractAppender {
             final boolean ignoreExceptions = Booleans.parseBoolean(ignore, true);
             return new EditorConsoleAppender(name, filter, layout, ignoreExceptions);
         }
+    }
+
+    private static String getEncodedString(String str) {
+        String cleanedString = Encode.forHtml(str);
+        if (!cleanedString.equals(str)) {
+            cleanedString += " (Encoded)";
+        }
+        return cleanedString;
+    }
+
+    /**
+     * Taken from the previous EditorConsoleAppender
+     */
+    public void activateOptions() {
+        this.circularBuffer = DataHolder.getBuffer(BUFFER_SIZE);
     }
 
     /**
@@ -140,14 +148,6 @@ public final class EditorConsoleAppender extends AbstractAppender {
         StringWriter stringWriter = new StringWriter();
         e.printStackTrace(new PrintWriter(stringWriter));
         return stringWriter.toString().trim();
-    }
-
-    private static String getEncodedString(String str) {
-        String cleanedString = Encode.forHtml(str);
-        if (!cleanedString.equals(str)) {
-            cleanedString += " (Encoded)";
-        }
-        return cleanedString;
     }
 
 }

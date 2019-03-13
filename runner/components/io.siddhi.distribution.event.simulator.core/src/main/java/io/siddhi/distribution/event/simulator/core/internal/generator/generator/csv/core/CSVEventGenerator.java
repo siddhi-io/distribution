@@ -18,22 +18,22 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.core;
 
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.CSVReader;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.FileStore;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InsufficientAttributesException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CSVSimulationDTO;
+import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
+import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.CSVReader;
+import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.FileStore;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.util.util.SourceConfigLogger;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
@@ -92,7 +92,7 @@ public class CSVEventGenerator implements EventGenerator {
                     .getStreamAttributes(csvConfiguration.getSiddhiAppName(), csvConfiguration.getStreamName());
         } catch (ResourceNotFoundException e) {
             log.error(e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for CSV simulation "
-                              + "does not exist. Invalid source configuration : " + csvConfiguration.toString(), e);
+                    + "does not exist. Invalid source configuration : " + csvConfiguration.toString(), e);
             throw new SimulationValidationException(
                     e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for CSV simulation does not "
                             + "exist. Invalid source configuration : " + csvConfiguration.toString(),
@@ -107,8 +107,8 @@ public class CSVEventGenerator implements EventGenerator {
         this.endTimestamp = endTimestamp;
         if (log.isDebugEnabled()) {
             log.debug("Timestamp range initiated for CSV event generator for stream '"
-                              + csvConfiguration.getStreamName() + "'. Timestamp start time : " + startTimestamp
-                              + " and timestamp end time : " + endTimestamp);
+                    + csvConfiguration.getStreamName() + "'. Timestamp start time : " + startTimestamp
+                    + " and timestamp end time : " + endTimestamp);
         }
     }
 
@@ -147,13 +147,13 @@ public class CSVEventGenerator implements EventGenerator {
             }
             if (log.isDebugEnabled()) {
                 log.debug("Start CSV generator for file '" + csvConfiguration.getFileName() + "' for simulation "
-                                  + "of stream '" + csvConfiguration.getStreamName() + "'.");
+                        + "of stream '" + csvConfiguration.getStreamName() + "'.");
             }
         } catch (ResourceNotFoundException e) {
             log.error(e.getResourceTypeString() + " '" + e.getResourceName() + "' required for simulation of stream '"
-                              + csvConfiguration.getStreamName() + "' cannot be found. Source configuration : "
-                              + csvConfiguration.toString(), ResourceNotFoundException.ResourceType.CSV_FILE,
-                      csvConfiguration.getFileName(), e);
+                            + csvConfiguration.getStreamName() + "' cannot be found. Source configuration : "
+                            + csvConfiguration.toString(), ResourceNotFoundException.ResourceType.CSV_FILE,
+                    csvConfiguration.getFileName(), e);
         }
     }
 
@@ -167,7 +167,7 @@ public class CSVEventGenerator implements EventGenerator {
         startTimestamp = -1;
         if (log.isDebugEnabled()) {
             log.debug("Stop CSV generator for file '" + csvConfiguration.getFileName() + "' for stream '"
-                              + csvConfiguration.getStreamName() + "'.");
+                    + csvConfiguration.getStreamName() + "'.");
         }
     }
 
@@ -308,8 +308,8 @@ public class CSVEventGenerator implements EventGenerator {
         }
         if (log.isDebugEnabled()) {
             log.debug("Get next event for current timestamp from CSV generator for file '"
-                              + csvConfiguration.getFileName() + "' for stream '"
-                              + csvConfiguration.getStreamName() + "'.");
+                    + csvConfiguration.getFileName() + "' for stream '"
+                    + csvConfiguration.getStreamName() + "'.");
         }
     }
 
@@ -334,20 +334,20 @@ public class CSVEventGenerator implements EventGenerator {
              * */
             if (!checkAvailability(sourceConfig, EventSimulatorConstants.STREAM_NAME)) {
                 throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Stream name is required for CSV simulation. Invalid source configuration in '" +
-                                    simulationName + "' simulation.\n" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
+                        ResourceNotFoundException.ResourceType.CSV_FILE,
+                        sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                        "Stream name is required for CSV simulation. Invalid source configuration in '" +
+                                simulationName + "' simulation.\n" +
+                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
             }
             if (!checkAvailability(sourceConfig, EventSimulatorConstants.EXECUTION_PLAN_NAME)) {
                 throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Siddhi app name is required for CSV simulation of stream '" +
-                                    sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
-                                    "Invalid source configuration in '" +  simulationName + "' simulation.\n" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
+                        ResourceNotFoundException.ResourceType.CSV_FILE,
+                        sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                        "Siddhi app name is required for CSV simulation of stream '" +
+                                sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
+                                "Invalid source configuration in '" + simulationName + "' simulation.\n" +
+                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
             }
             try {
                 streamAttributes = EventSimulatorDataHolder.getInstance().getEventStreamService().getStreamAttributes(
@@ -355,21 +355,21 @@ public class CSVEventGenerator implements EventGenerator {
                         sourceConfig.getString(EventSimulatorConstants.STREAM_NAME));
             } catch (ResourceNotFoundException e) {
                 throw new SimulationValidationException(
-                                    e.getResourceName(), e.getResourceType(),
-                                    e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for CSV " +
-                                    "simulation does not exist. Invalid source configuration in '" + simulationName +
-                                    "' simulation.\n" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig),
-                                    e);
+                        e.getResourceName(), e.getResourceType(),
+                        e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for CSV " +
+                                "simulation does not exist. Invalid source configuration in '" + simulationName +
+                                "' simulation.\n" +
+                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig),
+                        e);
             }
             if (!checkAvailability(sourceConfig, EventSimulatorConstants.FILE_NAME)) {
                 throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "File name is required for CSV simulation of stream '" +
-                                    sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
-                                    "Invalid source configuration in '" + simulationName + "' simulation.\n" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
+                        ResourceNotFoundException.ResourceType.CSV_FILE,
+                        sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                        "File name is required for CSV simulation of stream '" +
+                                sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
+                                "Invalid source configuration in '" + simulationName + "' simulation.\n" +
+                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
             }
             if (checkAvailability(sourceConfig, EventSimulatorConstants.TIMESTAMP_ATTRIBUTE)) {
                 /*
@@ -379,9 +379,9 @@ public class CSVEventGenerator implements EventGenerator {
                  * */
                 if (sourceConfig.getInt(EventSimulatorConstants.TIMESTAMP_ATTRIBUTE) < 0) {
                     throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Timestamp attribute for CSV simulation of stream '" +
+                            ResourceNotFoundException.ResourceType.CSV_FILE,
+                            sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                            "Timestamp attribute for CSV simulation of stream '" +
                                     sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) +
                                     "' must be positive. Invalid source configuration in '" + simulationName +
                                     "' simulation.\n" + SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
@@ -391,9 +391,9 @@ public class CSVEventGenerator implements EventGenerator {
                     sourceConfig.getBoolean(EventSimulatorConstants.IS_ORDERED);
                 } else {
                     throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "isOrdered flag is required for CSV simulation of stream '" +
+                            ResourceNotFoundException.ResourceType.CSV_FILE,
+                            sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                            "isOrdered flag is required for CSV simulation of stream '" +
                                     sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
                                     "Invalid source configuration in '" + simulationName + "' simulation.\n" +
                                     SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
@@ -401,9 +401,9 @@ public class CSVEventGenerator implements EventGenerator {
             } else if (checkAvailability(sourceConfig, EventSimulatorConstants.TIMESTAMP_INTERVAL)) {
                 if (sourceConfig.getLong(EventSimulatorConstants.TIMESTAMP_INTERVAL) < 0) {
                     throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Time interval for CSV simulation of stream '" +
+                            ResourceNotFoundException.ResourceType.CSV_FILE,
+                            sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                            "Time interval for CSV simulation of stream '" +
                                     sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) +
                                     "' must be positive. Invalid source configuration in '" + simulationName +
                                     "' simulation.\n" +
@@ -412,12 +412,12 @@ public class CSVEventGenerator implements EventGenerator {
             }
             if (!checkAvailability(sourceConfig, EventSimulatorConstants.DELIMITER)) {
                 throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Delimiter is required for CSV simulation of stream '" +
-                                    sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
-                                    "Invalid source configuration in '" + simulationName + "' simulation" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
+                        ResourceNotFoundException.ResourceType.CSV_FILE,
+                        sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                        "Delimiter is required for CSV simulation of stream '" +
+                                sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
+                                "Invalid source configuration in '" + simulationName + "' simulation" +
+                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
             }
             if (checkAvailability(sourceConfig, EventSimulatorConstants.INDICES)) {
                 List<String> indices = Arrays.asList(sourceConfig.getString(
@@ -432,19 +432,19 @@ public class CSVEventGenerator implements EventGenerator {
                         });
                     } catch (NumberFormatException | SimulatorInitializationException e) {
                         throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Invalid column indices specified for CSV simulation of stream '" +
-                                    sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
-                                    "Invalid source configuration in '" + simulationName + "' simulation.\n" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig), e);
+                                ResourceNotFoundException.ResourceType.CSV_FILE,
+                                sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                                "Invalid column indices specified for CSV simulation of stream '" +
+                                        sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. " +
+                                        "Invalid source configuration in '" + simulationName + "' simulation.\n" +
+                                        SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig), e);
                     }
                 } else {
                     throw new InsufficientAttributesException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Stream '" + sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) +
-                                    "' has " +  streamAttributes.size()  + " attribute(s) but CSV source " +
+                            ResourceNotFoundException.ResourceType.CSV_FILE,
+                            sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                            "Stream '" + sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) +
+                                    "' has " + streamAttributes.size() + " attribute(s) but CSV source " +
                                     "configuration contains values for only " + indices.size() + " attribute(s). " +
                                     "Invalid source configuration in '" + simulationName + "' simulation.\n" +
                                     SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig));
@@ -452,13 +452,13 @@ public class CSVEventGenerator implements EventGenerator {
             }
             if (!FileStore.getFileStore().checkExists(sourceConfig.getString(EventSimulatorConstants.FILE_NAME))) {
                 throw new SimulationValidationException(
-                                    "CSV file '" + sourceConfig.getString(EventSimulatorConstants.FILE_NAME) +
-                                    "' required for simulation of stream '" +
-                                    sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "' has not been " +
-                                    "uploaded. Invalid source configuration in '" + simulationName + "' simulation.\n" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig),
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME));
+                        "CSV file '" + sourceConfig.getString(EventSimulatorConstants.FILE_NAME) +
+                                "' required for simulation of stream '" +
+                                sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "' has not been " +
+                                "uploaded. Invalid source configuration in '" + simulationName + "' simulation.\n" +
+                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig),
+                        ResourceNotFoundException.ResourceType.CSV_FILE,
+                        sourceConfig.getString(EventSimulatorConstants.FILE_NAME));
             }
         } catch (JSONException e) {
             log.error("Error occurred when accessing CSV simulation configuration of stream '" +
@@ -466,12 +466,12 @@ public class CSVEventGenerator implements EventGenerator {
                     "Invalid source configuration provided in '" + simulationName + "' simulation.\n" +
                     SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig), e);
             throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Error occurred when accessing CSV simulation configuration of stream '" +
-                                    sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. Invalid source " +
-                                    "configuration provided in '" + simulationName + "' simulation.\n" +
-                                    SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig), e);
+                    ResourceNotFoundException.ResourceType.CSV_FILE,
+                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                    "Error occurred when accessing CSV simulation configuration of stream '" +
+                            sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. Invalid source " +
+                            "configuration provided in '" + simulationName + "' simulation.\n" +
+                            SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig), e);
         }
     }
 
@@ -480,7 +480,7 @@ public class CSVEventGenerator implements EventGenerator {
      *
      * @param sourceConfig JSON object containing configuration required to simulate stream
      * @return CSVSimulationDTO containing csv simulation configuration
-     * @throws InvalidConfigException if the sourceConfig JSONObject is malformed
+     * @throws InvalidConfigException    if the sourceConfig JSONObject is malformed
      * @throws ResourceNotFoundException if resources required for simulation are not available
      */
     private CSVSimulationDTO createCSVConfiguration(JSONObject sourceConfig, String simulationName)
@@ -492,9 +492,9 @@ public class CSVEventGenerator implements EventGenerator {
                         sourceConfig.getString(EventSimulatorConstants.STREAM_NAME));
             } catch (ResourceNotFoundException e) {
                 throw new SimulationValidationException(
-                                e.getResourceName(), e.getResourceType(), e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for CSV " +
-                                "simulation does not exist. Invalid source configuration in '" + simulationName +
-                                "' simulation", e);
+                        e.getResourceName(), e.getResourceType(), e.getResourceTypeString() + " '" +
+                        e.getResourceName() + "' specified for CSV simulation does not exist. Invalid source " +
+                        "configuration in '" + simulationName + "' simulation", e);
             }
             /*
              * either a timestamp attribute must be specified or the timeInterval between timestamps of 2 consecutive
@@ -567,11 +567,11 @@ public class CSVEventGenerator implements EventGenerator {
                     sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. Invalid source configuration " +
                     "provided : " + sourceConfig.toString() + ". ", e);
             throw new InvalidConfigException(
-                                    ResourceNotFoundException.ResourceType.CSV_FILE,
-                                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
-                                    "Error occurred when accessing CSV simulation configuration of stream '" +
-                                    sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. Invalid source " +
-                                    "configuration provided : " + sourceConfig.toString() + ". ", e);
+                    ResourceNotFoundException.ResourceType.CSV_FILE,
+                    sourceConfig.getString(EventSimulatorConstants.FILE_NAME),
+                    "Error occurred when accessing CSV simulation configuration of stream '" +
+                            sourceConfig.getString(EventSimulatorConstants.STREAM_NAME) + "'. Invalid source " +
+                            "configuration provided : " + sourceConfig.toString() + ". ", e);
         }
     }
 

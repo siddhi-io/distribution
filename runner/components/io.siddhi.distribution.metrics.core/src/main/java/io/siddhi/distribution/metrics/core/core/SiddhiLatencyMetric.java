@@ -19,9 +19,9 @@
 
 package io.siddhi.distribution.metrics.core.core;
 
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
 import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.Timer;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
 import org.wso2.siddhi.core.util.statistics.LatencyTracker;
 
 import static org.wso2.carbon.metrics.core.Level.INFO;
@@ -36,7 +36,7 @@ public class SiddhiLatencyMetric implements LatencyTracker {
     private ThreadLocal<Timer> execLatencyTimer;
     private ThreadLocal<Timer.Context> context;
     private String latencyTrackerId;
-    
+
     public SiddhiLatencyMetric(String latencyTrackerId, MetricService metricService, boolean isStatisticEnabled) {
         this.latencyTrackerId = latencyTrackerId;
         Timer timer = metricService.timer(this.latencyTrackerId, INFO);
@@ -58,9 +58,9 @@ public class SiddhiLatencyMetric implements LatencyTracker {
                 return null;
             }
         };
-        
+
     }
-    
+
     /**
      * This is called when the processing of the event is started. This is called at
      * ProcessStreamReceiver#receive before the event is passed into process chain.
@@ -72,7 +72,7 @@ public class SiddhiLatencyMetric implements LatencyTracker {
         }
         context.set(execLatencyTimer.get().start());
     }
-    
+
     /**
      * This is called to when the processing of an event is finished. This is called at two places,
      * 1. OutputRateLimiter#sendToCallBacks - When the event is processed and by the full chain and emitted out.
@@ -86,7 +86,7 @@ public class SiddhiLatencyMetric implements LatencyTracker {
             context.set(null);
         }
     }
-    
+
     /**
      * @return Name of the latency tracker.
      */
@@ -94,5 +94,5 @@ public class SiddhiLatencyMetric implements LatencyTracker {
     public String getName() {
         return latencyTrackerId;
     }
-    
+
 }

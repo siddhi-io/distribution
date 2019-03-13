@@ -21,11 +21,11 @@ package io.siddhi.distribution.event.simulator.core.internal.generator.generator
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-import org.apache.log4j.Logger;
 import io.siddhi.distribution.event.simulator.core.exception.exception.EventGenerationException;
 import io.siddhi.distribution.event.simulator.core.exception.exception.SimulatorInitializationException;
-import io.siddhi.distribution.event.simulator.core.util.util.LogEncoder;
 import io.siddhi.distribution.event.simulator.core.model.model.DBConnectionModel;
+import io.siddhi.distribution.event.simulator.core.util.util.LogEncoder;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -60,6 +60,57 @@ public class DatabaseConnector {
 
 
     public DatabaseConnector() {
+    }
+
+    public static HikariDataSource initializeDatasource(DBConnectionModel connectionDetails) {
+        Properties connectionProperties = new Properties();
+        String url = connectionDetails.getDataSourceLocation();
+        String username = connectionDetails.getUsername();
+        String password = connectionDetails.getPassword();
+        String driverClassName = connectionDetails.getDriver();
+        connectionProperties.setProperty("jdbcUrl", url);
+        connectionProperties.setProperty("dataSource.user", username);
+        connectionProperties.setProperty("dataSource.password", password);
+        connectionProperties.setProperty("driverClassName", driverClassName);
+        HikariConfig config = new HikariConfig(connectionProperties);
+        return new HikariDataSource(config);
+    }
+
+    public static List<String> retrieveTableNames(DBConnectionModel connectionDetails)
+            throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        HikariDataSource dataSource = initializeDatasource(connectionDetails);
+        try (Connection conn = dataSource.getConnection()) {
+            DatabaseMetaData md = conn.getMetaData();
+            ResultSet rs = md.getTables(null, null, "%", null);
+            List<String> tableNames = new ArrayList<>();
+            while (rs.next()) {
+                tableNames.add(rs.getString("TABLE_NAME"));
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("Successfully retrieved table names from datasource '" +
+                        LogEncoder.removeCRLFCharacters(connectionDetails.getDataSourceLocation()) + "'.");
+            }
+            return tableNames;
+        }
+    }
+
+    public static List<String> retrieveColumnNames(DBConnectionModel connectionDetails, String tableName)
+            throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        HikariDataSource dataSource = initializeDatasource(connectionDetails);
+        try (Connection conn = dataSource.getConnection()) {
+            DatabaseMetaData md = conn.getMetaData();
+            ResultSet rs = md.getColumns(null, null, tableName, null);
+            List<String> columnNames = new ArrayList<>();
+            while (rs.next()) {
+                columnNames.add(rs.getString("COLUMN_NAME"));
+            }
+            if (log.isDebugEnabled()) {
+                log.debug("Successfully retrieved column names of table '" +
+                        LogEncoder.removeCRLFCharacters(tableName) + "' from datasource '" +
+                        LogEncoder.removeCRLFCharacters(connectionDetails.getDataSourceLocation()) + "'.");
+            }
+            return columnNames;
+        }
     }
 
     /**
@@ -179,7 +230,6 @@ public class DatabaseConnector {
         }
     }
 
-
     /**
      * validateColumns method checks whether the columns specified exists in the specified table in the
      * specified database
@@ -265,57 +315,6 @@ public class DatabaseConnector {
                     "table name : '" + tableName + "', columns : '" + columns + "', timestamp attribute : '" +
                     timestampAttribute + "', timestamp start time : '" + timestampStartTime + "' and timestamp end " +
                     "time : '" + timestampEndTime + "'. ", e);
-        }
-    }
-
-    public static HikariDataSource initializeDatasource(DBConnectionModel connectionDetails) {
-        Properties connectionProperties = new Properties();
-        String url = connectionDetails.getDataSourceLocation();
-        String username = connectionDetails.getUsername();
-        String password = connectionDetails.getPassword();
-        String driverClassName = connectionDetails.getDriver();
-        connectionProperties.setProperty("jdbcUrl", url);
-        connectionProperties.setProperty("dataSource.user", username);
-        connectionProperties.setProperty("dataSource.password", password);
-        connectionProperties.setProperty("driverClassName", driverClassName);
-        HikariConfig config = new HikariConfig(connectionProperties);
-        return new HikariDataSource(config);
-    }
-
-    public static List<String> retrieveTableNames(DBConnectionModel connectionDetails)
-            throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        HikariDataSource dataSource = initializeDatasource(connectionDetails);
-        try (Connection conn = dataSource.getConnection()) {
-            DatabaseMetaData md = conn.getMetaData();
-            ResultSet rs = md.getTables(null, null, "%", null);
-            List<String> tableNames = new ArrayList<>();
-            while (rs.next()) {
-                tableNames.add(rs.getString("TABLE_NAME"));
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("Successfully retrieved table names from datasource '" +
-                        LogEncoder.removeCRLFCharacters(connectionDetails.getDataSourceLocation()) + "'.");
-            }
-            return tableNames;
-        }
-    }
-
-    public static List<String> retrieveColumnNames(DBConnectionModel connectionDetails, String tableName)
-            throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        HikariDataSource dataSource = initializeDatasource(connectionDetails);
-        try (Connection conn = dataSource.getConnection()) {
-            DatabaseMetaData md = conn.getMetaData();
-            ResultSet rs = md.getColumns(null, null, tableName, null);
-            List<String> columnNames = new ArrayList<>();
-            while (rs.next()) {
-                columnNames.add(rs.getString("COLUMN_NAME"));
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("Successfully retrieved column names of table '" + LogEncoder.removeCRLFCharacters(tableName) +
-                        "' from datasource '" + LogEncoder.removeCRLFCharacters(connectionDetails.
-                        getDataSourceLocation()) + "'.");
-            }
-            return columnNames;
         }
     }
 

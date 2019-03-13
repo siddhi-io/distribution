@@ -1,4 +1,4 @@
-package io.siddhi.distribution.common.common;/*
+/*
  * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
@@ -15,6 +15,8 @@ package io.siddhi.distribution.common.common;/*
  * specific language governing permissions and limitations
  * under the License.
  */
+
+package io.siddhi.distribution.common.common;
 
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import org.wso2.siddhi.core.event.Event;

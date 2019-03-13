@@ -36,7 +36,7 @@ public class InvalidConfigException extends SimulationValidationException {
     }
 
     public InvalidConfigException(ResourceNotFoundException.ResourceType resourceType,
-                                           String resourceName, String message) {
+                                  String resourceName, String message) {
         super(message, resourceType, resourceName);
     }
 

@@ -53,15 +53,14 @@ public class StreamProcessorDataHolder {
     private static DistributionService distributionService;
     private static RecordTableHandlerManager recordTableHandlerManager;
     private static PermissionProvider permissionProvider;
-    private CarbonRuntime carbonRuntime;
-    private SiddhiAppProcessorConstants.RuntimeMode runtimeMode = SiddhiAppProcessorConstants.RuntimeMode.ERROR;
-    private BundleContext bundleContext;
-    private ConfigProvider configProvider;
-
     /**
      * List used to hold all the registered subscribers.
      */
     private static List<ServerEventListener> serverListeners = new ArrayList<>();
+    private CarbonRuntime carbonRuntime;
+    private SiddhiAppProcessorConstants.RuntimeMode runtimeMode = SiddhiAppProcessorConstants.RuntimeMode.ERROR;
+    private BundleContext bundleContext;
+    private ConfigProvider configProvider;
 
     private StreamProcessorDataHolder() {
 
@@ -168,6 +167,14 @@ public class StreamProcessorDataHolder {
         return serverListeners;
     }
 
+    public static PermissionProvider getPermissionProvider() {
+        return StreamProcessorDataHolder.permissionProvider;
+    }
+
+    public static void setPermissionProvider(PermissionProvider permissionProvider) {
+        StreamProcessorDataHolder.permissionProvider = permissionProvider;
+    }
+
     /**
      * Returns the CarbonRuntime service which gets set through a service component.
      *
@@ -209,13 +216,5 @@ public class StreamProcessorDataHolder {
 
     public void setConfigProvider(ConfigProvider configProvider) {
         this.configProvider = configProvider;
-    }
-
-    public static PermissionProvider getPermissionProvider() {
-        return StreamProcessorDataHolder.permissionProvider;
-    }
-
-    public static void setPermissionProvider(PermissionProvider permissionProvider) {
-        StreamProcessorDataHolder.permissionProvider = permissionProvider;
     }
 }

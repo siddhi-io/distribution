@@ -17,15 +17,15 @@
  */
 package io.siddhi.distribution.msf4j.interceptor.common.common;
 
+import io.siddhi.distribution.common.common.utils.SPConstants;
+import io.siddhi.distribution.msf4j.interceptor.common.common.internal.DataHolder;
+import io.siddhi.distribution.msf4j.interceptor.common.common.util.InterceptorConstants;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.analytics.idp.client.core.api.IdPClient;
 import org.wso2.carbon.analytics.idp.client.core.exception.AuthenticationException;
 import org.wso2.carbon.analytics.idp.client.core.utils.IdPClientConstants;
-import io.siddhi.distribution.msf4j.interceptor.common.common.internal.DataHolder;
-import io.siddhi.distribution.msf4j.interceptor.common.common.util.InterceptorConstants;
-import io.siddhi.distribution.common.common.utils.SPConstants;
 import org.wso2.msf4j.Request;
 import org.wso2.msf4j.Response;
 import org.wso2.msf4j.interceptor.RequestInterceptor;

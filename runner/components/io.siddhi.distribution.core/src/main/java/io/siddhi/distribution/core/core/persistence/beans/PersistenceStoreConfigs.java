@@ -23,6 +23,9 @@ import org.wso2.carbon.database.query.manager.config.Queries;
 
 import java.util.List;
 
+/**
+ * Class which hold persistence store configuration.
+ */
 public class PersistenceStoreConfigs {
     private String location = "siddhi-app-persistence";
     private String datasource;

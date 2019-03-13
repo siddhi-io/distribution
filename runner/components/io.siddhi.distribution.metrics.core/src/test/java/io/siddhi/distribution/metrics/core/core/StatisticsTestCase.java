@@ -18,6 +18,8 @@
 
 package io.siddhi.distribution.metrics.core.core;
 
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
+import io.siddhi.distribution.metrics.core.core.internal.SiddhiStatisticsManager;
 import org.apache.log4j.Logger;
 import org.awaitility.Awaitility;
 import org.testng.Assert;
@@ -30,8 +32,6 @@ import org.wso2.carbon.metrics.core.Level;
 import org.wso2.carbon.metrics.core.MetricManagementService;
 import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.Metrics;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiMetricsDataHolder;
-import io.siddhi.distribution.metrics.core.core.internal.SiddhiStatisticsManager;
 import org.wso2.siddhi.core.SiddhiAppRuntime;
 import org.wso2.siddhi.core.SiddhiManager;
 import org.wso2.siddhi.core.config.StatisticsConfiguration;
@@ -48,14 +48,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class StatisticsTestCase {
     private static final Logger log = Logger.getLogger(StatisticsTestCase.class);
+    protected static Metrics metrics;
+    protected static MetricService metricService;
+    protected static MetricManagementService metricManagementService;
     private int count;
     private boolean eventArrived;
-    protected static Metrics metrics;
-    
-    protected static MetricService metricService;
-    
-    protected static MetricManagementService metricManagementService;
-    
+
+    @AfterSuite
+    protected static void destroy() throws Exception {
+        metrics.deactivate();
+    }
+
     @BeforeSuite
     protected void initMetrics() throws Exception {
         // Initialize the Metrics
@@ -65,7 +68,7 @@ public class StatisticsTestCase {
         metricService = metrics.getMetricService();
         metricManagementService = metrics.getMetricManagementService();
     }
-    
+
     @BeforeMethod
     public void init() {
         metricManagementService.setRootLevel(Level.ALL);
@@ -76,12 +79,7 @@ public class StatisticsTestCase {
         SiddhiMetricsDataHolder.getInstance().setMetricManagementService(metricManagementService);
         metricManagementService.startReporter("Console");
     }
-    
-    @AfterSuite
-    protected static void destroy() throws Exception {
-        metrics.deactivate();
-    }
-    
+
     @Test
     public void statisticsMetricsFactory() throws InterruptedException {
         StatisticsConfiguration statisticsConfiguration = new StatisticsConfiguration(new SiddhiMetricsFactory());
@@ -95,14 +93,14 @@ public class StatisticsTestCase {
                         "MetricsTest",
                         true));
         AssertJUnit.assertEquals("test.throughput", throughputTracker.getName());
-        
+
         SiddhiMemoryUsageMetric memoryUsageTracker = (SiddhiMemoryUsageMetric) statisticsConfiguration
                 .getFactory()
                 .createMemoryUsageTracker(new SiddhiStatisticsManager("MetricsTest",
                         true));
-        mockmoryObject mockmoryObject = new mockmoryObject("test.memory");
-        memoryUsageTracker.registerObject(mockmoryObject, "test.memory");
-        AssertJUnit.assertEquals("test.memory", memoryUsageTracker.getName(mockmoryObject));
+        MockMemory mockMemory = new MockMemory("test.memory");
+        memoryUsageTracker.registerObject(mockMemory, "test.memory");
+        AssertJUnit.assertEquals("test.memory", memoryUsageTracker.getName(mockMemory));
         SiddhiBufferedEventsMetric bufferedEventsTracker = (SiddhiBufferedEventsMetric) statisticsConfiguration
                 .getFactory().createBufferSizeTracker(new SiddhiStatisticsManager("MetricsTest",
                         true));
@@ -111,7 +109,7 @@ public class StatisticsTestCase {
             public long getBufferedEvents() {
                 return 1;
             }
-            
+
             @Override
             public boolean containsBufferedEvents() {
                 return true;
@@ -120,7 +118,7 @@ public class StatisticsTestCase {
         bufferedEventsTracker.registerEventBufferHolder(eventBufferHolder, "test.size");
         AssertJUnit.assertEquals("test.size", bufferedEventsTracker.getName(eventBufferHolder));
     }
-    
+
     @Test
     public void statisticsTest1() throws InterruptedException {
         log.info("statistics test 1");
@@ -142,7 +140,7 @@ public class StatisticsTestCase {
                 "from cseEventStream[volume > 90] " +
                 "select * " +
                 "insert into outputStream ;";
-        
+
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
         siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
             @Override
@@ -156,14 +154,14 @@ public class StatisticsTestCase {
                 }
             }
         });
-        
+
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("cseEventStream");
         siddhiAppRuntime.start();
         for (int i = 0; i < 1; i++) {
-            inputHandler.send(new Object[] {"WSO2", 55.6f, 100});
-            inputHandler.send(new Object[] {"IBM", 75.6f, 100});
+            inputHandler.send(new Object[]{"WSO2", 55.6f, 100});
+            inputHandler.send(new Object[]{"IBM", 75.6f, 100});
         }
-        
+
         String name1 = MetricService.name("org.wso2.siddhi.SiddhiApps.MetricsTest",
                 "Siddhi.Queries.query1.memory");
         String name2 = MetricService.name("org.wso2.siddhi.SiddhiApps.MetricsTest",
@@ -196,13 +194,13 @@ public class StatisticsTestCase {
         AssertJUnit.assertEquals("INFO", metricManagementService.getMetricLevel(name5).name());
         AssertJUnit.assertEquals("INFO", metricManagementService.getMetricLevel(name6).name());
         AssertJUnit.assertEquals("INFO", metricManagementService.getMetricLevel(name7).name());
-        
+
         AssertJUnit.assertTrue(eventArrived);
         AssertJUnit.assertEquals(3, count);
         metricManagementService.stopReporter("Console");
         siddhiAppRuntime.shutdown();
     }
-    
+
     @Test
     public void asyncTest5() throws InterruptedException {
         log.info("async test 5");
@@ -228,7 +226,7 @@ public class StatisticsTestCase {
                 "insert into outputStream ;";
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(siddhiApp);
         siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
-            
+
             @Override
             public void receive(Event[] events) {
                 EventPrinter.print(events);
@@ -242,16 +240,16 @@ public class StatisticsTestCase {
                     count++;
                 }
             }
-            
+
         });
-        
+
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("cseEventStream");
         siddhiAppRuntime.start();
-        inputHandler.send(new Object[] {"WSO2", 55.6f, 100});
-        inputHandler.send(new Object[] {"IBM", 9.6f, 100});
-        inputHandler.send(new Object[] {"FB", 7.6f, 100});
-        inputHandler.send(new Object[] {"GOOG", 5.6f, 100});
-        inputHandler.send(new Object[] {"WSO2", 15.6f, 100});
+        inputHandler.send(new Object[]{"WSO2", 55.6f, 100});
+        inputHandler.send(new Object[]{"IBM", 9.6f, 100});
+        inputHandler.send(new Object[]{"FB", 7.6f, 100});
+        inputHandler.send(new Object[]{"GOOG", 5.6f, 100});
+        inputHandler.send(new Object[]{"WSO2", 15.6f, 100});
         String name1 = MetricService.name("org.wso2.siddhi.SiddhiApps.MetricsTest2.Siddhi.Streams" +
                 ".cseEventStream.size");
         Awaitility.await().atMost(5, TimeUnit.SECONDS).until(() -> {
@@ -263,14 +261,14 @@ public class StatisticsTestCase {
         AssertJUnit.assertTrue(eventArrived);
         metricManagementService.stopReporter("Console");
     }
-    
-    private class mockmoryObject {
+
+    private class MockMemory {
         String name;
-        
-        public mockmoryObject(String name) {
+
+        public MockMemory(String name) {
             this.name = name;
         }
-        
+
         String getName() {
             return name;
         }

@@ -16,6 +16,9 @@
 
 package io.siddhi.distribution.core.core.persistence.exception;
 
+/**
+ * Exception class for persistence store configuration.
+ */
 public class PersistenceStoreConfigurationException extends Exception {
 
     public PersistenceStoreConfigurationException() {

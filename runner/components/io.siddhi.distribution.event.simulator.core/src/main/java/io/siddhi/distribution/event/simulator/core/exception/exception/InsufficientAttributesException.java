@@ -44,7 +44,7 @@ public class InsufficientAttributesException extends SimulationValidationExcepti
      * Throws customizes validating the number of attributes generated
      *
      * @param message Error Message
-     * @param cause throwable that caused the exception
+     * @param cause   throwable that caused the exception
      */
     public InsufficientAttributesException(String message, Throwable cause) {
         super(message, cause);

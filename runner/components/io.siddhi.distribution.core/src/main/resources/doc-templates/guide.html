@@ -24,9 +24,12 @@
         large-scale deployments right away.
     </p>
 
-    <p> The REST API is implemented based on REST best practices and specifications as a CXF REST web application running on WSO2 API
+    <p> The REST API is implemented based on REST best practices and specifications as a CXF REST web application
+        running on WSO2 API
         Manager. API development is started with a swagger specification with a contract-first approach.
-        Please see <a href="https://raw.githubusercontent.com/wso2/carbon-apimgt/v6.0.4/components/apimgt/org.wso2.carbon.apimgt.rest.api.publisher/src/main/resources/publisher-api.yaml">full swagger definition</a> which is written using swagger 2.0.
+        Please see <a
+                href="https://raw.githubusercontent.com/wso2/carbon-apimgt/v6.0.4/components/apimgt/org.wso2.carbon.apimgt.rest.api.publisher/src/main/resources/publisher-api.yaml">full
+            swagger definition</a> which is written using swagger 2.0.
         This can be also retrieved from the Web app itself using the URL
         <code>https://&lt;host-name[:port]&gt;/api/am/publisher/v0.11/swagger.json</code>
     </p>
@@ -43,7 +46,8 @@
         example is shown below,
     </p>
 
-    <div class="pre"><code class="bash">curl -X POST -H "Authorization: Basic YWRtaW46YWRtaW4=" -H "Content-Type: application/json" -d @payload.json http://localhost:9763/client-registration/v0.11/register</code></div>
+    <div class="pre"><code class="bash">curl -X POST -H "Authorization: Basic YWRtaW46YWRtaW4=" -H "Content-Type:
+        application/json" -d @payload.json http://localhost:9763/client-registration/v0.11/register</code></div>
     <br/>
 
     <p>
@@ -51,13 +55,13 @@
     </p>
 
     <div class="pre"><code class="json">{
-    "callbackUrl": "www.google.lk",
-    "clientName": "rest_api_publisher",
-    "tokenScope": "Production",
-    "owner": "admin",
-    "grantType": "password refresh_token",
-    "saasApp": true
-}</code></div>
+        "callbackUrl": "www.google.lk",
+        "clientName": "rest_api_publisher",
+        "tokenScope": "Production",
+        "owner": "admin",
+        "grantType": "password refresh_token",
+        "saasApp": true
+        }</code></div>
     <br/>
 
     <p>
@@ -65,20 +69,20 @@
     </p>
 
     <div class="pre"><code class="json">{
-    "callBackURL": "www.google.lk",
-    "jsonString":
-    "{
-    \"username\":\"admin\",
-    \"redirect_uris\":\"www.google.lk\",
-    \"tokenScope\":[Ljava.lang.String;@3a73796a,
-    \"client_name\":\"admin_rest_api_publisher\",
-    \"grant_types\":\"authorization_code password refresh_token iwa:ntlm
-    urn:ietf:params:oauth:grant-type:saml2-bearer client_credentialsimplicit\"
-    }",
-    "clientName": null,
-    "clientId": "HfEl1jJPdg5tbtrxhAwybN05QGoa",
-    "clientSecret": "l6c0aoLcWR3fwezHhc7XoGOht5Aa"
-}</code></div>
+        "callBackURL": "www.google.lk",
+        "jsonString":
+        "{
+        \"username\":\"admin\",
+        \"redirect_uris\":\"www.google.lk\",
+        \"tokenScope\":[Ljava.lang.String;@3a73796a,
+        \"client_name\":\"admin_rest_api_publisher\",
+        \"grant_types\":\"authorization_code password refresh_token iwa:ntlm
+        urn:ietf:params:oauth:grant-type:saml2-bearer client_credentialsimplicit\"
+        }",
+        "clientName": null,
+        "clientId": "HfEl1jJPdg5tbtrxhAwybN05QGoa",
+        "clientSecret": "l6c0aoLcWR3fwezHhc7XoGOht5Aa"
+        }</code></div>
     <br/>
 
     <p>
@@ -93,7 +97,9 @@
         </b>
     </p>
 
-    <div class="pre"><code class="bash">curl -k -d "grant_type=password&username=admin&password=admin&<b>scope=apim:api_view</b>" -H "Authorization: Basic SGZFbDFqSlBkZzV0YnRyeGhBd3liTjA1UUdvYTpsNmMwYW9MY1dSM2Z3ZXpIaGM3WG9HT2h0NUFh" https://127.0.0.1:8243/token</code></div>
+    <div class="pre"><code class="bash">curl -k -d "grant_type=password&username=admin&password=admin&<b>scope=apim:api_view</b>"
+        -H "Authorization: Basic SGZFbDFqSlBkZzV0YnRyeGhBd3liTjA1UUdvYTpsNmMwYW9MY1dSM2Z3ZXpIaGM3WG9HT2h0NUFh"
+        https://127.0.0.1:8243/token</code></div>
     <br/>
 
     <p>
@@ -101,12 +107,12 @@
     </p>
 
     <div class="pre"><code class="json">{
-    "scope":"apim:api_view",
-    "token_type":"Bearer",
-    "expires_in":3600,
-    "refresh_token":"33c3be152ebf0030b3fb76f2c1f80bf8",
-    "access_token":"292ff0fd256814536baca0926f483c8d"
-}</code></div>
+        "scope":"apim:api_view",
+        "token_type":"Bearer",
+        "expires_in":3600,
+        "refresh_token":"33c3be152ebf0030b3fb76f2c1f80bf8",
+        "access_token":"292ff0fd256814536baca0926f483c8d"
+        }</code></div>
     <br/>
 
     <p>

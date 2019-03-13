@@ -18,9 +18,9 @@
 
 package io.siddhi.distribution.event.simulator.core.service.service.bean;
 
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 
 /**
  * ResourceDependencyData holds details about the resource required by the inactive simulation

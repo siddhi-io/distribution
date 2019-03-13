@@ -39,9 +39,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.awaitility.Awaitility.await;
 import static java.lang.System.currentTimeMillis;
 import static java.net.URLConnection.guessContentTypeFromName;
-import static org.awaitility.Awaitility.await;
+
 
 
 /**
@@ -50,11 +51,11 @@ import static org.awaitility.Awaitility.await;
 public class TestUtil {
     private static final String LINE_FEED = "\r\n";
     private static final String CHARSET = "UTF-8";
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TestUtil.class);
     private HttpURLConnection connection = null;
     private OutputStream outputStream = null;
     private PrintWriter writer = null;
     private String boundary = null;
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TestUtil.class);
 
     public TestUtil(URI baseURI, String path, Boolean auth, Boolean keepAlive, String methodType,
                     String contentType, String userName, String password) {
@@ -93,6 +94,36 @@ public class TestUtil {
         } catch (IOException e) {
             handleException("IOException occurred while running the HttpsSourceTestCaseForSSL", e);
         }
+    }
+
+    public static void waitForAppDeployment(SiddhiAppRuntimeService runtimeService,
+                                            EventStreamService streamService, String appName, Duration atMost) {
+        await().atMost(atMost).until(() -> {
+            SiddhiAppRuntime app = runtimeService.getActiveSiddhiAppRuntimes().get(appName);
+            if (app != null) {
+                List<String> streams = streamService.getStreamNames(appName);
+                if (!streams.isEmpty()) {
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+
+    public static void waitForAppUndeployment(SiddhiAppRuntimeService runtimeService, String appName,
+                                              Duration atMost) {
+        await().atMost(atMost).until(() -> {
+            SiddhiAppRuntime app = runtimeService.getActiveSiddhiAppRuntimes().get(appName);
+            return app == null;
+        });
+    }
+
+    public static void waitForMicroServiceDeployment(MicroservicesRegistry microservicesRegistry, String basePath,
+                                                     Duration duration) {
+        await().atMost(duration).until(() -> {
+            Optional<Map.Entry<String, Object>> entry = microservicesRegistry.getServiceWithBasePath(basePath);
+            return entry.isPresent();
+        });
     }
 
     public HttpURLConnection getConnection() {
@@ -198,36 +229,6 @@ public class TestUtil {
 
     private void handleException(String msg, Exception ex) {
         logger.error(msg, ex);
-    }
-
-    public static void waitForAppDeployment(SiddhiAppRuntimeService runtimeService,
-                                            EventStreamService streamService, String appName, Duration atMost) {
-        await().atMost(atMost).until(() -> {
-            SiddhiAppRuntime app = runtimeService.getActiveSiddhiAppRuntimes().get(appName);
-            if (app != null) {
-                List<String> streams = streamService.getStreamNames(appName);
-                if (!streams.isEmpty()) {
-                    return true;
-                }
-            }
-            return false;
-        });
-    }
-
-    public static void waitForAppUndeployment(SiddhiAppRuntimeService runtimeService, String appName,
-                                              Duration atMost) {
-        await().atMost(atMost).until(() -> {
-            SiddhiAppRuntime app = runtimeService.getActiveSiddhiAppRuntimes().get(appName);
-            return app == null;
-        });
-    }
-
-    public static void waitForMicroServiceDeployment(MicroservicesRegistry microservicesRegistry, String basePath,
-                                                     Duration duration) {
-        await().atMost(duration).until(() -> {
-            Optional<Map.Entry<String, Object>> entry = microservicesRegistry.getServiceWithBasePath(basePath);
-            return entry.isPresent();
-        });
     }
 
 }

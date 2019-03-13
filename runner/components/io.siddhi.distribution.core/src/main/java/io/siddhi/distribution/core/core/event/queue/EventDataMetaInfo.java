@@ -20,9 +20,13 @@ package io.siddhi.distribution.core.core.event.queue;
 
 import org.wso2.siddhi.query.api.definition.Attribute;
 
+/**
+ * Class which holds event data meta information.
+ */
 public class EventDataMetaInfo {
-    int eventSize;
-    Attribute.Type attributeType;
+
+    private int eventSize;
+    private Attribute.Type attributeType;
 
     public EventDataMetaInfo(int eventSize, Attribute.Type attributeType) {
         this.eventSize = eventSize;

@@ -16,9 +16,10 @@
 
 package io.siddhi.distribution.test.osgi;
 
-import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonDistribution;
-import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
-
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
+import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
 import org.ops4j.pax.exam.Option;
@@ -28,10 +29,7 @@ import org.ops4j.pax.exam.testng.listener.PaxExam;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
-import io.siddhi.distribution.test.osgi.util.TestUtil;
 import org.wso2.carbon.container.CarbonContainerFactory;
-import org.wso2.carbon.container.options.CarbonDistributionOption;
 import org.wso2.carbon.kernel.CarbonServerInfo;
 
 import java.net.URI;
@@ -39,11 +37,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 import java.util.Map;
-
 import javax.inject.Inject;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonDistribution;
+import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
 
 /**
  * OSGI Tests for siddhi-editor.
@@ -98,7 +95,7 @@ public class SiddhiEditorTestCase {
 
     @Configuration
     public Option[] createConfiguration() {
-        logger.info("Running - "+ this.getClass().getName());
+        logger.info("Running - " + this.getClass().getName());
         return new Option[]{
                 copySiddhiAppFileOption(),
                 //copySampleFileOption(),
@@ -106,7 +103,7 @@ public class SiddhiEditorTestCase {
                 carbonDistribution(Paths.get("target", "siddhi-tooling-" +
                         System.getProperty("io.siddhi.distribution.version")), "editor")/*,
                 CarbonDistributionOption.debug(5005)*/
-                };
+        };
     }
 
     @Test

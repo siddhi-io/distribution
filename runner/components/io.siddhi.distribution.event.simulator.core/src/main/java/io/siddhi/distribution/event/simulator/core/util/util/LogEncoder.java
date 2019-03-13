@@ -21,7 +21,8 @@ package io.siddhi.distribution.event.simulator.core.util.util;
  */
 public class LogEncoder {
 
-    private LogEncoder() {}
+    private LogEncoder() {
+    }
 
     public static String removeCRLFCharacters(String str) {
         if (str != null) {

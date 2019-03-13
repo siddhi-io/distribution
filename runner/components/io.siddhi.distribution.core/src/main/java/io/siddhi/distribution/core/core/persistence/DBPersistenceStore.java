@@ -30,7 +30,6 @@ import io.siddhi.distribution.core.core.persistence.util.PersistenceConstants;
 import io.siddhi.distribution.core.core.persistence.util.RDBMSConfiguration;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
-
 import org.wso2.siddhi.core.exception.CannotClearSiddhiAppStateException;
 import org.wso2.siddhi.core.util.persistence.PersistenceStore;
 
@@ -371,6 +370,7 @@ public class DBPersistenceStore implements PersistenceStore {
 
     /**
      * Method to clear all the revisions related to a Siddhi App
+     *
      * @param siddhiAppName is the name of the Siddhi Application whose all revisions to remove
      */
     @Override
