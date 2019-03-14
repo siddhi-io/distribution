@@ -16,7 +16,7 @@
 
 package io.siddhi.distribution.test.osgi;
 
-import io.siddhi.distribution.core.core.internal.StreamProcessorDataHolder;
+import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.apache.log4j.Logger;
 import org.awaitility.Awaitility;
