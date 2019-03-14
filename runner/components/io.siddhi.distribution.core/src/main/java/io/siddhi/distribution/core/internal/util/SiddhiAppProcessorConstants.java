@@ -57,7 +57,7 @@ public class SiddhiAppProcessorConstants {
     }
 
     /**
-     * Runtime modes of Stream Processor engine
+     * Runtime modes of Stream Processor engine.
      */
     public enum RuntimeMode {
         // Run File Mode.
