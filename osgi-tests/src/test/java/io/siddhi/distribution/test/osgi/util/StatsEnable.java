@@ -38,7 +38,7 @@ public class StatsEnable {
     }
 
     /**
-     * Get statsEnable
+     * Get statsEnable.
      *
      * @return statsEnable
      **/

@@ -42,7 +42,7 @@ public class SiddhiAppContent {
     }
 
     /**
-     * Siddhi content
+     * Siddhi content.
      *
      * @return content
      **/

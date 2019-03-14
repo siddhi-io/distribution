@@ -42,7 +42,7 @@ public class InlineResponse400 {
     }
 
     /**
-     * Get code
+     * Get code.
      *
      * @return code
      **/
@@ -61,7 +61,7 @@ public class InlineResponse400 {
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return status
      **/
@@ -80,7 +80,7 @@ public class InlineResponse400 {
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return message
      **/

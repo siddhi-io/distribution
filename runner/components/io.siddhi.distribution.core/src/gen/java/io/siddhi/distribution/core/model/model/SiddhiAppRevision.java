@@ -42,7 +42,7 @@ public class SiddhiAppRevision {
     }
 
     /**
-     * Siddhi revision
+     * Siddhi revision.
      *
      * @return revision
      **/

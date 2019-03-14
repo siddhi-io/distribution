@@ -39,7 +39,7 @@ public class InlineResponse200 {
     }
 
     /**
-     * Siddhi App Name
+     * Siddhi App Name.
      *
      * @return name
      **/
@@ -58,7 +58,7 @@ public class InlineResponse200 {
     }
 
     /**
-     * Siddhi Query
+     * Siddhi Query.
      *
      * @return query
      **/

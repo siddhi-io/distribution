@@ -62,7 +62,7 @@ public class SiddhiAppsApi implements Microservice {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Saves the Siddhi Application", notes = "Saves the Siddhi " +
             "Application. Request **siddhiApp** explains the Siddhi Query. ", response = InlineResponse400.class,
-            tags = {"Artifact",})
+            tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 201, message = "The Siddhi Application is successfully " +
                     "validated and saved.", response = InlineResponse400.class),
@@ -84,7 +84,7 @@ public class SiddhiAppsApi implements Microservice {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Updates the Siddhi Application.", notes = "Updates the Siddhi " +
             "Application. Request **siddhiApp** explains the Siddhi Query. ", response = InlineResponse400.class,
-            tags = {"Artifact",})
+            tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The Siddhi Application is successfully " +
                     "validated and updated.", response = InlineResponse400.class),
@@ -104,7 +104,7 @@ public class SiddhiAppsApi implements Microservice {
     @GET
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Lists Siddhi Applications", notes = "Provides the name list of " +
-            "Siddhi Applications that exist.", response = InlineResponse200.class, tags = {"Artifact",})
+            "Siddhi Applications that exist.", response = InlineResponse200.class, tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The Siddhi Applications are successfully " +
                     "retrieved.", response = InlineResponse200.class)})
@@ -120,7 +120,7 @@ public class SiddhiAppsApi implements Microservice {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Deletes the Siddhi Application.", notes = "Removes the currently" +
             " deployed Siddhi Application with the name specified. Path param of **appName** determines name of the " +
-            "Siddhi application. ", response = InlineResponse400.class, tags = {"Artifact",})
+            "Siddhi application. ", response = InlineResponse400.class, tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The Siddhi Application is successfully deleted.",
                     response = InlineResponse400.class),
@@ -141,7 +141,7 @@ public class SiddhiAppsApi implements Microservice {
     @Path("/{appName}")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Retrieves the specified Siddhi Application.", notes = "Retrieves " +
-            "the Siddhi Application with the specified name.", response = InlineResponse200.class, tags = {"Artifact",})
+            "the Siddhi Application with the specified name.", response = InlineResponse200.class, tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The Siddhi Application is successfully " +
                     "retrieved.", response = InlineResponse200.class),
@@ -158,7 +158,7 @@ public class SiddhiAppsApi implements Microservice {
     @Path("/{appName}/status")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Fetches the status of the Siddhi Application.", notes = "Fetches " +
-            "the status of the Siddhi Application.", response = InlineResponse200.class, tags = {"Artifact",})
+            "the status of the Siddhi Application.", response = InlineResponse200.class, tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The state of the Siddhi Application is " +
                     "successfully retrieved.", response = InlineResponse200.class),
@@ -176,7 +176,7 @@ public class SiddhiAppsApi implements Microservice {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Backs up the current state of a Siddhi Application.",
             notes = "Backs up the current state of the specified Siddhi Application. ",
-            response = InlineResponse400.class, tags = {"State",})
+            response = InlineResponse400.class, tags = {"State"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The state of the Siddhi Application is " +
                     "successfully persisted.", response = InlineResponse400.class),
@@ -195,7 +195,7 @@ public class SiddhiAppsApi implements Microservice {
     @Path("/{appName}/restore")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Restores the state of a Siddhi Application.", notes = "Restores " +
-            "the state of the specified Siddhi Application.", response = InlineResponse400.class, tags = {"State",})
+            "the state of the specified Siddhi Application.", response = InlineResponse400.class, tags = {"State"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The Siddhi Application is successfully " +
                     "restored.", response = InlineResponse400.class),
@@ -216,10 +216,11 @@ public class SiddhiAppsApi implements Microservice {
     @Path("/{appName}/revisions")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Deletes all revisions of the periodic state of a Siddhi Application.",
-            notes = "Deletes all revisions of the periodic state of the specified Siddhi Application.", response = InlineResponse400.class, tags = {"State",})
+            notes = "Deletes all revisions of the periodic state of the specified Siddhi Application.",
+            response = InlineResponse400.class, tags = {"State"})
     @io.swagger.annotations.ApiResponses(value = {
-            @io.swagger.annotations.ApiResponse(code = 200, message = "All revisions of the periodic state of the siddhi application" +
-                    " are deleted succussfully.", response = InlineResponse400.class),
+            @io.swagger.annotations.ApiResponse(code = 200, message = "All revisions of the periodic state of the " +
+                    "siddhi application are deleted succussfully.", response = InlineResponse400.class),
             @io.swagger.annotations.ApiResponse(code = 404, message = "The Siddhi Application is not found.",
                     response = InlineResponse400.class),
             @io.swagger.annotations.ApiResponse(code = 500, message = "An unexpected error occured.",
@@ -236,10 +237,13 @@ public class SiddhiAppsApi implements Microservice {
     @DELETE
     @Path("/revisions")
     @Produces({"application/json"})
-    @io.swagger.annotations.ApiOperation(value = "Deletes all revisions of the periodic state of all Siddhi Applications.",
-            notes = "Deletes all revisions of the periodic state of all Siddhi Applications. ", response = InlineResponse400.class, tags = {"State",})
+    @io.swagger.annotations.ApiOperation(value = "Deletes all revisions of the periodic state of all Siddhi " +
+            "Applications.",
+            notes = "Deletes all revisions of the periodic state of all Siddhi Applications. ",
+            response = InlineResponse400.class, tags = {"State"})
     @io.swagger.annotations.ApiResponses(value = {
-            @io.swagger.annotations.ApiResponse(code = 200, message = "All revisions of the periodic state of all the siddhi applicationa " +
+            @io.swagger.annotations.ApiResponse(code = 200, message = "All revisions of the periodic state of " +
+                    "all the siddhi applicationa " +
                     "are deleted succussfully.", response = InlineResponse400.class),
             @io.swagger.annotations.ApiResponse(code = 500, message = "An unexpected error occured.",
                     response = InlineResponse400.class)})
@@ -274,7 +278,7 @@ public class SiddhiAppsApi implements Microservice {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Fetches the statistics details of the Siddhi Applications.",
             notes = "Fetches the status of the Siddhi Application. ", response = SiddhiAppMetrics.class,
-            tags = {"Artifact",})
+            tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The Siddhi Applications  statistics data are " +
                     "successfully retrieved.", response = SiddhiAppMetrics.class)})
@@ -290,7 +294,7 @@ public class SiddhiAppsApi implements Microservice {
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Dissable the statistics of siddhi application.", notes =
-            "Dissable the statistics of siddhi application. ", response = void.class, tags = {"Artifact",})
+            "Dissable the statistics of siddhi application. ", response = void.class, tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Siddhi Application sucessfully updated.",
                     response = void.class),
@@ -310,7 +314,7 @@ public class SiddhiAppsApi implements Microservice {
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Dissable the statistics of siddhi application.", notes =
-            "Dissable the statistics of siddhi application. ", response = void.class, tags = {"Artifact",})
+            "Dissable the statistics of siddhi application. ", response = void.class, tags = {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Siddhi Application sucessfully updated.",
                     response = void.class),

@@ -42,7 +42,7 @@ public class Success {
     }
 
     /**
-     * Get code
+     * Get code.
      *
      * @return code
      **/
@@ -61,7 +61,7 @@ public class Success {
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return status
      **/
@@ -80,7 +80,7 @@ public class Success {
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return message
      **/

@@ -37,7 +37,7 @@ public class SiddhiAppStatus {
     }
 
     /**
-     * Siddhi App status
+     * Siddhi App status.
      *
      * @return status
      **/
