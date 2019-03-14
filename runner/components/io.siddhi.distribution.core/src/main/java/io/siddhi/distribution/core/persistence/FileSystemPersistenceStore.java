@@ -30,7 +30,7 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Implementation of Persistence Store that would persist snapshots to the file system
+ * Implementation of Persistence Store that would persist snapshots to the file system.
  */
 public class FileSystemPersistenceStore implements PersistenceStore {
 
@@ -158,7 +158,7 @@ public class FileSystemPersistenceStore implements PersistenceStore {
     }
 
     /**
-     * Method to remove revisions that are older than the user specified amount
+     * Method to remove revisions that are older than the user specified amount.
      *
      * @param siddhiAppName is the name of the Siddhi Application whose old revisions to remove
      */

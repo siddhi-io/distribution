@@ -420,7 +420,7 @@ public class IncrementalDBPersistenceStore implements IncrementalPersistenceStor
     }
 
     /**
-     * Method that would create the persistence table
+     * Method that would create the persistence table.
      */
     private void createTableIfNotExist() {
         if (!executionInfo.isTableExist()) {

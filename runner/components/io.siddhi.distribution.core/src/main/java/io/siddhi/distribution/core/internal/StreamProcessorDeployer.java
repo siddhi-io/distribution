@@ -54,7 +54,6 @@ import java.util.Map;
 /**
  * {@code StreamProcessorDeployer} is responsible for all Siddhi Appp file deployment tasks.
  */
-
 @Component(
         name = "stream-processor-deployer",
         immediate = true,
@@ -344,7 +343,7 @@ public class StreamProcessorDeployer implements Deployer {
     }
 
     /**
-     * broadcastDeploy() is used to notify simulationDependencyListeners about a new file deployment
+     * broadcastDeploy() is used to notify simulationDependencyListeners about a new file deployment.
      */
     private void broadcastDeploy() {
         if (simulationDependencyListener != null) {
@@ -353,7 +352,7 @@ public class StreamProcessorDeployer implements Deployer {
     }
 
     /**
-     * broadcastUpdate() is used to notify simulationDependencyListeners about a update on a deployed file
+     * broadcastUpdate() is used to notify simulationDependencyListeners about a update on a deployed file.
      */
     private void broadcastUpdate() {
         if (simulationDependencyListener != null) {
@@ -362,7 +361,7 @@ public class StreamProcessorDeployer implements Deployer {
     }
 
     /**
-     * broadcastUpdate() is used to notify simulationDependencyListeners about a delete
+     * broadcastUpdate() is used to notify simulationDependencyListeners about a delete.
      */
     private void broadcastDelete() {
         if (simulationDependencyListener != null) {
