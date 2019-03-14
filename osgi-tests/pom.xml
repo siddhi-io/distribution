@@ -1055,7 +1055,7 @@
             <id>with-tests</id>
             <activation>
                 <property>
-                    <name>!skipTests</name>
+                    <name>!maven.test.skip</name>
                 </property>
             </activation>
             <build>
@@ -1265,7 +1265,7 @@
                         <artifactId>maven-antrun-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>post-integration-test</phase>
+                                <phase>install</phase>
                                 <configuration>
                                     <target xmlns:jacoco="antlib:org.jacoco.ant">
                                         <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
