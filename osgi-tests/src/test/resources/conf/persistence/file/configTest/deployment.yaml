@@ -215,7 +215,7 @@ wso2.artifact.deployment:
   # HA Configuration
 state.persistence:
   enabled: true
-  persistenceStore: persistenceStore: io.siddhi.distribution.core.persistence.FileSystemPersistenceStore
+  persistenceStore: io.siddhi.distribution.core.persistence.FileSystemPersistenceStore
   config:
 
   # Secure Vault Configuration
