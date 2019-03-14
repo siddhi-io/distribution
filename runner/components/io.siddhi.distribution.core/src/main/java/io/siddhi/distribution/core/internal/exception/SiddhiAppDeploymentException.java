@@ -16,7 +16,7 @@
 package io.siddhi.distribution.core.internal.exception;
 
 /**
- * Execption class that used when Siddhi app deployment is failed
+ * Execption class that used when Siddhi app deployment is failed.
  */
 public class SiddhiAppDeploymentException extends Exception {
 

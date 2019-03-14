@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * FileStore keeps a record of all CSV files that have been uploaded to the system
+ * FileStore keeps a record of all CSV files that have been uploaded to the system.
  *
  * @see FileUploader
  */

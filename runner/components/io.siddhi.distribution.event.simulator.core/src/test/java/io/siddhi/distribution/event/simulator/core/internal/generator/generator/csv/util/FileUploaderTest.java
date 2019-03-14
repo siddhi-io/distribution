@@ -36,7 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * FileUploaderTest verifies the functionality of uploading CSv files
+ * FileUploaderTest verifies the functionality of uploading CSv files.
  */
 public class FileUploaderTest {
     private static File testDir = Paths.get("target", "FileUploaderTest").toFile();

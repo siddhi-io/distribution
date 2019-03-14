@@ -19,7 +19,7 @@
 package io.siddhi.distribution.core.persistence.util;
 
 /**
- * Class that holds the Database Queries required for Periodic Persistence
+ * Class that holds the Database Queries required for Periodic Persistence.
  */
 public class ExecutionInfo {
 

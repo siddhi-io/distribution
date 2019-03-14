@@ -20,7 +20,7 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
 
 
 /**
- * customized exception class for when size of file uploaded exceeds the size limit
+ * customized exception class for when size of file uploaded exceeds the size limit.
  */
 public class FileLimitExceededException extends RuntimeException {
 

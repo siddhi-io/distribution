@@ -21,7 +21,7 @@ package io.siddhi.distribution.event.simulator.core.service.service.bean;
 import io.siddhi.distribution.event.simulator.core.service.service.EventSimulator;
 
 /**
- * ActiveSimulatorData holds details about the active simulator
+ * ActiveSimulatorData holds details about the active simulator.
  */
 public class ActiveSimulatorData {
     private EventSimulator eventSimulator;

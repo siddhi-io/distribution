@@ -22,7 +22,7 @@ import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 
 /**
  * customized exception class for validation whethere the number of attributes generated is equal to the number of
- * attributes in stream
+ * attributes in stream.
  */
 public class InsufficientAttributesException extends SimulationValidationException {
 

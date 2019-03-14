@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 
 /**
- * RegexBasedAttributeDTO represents the Random data generator based on given regular expression
+ * RegexBasedAttributeDTO represents the Random data generator based on given regular expression.
  */
 
 public class RegexBasedAttributeDTO implements RandomAttributeDTO {

@@ -52,7 +52,7 @@ import static io.siddhi.distribution.event.simulator.core.internal.util.util.Com
 
 
 /**
- * DatabaseEventGenerator class is used to generate events from a database
+ * DatabaseEventGenerator class is used to generate events from a database.
  */
 public class DatabaseEventGenerator implements EventGenerator {
     private static final Logger log = LoggerFactory.getLogger(DatabaseEventGenerator.class);

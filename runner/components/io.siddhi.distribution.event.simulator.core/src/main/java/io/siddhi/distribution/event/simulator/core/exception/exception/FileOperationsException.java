@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.exception.exception;
 
 /**
- * customized exception class for copying and deleting files
+ * customized exception class for copying and deleting files.
  */
 public class FileOperationsException extends Exception {
     /**

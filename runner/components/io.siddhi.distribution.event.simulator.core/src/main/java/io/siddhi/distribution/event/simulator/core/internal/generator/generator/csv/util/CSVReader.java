@@ -48,7 +48,7 @@ import java.util.TreeMap;
 
 
 /**
- * CSVReader class is used to read csv files
+ * CSVReader class is used to read csv files.
  */
 public class CSVReader {
     private final Logger log = LoggerFactory.getLogger(CSVReader.class);

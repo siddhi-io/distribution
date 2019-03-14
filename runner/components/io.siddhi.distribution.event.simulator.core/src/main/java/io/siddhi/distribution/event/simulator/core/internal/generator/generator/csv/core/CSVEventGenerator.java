@@ -46,7 +46,7 @@ import static io.siddhi.distribution.event.simulator.core.internal.util.util.Com
 
 /**
  * CSVEventGenerator implements EventGenerator interface.
- * This class produces events using csv files
+ * This class produces events using csv files.
  */
 public class CSVEventGenerator implements EventGenerator {
     private final Logger log = LoggerFactory.getLogger(CSVEventGenerator.class);

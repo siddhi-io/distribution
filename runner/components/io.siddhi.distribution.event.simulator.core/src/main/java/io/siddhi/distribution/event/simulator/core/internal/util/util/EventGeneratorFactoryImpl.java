@@ -31,7 +31,7 @@ import org.json.JSONObject;
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
 
 /**
- * Factory class used to create event generators
+ * Factory class used to create event generators.
  */
 public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
 

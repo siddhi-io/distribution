@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.wso2.siddhi.core.event.Event;
 
 /**
- * Interface which defines the common methods used by all event generators
+ * Interface which defines the common methods used by all event generators.
  */
 public interface EventGenerator {
 

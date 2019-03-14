@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.exception.exception;
 
 /**
- * customized exception class for Simulator Initialization
+ * customized exception class for Simulator Initialization.
  */
 public class SimulatorInitializationException extends RuntimeException {
     /**

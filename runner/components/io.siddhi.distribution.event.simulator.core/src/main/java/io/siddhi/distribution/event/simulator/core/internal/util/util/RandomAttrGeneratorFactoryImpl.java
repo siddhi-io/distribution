@@ -29,7 +29,7 @@ import org.json.JSONObject;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
- * Factory class used to create random attribute generators
+ * Factory class used to create random attribute generators.
  */
 public class RandomAttrGeneratorFactoryImpl implements RandomAttrGeneratorFactory {
 

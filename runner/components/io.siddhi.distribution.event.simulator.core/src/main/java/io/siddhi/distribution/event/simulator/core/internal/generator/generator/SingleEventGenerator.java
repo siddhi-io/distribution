@@ -43,7 +43,7 @@ import static io.siddhi.distribution.event.simulator.core.internal.util.util.Com
 
 
 /**
- * SingleEventGenerator class is responsible for single event simulation
+ * SingleEventGenerator class is responsible for single event simulation.
  */
 public class SingleEventGenerator {
     private static final Logger log = LoggerFactory.getLogger(SingleEventGenerator.class);

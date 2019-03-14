@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.exception.exception;
 
 /**
- * customized exception class for uploading non csv files
+ * customized exception class for uploading non csv files.
  */
 public class InvalidFileException extends Exception {
 

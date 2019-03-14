@@ -45,7 +45,7 @@ import javax.sql.DataSource;
 import javax.sql.rowset.serial.SerialBlob;
 
 /**
- * Implementation of Persistence Store that would persist snapshots to an RDBMS instance
+ * Implementation of Persistence Store that would persist snapshots to an RDBMS instance.
  */
 public class DBPersistenceStore implements PersistenceStore {
 

@@ -38,7 +38,7 @@ import java.util.Properties;
 
 
 /**
- * DatabaseConnector is a utility class performs the following tasks
+ * DatabaseConnector is a utility class performs the following tasks.
  * 1. Load the driver
  * 2. Connect to the database
  * 3. Create and execute a SELECT query

@@ -25,7 +25,7 @@ import java.util.List;
 
 
 /**
- * Event converter convert the given attribute list as event
+ * Event converter convert the given attribute list as event.
  */
 public class EventConverter {
     /**

@@ -22,7 +22,7 @@ import io.siddhi.distribution.event.simulator.core.exception.exception.FileOpera
 import org.json.JSONObject;
 
 /**
- * CommonOperations class is used to perform functions common to all validations
+ * CommonOperations class is used to perform functions common to all validations.
  */
 public class CommonOperations {
 

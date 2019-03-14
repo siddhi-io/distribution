@@ -34,7 +34,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 /**
- * SimulationConfigUploaderTest the functionality of simulation configuration uploading
+ * SimulationConfigUploaderTest the functionality of simulation configuration uploading.
  */
 public class SimulationConfigUploaderTest {
     private static File testDir = Paths.get("target", "FileUploaderTest").toFile();

@@ -23,7 +23,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
- * ResourceDependencyData holds details about the resource required by the inactive simulation
+ * ResourceDependencyData holds details about the resource required by the inactive simulation.
  */
 public class ResourceDependencyData {
 

@@ -22,7 +22,7 @@ package io.siddhi.distribution.store.api.rest.rest;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 
 /**
- * This class holds the services referenced by the store api micro services {@link StoresApi}
+ * This class holds the services referenced by the store api micro services {@link StoresApi}.
  */
 public class SiddhiStoreDataHolder {
     private static SiddhiStoreDataHolder instance = new SiddhiStoreDataHolder();

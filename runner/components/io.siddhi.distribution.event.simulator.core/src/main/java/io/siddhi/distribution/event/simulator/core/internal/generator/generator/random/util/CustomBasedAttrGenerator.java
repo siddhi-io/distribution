@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailabilityOfArray;
 
 /**
- * CustomBasedAttrGenerator class is responsible for generating attribute values from the data list provided by user
+ * CustomBasedAttrGenerator class is responsible for generating attribute values from the data list provided by user.
  * This class implements interface RandomAttributeGenerator
  */
 public class CustomBasedAttrGenerator extends RandomAttrGenAbstractImpl {

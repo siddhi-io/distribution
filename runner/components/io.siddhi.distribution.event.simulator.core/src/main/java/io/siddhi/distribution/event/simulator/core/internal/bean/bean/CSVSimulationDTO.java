@@ -21,7 +21,7 @@ package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 import java.util.List;
 
 /**
- * CSVSimulationDTO returns the configuration for CSV simulation
+ * CSVSimulationDTO returns the configuration for CSV simulation.
  */
 public class CSVSimulationDTO extends StreamConfigurationDTO {
 

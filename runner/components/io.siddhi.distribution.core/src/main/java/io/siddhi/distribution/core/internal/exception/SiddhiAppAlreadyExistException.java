@@ -16,7 +16,7 @@
 package io.siddhi.distribution.core.internal.exception;
 
 /**
- * Execption class that used when there is a Siddhi app exist with same name
+ * Execption class that used when there is a Siddhi app exist with same name.
  */
 public class SiddhiAppAlreadyExistException extends Exception {
 

@@ -22,7 +22,7 @@ import io.siddhi.distribution.common.common.EventStreamService;
 import org.wso2.carbon.analytics.permissions.PermissionProvider;
 
 /**
- * EventSimulaorDataHolder referenced through ServiceComponent
+ * EventSimulaorDataHolder referenced through ServiceComponent.
  */
 public class EventSimulatorDataHolder {
     private static EventSimulatorDataHolder instance = new EventSimulatorDataHolder();

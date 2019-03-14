@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.exception.exception;
 
 /**
- * customized exception class for duplicate files uploaded
+ * customized exception class for duplicate files uploaded.
  */
 public class FileAlreadyExistsException extends Exception {
 

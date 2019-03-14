@@ -47,7 +47,7 @@ import static io.siddhi.distribution.event.simulator.core.internal.util.util.Com
 
 /**
  * EventSimulator starts the simulation execution for single Event and
- * Feed Simulation
+ * Feed Simulation.
  */
 @NotThreadSafe
 public class EventSimulator implements Runnable {

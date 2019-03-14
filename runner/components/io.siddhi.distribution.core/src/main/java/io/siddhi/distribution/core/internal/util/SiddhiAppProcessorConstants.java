@@ -17,7 +17,7 @@ package io.siddhi.distribution.core.internal.util;
 
 
 /**
- * Class which contains public constants
+ * Class which contains public constants.
  */
 public class SiddhiAppProcessorConstants {
 

@@ -42,7 +42,7 @@ import static io.siddhi.distribution.event.simulator.core.internal.util.util.Com
 
 
 /**
- * PropertyBasedAttrGenerator class is responsible for generating attribute values for a given property type
+ * PropertyBasedAttrGenerator class is responsible for generating attribute values for a given property type.
  */
 public class PropertyBasedAttrGenerator extends RandomAttrGenAbstractImpl {
 

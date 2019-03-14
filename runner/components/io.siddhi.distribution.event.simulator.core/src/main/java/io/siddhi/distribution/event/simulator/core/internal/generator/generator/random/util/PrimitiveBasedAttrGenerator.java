@@ -35,7 +35,7 @@ import java.text.DecimalFormat;
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
 
 /**
- * PrimitiveBasedAttrGenerator class is responsible for generating an attribute of primitive type
+ * PrimitiveBasedAttrGenerator class is responsible for generating an attribute of primitive type.
  */
 public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
     private static final Logger log = LoggerFactory.getLogger(PrimitiveBasedAttrGenerator.class);

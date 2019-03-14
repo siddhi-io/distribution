@@ -36,7 +36,7 @@ import java.util.regex.PatternSyntaxException;
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
 
 /**
- * RegexBasedAttrGenerator is used to generate random data using regex provided
+ * RegexBasedAttrGenerator is used to generate random data using regex provided.
  */
 public class RegexBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     private static final Logger log = LoggerFactory.getLogger(RegexBasedAttrGenerator.class);

@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Container class to send back deployment status
+ * Container class to send back deployment status.
  */
 public class DeploymentStatus {
     //// TODO: 10/25/17 Add place holder to propagate failure reason

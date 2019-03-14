@@ -52,7 +52,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * {@code StreamProcessorDeployer} is responsible for all Siddhi Appp file deployment tasks
+ * {@code StreamProcessorDeployer} is responsible for all Siddhi Appp file deployment tasks.
  */
 
 @Component(

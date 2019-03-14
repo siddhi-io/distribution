@@ -16,7 +16,7 @@
 package io.siddhi.distribution.event.simulator.core.exception.exception;
 
 /**
- * Exception class that used when simulation config deployment is failed
+ * Exception class that used when simulation config deployment is failed.
  */
 public class SimulationConfigDeploymentException extends Exception {
 

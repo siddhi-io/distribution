@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 /**
- * ExceptionMapper used to map custom exceptions of simulator
+ * ExceptionMapper used to map custom exceptions of simulator.
  */
 
 @Component(

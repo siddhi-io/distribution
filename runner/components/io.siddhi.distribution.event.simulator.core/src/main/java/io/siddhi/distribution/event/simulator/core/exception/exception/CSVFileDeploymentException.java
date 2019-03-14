@@ -16,7 +16,7 @@
 package io.siddhi.distribution.event.simulator.core.exception.exception;
 
 /**
- * Exception class that used when csv file deployment is failed
+ * Exception class that used when csv file deployment is failed.
  */
 public class CSVFileDeploymentException extends Exception {
 

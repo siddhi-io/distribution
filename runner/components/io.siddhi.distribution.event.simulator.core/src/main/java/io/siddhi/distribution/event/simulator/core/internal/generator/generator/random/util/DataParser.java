@@ -21,7 +21,7 @@ package io.siddhi.distribution.event.simulator.core.internal.generator.generator
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
- * DataParser class is used to validate whether a give data element can be parsed to the attribute type specified
+ * DataParser class is used to validate whether a give data element can be parsed to the attribute type specified.
  */
 public class DataParser {
 

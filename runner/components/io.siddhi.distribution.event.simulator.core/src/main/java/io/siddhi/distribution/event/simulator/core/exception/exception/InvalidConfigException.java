@@ -22,7 +22,7 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 
 /**
- * customized exception class for parsing simulation and stream configurations
+ * customized exception class for parsing simulation and stream configurations.
  */
 public class InvalidConfigException extends SimulationValidationException {
 

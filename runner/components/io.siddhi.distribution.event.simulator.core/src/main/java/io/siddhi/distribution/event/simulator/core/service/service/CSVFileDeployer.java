@@ -41,7 +41,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * CSVFileDeployer is responsible for all simulation related CSV deployment tasks
+ * CSVFileDeployer is responsible for all simulation related CSV deployment tasks.
  */
 @Component(
         name = "csv-file-deployer",

@@ -35,7 +35,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * This class is responsible for saving, modifying and deleting the simulation configurations
+ * This class is responsible for saving, modifying and deleting the simulation configurations.
  */
 public class SimulationConfigUploader {
     private static final Logger log = Logger.getLogger(SimulationConfigUploader.class);

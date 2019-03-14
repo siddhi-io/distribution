@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Implementation of Persistence Store that would persist snapshots to the file system
+ * Implementation of Persistence Store that would persist snapshots to the file system.
  */
 public class IncrementalFileSystemPersistenceStore implements IncrementalPersistenceStore {
 

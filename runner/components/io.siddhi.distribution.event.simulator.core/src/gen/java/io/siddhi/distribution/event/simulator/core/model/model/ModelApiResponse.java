@@ -7,7 +7,7 @@ import java.util.Objects;
 
 
 /**
- * ModelApiResponse
+ * ModelApiResponse.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen", date = "2017-07-20T09:30:14.336Z")
 public class ModelApiResponse {

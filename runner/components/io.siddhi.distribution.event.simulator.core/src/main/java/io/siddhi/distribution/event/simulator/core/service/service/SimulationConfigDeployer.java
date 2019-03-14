@@ -47,7 +47,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 
 /**
- * SimulationConfigDeployer is responsible for all simulation config deployment tasks
+ * SimulationConfigDeployer is responsible for all simulation config deployment tasks.
  */
 @Component(
         name = "simulation-config-deployer",
