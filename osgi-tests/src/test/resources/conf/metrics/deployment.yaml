@@ -347,7 +347,7 @@ state.persistence:
   enabled: false
   intervalInMin: 1
   revisionsToKeep: 2
-  persistenceStore: FileSystemPersistenceStore
+  persistenceStore: io.siddhi.distribution.core.persistence.FileSystemPersistenceStore
   config:
     location: siddhi-app-persistence
 
