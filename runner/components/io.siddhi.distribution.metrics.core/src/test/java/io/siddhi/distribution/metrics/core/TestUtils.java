@@ -51,7 +51,8 @@ public class TestUtils {
         System.setProperty("carbon.home", carbonHome.toString());
         String filePath = carbonHome.toAbsolutePath() + File.separator + "resources" + File.separator + "conf" +
                 File.separator + file;
-        Path configurationFilePath = Paths.get(URI.create("file:" + filePath));
+        File metricsYamlFile = new File(filePath);
+        Path configurationFilePath = Paths.get(metricsYamlFile.toURI());
         ConfigFileReader configFileReader = new YAMLBasedConfigFileReader(configurationFilePath);
         return new ConfigProviderImpl(configFileReader, secureVault);
     }
