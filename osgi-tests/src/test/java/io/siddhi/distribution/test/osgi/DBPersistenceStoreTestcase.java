@@ -17,7 +17,7 @@
 package io.siddhi.distribution.test.osgi;
 
 import com.zaxxer.hikari.HikariDataSource;
-import io.siddhi.distribution.core.core.internal.StreamProcessorDataHolder;
+import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.test.osgi.util.RDBMSConfig;
 import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.apache.log4j.Logger;

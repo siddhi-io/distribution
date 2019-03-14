@@ -18,21 +18,20 @@
   -->
 
 <FindBugsFilter>
-    <!--carbon.stream.processor.core;-->
     <Match>
-        <Class name="io.siddhi.distribution.core.core.ha.HACoordinationSinkHandler"/>
-        <Bug pattern="UW_UNCOND_WAIT, WA_NOT_IN_LOOP"/>
-    </Match>
-    <Match>
-        <Class name="io.siddhi.distribution.core.core.persistence.dto.RDBMSQueryConfigurationEntry"/>
-        <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2"/>
-    </Match>
-    <Match>
-        <Class name="io.siddhi.distribution.core.core.persistence.DBPersistenceStore"/>
+        <Class name="io.siddhi.distribution.core.persistence.DBPersistenceStore"/>
         <Bug pattern="OBL_UNSATISFIED_OBLIGATION"/>
     </Match>
     <Match>
-        <Class name="io.siddhi.distribution.editor.core.core.internal.EditorMicroservice"/>
+        <Class name="io.siddhi.distribution.core.persistence.dto.RDBMSQueryConfigurationEntry"/>
+        <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2"/>
+    </Match>
+    <Match>
+        <Class name="DBPersistenceStore"/>
+        <Bug pattern="OBL_UNSATISFIED_OBLIGATION"/>
+    </Match>
+    <Match>
+        <Class name="io.siddhi.distribution.editor.core.internal.EditorMicroservice"/>
         <Bug pattern="OBL_UNSATISFIED_OBLIGATION"/>
     </Match>
     <Match>

@@ -16,7 +16,7 @@
 
 package io.siddhi.distribution.core.api.api;
 
-import io.siddhi.distribution.core.core.factories.SiddhiAppsApiServiceFactory;
+import io.siddhi.distribution.core.factories.SiddhiAppsApiServiceFactory;
 import io.siddhi.distribution.core.model.model.InlineResponse200;
 import io.siddhi.distribution.core.model.model.InlineResponse400;
 import io.siddhi.distribution.core.model.model.SiddhiAppMetrics;

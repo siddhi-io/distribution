@@ -19,23 +19,85 @@
 Siddhi Distribution
 ======================
 
----
+  [![Jenkins Build Status](https://wso2.org/jenkins/view/extensions/job/siddhi/job/distribution/badge/icon)](https://wso2.org/jenkins/view/extensions/job/siddhi/job/distribution)
+  [![GitHub (pre-)release](https://img.shields.io/github/release-pre/siddhi-io/distribution.svg)](https://github.com/siddhi-io/distribution/releases)
+  [![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/siddhi-io/distribution.svg)](https://github.com/siddhi-io/distribution/releases)
+  [![GitHub last commit](https://img.shields.io/github/last-commit/siddhi-io/distribution.svg)](https://github.com/siddhi-io/distribution/commits/master)
+  [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-|  Branch | Build Status |
-| :------------ |:-------------
-| master      | [![Build Status](https://wso2.org/jenkins/job/products/job/siddhi-distribution/badge/icon)](https://wso2.org/jenkins/job/products/job/siddhi-distribution) |
-
-
----
-#### Introduction ####
+## Introduction ##
 
 [Siddhi](https://siddhi-io.github.io/siddhi/) is a Streaming and Complex Event Processing engine that listens to events from data streams, detects complex conditions described via a Streaming SQL language, and triggers actions.
+This repo contains necessary source code which creates the Siddhi runner and siddhi tooling distributions by embedding Siddhi library in it.
 
 Siddhi maintains two distributions as Siddhi-Runner distribution and Siddhi-Tooling distribution.
 * Siddhi-Runner distribution bundles the Siddhi runtime which runs the Siddhi logic in a production environment.
+
 * Siddhi-Tooling distribution bundles the tooling editor profile which can be used for developing, testing and debugging Siddhi applications before moving to production.
 
+## Build from the Source ##
 
-#### Reporting Issues  ####
+### Prerequisites
+* [Oracle JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](http://openjdk.java.net/install/) (Java 8 should be used for building in order to support both Java 8 and Java 11 at runtime)
+* [Maven 3.5.x version](https://maven.apache.org/install.html)
+* [Node.js](https://nodejs.org/en/) 8.x.x or above
 
-We encourage you to report issues, documentation faults and feature requests regarding Siddhi Distribution through the [Siddhi Distribution Issue Tracker](https://github.com/siddhi-io/distribution/issues).
+### Steps to Build ###
+1. Get a clone or download source from [Github](https://github.com/siddhi-io/distribution.git)
+
+    ```bash
+    git clone https://github.com/siddhi-io/distribution.git
+    ```
+
+1. Run the Maven command ``mvn clean install`` from the root directory
+
+## Reporting Issues ##
+
+If you are unsure whether you have found a bug, please consider searching existing issues in github and asking in Siddhi-Dev Google Group.
+
+To file non-security issues:
+
+1. Click the **Issues** tab in the github repository,
+
+2. Click the **New Issue** button,
+
+3. Fill out all sections in the issue template and submit.
+
+## Try Siddhi Runner & Tooling ##
+
+### Siddhi Runner Distribution ###
+If you build from the source then you have to go target directy of runner to find the Siddhi runner distribution.<br />
+You can also download the latest relesed distributions in [here](https://github.com/siddhi-io/siddhi/releases)
+
+Then follow below steps,
+1. Unzip the Siddhi runner distribution.
+2. Navigate to the <SP_HOME>/bin directory and issue one of the following commands:<br />
+   For Windows: worker.bat <br />
+   For Linux: ./worker.sh <br />
+
+   In order to start a worker with only one Siddhi application deployed in it, use the -Dfile property with the path to the relevant Siddhi file as shown below.<br />
+   For Windows: worker.bat -Dfile=<SIDDHI_FILE_PATH><br />
+   For Linux : ./worker.sh -Dfile=<SIDDHI_FILE_PATH>
+
+### Siddhi Tolling Distribution ###
+If you build from the source then you have to go target directy of tooling to find the Siddhi tooling distribution.
+You can also download the latest relesed distributions in [here](https://github.com/siddhi-io/siddhi/releases)
+1. Unzip the Siddhi tooling distribution.
+2. Navigate to the <SP_HOME>/bin directory and issue one of the following commands:<br />
+   For Windows: editor.bat<br />
+   For Linux: ./editor.sh<br />
+3. Use the following URL to access the editor UI.<br />
+   http://localhost:<EDITOR_PORT>/editor   (e.g: https://localhost:9390/portal )
+
+Navigate to the <SP_HOME>/bin directory and issue one of the following commands:
+For Windows: editor.bat
+For Linux: ./editor.sh
+
+## Communicating with the team
+
+[Siddhi-Dev Google Group](https://groups.google.com/forum/#!forum/siddhi-dev) Group is the main Siddhi project discussion forum for developers.
+
+Users can you [Siddhi-User Google Group](https://groups.google.com/forum/#!forum/siddhi-user) to raise any queries and get some help to achieve their usecases.
+
+[StackOverflow](https://stackoverflow.com/questions/tagged/siddhi) is also can be used to get some support, and GitHub for issues and code repositories.
+
