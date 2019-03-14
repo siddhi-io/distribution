@@ -6,7 +6,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 /**
- * Exception mapper that maps customized ResourceNotFoundExceptions to customized HTTP responses
+ * Exception mapper that maps customized ResourceNotFoundExceptions to customized HTTP responses.
  */
 @Component(
         name = "ResourceNotFoundMapper",
