@@ -260,7 +260,7 @@ public class SiddhiAppsApi implements Microservice {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Retrieves the  elements of the specified Siddhi Application.",
             notes = "Retrieves the elements with the specified name.", response = InlineResponse200.class, tags =
-            {"Artifact",})
+            {"Artifact"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "The Siddhi Application is successfully " +
                     "retrieved.", response = InlineResponse200.class),
