@@ -18,4 +18,4 @@ cache:
   directories:
     - $HOME/.m2
 install: true
-script: ./mvnw clean install
+script: mvn clean install
