@@ -44,7 +44,7 @@ public class CustomBasedAttrGenerator extends RandomAttrGenAbstractImpl {
 
     /**
      * validateAttributeConfiguration() validates the attribute configuration provided for custom data based random
-     * simulation
+     * simulation.
      *
      * @param attributeConfig attribute configuration for custom data based random simulation
      * @throws InvalidConfigException if a custom data list is not provided
@@ -80,7 +80,7 @@ public class CustomBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     }
 
     /**
-     * createRandomAttributeDTO() creates a CustomBasedAttributeDTO for custom attribute generator
+     * createRandomAttributeDTO() creates a CustomBasedAttributeDTO for custom attribute generator.
      *
      * @param attributeConfig is the attribute configuration
      */
@@ -91,7 +91,7 @@ public class CustomBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     }
 
     /**
-     * generateAttribute() generate data with in given data list
+     * generateAttribute() generate data with in given data list.
      *
      * @return generated data from custom data list
      */
@@ -107,7 +107,7 @@ public class CustomBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     }
 
     /**
-     * getAttributeConfiguration() returns attribute configuration used for custom based attribute configuration
+     * getAttributeConfiguration() returns attribute configuration used for custom based attribute configuration.
      *
      * @return attribute configuration
      */

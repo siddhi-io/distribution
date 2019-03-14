@@ -11,7 +11,7 @@ public class SimulationValidationException extends Exception {
     private ResourceNotFoundException.ResourceType resourceType;
 
     /**
-     * Throws customizes Simulator Initialization exception
+     * Throws customizes Simulator Initialization exception.
      *
      * @param message Error Message
      */
@@ -20,7 +20,7 @@ public class SimulationValidationException extends Exception {
     }
 
     /**
-     * Throws customizes Simulator Initialization exception
+     * Throws customizes Simulator Initialization exception.
      *
      * @param message Error Message
      * @param cause   Throwable which caused the Simulator Initialization exception

@@ -46,7 +46,7 @@ public class PrimitiveBasedAttributeDTO implements RandomAttributeDTO {
     private int length;
 
     /**
-     * Initialize PrimitiveBasedAttributeDTO with parent class
+     * Initialize PrimitiveBasedAttributeDTO with parent class.
      */
     public PrimitiveBasedAttributeDTO() {
     }

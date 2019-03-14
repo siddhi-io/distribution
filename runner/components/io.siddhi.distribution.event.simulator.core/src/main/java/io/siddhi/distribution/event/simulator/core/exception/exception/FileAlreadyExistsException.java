@@ -24,7 +24,7 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
 public class FileAlreadyExistsException extends Exception {
 
     /**
-     * Throws customizes extensions for duplicate files uploaded
+     * Throws customizes extensions for duplicate files uploaded.
      *
      * @param message Error Message
      */
@@ -33,7 +33,7 @@ public class FileAlreadyExistsException extends Exception {
     }
 
     /**
-     * Throws customizes extensions for duplicate files uploaded
+     * Throws customizes extensions for duplicate files uploaded.
      *
      * @param message Error Message
      * @param cause   Throwable which caused the FileAlreadyExistsException

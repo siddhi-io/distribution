@@ -62,7 +62,7 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
 
 
     /**
-     * deployConfigFile() is used to deploy a simulation configuration added to directory 'simulation-configs'
+     * deployConfigFile() is used to deploy a simulation configuration added to directory 'simulation-configs'.
      *
      * @param file simulation config file added
      */
@@ -126,7 +126,7 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
     }
 
     /**
-     * init() is used to initialize SimulationConfigDeployer
+     * init() is used to initialize SimulationConfigDeployer.
      */
     @Override
     public void init() {
@@ -141,7 +141,7 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
 
 
     /**
-     * deploy() is used to deploy a csv file added
+     * deploy() is used to deploy a csv file added.
      *
      * @param artifact simulation config file added
      * @return name of simulation config file
@@ -158,7 +158,7 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
 
 
     /**
-     * undeploy() is called when a simulation config file is deleted
+     * undeploy() is called when a simulation config file is deleted.
      *
      * @param key name of the simulation config file deleted
      */
@@ -174,7 +174,7 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
     }
 
     /**
-     * update() is called when a simulation config file is updated
+     * update() is called when a simulation config file is updated.
      *
      * @param artifact simulation config file that was updated
      * @return name of artifact
@@ -227,7 +227,7 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
 
     /**
      * onDeploy() is called when one of the deployers the SimulationConfigDeployer is listening to deploys an
-     * artifact
+     * artifact.
      */
     @Override
     public void onDeploy() {

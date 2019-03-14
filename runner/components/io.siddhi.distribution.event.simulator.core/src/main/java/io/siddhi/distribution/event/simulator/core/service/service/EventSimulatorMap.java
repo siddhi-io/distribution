@@ -38,13 +38,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class EventSimulatorMap {
     private static final Logger log = LoggerFactory.getLogger(EventSimulatorMap.class);
     private static final EventSimulatorMap instance = new EventSimulatorMap();
+
     /**
-     * Key - simulator config name
+     * Key - simulator config name.
      * Value - @{@link ActiveSimulatorData}
      */
     private final Map<String, ActiveSimulatorData> activeSimulatorMap = new ConcurrentHashMap<>();
+
     /**
-     * Key - simulator config name
+     * Key - simulator config name.
      * Value - @{@link ResourceDependencyData}
      */
     private final Map<String, ResourceDependencyData> inActiveSimulatorMap = new ConcurrentHashMap<>();
@@ -67,7 +69,7 @@ public class EventSimulatorMap {
 
     /**
      * retryInActiveSimulatorDeployment() retries to create simulator objects from inactive simulation
-     * configurations which resulted in ResourceNotFoundException
+     * configurations which resulted in ResourceNotFoundException.
      */
     public void retryInActiveSimulatorDeployment(boolean isTriggeredFromDeploy) {
         inActiveSimulatorMap.forEach((simulationName, resourceData) -> {
@@ -122,7 +124,7 @@ public class EventSimulatorMap {
 
 
     /**
-     * retrySimulatorDeployment() revalidates active simulations and retries inactive simulations
+     * retrySimulatorDeployment() revalidates active simulations and retries inactive simulations.
      */
     public void checkValidityAfterDependency() {
         checkValidityOfActiveSimAfterDependency(true);
@@ -131,7 +133,7 @@ public class EventSimulatorMap {
 
 
     /**
-     * stopAllActiveSimulations() stops all active simulations
+     * stopAllActiveSimulations() stops all active simulations.
      */
     public void stopAllActiveSimulations() {
         activeSimulatorMap.forEach((simulationName, simulatorData) -> simulatorData.getEventSimulator().stop());

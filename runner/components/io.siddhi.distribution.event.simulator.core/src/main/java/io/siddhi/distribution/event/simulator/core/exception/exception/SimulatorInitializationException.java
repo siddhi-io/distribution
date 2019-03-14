@@ -23,7 +23,7 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
  */
 public class SimulatorInitializationException extends RuntimeException {
     /**
-     * Throws customizes Simulator Initialization exception
+     * Throws customizes Simulator Initialization exception.
      *
      * @param message Error Message
      */
@@ -32,7 +32,7 @@ public class SimulatorInitializationException extends RuntimeException {
     }
 
     /**
-     * Throws customizes Simulator Initialization exception
+     * Throws customizes Simulator Initialization exception.
      *
      * @param message Error Message
      * @param cause   Throwable which caused the Simulator Initialization exception

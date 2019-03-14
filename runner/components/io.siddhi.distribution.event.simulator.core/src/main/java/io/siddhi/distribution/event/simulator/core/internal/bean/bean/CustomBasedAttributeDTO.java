@@ -26,7 +26,7 @@ import java.util.ArrayList;
 public class CustomBasedAttributeDTO implements RandomAttributeDTO {
 
     /**
-     * List of custom data value given by user
+     * List of custom data value given by user.
      */
     private ArrayList customDataList;
 

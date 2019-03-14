@@ -27,7 +27,7 @@ import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 public class InsufficientAttributesException extends SimulationValidationException {
 
     /**
-     * Throws customizes validating the number of attributes generated
+     * Throws customizes validating the number of attributes generated.
      *
      * @param message Error Message
      */
@@ -41,7 +41,7 @@ public class InsufficientAttributesException extends SimulationValidationExcepti
     }
 
     /**
-     * Throws customizes validating the number of attributes generated
+     * Throws customizes validating the number of attributes generated.
      *
      * @param message Error Message
      * @param cause   throwable that caused the exception

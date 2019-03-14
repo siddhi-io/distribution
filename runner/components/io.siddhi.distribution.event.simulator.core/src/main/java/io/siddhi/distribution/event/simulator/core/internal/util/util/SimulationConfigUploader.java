@@ -46,7 +46,7 @@ public class SimulationConfigUploader {
     }
 
     /**
-     * getConfigUploader() returns Singleton configUploader object
+     * getConfigUploader() returns Singleton configUploader object.
      *
      * @return configUploader
      */
@@ -113,7 +113,7 @@ public class SimulationConfigUploader {
     }
 
     /**
-     * getSimulationConfig() is used to retrieve an uploaded simulation configuration
+     * getSimulationConfig() is used to retrieve an uploaded simulation configuration.
      *
      * @param simulationName name of simulation to be retrieved
      * @param destination    where the simulation configuration is stored
@@ -135,7 +135,7 @@ public class SimulationConfigUploader {
     }
 
     /**
-     * getSimulationName() is used to retrieve the simulation name of a simulation configuration
+     * getSimulationName() is used to retrieve the simulation name of a simulation configuration.
      *
      * @param simulationConfig simulation configuration
      * @return simulation configuration name
@@ -170,7 +170,7 @@ public class SimulationConfigUploader {
     }
 
     /**
-     * checkSimulationExists() is used to validate that the simulation config file exists
+     * checkSimulationExists() is used to validate that the simulation config file exists.
      *
      * @param simulationName    name of the simulation config file
      * @param directoryLocation directory where the file is saved

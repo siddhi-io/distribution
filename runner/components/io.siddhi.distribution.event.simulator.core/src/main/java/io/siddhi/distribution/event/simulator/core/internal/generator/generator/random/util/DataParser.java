@@ -26,7 +26,7 @@ import org.wso2.siddhi.query.api.definition.Attribute;
 public class DataParser {
 
     /**
-     * parse() parses the provided data element to the attribute type specified
+     * parse() parses the provided data element to the attribute type specified.
      *
      * @param attributeType type to be parsed to
      * @param dataItem      data element to be parsed

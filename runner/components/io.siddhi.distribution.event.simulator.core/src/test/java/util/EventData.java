@@ -20,6 +20,9 @@ package util;
 
 import org.wso2.siddhi.core.event.Event;
 
+/**
+ * Event Data class.
+ */
 public class EventData {
     private String siddhiAppName;
     private String streamName;

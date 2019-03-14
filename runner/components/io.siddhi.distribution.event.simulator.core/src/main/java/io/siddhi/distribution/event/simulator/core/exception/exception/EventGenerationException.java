@@ -24,7 +24,7 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
 public class EventGenerationException extends RuntimeException {
 
     /**
-     * Throws customizes event generation exception
+     * Throws customizes event generation exception.
      *
      * @param message Error Message
      */
@@ -33,7 +33,7 @@ public class EventGenerationException extends RuntimeException {
     }
 
     /**
-     * Throws customizes event generation exception
+     * Throws customizes event generation exception.
      *
      * @param message Error Message
      * @param cause   throwable which caused the event generation exception

@@ -101,7 +101,7 @@ public class CSVReader {
     }
 
     /**
-     * If the CSV file is ordered by timestamp, this method reads the next line and produces an event
+     * If the CSV file is ordered by timestamp, this method reads the next line and produces an event.
      *
      * @param csvConfig        configuration of CSV simulation
      * @param streamAttributes list of attributes of the stream to which events are produced
@@ -220,7 +220,7 @@ public class CSVReader {
 
 
     /**
-     * parseFile() method is used to parse the CSV file using the delimiter specified in CSV simulation Configuration
+     * parseFile() method is used to parse the CSV file using the delimiter specified in CSV simulation Configuration.
      *
      * @param delimiter delimiter to be used when parsing CSV file
      * @throws IOException if an error occurs when creating a CSVReader
@@ -313,7 +313,7 @@ public class CSVReader {
 
 
     /**
-     * closeParser() method is used to release resources created to read the CSV file
+     * closeParser() method is used to release resources created to read the CSV file.
      *
      * @param isOrdered bool indicating whether the entries in CSV file are ordered or not
      */

@@ -29,7 +29,7 @@ public class CSVSimulationDTO extends StreamConfigurationDTO {
     private String delimiter;
     private List<Integer> indices;
     /**
-     * Flag to indicate whether the CSV records are ordered by timestamp or not
+     * Flag to indicate whether the CSV records are ordered by timestamp or not.
      */
     private boolean isOrdered = true;
 

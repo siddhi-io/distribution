@@ -24,7 +24,7 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
 public class InvalidFileException extends Exception {
 
     /**
-     * Throws customizes exception for uploading invalid files
+     * Throws customizes exception for uploading invalid files.
      *
      * @param message Error Message
      */
@@ -33,7 +33,7 @@ public class InvalidFileException extends Exception {
     }
 
     /**
-     * Throws customizes exception for uploading invalid files
+     * Throws customizes exception for uploading invalid files.
      *
      * @param message Error Message
      * @param cause   Throwable that caused the InvalidConfigException

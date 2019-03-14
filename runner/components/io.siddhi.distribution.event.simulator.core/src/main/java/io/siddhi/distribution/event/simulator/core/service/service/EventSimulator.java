@@ -64,7 +64,7 @@ public class EventSimulator implements Runnable {
 
 
     /**
-     * EventSimulator() constructor initializes an EventSimulator object
+     * EventSimulator() constructor initializes an EventSimulator object.
      *
      * @param simulationConfiguration a string containing the simulation configuration
      * @param simulationName          name of simulation
@@ -100,7 +100,7 @@ public class EventSimulator implements Runnable {
     }
 
     /**
-     * validateSimulationConfig() validates a simulation configuraiton provided
+     * validateSimulationConfig() validates a simulation configuraiton provided.
      *
      * @param simulationConfiguration simulation configuration
      */
@@ -157,7 +157,7 @@ public class EventSimulator implements Runnable {
     }
 
     /**
-     * validateSimulationConfiguration() is used to validate the simulation configuration provided
+     * validateSimulationConfiguration() is used to validate the simulation configuration provided.
      *
      * @param simulationPropertiesConfig a JSON object containing simulation properties
      * @throws InvalidConfigException if the simulation configuration contains invalid data
@@ -258,7 +258,7 @@ public class EventSimulator implements Runnable {
 
     /**
      * eventSimulation() method is responsible for sending events belonging to one simulation configuration in the
-     * order of their timestamps
+     * order of their timestamps.
      * Events will be sent at time intervals equal to the delay
      */
     @SuppressWarnings("SWL_SLEEP_WITH_LOCK_HELD")
@@ -348,7 +348,7 @@ public class EventSimulator implements Runnable {
     }
 
     /**
-     * validateSimulationConfiguration() is used to parse the simulation configuration
+     * validateSimulationConfiguration() is used to parse the simulation configuration.
      *
      * @param simulationPropertiesConfig a JSON object containing simulation properties
      * @return SimulationPropertiesDTO object containing simulation properties
@@ -433,7 +433,7 @@ public class EventSimulator implements Runnable {
 
 
     /**
-     * run() method of runnable associated with the event simulator
+     * run() method of runnable associated with the event simulator.
      * This method starts all the event generators belonging to the simulations and begins the event simulation
      */
     @Override
@@ -458,7 +458,7 @@ public class EventSimulator implements Runnable {
     }
 
     /**
-     * stop() is used to stop event simulation
+     * stop() is used to stop event simulation.
      */
     public void stop() {
         if (!status.equals(Status.STOP)) {
@@ -477,7 +477,7 @@ public class EventSimulator implements Runnable {
 
 
     /**
-     * pause() is used to pause event simulation
+     * pause() is used to pause event simulation.
      */
     public void pause() {
         if (!status.equals(Status.PAUSE)) {
@@ -495,7 +495,7 @@ public class EventSimulator implements Runnable {
 
 
     /**
-     * resume() is used to resume event simulation
+     * resume() is used to resume event simulation.
      */
     public void resume() {
         if (status.equals(Status.PAUSE)) {
@@ -521,7 +521,7 @@ public class EventSimulator implements Runnable {
     }
 
     /**
-     * Action class specifies the possible actions user can take for a given simulation
+     * Action class specifies the possible actions user can take for a given simulation.
      */
     public enum Action {
         RUN,
@@ -531,7 +531,7 @@ public class EventSimulator implements Runnable {
     }
 
     /**
-     * Status class specifies the possible statuses a simulator can be in
+     * Status class specifies the possible statuses a simulator can be in.
      */
     public enum Status {
         RUN,

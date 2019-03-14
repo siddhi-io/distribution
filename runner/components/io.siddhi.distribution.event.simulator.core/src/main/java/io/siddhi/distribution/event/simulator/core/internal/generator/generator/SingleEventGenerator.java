@@ -53,7 +53,7 @@ public class SingleEventGenerator {
 
     /**
      * sendEvent() is used to send a single event based on the configuration provided by the SingleEventSimulationDTO
-     * object
+     * object.
      *
      * @param singleEventConfiguration configuration of the single event
      * @throws InvalidConfigException          if the single even simulation configuration contains invalid entries
@@ -96,7 +96,7 @@ public class SingleEventGenerator {
     }
 
     /**
-     * validateSingleEventConfig() is used to validate single event simulation provided a
+     * validateSingleEventConfig() is used to validate single event simulation provided.
      *
      * @param singleEventConfiguration SingleEventSimulationDTO containing single event simulation configuration
      * @throws InvalidConfigException          if the single even simulation configuration contains invalid entries
@@ -170,7 +170,7 @@ public class SingleEventGenerator {
     }
 
     /**
-     * createSingleEventDTO() is used create a SingleEventSimulationDTO object containing simulation configuration
+     * createSingleEventDTO() is used create a SingleEventSimulationDTO object containing simulation configuration.
      *
      * @param singleEventConfiguration SingleEventSimulationDTO containing single event simulation configuration
      * @return SingleEventSimulationDTO if required configuration is provided

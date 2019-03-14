@@ -90,7 +90,7 @@ public class RandomEventGenerator implements EventGenerator {
     }
 
     /**
-     * start() method is used to retrieve the first event
+     * start() method is used to retrieve the first event.
      */
     @Override
     public void start() {
@@ -105,7 +105,7 @@ public class RandomEventGenerator implements EventGenerator {
 
 
     /**
-     * stop() method
+     * stop() method.
      */
     @Override
     public void stop() {
@@ -117,7 +117,7 @@ public class RandomEventGenerator implements EventGenerator {
     }
 
     /**
-     * resume() method
+     * resume() method.
      */
     @Override
     public void resume() {
@@ -138,7 +138,7 @@ public class RandomEventGenerator implements EventGenerator {
 
     /**
      * poll() method is used to retrieve the nextEvent of generator and assign the next event of with least timestamp
-     * as nextEvent
+     * as nextEvent.
      *
      * @return nextEvent
      */
@@ -159,7 +159,7 @@ public class RandomEventGenerator implements EventGenerator {
 
 
     /**
-     * peek() method is used to access the nextEvent of generator
+     * peek() method is used to access the nextEvent of generator.
      *
      * @return nextEvent
      */
@@ -170,7 +170,7 @@ public class RandomEventGenerator implements EventGenerator {
 
 
     /**
-     * getNextEvent() method is used to get the next event with least timestamp
+     * getNextEvent() method is used to get the next event with least timestamp.
      */
     @Override
     public void getNextEvent() {
@@ -199,7 +199,7 @@ public class RandomEventGenerator implements EventGenerator {
     }
 
     /**
-     * getStreamName() method returns the name of the stream to which events are generated
+     * getStreamName() method returns the name of the stream to which events are generated,
      *
      * @return stream name
      */
@@ -210,7 +210,7 @@ public class RandomEventGenerator implements EventGenerator {
 
 
     /**
-     * getSiddhiAppName() method returns the name of the execution plan to which events are generated
+     * getSiddhiAppName() method returns the name of the execution plan to which events are generated.
      *
      * @return execution plan name
      */
@@ -221,7 +221,7 @@ public class RandomEventGenerator implements EventGenerator {
 
 
     /**
-     * validateRandomConfiguration() method validates random source configuration provided
+     * validateRandomConfiguration() method validates random source configuration provided.
      *
      * @param sourceConfig JSON object containing configuration required to simulate stream
      * @throws InvalidConfigException    if the stream configuration is invalid
@@ -353,7 +353,7 @@ public class RandomEventGenerator implements EventGenerator {
     }
 
     /**
-     * createRandomConfiguration() method creates RandomSimulationDTO object using the random source configuration
+     * createRandomConfiguration() method creates RandomSimulationDTO object using the random source configuration.
      *
      * @param sourceConfig JSON object containing configuration required to simulate stream
      * @return RandomSimulationDTO containing random source configuration

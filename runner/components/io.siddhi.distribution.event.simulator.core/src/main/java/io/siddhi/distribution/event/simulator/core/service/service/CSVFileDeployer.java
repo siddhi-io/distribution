@@ -55,7 +55,7 @@ public class CSVFileDeployer implements Deployer {
     private URL directoryLocation;
 
     /**
-     * deployCSVFile() is used to deploy csv files copied to directory 'csv-files'
+     * deployCSVFile() is used to deploy csv files copied to directory 'csv-files'.
      *
      * @param file file copied to directory
      */
@@ -80,7 +80,7 @@ public class CSVFileDeployer implements Deployer {
     }
 
     /**
-     * init() is used to initialize csvFileDeployer
+     * init() is used to initialize csvFileDeployer.
      */
     @Override
     public void init() {
@@ -94,7 +94,7 @@ public class CSVFileDeployer implements Deployer {
     }
 
     /**
-     * deploy() is used to deploy a csv file added
+     * deploy() is used to deploy a csv file added.
      *
      * @param artifact csv file added
      * @return name of csv file
@@ -111,7 +111,7 @@ public class CSVFileDeployer implements Deployer {
     }
 
     /**
-     * undeploy() is called when a csv file is deleted
+     * undeploy() is called when a csv file is deleted.
      *
      * @param key name of the csv file deleted
      */
@@ -146,7 +146,7 @@ public class CSVFileDeployer implements Deployer {
     }
 
     /**
-     * broadcastDeploy() is used to notify simulationDependencyListeners about a deployment
+     * broadcastDeploy() is used to notify simulationDependencyListeners about a deployment.
      */
     private void broadcastDeploy() {
         if (simulationDependencyListener != null) {
@@ -156,7 +156,7 @@ public class CSVFileDeployer implements Deployer {
 
 
     /**
-     * broadcastDelete() is used to notify simulationDependencyListeners about a delete
+     * broadcastDelete() is used to notify simulationDependencyListeners about a delete.
      */
     private void broadcastDelete() {
         if (simulationDependencyListener != null) {

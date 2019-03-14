@@ -127,7 +127,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * start() method is used to retrieve the resultSet from the data source and to obtain the first event
+     * start() method is used to retrieve the resultSet from the data source and to obtain the first event.
      */
     @Override
     public void start() {
@@ -181,7 +181,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * stop() method is used to close database resources held by the database event generator
+     * stop() method is used to close database resources held by the database event generator.
      */
     @Override
     public void stop() {
@@ -195,7 +195,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * resume() method
+     * resume() method.
      */
     @Override
     public void resume() {
@@ -211,7 +211,7 @@ public class DatabaseEventGenerator implements EventGenerator {
 
     /**
      * poll() method is used to retrieve the nextEvent of generator and assign the next event of with least timestamp
-     * as nextEvent
+     * as nextEvent.
      *
      * @return nextEvent
      */
@@ -230,7 +230,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * peek() method is used to access the nextEvent of generator
+     * peek() method is used to access the nextEvent of generator.
      *
      * @return nextEvent
      */
@@ -240,7 +240,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * getNextEvent() method is used to get the next event with least timestamp
+     * getNextEvent() method is used to get the next event with least timestamp.
      */
     @Override
     public void getNextEvent() {
@@ -321,7 +321,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * getStreamName() method returns the name of the stream to which events are generated
+     * getStreamName() method returns the name of the stream to which events are generated.
      *
      * @return stream name
      */
@@ -331,7 +331,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * getSiddhiAppName() method returns the name of the execution plan to which events are generated
+     * getSiddhiAppName() method returns the name of the execution plan to which events are generated.
      *
      * @return execution plan name
      */
@@ -341,7 +341,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * validateDBConfiguration() method validates the database simulation source configuration
+     * validateDBConfiguration() method validates the database simulation source configuration.
      *
      * @param sourceConfig JSON object containing configuration required dor database simulation
      * @throws InvalidConfigException          if the stream configuration is invalid
@@ -551,7 +551,7 @@ public class DatabaseEventGenerator implements EventGenerator {
     }
 
     /**
-     * validateDBConfiguration() method parses the database simulation configuration into a DBSimulationDTO object
+     * validateDBConfiguration() method parses the database simulation configuration into a DBSimulationDTO object.
      *
      * @param sourceConfig JSON object containing configuration required to simulate stream
      * @return DBSimulationDTO containing database simulation configuration

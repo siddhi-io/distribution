@@ -23,7 +23,7 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
  */
 public class FileOperationsException extends Exception {
     /**
-     * Throws customizes exception copying and deleting files
+     * Throws customizes exception copying and deleting files.
      *
      * @param message Error Message
      */
@@ -32,7 +32,7 @@ public class FileOperationsException extends Exception {
     }
 
     /**
-     * Throws customizes exception copying and deleting files
+     * Throws customizes exception copying and deleting files.
      *
      * @param message Error Message
      * @param cause   Throwable which caused the file deployment exception

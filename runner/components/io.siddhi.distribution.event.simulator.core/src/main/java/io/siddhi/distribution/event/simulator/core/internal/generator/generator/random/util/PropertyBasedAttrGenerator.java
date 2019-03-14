@@ -72,7 +72,7 @@ public class PropertyBasedAttrGenerator extends RandomAttrGenAbstractImpl {
 
     /**
      * validateAttributeConfiguration() validates the attribute configuration provided for property base attribute
-     * generation
+     * generation.
      *
      * @param attributeConfig the attribute configuration for property based attribute generation
      * @throws InvalidConfigException if the attribute configuration contains an invalid propertyType
@@ -107,7 +107,7 @@ public class PropertyBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     }
 
     /**
-     * createRandomAttributeDTO() creates PropertyBasedAttributeDTO using the attribute configuration provided
+     * createRandomAttributeDTO() creates PropertyBasedAttributeDTO using the attribute configuration provided.
      *
      * @param attributeConfig attribute configuration for property based attribute generation
      */
@@ -119,7 +119,7 @@ public class PropertyBasedAttrGenerator extends RandomAttrGenAbstractImpl {
 
     /**
      * generateAttribute() generated an attribute value based on the property specified in the
-     * propertyBasedAttributeDto configuration
+     * propertyBasedAttributeDto configuration.
      *
      * @return attribute value generated based on the property value
      */
@@ -284,7 +284,7 @@ public class PropertyBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     }
 
     /**
-     * Property enum specifies the attributes that can be randomly generates using the random data generator library
+     * Property enum specifies the attributes that can be randomly generates using the random data generator library.
      */
     public enum PropertyType {
         TIME_12H, TIME_24H, SECOND, MINUTE, MONTH, MONTH_NUM, YEAR, DAY, DAY_OF_WEEK, DATE, FULL_NAME, FIRST_NAME,

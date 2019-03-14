@@ -47,7 +47,7 @@ public class RegexBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     }
 
     /**
-     * validateAttributeConfiguration() validates the regex based attribute configuration provided a
+     * validateAttributeConfiguration() validates the regex based attribute configuration provided.
      *
      * @param attributeConfig JSON object of the custom data attribute configuration
      * @throws InvalidConfigException if the regex provided is incorrect
@@ -93,7 +93,7 @@ public class RegexBasedAttrGenerator extends RandomAttrGenAbstractImpl {
     }
 
     /**
-     * createRandomAttributeDTO() creates PropertyBasedAttributeDTO using the attribute configuration provided
+     * createRandomAttributeDTO() creates PropertyBasedAttributeDTO using the attribute configuration provided.
      *
      * @param attributeConfig attribute configuration for regex based attribute generation
      */

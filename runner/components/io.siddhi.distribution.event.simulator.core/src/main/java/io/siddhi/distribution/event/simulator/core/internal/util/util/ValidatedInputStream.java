@@ -37,7 +37,7 @@ public class ValidatedInputStream extends LimitedInputStream {
     }
 
     /**
-     * raiseError() alerts when the input stream exceeds the maximum size specified
+     * raiseError() alerts when the input stream exceeds the maximum size specified.
      */
     @Override
     protected void raiseError(long sizeLimit, long actualSize) throws IOException {
