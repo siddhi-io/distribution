@@ -25,7 +25,6 @@ import org.wso2.carbon.secvault.SecureVault;
 import org.wso2.carbon.secvault.exception.SecureVaultException;
 
 import java.io.File;
-import java.net.URI;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
