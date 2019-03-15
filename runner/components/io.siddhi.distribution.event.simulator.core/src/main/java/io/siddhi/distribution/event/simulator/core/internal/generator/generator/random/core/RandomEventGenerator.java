@@ -199,7 +199,7 @@ public class RandomEventGenerator implements EventGenerator {
     }
 
     /**
-     * getStreamName() method returns the name of the stream to which events are generated,
+     * getStreamName() method returns the name of the stream to which events are generated.
      *
      * @return stream name
      */
