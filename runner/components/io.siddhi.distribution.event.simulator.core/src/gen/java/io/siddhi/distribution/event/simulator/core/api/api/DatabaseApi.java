@@ -1,3 +1,22 @@
+/*
+ *   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *   WSO2 Inc. licenses this file to you under the Apache License,
+ *   Version 2.0 (the "License"); you may not use this file except
+ *   in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing,
+ *   software distributed under the License is distributed on an
+ *   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *   KIND, either express or implied.  See the License for the
+ *   specific language governing permissions and limitations
+ *   under the License.
+ *
+ */
+
 package io.siddhi.distribution.event.simulator.core.api.api;
 
 import io.siddhi.distribution.event.simulator.core.factories.factories.DatabaseApiServiceFactory;
@@ -40,7 +59,7 @@ public class DatabaseApi implements Microservice {
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Retreive database table columns", notes = "", response = void.class,
-            tags = {"simulator",})
+            tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully retrieved the database tables",
                     response = void.class),
@@ -54,7 +73,8 @@ public class DatabaseApi implements Microservice {
             ,
             @ApiParam(value = "Table name to get the columns", required = true) @PathParam("tableName") String tableName
     )
-            throws javax.ws.rs.NotFoundException, io.siddhi.distribution.event.simulator.core.api.api.NotFoundException {
+            throws javax.ws.rs.NotFoundException,
+            io.siddhi.distribution.event.simulator.core.api.api.NotFoundException {
         return delegate.getDatabaseTableColumns(body, tableName, request);
     }
 
@@ -63,7 +83,7 @@ public class DatabaseApi implements Microservice {
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Retreive database tables", notes = "", response = void.class,
-            tags = {"simulator",})
+            tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully retrieved the database tables",
                     response = void.class),
@@ -75,7 +95,8 @@ public class DatabaseApi implements Microservice {
             @ApiParam(value = "Database connection parameters to get the database tables", required = true)
                     DBConnectionModel body
     )
-            throws javax.ws.rs.NotFoundException, io.siddhi.distribution.event.simulator.core.api.api.NotFoundException {
+            throws javax.ws.rs.NotFoundException,
+            io.siddhi.distribution.event.simulator.core.api.api.NotFoundException {
         return delegate.getDatabaseTables(body, request);
     }
 
@@ -84,7 +105,7 @@ public class DatabaseApi implements Microservice {
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Test a database connection.", notes = "", response = void.class,
-            tags = {"simulator",})
+            tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully connected to the database",
                     response = void.class),
@@ -94,7 +115,8 @@ public class DatabaseApi implements Microservice {
     public Response testDBConnection(
             @Context Request request,
             @ApiParam(value = "Database connection parameters to test the database connection", required = true)
-                    DBConnectionModel body) throws io.siddhi.distribution.event.simulator.core.api.api.NotFoundException {
+                    DBConnectionModel body)
+            throws io.siddhi.distribution.event.simulator.core.api.api.NotFoundException {
         return delegate.testDBConnection(body, request);
     }
 

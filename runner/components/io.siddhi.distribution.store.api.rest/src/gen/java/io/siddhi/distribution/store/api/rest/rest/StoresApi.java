@@ -41,6 +41,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+/**
+ * Stores API.
+ */
 @Component(
         name = "siddhi-store-query-service",
         service = Microservice.class,
