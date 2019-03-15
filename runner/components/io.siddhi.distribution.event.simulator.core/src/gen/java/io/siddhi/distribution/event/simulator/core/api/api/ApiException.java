@@ -19,6 +19,9 @@
 
 package io.siddhi.distribution.event.simulator.core.api.api;
 
+/**
+ * API exception class.
+ */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-07-20T09:30:14.336Z")
 public class ApiException extends Exception {

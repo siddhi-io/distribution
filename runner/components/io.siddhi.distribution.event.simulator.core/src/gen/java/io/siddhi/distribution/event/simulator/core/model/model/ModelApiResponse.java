@@ -106,10 +106,10 @@ public class ModelApiResponse {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ModelApiResponse _apiResponse = (ModelApiResponse) o;
-        return Objects.equals(this.code, _apiResponse.code) &&
-                Objects.equals(this.type, _apiResponse.type) &&
-                Objects.equals(this.message, _apiResponse.message);
+        ModelApiResponse modelApiResponse = (ModelApiResponse) o;
+        return Objects.equals(this.code, modelApiResponse.code) &&
+                Objects.equals(this.type, modelApiResponse.type) &&
+                Objects.equals(this.message, modelApiResponse.message);
     }
 
     @Override

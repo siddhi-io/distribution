@@ -40,6 +40,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
+/**
+ * Database API.
+ */
 @Component(
         name = "simulator-core-database-services",
         service = Microservice.class,
@@ -121,7 +124,7 @@ public class DatabaseApi implements Microservice {
     }
 
     /**
-     * This is the activation method of ServiceComponent. This will be called when it's references are fulfilled
+     * This is the activation method of ServiceComponent. This will be called when it's references are fulfilled.
      *
      * @throws Exception this will be thrown if an issue occurs while executing the activate method
      */
