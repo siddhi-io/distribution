@@ -117,7 +117,8 @@ public class FileUploaderTest {
             Assert.assertTrue(new File(Paths.get(testDir.toString(), "tempCSVFolder", FilenameUtils.getName
                     (sampleORDEREDcsv)).toString()).exists());
         } catch (FileAlreadyExistsException ex) {
-            if (!"Mac OS X".equals(operatingSystemName)) {
+            if (!("Mac OS X".equals(operatingSystemName) ||
+                    (operatingSystemName != null && (operatingSystemName.contains("Windows"))))) {
                 throw ex;
             }
         }
