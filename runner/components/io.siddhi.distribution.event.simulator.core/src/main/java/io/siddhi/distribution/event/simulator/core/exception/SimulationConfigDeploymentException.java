@@ -13,20 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package io.siddhi.distribution.core.factories;
-
-import io.siddhi.distribution.core.api.SiddhiAppsApiService;
-import io.siddhi.distribution.core.impl.SiddhiAppsApiServiceImpl;
+package io.siddhi.distribution.event.simulator.core.exception;
 
 /**
- * Siddhi API Service factory Class.
+ * Exception class that used when simulation config deployment is failed.
  */
-public class SiddhiAppsApiServiceFactory {
+public class SimulationConfigDeploymentException extends Exception {
 
-    private static final SiddhiAppsApiService service = new SiddhiAppsApiServiceImpl();
+    public SimulationConfigDeploymentException() {
+    }
 
-    public static SiddhiAppsApiService getSiddhiAppsApi() {
-        return service;
+    public SimulationConfigDeploymentException(String message) {
+        super(message);
+    }
+
+    public SimulationConfigDeploymentException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public SimulationConfigDeploymentException(Throwable cause) {
+        super(cause);
     }
 }

@@ -13,20 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package io.siddhi.distribution.core.factories;
-
-import io.siddhi.distribution.core.api.SiddhiAppsApiService;
-import io.siddhi.distribution.core.impl.SiddhiAppsApiServiceImpl;
+package io.siddhi.distribution.event.simulator.core.exception;
 
 /**
- * Siddhi API Service factory Class.
+ * Exception class that used when csv file deployment is failed.
  */
-public class SiddhiAppsApiServiceFactory {
+public class CSVFileDeploymentException extends Exception {
 
-    private static final SiddhiAppsApiService service = new SiddhiAppsApiServiceImpl();
+    public CSVFileDeploymentException() {
+    }
 
-    public static SiddhiAppsApiService getSiddhiAppsApi() {
-        return service;
+    public CSVFileDeploymentException(String message) {
+        super(message);
+    }
+
+    public CSVFileDeploymentException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public CSVFileDeploymentException(Throwable cause) {
+        super(cause);
     }
 }

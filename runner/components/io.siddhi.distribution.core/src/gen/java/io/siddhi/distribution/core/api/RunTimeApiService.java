@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.factories;
+package io.siddhi.distribution.core.api;
 
-import io.siddhi.distribution.core.api.RunTimeApiService;
-import io.siddhi.distribution.core.impl.RunTimeApiServiceImpl;
+import org.wso2.msf4j.Request;
+
+import javax.ws.rs.core.Response;
 
 /**
- * Factory class for run time apis.
+ * Auto generated class from Swagger to MSF4J.
  */
-public class RunTimeApiServiceFactory {
 
-    private static final RunTimeApiService service = new RunTimeApiServiceImpl();
-
-    public static RunTimeApiService getRunTimeApi() {
-        return service;
-    }
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
+        date = "2018-02-20T10:49:25.745Z")
+public abstract class RunTimeApiService {
+    public abstract Response getRunTime(Request request) throws NotFoundException;
 }

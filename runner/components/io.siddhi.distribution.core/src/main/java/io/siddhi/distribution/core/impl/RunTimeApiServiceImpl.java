@@ -16,9 +16,9 @@
 
 package io.siddhi.distribution.core.impl;
 
-import io.siddhi.distribution.core.api.api.ApiResponseMessageWithCode;
-import io.siddhi.distribution.core.api.api.NotFoundException;
-import io.siddhi.distribution.core.api.api.RunTimeApiService;
+import io.siddhi.distribution.core.api.ApiResponseMessageWithCode;
+import io.siddhi.distribution.core.api.NotFoundException;
+import io.siddhi.distribution.core.api.RunTimeApiService;
 import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import org.osgi.service.component.annotations.Component;
 import org.wso2.carbon.analytics.permissions.bean.Permission;

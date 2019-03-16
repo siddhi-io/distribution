@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.factories;
-
-import io.siddhi.distribution.core.api.RunTimeApiService;
-import io.siddhi.distribution.core.impl.RunTimeApiServiceImpl;
+package io.siddhi.distribution.core.api;
 
 /**
- * Factory class for run time apis.
+ * Auto generated class from Swagger to MSF4J.
  */
-public class RunTimeApiServiceFactory {
 
-    private static final RunTimeApiService service = new RunTimeApiServiceImpl();
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
+        date = "2017-03-15T08:56:59.657Z")
 
-    public static RunTimeApiService getRunTimeApi() {
-        return service;
+public class ApiException extends Exception {
+    private int code;
+
+    public ApiException(int code, String msg) {
+        super(msg);
+        this.code = code;
     }
 }

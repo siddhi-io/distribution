@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.factories;
-
-import io.siddhi.distribution.core.api.RunTimeApiService;
-import io.siddhi.distribution.core.impl.RunTimeApiServiceImpl;
+package io.siddhi.distribution.event.simulator.core.util;
 
 /**
- * Factory class for run time apis.
+ * Class used to encode strings before logging.
  */
-public class RunTimeApiServiceFactory {
+public class LogEncoder {
 
-    private static final RunTimeApiService service = new RunTimeApiServiceImpl();
+    private LogEncoder() {
+    }
 
-    public static RunTimeApiService getRunTimeApi() {
-        return service;
+    public static String removeCRLFCharacters(String str) {
+        if (str != null) {
+            str = str.replace('\n', '_').replace('\r', '_');
+        }
+        return str;
     }
 }
