@@ -48,10 +48,12 @@ public final class EditorConsoleAppender extends AbstractAppender {
      * Fixed size of the circular buffer {@value #BUFFER_SIZE}.
      */
     private static final int BUFFER_SIZE = 10;
+
     /**
-     * Date Formatter to decode timestamp
+     * Date Formatter to decode timestamp.
      */
     private final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SSS");
+
     /**
      * CircularBuffer to hold the log events.
      */
