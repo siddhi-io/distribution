@@ -96,8 +96,8 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
             String siddhiAppName = StreamProcessorDataHolder.
                     getStreamProcessorService().validateAndSave(body, false);
             if (siddhiAppName != null) {
-                URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + File.separator +
-                        File.separator + siddhiAppName);
+                URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + "/" +
+                        siddhiAppName);
                 jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                         "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
                 return Response.created(location).entity(jsonString).build();
@@ -135,8 +135,8 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                             "Siddhi App updated succesfully and will be deployed in next deployment cycle"));
                 } else {
-                    URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + File.separator +
-                            File.separator + siddhiAppName);
+                    URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + "/" +
+                            siddhiAppName);
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                             "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
                     return Response.created(location).entity(jsonString).build();

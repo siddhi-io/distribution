@@ -300,8 +300,8 @@ public class SimulatorAPITestcase {
         HTTPResponseMessage httpResponseMessage = sendHRequest(null, baseURI, path, null,
                 method, true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
         logger.info(httpResponseMessage.getMessage());
-        logger.info(httpResponseMessage.getSuccessContent().toString());
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 200);
+        logger.info(httpResponseMessage.getSuccessContent().toString());
     }
 
     private HTTPResponseMessage sendHRequest(String body, URI baseURI, String path, String contentType,
