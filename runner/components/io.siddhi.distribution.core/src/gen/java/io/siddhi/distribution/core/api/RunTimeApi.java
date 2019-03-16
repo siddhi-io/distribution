@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.api.api;
+package io.siddhi.distribution.core.api;
 
 import io.siddhi.distribution.core.factories.RunTimeApiServiceFactory;
 import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;

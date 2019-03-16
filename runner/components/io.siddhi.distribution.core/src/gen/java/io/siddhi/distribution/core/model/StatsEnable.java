@@ -16,7 +16,7 @@
  *  under the License.
  *
  */
-package io.siddhi.distribution.core.model.model;
+package io.siddhi.distribution.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;

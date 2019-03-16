@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.api.api;
+package io.siddhi.distribution.core.api;
 
 import io.siddhi.distribution.core.factories.SiddhiAppsApiServiceFactory;
-import io.siddhi.distribution.core.model.model.InlineResponse200;
-import io.siddhi.distribution.core.model.model.InlineResponse400;
-import io.siddhi.distribution.core.model.model.SiddhiAppMetrics;
-import io.siddhi.distribution.core.model.model.StatsEnable;
+import io.siddhi.distribution.core.model.InlineResponse200;
+import io.siddhi.distribution.core.model.InlineResponse400;
+import io.siddhi.distribution.core.model.SiddhiAppMetrics;
+import io.siddhi.distribution.core.model.StatsEnable;
 import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import io.swagger.annotations.ApiParam;
 import org.osgi.service.component.annotations.Component;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.api.api;
+package io.siddhi.distribution.core.api;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;

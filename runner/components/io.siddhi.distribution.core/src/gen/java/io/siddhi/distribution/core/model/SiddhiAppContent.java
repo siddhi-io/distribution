@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.model.model;
+package io.siddhi.distribution.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,33 +26,33 @@ import java.util.Objects;
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-05-31T15:43:24.557Z")
-public class SiddhiAppRevision {
+public class SiddhiAppContent {
 
-    @JsonProperty("revision")
-    private String revision = null;
+    @JsonProperty("content")
+    private String content = null;
 
-    public SiddhiAppRevision name(String name) {
+    public SiddhiAppContent name(String name) {
         return this;
     }
 
 
-    public SiddhiAppRevision revision(String revision) {
-        this.revision = revision;
+    public SiddhiAppContent content(String content) {
+        this.content = content;
         return this;
     }
 
     /**
-     * Siddhi revision.
+     * Siddhi content.
      *
-     * @return revision
+     * @return content
      **/
-    @ApiModelProperty(value = "Siddhi revision")
-    public String getrevision() {
-        return revision;
+    @ApiModelProperty(value = "Siddhi content")
+    public String getcontent() {
+        return content;
     }
 
-    public void setrevision(String revision) {
-        this.revision = revision;
+    public void setcontent(String content) {
+        this.content = content;
     }
 
 
@@ -64,20 +64,20 @@ public class SiddhiAppRevision {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SiddhiAppRevision siddhiAppContent = (SiddhiAppRevision) o;
-        return Objects.equals(this.revision, siddhiAppContent.revision);
+        SiddhiAppContent siddhiAppContent = (SiddhiAppContent) o;
+        return Objects.equals(this.content, siddhiAppContent.content);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(revision);
+        return Objects.hash(content);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class SiddhiAppContent {\n");
-        sb.append("    revision: ").append(toIndentedString(revision)).append("\n");
+        sb.append("    content: ").append(toIndentedString(content)).append("\n");
         sb.append("}");
         return sb.toString();
     }

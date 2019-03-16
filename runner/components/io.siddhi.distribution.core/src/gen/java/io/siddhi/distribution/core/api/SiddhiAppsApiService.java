@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.api.api;
+package io.siddhi.distribution.core.api;
 
 
 import org.wso2.msf4j.Request;

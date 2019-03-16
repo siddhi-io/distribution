@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.model.model;
+package io.siddhi.distribution.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,81 +22,57 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * InlineResponse200.
+ * SiddhiAppStatus.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
-        date = "2017-05-31T15:43:24.557Z")
-public class InlineResponse200 {
-    @JsonProperty("name")
-    private String name = null;
+        date = "2017-06-16T03:25:43.127Z")
+public class SiddhiAppStatus {
 
-    @JsonProperty("query")
-    private String query = null;
+    @JsonProperty("status")
+    private String status = null;
 
-    public InlineResponse200 name(String name) {
-        this.name = name;
+    public SiddhiAppStatus status(String status) {
+        this.status = status;
         return this;
     }
 
     /**
-     * Siddhi App Name.
+     * Siddhi App status.
      *
-     * @return name
+     * @return status
      **/
-    @ApiModelProperty(value = "Siddhi App Name")
-    public String getName() {
-        return name;
+    @ApiModelProperty(value = "Siddhi App Status")
+    public String getStatus() {
+        return status;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setStatus(String status) {
+        this.status = status;
     }
-
-    public InlineResponse200 query(String query) {
-        this.query = query;
-        return this;
-    }
-
-    /**
-     * Siddhi Query.
-     *
-     * @return query
-     **/
-    @ApiModelProperty(value = "Siddhi Query")
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        InlineResponse200 inlineResponse200 = (InlineResponse200) o;
-        return Objects.equals(this.name, inlineResponse200.name) &&
-                Objects.equals(this.query, inlineResponse200.query);
+        SiddhiAppStatus artifact = (SiddhiAppStatus) o;
+        return Objects.equals(this.status, artifact.status);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, query);
+        return Objects.hash(status);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class InlineResponse200 {\n");
+        sb.append("class SiddhiAppStatus {\n");
 
-        sb.append("    name: ").append(toIndentedString(name)).append("\n");
-        sb.append("    query: ").append(toIndentedString(query)).append("\n");
+        sb.append("    status: ").append(toIndentedString(status)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -105,11 +81,10 @@ public class InlineResponse200 {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
     }
 }
-

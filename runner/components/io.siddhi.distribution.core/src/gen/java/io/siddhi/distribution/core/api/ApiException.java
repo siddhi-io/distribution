@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,20 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.api.api;
-
-import org.wso2.msf4j.Request;
-
-import javax.ws.rs.core.Response;
+package io.siddhi.distribution.core.api;
 
 /**
  * Auto generated class from Swagger to MSF4J.
  */
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
-        date = "2018-02-20T10:49:25.745Z")
-public abstract class RunTimeApiService {
-    public abstract Response getRunTime(Request request) throws NotFoundException;
+        date = "2017-03-15T08:56:59.657Z")
+
+public class ApiException extends Exception {
+    private int code;
+
+    public ApiException(int code, String msg) {
+        super(msg);
+        this.code = code;
+    }
 }

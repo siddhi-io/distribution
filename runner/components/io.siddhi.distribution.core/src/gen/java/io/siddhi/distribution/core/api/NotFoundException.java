@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.api.api;
+package io.siddhi.distribution.core.api;
 
 /**
  * Auto generated class from Swagger to MSF4J.
@@ -22,12 +22,11 @@ package io.siddhi.distribution.core.api.api;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-03-15T08:56:59.657Z")
-
-public class ApiException extends Exception {
+public class NotFoundException extends ApiException {
     private int code;
 
-    public ApiException(int code, String msg) {
-        super(msg);
+    public NotFoundException(int code, String msg) {
+        super(code, msg);
         this.code = code;
     }
 }

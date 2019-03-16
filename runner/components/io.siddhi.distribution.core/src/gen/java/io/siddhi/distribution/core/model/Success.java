@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.model.model;
+package io.siddhi.distribution.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,11 +22,11 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * InlineResponse400.
+ * Success.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-05-31T15:43:24.557Z")
-public class InlineResponse400 {
+public class Success {
     @JsonProperty("code")
     private Integer code = null;
 
@@ -36,7 +36,7 @@ public class InlineResponse400 {
     @JsonProperty("message")
     private String message = null;
 
-    public InlineResponse400 code(Integer code) {
+    public Success code(Integer code) {
         this.code = code;
         return this;
     }
@@ -55,7 +55,7 @@ public class InlineResponse400 {
         this.code = code;
     }
 
-    public InlineResponse400 status(String status) {
+    public Success status(String status) {
         this.status = status;
         return this;
     }
@@ -74,7 +74,7 @@ public class InlineResponse400 {
         this.status = status;
     }
 
-    public InlineResponse400 message(String message) {
+    public Success message(String message) {
         this.message = message;
         return this;
     }
@@ -102,10 +102,10 @@ public class InlineResponse400 {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        InlineResponse400 inlineResponse400 = (InlineResponse400) o;
-        return Objects.equals(this.code, inlineResponse400.code) &&
-                Objects.equals(this.status, inlineResponse400.status) &&
-                Objects.equals(this.message, inlineResponse400.message);
+        Success success = (Success) o;
+        return Objects.equals(this.code, success.code) &&
+                Objects.equals(this.status, success.status) &&
+                Objects.equals(this.message, success.message);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class InlineResponse400 {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class InlineResponse400 {\n");
+        sb.append("class Success {\n");
 
         sb.append("    code: ").append(toIndentedString(code)).append("\n");
         sb.append("    status: ").append(toIndentedString(status)).append("\n");

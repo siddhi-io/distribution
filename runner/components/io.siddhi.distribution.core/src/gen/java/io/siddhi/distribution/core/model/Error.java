@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.core.model.model;
+package io.siddhi.distribution.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
@@ -22,26 +22,50 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * SiddhiAppStatus.
+ * Error.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
-        date = "2017-06-16T03:25:43.127Z")
-public class SiddhiAppStatus {
+        date = "2017-05-31T15:43:24.557Z")
+public class Error {
+    @JsonProperty("code")
+    private Integer code = null;
 
     @JsonProperty("status")
     private String status = null;
 
-    public SiddhiAppStatus status(String status) {
+    @JsonProperty("message")
+    private String message = null;
+
+    public Error code(Integer code) {
+        this.code = code;
+        return this;
+    }
+
+    /**
+     * Get code.
+     *
+     * @return code
+     **/
+    @ApiModelProperty(value = "")
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public Error status(String status) {
         this.status = status;
         return this;
     }
 
     /**
-     * Siddhi App status.
+     * Get status.
      *
      * @return status
      **/
-    @ApiModelProperty(value = "Siddhi App Status")
+    @ApiModelProperty(value = "")
     public String getStatus() {
         return status;
     }
@@ -50,29 +74,53 @@ public class SiddhiAppStatus {
         this.status = status;
     }
 
+    public Error message(String message) {
+        this.message = message;
+        return this;
+    }
+
+    /**
+     * Get message.
+     *
+     * @return message
+     **/
+    @ApiModelProperty(value = "")
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SiddhiAppStatus artifact = (SiddhiAppStatus) o;
-        return Objects.equals(this.status, artifact.status);
+        Error error = (Error) o;
+        return Objects.equals(this.code, error.code) &&
+                Objects.equals(this.status, error.status) &&
+                Objects.equals(this.message, error.message);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(status);
+        return Objects.hash(code, status, message);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class SiddhiAppStatus {\n");
+        sb.append("class Error {\n");
 
+        sb.append("    code: ").append(toIndentedString(code)).append("\n");
         sb.append("    status: ").append(toIndentedString(status)).append("\n");
+        sb.append("    message: ").append(toIndentedString(message)).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -81,10 +129,11 @@ public class SiddhiAppStatus {
      * Convert the given object to string with each line indented by 4 spaces
      * (except the first line).
      */
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
         return o.toString().replace("\n", "\n    ");
     }
 }
+
