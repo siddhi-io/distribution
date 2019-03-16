@@ -33,7 +33,9 @@ import util.StreamProcessorUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-
+/**
+ * Single event generation test case.
+ */
 public class SingleEventGeneratorTest {
     private static final String validSingleEventConfig = "{\n" +
             "  \"streamName\": \"FooStream\",\n" +

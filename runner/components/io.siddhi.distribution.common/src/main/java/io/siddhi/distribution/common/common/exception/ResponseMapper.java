@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import javax.ws.rs.core.Response;
 
 /**
- * ResponseMapper class is used to wrap responses of REST API's
+ * ResponseMapper class is used to wrap responses of REST API's.
  */
 public class ResponseMapper {
     private Response.Status status;

@@ -364,7 +364,7 @@ public class FeedApiServiceImpl extends FeedApiService {
     }
 
     /**
-     * run() is used to start a feed simulation
+     * run() is used to start a feed simulation.
      *
      * @param simulationName name of simulation being started
      * @return response
@@ -429,7 +429,7 @@ public class FeedApiServiceImpl extends FeedApiService {
     }
 
     /**
-     * pause() is used to pause an ongoing feed simulation
+     * pause() is used to pause an ongoing feed simulation.
      *
      * @param simulationName name of simulation being started
      * @return response
@@ -482,7 +482,7 @@ public class FeedApiServiceImpl extends FeedApiService {
     }
 
     /**
-     * resume() is used to resume a paused feed simulation
+     * resume() is used to resume a paused feed simulation.
      *
      * @param simulationName name of simulation being started
      * @return response
@@ -535,7 +535,7 @@ public class FeedApiServiceImpl extends FeedApiService {
     }
 
     /**
-     * stop() is used to stop an ongoing or paused feed simulation
+     * stop() is used to stop an ongoing or paused feed simulation.
      *
      * @param simulationName name of simulation being started
      * @return response

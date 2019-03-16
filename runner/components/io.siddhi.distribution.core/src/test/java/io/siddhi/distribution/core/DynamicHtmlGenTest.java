@@ -23,6 +23,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Dynamic Html generation test case.
+ */
 public class DynamicHtmlGenTest {
 
     @BeforeTest

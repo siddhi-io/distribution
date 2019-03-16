@@ -19,14 +19,14 @@
 package io.siddhi.distribution.editor.core.util.designview.constants;
 
 /**
- * Has types of 'attribute' in 'map' of a Siddhi Source
+ * Has types of 'attribute' in 'map' of a Siddhi Source.
  */
 public class SourceMapAttributeTypes {
     public static final String MAP = "map";
     public static final String LIST = "list";
 
     /**
-     * Avoids instantiation
+     * Avoids instantiation.
      */
     private SourceMapAttributeTypes() {
     }

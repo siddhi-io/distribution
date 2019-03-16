@@ -22,7 +22,7 @@ import io.siddhi.distribution.event.simulator.core.internal.generator.generator.
 
 
 /**
- * PropertyBasedAttributeDTO represents the Random data generator which generates meaning full data
+ * PropertyBasedAttributeDTO represents the Random data generator which generates meaning full data.
  */
 
 public class PropertyBasedAttributeDTO implements RandomAttributeDTO {

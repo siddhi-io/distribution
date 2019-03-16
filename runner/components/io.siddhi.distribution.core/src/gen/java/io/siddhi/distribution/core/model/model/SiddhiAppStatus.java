@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * SiddhiAppStatus
+ * SiddhiAppStatus.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-06-16T03:25:43.127Z")
@@ -37,7 +37,7 @@ public class SiddhiAppStatus {
     }
 
     /**
-     * Siddhi App status
+     * Siddhi App status.
      *
      * @return status
      **/

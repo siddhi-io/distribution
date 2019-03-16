@@ -71,7 +71,7 @@ public class SiddhiMetricsDataHolder {
     }
 
     /**
-     * Set the metrics managemet service for metrics management purpose such as enable disable metrics
+     * Set the metrics managemet service for metrics management purpose such as enable disable metrics.
      *
      * @param metricManagementService wso2.carbon.metrics
      */

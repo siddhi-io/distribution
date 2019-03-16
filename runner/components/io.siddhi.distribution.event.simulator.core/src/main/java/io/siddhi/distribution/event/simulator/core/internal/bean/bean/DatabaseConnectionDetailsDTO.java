@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 
 /**
- * DatabaseConnectionDetailsDTO class is used to contain data required to validate a database connection
+ * DatabaseConnectionDetailsDTO class is used to contain data required to validate a database connection.
  */
 public class DatabaseConnectionDetailsDTO {
 

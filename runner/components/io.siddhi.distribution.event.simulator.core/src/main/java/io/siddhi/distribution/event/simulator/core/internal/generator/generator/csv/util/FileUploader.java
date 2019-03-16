@@ -48,8 +48,9 @@ import java.util.stream.Collectors;
 public class FileUploader {
     private static final Logger log = Logger.getLogger(FileUploader.class);
     private static final FileUploader fileUploader = new FileUploader(FileStore.getFileStore());
+
     /**
-     * FileStore object which holds details of uploaded file
+     * FileStore object which holds details of uploaded file.
      */
     private FileStore fileStore;
 
@@ -58,7 +59,7 @@ public class FileUploader {
     }
 
     /**
-     * getFileUploaderInstance() returns Singleton FileUploader object
+     * getFileUploaderInstance() returns Singleton FileUploader object.
      *
      * @return fileUploader
      */
@@ -157,7 +158,7 @@ public class FileUploader {
     }
 
     /**
-     * validateFileSource() is used to validate that the CSV file exists
+     * validateFileSource() is used to validate that the CSV file exists.
      *
      * @param fileName name of file being validated
      */
@@ -166,7 +167,7 @@ public class FileUploader {
     }
 
     /**
-     * retrieveFileNameList() is used to retrieve the names of CSV files already uploaded
+     * retrieveFileNameList() is used to retrieve the names of CSV files already uploaded.
      *
      * @param extension         type of files retrieved
      * @param directoryLocation the directory where the files reside

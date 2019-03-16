@@ -24,9 +24,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * StatsEnable
+ * StatsEnable.
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen", date = "2017-11-02T13:49:11.445Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
+        date = "2017-11-02T13:49:11.445Z")
 public class StatsEnable {
     @JsonProperty("statsEnable")
     private Boolean statsEnable = null;
@@ -37,7 +38,7 @@ public class StatsEnable {
     }
 
     /**
-     * Get statsEnable
+     * Get statsEnable.
      *
      * @return statsEnable
      **/

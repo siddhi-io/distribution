@@ -27,7 +27,7 @@ import org.wso2.siddhi.core.util.snapshot.PersistenceReference;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Class that manages the periodic persistence of Siddhi Applications
+ * Class that manages the periodic persistence of Siddhi Applications.
  */
 public class PersistenceManager implements Runnable {
 

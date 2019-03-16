@@ -21,7 +21,7 @@ package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 import java.util.List;
 
 /**
- * CSVSimulationDTO returns the configuration for CSV simulation
+ * CSVSimulationDTO returns the configuration for CSV simulation.
  */
 public class CSVSimulationDTO extends StreamConfigurationDTO {
 
@@ -29,7 +29,7 @@ public class CSVSimulationDTO extends StreamConfigurationDTO {
     private String delimiter;
     private List<Integer> indices;
     /**
-     * Flag to indicate whether the CSV records are ordered by timestamp or not
+     * Flag to indicate whether the CSV records are ordered by timestamp or not.
      */
     private boolean isOrdered = true;
 

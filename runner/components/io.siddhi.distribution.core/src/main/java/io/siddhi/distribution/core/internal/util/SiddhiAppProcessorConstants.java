@@ -17,7 +17,7 @@ package io.siddhi.distribution.core.internal.util;
 
 
 /**
- * Class which contains public constants
+ * Class which contains public constants.
  */
 public class SiddhiAppProcessorConstants {
 
@@ -57,7 +57,7 @@ public class SiddhiAppProcessorConstants {
     }
 
     /**
-     * Runtime modes of Stream Processor engine
+     * Runtime modes of Stream Processor engine.
      */
     public enum RuntimeMode {
         // Run File Mode.

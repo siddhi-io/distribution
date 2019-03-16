@@ -19,6 +19,9 @@
 
 package io.siddhi.distribution.store.api.rest.rest;
 
+/**
+ * String utl class.
+ */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-01T11:26:25.925Z")
 public class StringUtil {

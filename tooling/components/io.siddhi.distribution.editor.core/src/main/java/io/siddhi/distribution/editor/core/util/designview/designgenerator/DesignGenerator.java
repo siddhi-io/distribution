@@ -28,7 +28,7 @@ import org.wso2.siddhi.query.api.SiddhiApp;
 import org.wso2.siddhi.query.compiler.SiddhiCompiler;
 
 /**
- * Generator to create Config objects from Siddhi Code
+ * Generator to create Config objects from Siddhi Code.
  */
 public class DesignGenerator {
     private SiddhiManager siddhiManager;
@@ -38,7 +38,7 @@ public class DesignGenerator {
     }
 
     /**
-     * Gets EventFlow configuration for a given Siddhi app code string
+     * Gets EventFlow configuration for a given Siddhi app code string.
      *
      * @param siddhiAppString Code representation of the Siddhi app
      * @return Event flow representation of the Siddhi app

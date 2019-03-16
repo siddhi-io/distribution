@@ -62,9 +62,7 @@ import org.wso2.siddhi.query.api.execution.query.selection.OutputAttribute;
 import org.wso2.siddhi.query.api.expression.AttributeFunction;
 import org.wso2.siddhi.query.compiler.SiddhiCompiler;
 
-import java.io.File;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,7 +72,7 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * Siddhi Service Implementataion Class
+ * Siddhi Service Implementataion Class.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-05-31T15:43:24.557Z")
@@ -97,8 +95,8 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
             String siddhiAppName = StreamProcessorDataHolder.
                     getStreamProcessorService().validateAndSave(body, false);
             if (siddhiAppName != null) {
-                URI location = new URI(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + File.separator +
-                        File.separator + siddhiAppName);
+                URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + "/" +
+                        siddhiAppName);
                 jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                         "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
                 return Response.created(location).entity(jsonString).build();
@@ -109,7 +107,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                 status = Response.Status.CONFLICT;
             }
 
-        } catch (SiddhiAppDeploymentException | URISyntaxException e) {
+        } catch (SiddhiAppDeploymentException e) {
             jsonString = new Gson().
                     toJson(new ApiResponseMessageWithCode(ApiResponseMessageWithCode.FILE_PROCESSING_ERROR,
                             e.getMessage()));
@@ -136,14 +134,14 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                             "Siddhi App updated succesfully and will be deployed in next deployment cycle"));
                 } else {
-                    URI location = new URI(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + File.separator +
-                            File.separator + siddhiAppName);
+                    URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + "/" +
+                            siddhiAppName);
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                             "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
                     return Response.created(location).entity(jsonString).build();
                 }
             }
-        } catch (SiddhiAppDeploymentException | URISyntaxException e) {
+        } catch (SiddhiAppDeploymentException e) {
             jsonString = new Gson().
                     toJson(new ApiResponseMessageWithCode(ApiResponseMessageWithCode.FILE_PROCESSING_ERROR,
                             e.getMessage()));
@@ -557,7 +555,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     }
 
     /**
-     * Load all the elements of query
+     * Load all the elements of query.
      */
     private void loadQueryExecutionElements(SiddhiApp siddhiApp, SiddhiAppRuntime siddhiAppRuntime, ExecutionElement
             executionElement, String siddhiAppString, List<SiddhiAppElements> listOfSiddhiAppElements) {
@@ -580,7 +578,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     }
 
     /**
-     * Load all the elements of partition
+     * Load all the elements of partition.
      */
     private void loadPartitionExecutionElements(SiddhiApp siddhiApp, SiddhiAppRuntime siddhiAppRuntime,
                                                 ExecutionElement executionElement, String siddhiAppString,
@@ -758,7 +756,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     }
 
     /**
-     * Obtain query name of each siddhi app elements
+     * Obtain query name of each siddhi app elements.
      */
     private void loadQueryName(List<Annotation> queryAnnotations, SiddhiAppElements siddhiAppElements) {
         for (Annotation annotation : queryAnnotations) {
@@ -807,7 +805,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     }
 
     /**
-     * Load source related data
+     * Load source related data.
      */
     private void loadSources(SiddhiApp siddhiApp, SiddhiAppRuntime siddhiAppRuntime, List<SiddhiAppElements>
             listOfSiddhiAppElements, String siddhiAppString) {
@@ -833,7 +831,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     }
 
     /**
-     * Load sink related data
+     * Load sink related data.
      */
     private void loadSinks(SiddhiApp siddhiApp, SiddhiAppRuntime siddhiAppRuntime, List<SiddhiAppElements>
             listOfSiddhiAppElements, String

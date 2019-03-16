@@ -20,7 +20,7 @@ import io.siddhi.distribution.core.api.api.SiddhiAppsApiService;
 import io.siddhi.distribution.core.impl.SiddhiAppsApiServiceImpl;
 
 /**
- * Siddhi API Service factory Class
+ * Siddhi API Service factory Class.
  */
 public class SiddhiAppsApiServiceFactory {
 

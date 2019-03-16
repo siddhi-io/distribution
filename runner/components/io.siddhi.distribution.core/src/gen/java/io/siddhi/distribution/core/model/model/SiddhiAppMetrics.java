@@ -6,9 +6,10 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * SiddhiAppMetrics
+ * SiddhiAppMetrics.
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen", date = "2017-10-12T04:28:50.744Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
+        date = "2017-10-12T04:28:50.744Z")
 public class SiddhiAppMetrics {
     @JsonProperty("appName")
     private String appName = null;
@@ -28,7 +29,7 @@ public class SiddhiAppMetrics {
     }
 
     /**
-     * Name of the siddhi app
+     * Name of the siddhi app.
      *
      * @return appName
      **/
@@ -47,7 +48,7 @@ public class SiddhiAppMetrics {
     }
 
     /**
-     * Current status of the siddhi app ex. Active/Innactive
+     * Current status of the siddhi app ex. Active/Innactive.
      *
      * @return status
      **/
@@ -66,7 +67,7 @@ public class SiddhiAppMetrics {
     }
 
     /**
-     * Time gap between deployment and current time
+     * Time gap between deployment and current time.
      *
      * @return age
      **/
@@ -85,7 +86,7 @@ public class SiddhiAppMetrics {
     }
 
     /**
-     * is statistics enabled for this app
+     * is statistics enabled for this app.
      *
      * @return isStatEnabled
      **/

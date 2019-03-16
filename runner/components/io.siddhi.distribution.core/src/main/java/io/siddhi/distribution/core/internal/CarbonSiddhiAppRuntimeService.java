@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class contains the implementations of the apis related to SiddhiAppRuntimes
+ * This class contains the implementations of the apis related to SiddhiAppRuntimes.
  */
 public class CarbonSiddhiAppRuntimeService implements SiddhiAppRuntimeService {
     private static final Logger log = LoggerFactory.getLogger(CarbonSiddhiAppRuntimeService.class.getName());

@@ -21,6 +21,9 @@ package io.siddhi.distribution.store.api.rest.rest;
 
 import javax.xml.bind.annotation.XmlTransient;
 
+/**
+ * API response message class.
+ */
 @javax.xml.bind.annotation.XmlRootElement
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-01T11:26:25.925Z")

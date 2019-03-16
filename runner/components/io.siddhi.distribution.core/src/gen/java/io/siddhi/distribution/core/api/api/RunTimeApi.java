@@ -50,7 +50,7 @@ public class RunTimeApi implements Microservice {
     @GET
     @io.swagger.annotations.ApiOperation(value = "Returns the runtime of the stream processor.",
             notes = "Returns the run time given in the carbon.sh.", response = void.class,
-            tags = {"RunTime",})
+            tags = {"RunTime"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "OK.", response = void.class),
 

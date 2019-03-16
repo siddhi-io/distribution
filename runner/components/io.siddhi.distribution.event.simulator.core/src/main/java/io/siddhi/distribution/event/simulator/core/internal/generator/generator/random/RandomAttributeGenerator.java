@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
- * RandomAttributeGenerator interface defines common methods used by all random attribute generators
+ * RandomAttributeGenerator interface defines common methods used by all random attribute generators.
  */
 public interface RandomAttributeGenerator {
 
@@ -38,7 +38,7 @@ public interface RandomAttributeGenerator {
     void createRandomAttributeDTO(Attribute.Type attributeType, JSONObject attributeConfig);
 
     /**
-     * enum RandomDataGeneratorType specifies the random simulation types supported
+     * enum RandomDataGeneratorType specifies the random simulation types supported.
      **/
     enum RandomDataGeneratorType {
         PRIMITIVE_BASED, PROPERTY_BASED, REGEX_BASED, CUSTOM_DATA_BASED

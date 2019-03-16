@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * Error
+ * Error.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-05-31T15:43:24.557Z")
@@ -42,7 +42,7 @@ public class Error {
     }
 
     /**
-     * Get code
+     * Get code.
      *
      * @return code
      **/
@@ -61,7 +61,7 @@ public class Error {
     }
 
     /**
-     * Get status
+     * Get status.
      *
      * @return status
      **/
@@ -80,7 +80,7 @@ public class Error {
     }
 
     /**
-     * Get message
+     * Get message.
      *
      * @return message
      **/

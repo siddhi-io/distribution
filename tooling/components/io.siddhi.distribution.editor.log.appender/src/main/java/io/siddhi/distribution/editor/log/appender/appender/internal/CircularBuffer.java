@@ -35,7 +35,7 @@ public class CircularBuffer<E> {
     private int endIndex;
 
     /**
-     * Create a circular buffer with the given size
+     * Create a circular buffer with the given size.
      *
      * @param size - fixed size of the buffer
      */
@@ -56,7 +56,7 @@ public class CircularBuffer<E> {
     }
 
     /**
-     * Create a circular buffer with the maximum allowed size
+     * Create a circular buffer with the maximum allowed size.
      */
     public CircularBuffer() {
         this(MAX_ALLOWED_SIZE);
@@ -96,7 +96,7 @@ public class CircularBuffer<E> {
     /**
      * Retrieve the given amount of elements from the circular buffer. This is a forgiving
      * operation, if the amount asked is greater than the size of the buffer it will return all the
-     * available elements
+     * available elements.
      *
      * @param amount - no of elements to return
      * @return - a list of elements

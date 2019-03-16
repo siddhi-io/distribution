@@ -27,9 +27,10 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This class represents the bean class for the response of the query api
+ * This class represents the bean class for the response of the query api.
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen", date = "2017-11-01T11:26:25.925Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
+        date = "2017-11-01T11:26:25.925Z")
 public class ModelApiResponse {
     @JsonProperty("records")
     private List<Record> records = null;
@@ -63,7 +64,7 @@ public class ModelApiResponse {
     }
 
     /**
-     * Get records
+     * Get records.
      *
      * @return records
      */
@@ -92,12 +93,12 @@ public class ModelApiResponse {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ModelApiResponse _apiResponse = (ModelApiResponse) o;
+        ModelApiResponse modelApiResponse = (ModelApiResponse) o;
 
-        if (!Objects.equals(this.records, _apiResponse.records)) {
+        if (!Objects.equals(this.records, modelApiResponse.records)) {
             return false;
         }
-        if (!Objects.equals(this.details, _apiResponse.details)) {
+        if (!Objects.equals(this.details, modelApiResponse.details)) {
             return false;
         }
         return true;

@@ -27,7 +27,7 @@ import java.util.Set;
 
 /**
  * Contains methods to preserve code segments of Siddhi elements through their Config Generators,
- * in order to help preserving comments
+ * in order to help preserving comments.
  */
 public abstract class CodeSegmentsPreserver {
     private Set<ElementCodeSegment> preservedCodeSegments = new HashSet<>();
@@ -37,9 +37,9 @@ public abstract class CodeSegmentsPreserver {
     }
 
     /**
-     * Preserves code segment of the given SiddhiElement object
+     * Preserves code segment of the given SiddhiElement object.
      *
-     * @param siddhiElement SiddhiElement object which represents a parsed Siddhi element
+     * @param siddhiElement SiddhiElement object which represents a parsed Siddhi element.
      */
     public void preserveCodeSegment(SiddhiElement siddhiElement) {
         if (isCodeSegmentValid(siddhiElement)) {
@@ -51,7 +51,7 @@ public abstract class CodeSegmentsPreserver {
 
     /**
      * Preserves code segment of the given SiddhiElement,
-     * and binds the query start and end indexes to the given SiddhiElementConfig
+     * and binds the query start and end indexes to the given SiddhiElementConfig.
      *
      * @param bindFromElement     SiddhiElement object from which,
      *                            code segment indexes are acquired and preserved
@@ -64,7 +64,7 @@ public abstract class CodeSegmentsPreserver {
 
     /**
      * Binds query context start and end indexes of the given SiddhiElement object,
-     * to the given SiddhiElementConfig object
+     * to the given SiddhiElementConfig object.
      *
      * @param bindFromElement     SiddhiElement object from which, code segment indexes are acquired
      * @param bindToElementConfig SiddhiElementConfig object to which, the acquired code segment indexes are bound
@@ -78,7 +78,7 @@ public abstract class CodeSegmentsPreserver {
     }
 
     /**
-     * Preserves the code segments that are preserved in each of the given CodeSegmentsPreservers
+     * Preserves the code segments that are preserved in each of the given CodeSegmentsPreservers.
      *
      * @param codeSegmentsPreservers One or more CodeSegmentsPreserver objects,
      *                               whose preserved code segments are accessed for preserving
@@ -90,7 +90,7 @@ public abstract class CodeSegmentsPreserver {
     }
 
     /**
-     * Returns whether the given SiddhiElement object's code segment is valid or not
+     * Returns whether the given SiddhiElement object's code segment is valid or not.
      *
      * @param siddhiElement SiddhiElement object
      * @return true if the code segment is valid, otherwise false

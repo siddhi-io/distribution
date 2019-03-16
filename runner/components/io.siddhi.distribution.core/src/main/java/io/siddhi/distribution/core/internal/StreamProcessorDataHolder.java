@@ -37,7 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class which holds the OSGI Service references
+ * Class which holds the OSGI Service references.
  */
 public class StreamProcessorDataHolder {
 

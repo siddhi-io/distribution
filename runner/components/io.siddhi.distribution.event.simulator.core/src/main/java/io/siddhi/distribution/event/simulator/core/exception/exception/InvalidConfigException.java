@@ -22,12 +22,12 @@ package io.siddhi.distribution.event.simulator.core.exception.exception;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 
 /**
- * customized exception class for parsing simulation and stream configurations
+ * customized exception class for parsing simulation and stream configurations.
  */
 public class InvalidConfigException extends SimulationValidationException {
 
     /**
-     * Throws customizes exception when parsing simulation and stream configurations
+     * Throws customizes exception when parsing simulation and stream configurations.
      *
      * @param message Error Message
      */
@@ -46,7 +46,7 @@ public class InvalidConfigException extends SimulationValidationException {
     }
 
     /**
-     * Throws customizes exception when parsing simulation and stream configurations
+     * Throws customizes exception when parsing simulation and stream configurations.
      *
      * @param message Error Message
      * @param cause   Throwable that caused the InvalidConfigException

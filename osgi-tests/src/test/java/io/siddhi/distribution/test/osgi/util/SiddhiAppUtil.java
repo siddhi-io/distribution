@@ -27,6 +27,9 @@ import org.wso2.siddhi.core.util.EventPrinter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Siddhi APP util.
+ */
 public class SiddhiAppUtil {
 
     private static final Logger log = Logger.getLogger(SiddhiAppUtil.class);

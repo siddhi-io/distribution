@@ -3,11 +3,11 @@ package io.siddhi.distribution.common.common.exception;
 import java.util.Locale;
 
 /**
- * ResourceNotFoundException is used when a resource required is not found
+ * ResourceNotFoundException is used when a resource required is not found.
  */
 public class ResourceNotFoundException extends Exception {
     /**
-     * ResourceType specifies types of resources
+     * ResourceType specifies types of resources.
      * */
     public enum ResourceType {
         SIDDHI_APP_NAME, STREAM_NAME, CSV_FILE, DATABASE, RANDOM_SIMULATION, DATABASE_SIMULATION, SIMULATION

@@ -32,12 +32,12 @@ import io.siddhi.distribution.editor.core.util.designview.utilities.CodeGenerato
 import java.util.List;
 
 /**
- * Generates the code for a Siddhi aggregation element
+ * Generates the code for a Siddhi aggregation element.
  */
 public class AggregationCodeGenerator {
 
     /**
-     * Generates the Siddhi code representation of a AggregationConfig object
+     * Generates the Siddhi code representation of a AggregationConfig object.
      *
      * @param aggregation         The AggregationConfig object
      * @param isGeneratingToolTip If it is generating a tooltip or not
@@ -87,7 +87,7 @@ public class AggregationCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a aggregation definition's annotations
+     * Generates the Siddhi code representation of a aggregation definition's annotations.
      *
      * @param annotations The list of annotations of an aggregation definition
      * @return The Siddhi code representation of the given annotation list
@@ -112,7 +112,7 @@ public class AggregationCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a AggregateByTimePeriod object
+     * Generates the Siddhi code representation of a AggregateByTimePeriod object.
      *
      * @param aggregateByTimePeriod The AggregateByTimePeriod object
      * @return The Siddhi code representation of the given AggregateByTimePeriod object
@@ -141,7 +141,7 @@ public class AggregationCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a AggregateByTimeInterval object
+     * Generates the Siddhi code representation of a AggregateByTimeInterval object.
      *
      * @param aggregateByTimeInterval The AggregateByTimeInterval object
      * @return The Siddhi code representation of the given AggregateByTimeInterval object
@@ -164,7 +164,7 @@ public class AggregationCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a AggregateByTimeRange object
+     * Generates the Siddhi code representation of a AggregateByTimeRange object.
      *
      * @param aggregateByTimeRange The AggregateByTimeRange object
      * @return The Siddhi code representation of the given AggregateByTimeRange object

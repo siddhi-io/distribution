@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class which provides necessary apis for event stream related operations
+ * Class which provides necessary apis for event stream related operations.
  */
 public class CarbonEventStreamService implements EventStreamService {
 

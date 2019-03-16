@@ -23,7 +23,7 @@ import io.siddhi.distribution.event.simulator.core.internal.generator.generator.
 import org.json.JSONObject;
 
 /**
- * Factory class used to create event generators
+ * Factory class used to create event generators.
  */
 public interface EventGeneratorFactory {
 

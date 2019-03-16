@@ -17,7 +17,7 @@
 package io.siddhi.distribution.core;
 
 /**
- * Types of Deployments of Nodes
+ * Types of Deployments of Nodes.
  */
 public enum DeploymentMode {
     MINIMUM_HA, SINGLE_NODE

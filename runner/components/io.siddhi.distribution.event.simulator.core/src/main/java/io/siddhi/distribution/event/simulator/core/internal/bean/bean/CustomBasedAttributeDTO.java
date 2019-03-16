@@ -21,12 +21,12 @@ package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 import java.util.ArrayList;
 
 /**
- * CustomBasedAttributeDTO represents the Random data generator based on custom data list
+ * CustomBasedAttributeDTO represents the Random data generator based on custom data list.
  */
 public class CustomBasedAttributeDTO implements RandomAttributeDTO {
 
     /**
-     * List of custom data value given by user
+     * List of custom data value given by user.
      */
     private ArrayList customDataList;
 

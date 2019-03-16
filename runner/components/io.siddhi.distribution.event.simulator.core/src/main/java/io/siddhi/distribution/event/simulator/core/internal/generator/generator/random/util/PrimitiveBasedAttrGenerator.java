@@ -35,7 +35,7 @@ import java.text.DecimalFormat;
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
 
 /**
- * PrimitiveBasedAttrGenerator class is responsible for generating an attribute of primitive type
+ * PrimitiveBasedAttrGenerator class is responsible for generating an attribute of primitive type.
  */
 public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
     private static final Logger log = LoggerFactory.getLogger(PrimitiveBasedAttrGenerator.class);
@@ -43,14 +43,14 @@ public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
     private PrimitiveBasedAttributeDTO primitiveBasedAttrConfig = new PrimitiveBasedAttributeDTO();
 
     /**
-     * PrimitiveBasedAttrGenerator() constructor
+     * PrimitiveBasedAttrGenerator() constructor.
      */
     public PrimitiveBasedAttrGenerator() {
     }
 
     /**
      * validateAttributeConfiguration() validates the attribute configuration provided for primitive based attribute
-     * generation
+     * generation.
      *
      * @param attributeConfig the attribute configuration
      * @throws InvalidConfigException if the attribute configuration doesn't contain all the required data
@@ -124,7 +124,7 @@ public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
     }
 
     /**
-     * createRandomAttributeDTO() creates a primitiveBasedAttributeDTo for the attribute configuration provided
+     * createRandomAttributeDTO() creates a primitiveBasedAttributeDTo for the attribute configuration provided.
      *
      * @param attributeConfig the attribute configuration for primitive based attribute generation
      */
@@ -161,7 +161,7 @@ public class PrimitiveBasedAttrGenerator implements RandomAttributeGenerator {
 
     /**
      * generatePrimitiveBasedData() generates a primitive type attribute value based on the configuration provided by
-     * primitiveBasedAttrConfig
+     * primitiveBasedAttrConfig.
      *
      * @return primitive attribute value
      */

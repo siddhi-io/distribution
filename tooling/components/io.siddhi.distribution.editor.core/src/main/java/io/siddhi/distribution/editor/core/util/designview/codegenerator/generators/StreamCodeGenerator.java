@@ -24,12 +24,12 @@ import io.siddhi.distribution.editor.core.util.designview.exceptions.CodeGenerat
 import io.siddhi.distribution.editor.core.util.designview.utilities.CodeGeneratorUtils;
 
 /**
- * Generates the code for a Siddhi stream element
+ * Generates the code for a Siddhi stream element.
  */
 public class StreamCodeGenerator {
 
     /**
-     * Generates the Siddhi code representation of a StreamConfig object
+     * Generates the Siddhi code representation of a StreamConfig object.
      *
      * @param stream              The StreamConfig object
      * @param isGeneratingToolTip If it is generating a tooltip or not

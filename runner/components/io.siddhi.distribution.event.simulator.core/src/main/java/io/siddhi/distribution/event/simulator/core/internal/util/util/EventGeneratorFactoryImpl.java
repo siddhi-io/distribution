@@ -31,12 +31,12 @@ import org.json.JSONObject;
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
 
 /**
- * Factory class used to create event generators
+ * Factory class used to create event generators.
  */
 public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
 
     /**
-     * getEventGenerator() creates and initializes event generators according to the source configuration provided
+     * getEventGenerator() creates and initializes event generators according to the source configuration provided.
      *
      * @param sourceConfig   json object containing source configuration used for simulation
      * @param startTimestamp least possible timestamp an event produced could have
@@ -95,7 +95,7 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
     }
 
     /**
-     * validateGeneratorConfiguration() validates event generator configurations provided
+     * validateGeneratorConfiguration() validates event generator configurations provided.
      *
      * @param sourceConfig json object containing source configuration used for simulation
      * @throws InvalidConfigException          if the simulation type is not specified or if an invalid generator type

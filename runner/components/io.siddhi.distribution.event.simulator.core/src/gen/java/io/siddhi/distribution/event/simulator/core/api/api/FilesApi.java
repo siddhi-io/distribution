@@ -1,3 +1,22 @@
+/*
+ *   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *   WSO2 Inc. licenses this file to you under the Apache License,
+ *   Version 2.0 (the "License"); you may not use this file except
+ *   in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing,
+ *   software distributed under the License is distributed on an
+ *   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *   KIND, either express or implied.  See the License for the
+ *   specific language governing permissions and limitations
+ *   under the License.
+ *
+ */
+
 package io.siddhi.distribution.event.simulator.core.api.api;
 
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
@@ -33,7 +52,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-
+/**
+ * File API.
+ */
 @Component(
         name = "simulator-core-file-services",
         service = Microservice.class,
@@ -52,7 +73,7 @@ public class FilesApi implements Microservice {
     @Path("/{fileName}")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Update CSV file to simulate event flow", notes = "",
-            response = void.class, tags = {"simulator",})
+            response = void.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully deleted the csv file",
                     response = void.class),
@@ -71,7 +92,7 @@ public class FilesApi implements Microservice {
     @GET
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Get CSV file names", notes = "", response = InlineResponse2001.class,
-            tags = {"simulator",})
+            tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully retrieved file names",
                     response = InlineResponse2001.class),
@@ -88,7 +109,7 @@ public class FilesApi implements Microservice {
     @Consumes({"multipart/form-data"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Update CSV file to simulate event flow", notes = "",
-            response = void.class, tags = {"simulator",})
+            response = void.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully updated the csv file",
                     response = void.class),
@@ -111,7 +132,7 @@ public class FilesApi implements Microservice {
     @Consumes({"multipart/form-data"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Upload CSV file to simulate event flow", notes = "",
-            response = void.class, tags = {"simulator",})
+            response = void.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully uploaded file",
                     response = void.class),
@@ -127,7 +148,7 @@ public class FilesApi implements Microservice {
     }
 
     /**
-     * This is the activation method of ServiceComponent. This will be called when it's references are fulfilled
+     * This is the activation method of ServiceComponent. This will be called when it's references are fulfilled.
      *
      * @throws Exception this will be thrown if an issue occurs while executing the activate method
      */

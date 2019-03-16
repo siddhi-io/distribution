@@ -22,17 +22,17 @@ import io.siddhi.distribution.editor.core.util.designview.exceptions.DesignGener
 import org.wso2.siddhi.query.api.SiddhiElement;
 
 /**
- * Has methods involved in converting Siddhi elements to Design view Config objects
+ * Has methods involved in converting Siddhi elements to Design view Config objects.
  */
 public class ConfigBuildingUtilities {
     /**
-     * Avoids Instantiation
+     * Avoids Instantiation.
      */
     private ConfigBuildingUtilities() {
     }
 
     /**
-     * Gets the piece of the code for the given SiddhiElement, from the siddhiAppString
+     * Gets the piece of the code for the given SiddhiElement, from the siddhiAppString.
      *
      * @param siddhiElement   SiddhiElement object, whose code definition is to be extracted
      * @param siddhiAppString Complete Siddhi app string
@@ -49,7 +49,7 @@ public class ConfigBuildingUtilities {
 
     /**
      * Gets the code segment starting from the given startIndex and ending at the given endIndex,
-     * from the given Siddhi app string
+     * from the given Siddhi app string.
      *
      * @param startIndex      Query context start index
      * @param endIndex        Query context end index

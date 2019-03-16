@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
 /**
- * ExceptionMapper used to map custom exceptions of simulator
+ * ExceptionMapper used to map custom exceptions of simulator.
  */
 
 @Component(
@@ -36,7 +36,7 @@ import javax.ws.rs.ext.ExceptionMapper;
 public class EventSimulatorExceptionMapper implements ExceptionMapper<Exception> {
 
     /**
-     * toResponse() will return a response based on the type of exception thrown
+     * toResponse() will return a response based on the type of exception thrown.
      *
      * @param e exception
      * @return response

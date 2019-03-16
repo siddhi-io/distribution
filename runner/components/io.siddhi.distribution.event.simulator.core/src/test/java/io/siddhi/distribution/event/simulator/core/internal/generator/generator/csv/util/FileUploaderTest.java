@@ -36,7 +36,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 /**
- * FileUploaderTest verifies the functionality of uploading CSv files
+ * FileUploaderTest verifies the functionality of uploading CSv files.
  */
 public class FileUploaderTest {
     private static File testDir = Paths.get("target", "FileUploaderTest").toFile();
@@ -117,7 +117,8 @@ public class FileUploaderTest {
             Assert.assertTrue(new File(Paths.get(testDir.toString(), "tempCSVFolder", FilenameUtils.getName
                     (sampleORDEREDcsv)).toString()).exists());
         } catch (FileAlreadyExistsException ex) {
-            if (!"Mac OS X".equals(operatingSystemName)) {
+            if (!("Mac OS X".equals(operatingSystemName) ||
+                    (operatingSystemName != null && (operatingSystemName.contains("Windows"))))) {
                 throw ex;
             }
         }

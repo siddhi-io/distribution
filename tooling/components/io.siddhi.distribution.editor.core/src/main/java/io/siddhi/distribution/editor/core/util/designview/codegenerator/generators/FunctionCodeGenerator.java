@@ -24,12 +24,12 @@ import io.siddhi.distribution.editor.core.util.designview.exceptions.CodeGenerat
 import io.siddhi.distribution.editor.core.util.designview.utilities.CodeGeneratorUtils;
 
 /**
- * Generates the code for a Siddhi function element
+ * Generates the code for a Siddhi function element.
  */
 public class FunctionCodeGenerator {
 
     /**
-     * Generates the Siddhi code representation of a FunctionConfig object
+     * Generates the Siddhi code representation of a FunctionConfig object.
      *
      * @param function            The FunctionConfig object
      * @param isGeneratingToolTip If it is generating a tooltip or not

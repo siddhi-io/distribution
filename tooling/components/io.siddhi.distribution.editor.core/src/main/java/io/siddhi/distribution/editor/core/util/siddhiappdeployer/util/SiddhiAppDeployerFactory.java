@@ -21,14 +21,14 @@ package io.siddhi.distribution.editor.core.util.siddhiappdeployer.util;
 import io.siddhi.distribution.editor.core.internal.EditorDataHolder;
 
 /**
- * Factory that is used to produce a HTTPS client for calling a Worker
+ * Factory that is used to produce a HTTPS client for calling a Worker.
  */
 public class SiddhiAppDeployerFactory {
     private static final int CLIENT_CONNECTION_TIMEOUT = 5000;
     private static final int CLIENT_READ_TIMEOUT = 5000;
 
     /**
-     * Returns an HTTPS client for deploying Siddhi apps to the Worker
+     * Returns an HTTPS client for deploying Siddhi apps to the Worker.
      *
      * @param httpsUrl HTTPS URL of the Worker
      * @param username Username

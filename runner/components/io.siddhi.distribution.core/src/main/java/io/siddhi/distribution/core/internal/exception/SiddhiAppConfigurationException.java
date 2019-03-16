@@ -16,7 +16,7 @@
 package io.siddhi.distribution.core.internal.exception;
 
 /**
- * Execption class that used when execution plan deployment is failed
+ * Execption class that used when execution plan deployment is failed.
  */
 public class SiddhiAppConfigurationException extends Exception {
 

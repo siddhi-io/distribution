@@ -20,7 +20,7 @@ package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 
 /**
  * StreamConfigurationDTO class represents the event simulation configuration for an input stream.
- * This is an abstract class, CSVSimulationDTO and RandomDataSimulationDto extends this parent class
+ * This is an abstract class, CSVSimulationDTO and RandomDataSimulationDto extends this parent class.
  *
  * @see CSVSimulationDTO
  * @see RandomSimulationDTO

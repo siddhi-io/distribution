@@ -45,15 +45,17 @@ import java.text.SimpleDateFormat;
 public final class EditorConsoleAppender extends AbstractAppender {
 
     /**
-     * Fixed size of the circular buffer {@value #BUFFER_SIZE}
+     * Fixed size of the circular buffer {@value #BUFFER_SIZE}.
      */
     private static final int BUFFER_SIZE = 10;
+
     /**
-     * Date Formatter to decode timestamp
+     * Date Formatter to decode timestamp.
      */
     private final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss_SSS");
+
     /**
-     * CircularBuffer to hold the log events
+     * CircularBuffer to hold the log events.
      */
     private CircularBuffer<ConsoleLogEvent> circularBuffer;
 
@@ -110,14 +112,14 @@ public final class EditorConsoleAppender extends AbstractAppender {
     }
 
     /**
-     * Taken from the previous EditorConsoleAppender
+     * Taken from the previous EditorConsoleAppender.
      */
     public void activateOptions() {
         this.circularBuffer = DataHolder.getBuffer(BUFFER_SIZE);
     }
 
     /**
-     * This is the overridden method from the Appender interface. {@link Appender}
+     * This is the overridden method from the Appender interface. {@link Appender}.
      * This allows to write log events to preferred destination.
      * <p>
      * Converts the default log events to tenant aware log events and writes to a CircularBuffer

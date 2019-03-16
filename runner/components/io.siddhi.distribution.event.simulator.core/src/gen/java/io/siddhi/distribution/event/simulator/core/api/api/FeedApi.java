@@ -1,3 +1,22 @@
+/*
+ *   Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ *   WSO2 Inc. licenses this file to you under the Apache License,
+ *   Version 2.0 (the "License"); you may not use this file except
+ *   in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing,
+ *   software distributed under the License is distributed on an
+ *   "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *   KIND, either express or implied.  See the License for the
+ *   specific language governing permissions and limitations
+ *   under the License.
+ *
+ */
+
 package io.siddhi.distribution.event.simulator.core.api.api;
 
 import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
@@ -26,7 +45,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
-
+/**
+ * Feed API.
+ */
 @Component(
         name = "simulator-core-event-feed-services",
         service = Microservice.class,
@@ -45,7 +66,7 @@ public class FeedApi implements Microservice {
     @Consumes({"text/plain"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Upload feed simulation configuration to the system", notes = "",
-            response = void.class, tags = {"simulator",})
+            response = void.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully uploaded simulation",
                     response = void.class)})
@@ -62,7 +83,7 @@ public class FeedApi implements Microservice {
     @io.swagger.annotations.ApiOperation(value = "Delete a simulation configuration by name",
             notes = "For valid response try integer IDs with positive integer value. "
                     + "Negative or non-integer values will generate API errors",
-            response = void.class, tags = {"simulator",})
+            response = void.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully deleted simulation configuration",
                     response = void.class),
@@ -79,7 +100,7 @@ public class FeedApi implements Microservice {
     @Path("/{simulationName}")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Retrieve a simulation configuration by name.", notes = "Some desc",
-            response = String.class, tags = {"simulator",})
+            response = String.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully sent simulation configuratio    n.",
                     response = String.class),
@@ -96,7 +117,7 @@ public class FeedApi implements Microservice {
     @GET
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Retrieve all feed simulation configurations", notes = "Some desc.",
-            response = String.class, tags = {"simulator",})
+            response = String.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully updated simulation configuration.",
                     response = String.class),
@@ -110,7 +131,7 @@ public class FeedApi implements Microservice {
     @Path("/{simulationName}")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Operate a simulation configuration by name", notes = "some desc",
-            response = void.class, tags = {"simulator",})
+            response = void.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200,
                     message = "Successfully performed action on the feed simulation "
@@ -137,7 +158,7 @@ public class FeedApi implements Microservice {
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Update an uploaded simulation configuration",
             notes = "Some description", response = InlineResponse200.class,
-            tags = {"simulator",})
+            tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully updated simulation configuration.",
                     response = InlineResponse200.class),
@@ -158,7 +179,7 @@ public class FeedApi implements Microservice {
     @Path("/{simulationName}/status")
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Retrieve a simulation configuration statusby name.",
-            notes = "Some desc", response = String.class, tags = {"simulator",})
+            notes = "Some desc", response = String.class, tags = {"simulator"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "Successfully sent simulation status.",
                     response = String.class),
@@ -175,7 +196,7 @@ public class FeedApi implements Microservice {
     }
 
     /**
-     * This is the activation method of ServiceComponent. This will be called when it's references are fulfilled
+     * This is the activation method of ServiceComponent. This will be called when it's references are fulfilled.
      *
      * @throws Exception this will be thrown if an issue occurs while executing the activate method
      */

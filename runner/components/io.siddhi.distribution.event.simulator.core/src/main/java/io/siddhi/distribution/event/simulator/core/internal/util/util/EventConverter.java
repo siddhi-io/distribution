@@ -25,17 +25,17 @@ import java.util.List;
 
 
 /**
- * Event converter convert the given attribute list as event
+ * Event converter convert the given attribute list as event.
  */
 public class EventConverter {
     /**
-     * Initialize the EventConverter
+     * Initialize the EventConverter.
      */
     private EventConverter() {
     }
 
     /**
-     * eventConverter() create an event using the dataArray and timestamp value provided
+     * eventConverter() create an event using the dataArray and timestamp value provided.
      *
      * @param streamAttributes List containing stream attribute names and types
      * @param dataArray        array of attribute values to be converted to as event data

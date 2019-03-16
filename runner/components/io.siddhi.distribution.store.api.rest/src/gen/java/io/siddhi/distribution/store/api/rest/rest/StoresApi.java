@@ -41,6 +41,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+/**
+ * Stores API.
+ */
 @Component(
         name = "siddhi-store-query-service",
         service = Microservice.class,
@@ -59,7 +62,7 @@ public class StoresApi implements Microservice {
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Submit a Siddhi query and get the result records from a store",
-            notes = "", response = ModelApiResponse.class, tags = {"store",})
+            notes = "", response = ModelApiResponse.class, tags = {"store"})
     @io.swagger.annotations.ApiResponses(value = {
             @io.swagger.annotations.ApiResponse(code = 200, message = "OK, query was successfully submitted",
                     response = ModelApiResponse.class),

@@ -48,7 +48,7 @@ public class OutputSyncTimestamps {
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return id
      **/
@@ -67,7 +67,7 @@ public class OutputSyncTimestamps {
     }
 
     /**
-     * Get timestamp
+     * Get timestamp.
      *
      * @return timestamp
      **/

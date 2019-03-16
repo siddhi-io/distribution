@@ -19,12 +19,12 @@
 package io.siddhi.distribution.editor.core.exception;
 
 /**
- * Customized exception class for Siddhi Debugger
+ * Customized exception class for Siddhi Debugger.
  */
 public class DebuggerException extends Exception {
 
     /**
-     * Throws customize DebuggerException
+     * Throws customize DebuggerException.
      *
      * @param message Error Message
      */

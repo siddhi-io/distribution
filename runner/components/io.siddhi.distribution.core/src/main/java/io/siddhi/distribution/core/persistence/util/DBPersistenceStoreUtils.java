@@ -33,7 +33,7 @@ public class DBPersistenceStoreUtils {
     private static final Logger log = Logger.getLogger(DBPersistenceStoreUtils.class);
 
     /**
-     * Method that would create the persistence table
+     * Method that would create the persistence table.
      */
     public static void createTableIfNotExist(ExecutionInfo executionInfo, DataSource dataSource, String dataSourceName,
                                              String tableName) {

@@ -45,7 +45,7 @@ import javax.sql.DataSource;
 import javax.sql.rowset.serial.SerialBlob;
 
 /**
- * Implementation of Persistence Store that would persist snapshots to an RDBMS instance
+ * Implementation of Persistence Store that would persist snapshots to an RDBMS instance.
  */
 public class DBPersistenceStore implements PersistenceStore {
 
@@ -267,7 +267,7 @@ public class DBPersistenceStore implements PersistenceStore {
     }
 
     /**
-     * Method that would create the persistence table
+     * Method that would create the persistence table.
      */
     private void createTableIfNotExist() {
         if (!executionInfo.isTableExist()) {
@@ -309,7 +309,7 @@ public class DBPersistenceStore implements PersistenceStore {
     }
 
     /**
-     * Method to remove revisions that are older than the user specified amount
+     * Method to remove revisions that are older than the user specified amount.
      *
      * @param siddhiAppName is the name of the Siddhi Application whose old revisions to remove
      */
@@ -363,7 +363,7 @@ public class DBPersistenceStore implements PersistenceStore {
     }
 
     /**
-     * Method to clear all the revisions related to a Siddhi App
+     * Method to clear all the revisions related to a Siddhi App.
      *
      * @param siddhiAppName is the name of the Siddhi Application whose all revisions to remove
      */

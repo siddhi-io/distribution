@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 
 /**
- * RandomSimulationDTO represents configuration details for simulate using random data
+ * RandomSimulationDTO represents configuration details for simulate using random data.
  */
 public class RandomSimulationDTO extends StreamConfigurationDTO {
 

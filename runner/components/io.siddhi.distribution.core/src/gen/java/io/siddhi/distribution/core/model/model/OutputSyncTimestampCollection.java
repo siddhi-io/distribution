@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Collection;
 
 /**
- * Class that holds a list of last timestamps at sink level and record table level
+ * Class that holds a list of last timestamps at sink level and record table level.
  */
 public class OutputSyncTimestampCollection {
 

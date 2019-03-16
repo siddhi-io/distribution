@@ -28,11 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Generator to create TableConfig
+ * Generator to create TableConfig.
  */
 public class TableConfigGenerator extends CodeSegmentsPreserver {
     /**
-     * Generates TableConfig object from the given Siddhi TableDefinition
+     * Generates TableConfig object from the given Siddhi TableDefinition.
      *
      * @param tableDefinition Siddhi TableDefinition
      * @return TableConfig object

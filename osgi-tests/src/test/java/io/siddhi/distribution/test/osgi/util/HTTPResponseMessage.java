@@ -17,6 +17,9 @@
 package io.siddhi.distribution.test.osgi.util;
 
 
+/**
+ * HTTP response message.
+ */
 public class HTTPResponseMessage {
 
     private int responseCode;

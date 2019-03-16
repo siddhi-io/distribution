@@ -39,6 +39,9 @@ import javax.inject.Inject;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonDistribution;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
 
+/**
+ * Simulator API test case.
+ */
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
@@ -289,15 +292,16 @@ public class SimulatorAPITestcase {
         logger.info(httpResponseMessage.getSuccessContent());
     }
 
-    @Test(dependsOnMethods = {"testDeleteUnavailableFeedConf"})
+    @Test(dependsOnMethods = {"testGetSpecificUnavailableFeedConf"}, enabled = false)
     public void testDeleteFilesApi() throws Exception {
         String path = "/simulation/files/sampleCSV.csv";
         String method = "DELETE";
         logger.info("Trying to delete unavailable CSV file");
         HTTPResponseMessage httpResponseMessage = sendHRequest(null, baseURI, path, null,
                 method, true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
-        logger.info(httpResponseMessage.getSuccessContent().toString());
+        logger.info(httpResponseMessage.getMessage());
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 200);
+        logger.info(httpResponseMessage.getSuccessContent().toString());
     }
 
     private HTTPResponseMessage sendHRequest(String body, URI baseURI, String path, String contentType,

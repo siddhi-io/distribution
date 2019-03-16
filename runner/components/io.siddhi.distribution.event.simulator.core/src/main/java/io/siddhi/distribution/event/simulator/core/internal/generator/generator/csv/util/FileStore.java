@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * FileStore keeps a record of all CSV files that have been uploaded to the system
+ * FileStore keeps a record of all CSV files that have been uploaded to the system.
  *
  * @see FileUploader
  */
@@ -33,7 +33,7 @@ public class FileStore {
     private static final Logger log = LoggerFactory.getLogger(FileStore.class);
     private static final FileStore fileStore = new FileStore();
     /**
-     * Concurrent list that holds names of uploaded CSV files
+     * Concurrent list that holds names of uploaded CSV files.
      */
     private final List<String> fileNameList = Collections.synchronizedList(new ArrayList<>());
 
@@ -41,7 +41,7 @@ public class FileStore {
     }
 
     /**
-     * Method to return Singleton Object of FileStore
+     * Method to return Singleton Object of FileStore.
      *
      * @return fileStore
      */
@@ -50,7 +50,7 @@ public class FileStore {
     }
 
     /**
-     * Method to add file data into in memory
+     * Method to add file data into in memory.
      *
      * @param filename name of file uploaded
      */
@@ -59,7 +59,7 @@ public class FileStore {
     }
 
     /**
-     * Method to check whether the File Name  already exists in directory
+     * Method to check whether the File Name  already exists in directory.
      *
      * @param fileName File name of the file
      * @return true if exist false if not exist
@@ -69,7 +69,7 @@ public class FileStore {
     }
 
     /**
-     * deleteFile() is used to delete a file name from csv file store
+     * deleteFile() is used to delete a file name from csv file store.
      *
      * @param fileName name of file being deleted
      */

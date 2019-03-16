@@ -57,6 +57,9 @@ import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonDistribution;
 import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
 
+/**
+ * DB persistence store test case.
+ */
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
@@ -90,7 +93,7 @@ public class DBPersistenceStoreTestcase {
     }
 
     /**
-     * Copy the OJDBC OSGI dependency to lib folder of distribution
+     * Copy the OJDBC OSGI dependency to lib folder of distribution.
      */
     private Option copyOracleJDBCJar() {
         Path ojdbc6FilePath;

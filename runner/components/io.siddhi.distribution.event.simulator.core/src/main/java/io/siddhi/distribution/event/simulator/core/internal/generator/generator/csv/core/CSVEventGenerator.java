@@ -46,7 +46,7 @@ import static io.siddhi.distribution.event.simulator.core.internal.util.util.Com
 
 /**
  * CSVEventGenerator implements EventGenerator interface.
- * This class produces events using csv files
+ * This class produces events using csv files.
  */
 public class CSVEventGenerator implements EventGenerator {
     private final Logger log = LoggerFactory.getLogger(CSVEventGenerator.class);
@@ -55,7 +55,7 @@ public class CSVEventGenerator implements EventGenerator {
     private long startTimestamp;
     private long endTimestamp;
     /**
-     * nextEvent variable holds the next event with least timestamp
+     * nextEvent variable holds the next event with least timestamp.
      */
     private Event nextEvent;
     private CSVReader csvReader;
@@ -67,7 +67,7 @@ public class CSVEventGenerator implements EventGenerator {
     }
 
     /**
-     * init() is used to initialize a CSV event generator
+     * init() is used to initialize a CSV event generator.
      * performs following actions
      * 1.validate the   by parsing the csv simulation configuration
      * 2.create a CSVSimulationDTO object
@@ -113,7 +113,7 @@ public class CSVEventGenerator implements EventGenerator {
     }
 
     /**
-     * start() method begins event simulation by creating the first event
+     * start() method begins event simulation by creating the first event.
      */
     @Override
     public void start() {
@@ -159,7 +159,7 @@ public class CSVEventGenerator implements EventGenerator {
 
 
     /**
-     * stop() method is used to release resources used to read CSV file
+     * stop() method is used to release resources used to read CSV file.
      */
     @Override
     public void stop() {
@@ -172,7 +172,7 @@ public class CSVEventGenerator implements EventGenerator {
     }
 
     /**
-     * resume() method
+     * resume() method.
      */
     @Override
     public void resume() {
@@ -187,7 +187,7 @@ public class CSVEventGenerator implements EventGenerator {
 
 
     /**
-     * poll() returns nextEvent of the generator and assign the event with next least timestamp as the nextEvent
+     * poll() returns nextEvent of the generator and assign the event with next least timestamp as the nextEvent.
      *
      * @return event with least timestamp
      */
@@ -208,7 +208,7 @@ public class CSVEventGenerator implements EventGenerator {
 
 
     /**
-     * peek() method is used to view the nextEvent of the generator
+     * peek() method is used to view the nextEvent of the generator.
      *
      * @return the event with least timestamp
      */
@@ -218,7 +218,7 @@ public class CSVEventGenerator implements EventGenerator {
     }
 
     /**
-     * getStreamName() is used to obtain the name of the stream to which events are generated
+     * getStreamName() is used to obtain the name of the stream to which events are generated.
      *
      * @return name of the stream
      */
@@ -229,7 +229,7 @@ public class CSVEventGenerator implements EventGenerator {
 
 
     /**
-     * getSiddhiAppName() is used to obtain the name of execution plan which is being simulated
+     * getSiddhiAppName() is used to obtain the name of execution plan which is being simulated.
      *
      * @return name of the execution plan
      */
@@ -239,7 +239,7 @@ public class CSVEventGenerator implements EventGenerator {
     }
 
     /**
-     * getNextEvent() is used to obtain the next event with least timestamp
+     * getNextEvent() is used to obtain the next event with least timestamp.
      */
     @Override
     public void getNextEvent() {
@@ -258,7 +258,7 @@ public class CSVEventGenerator implements EventGenerator {
 
 
     /**
-     * getEventsForNextTimestamp() is used to get list of events with the next least timestamp
+     * getEventsForNextTimestamp() is used to get list of events with the next least timestamp.
      */
     private void getEventsForNextTimestamp() {
         /*
@@ -279,7 +279,7 @@ public class CSVEventGenerator implements EventGenerator {
 
 
     /**
-     * getNextEventForCurrentTimestamp() method is used to retrieve an event with the least timestamp
+     * getNextEventForCurrentTimestamp() method is used to retrieve an event with the least timestamp.
      */
     private void getNextEventForCurrentTimestamp() {
         /*
@@ -314,7 +314,7 @@ public class CSVEventGenerator implements EventGenerator {
     }
 
     /**
-     * validateCSVConfiguration() validates the source configuration provided for csv simulation
+     * validateCSVConfiguration() validates the source configuration provided for csv simulation.
      *
      * @param sourceConfig JSON object containing configuration required for csv simulation
      * @throws InvalidConfigException          if configuration is invalid
@@ -476,7 +476,7 @@ public class CSVEventGenerator implements EventGenerator {
     }
 
     /**
-     * createCSVConfiguration() creates a csv simulation configuration object
+     * createCSVConfiguration() creates a csv simulation configuration object.
      *
      * @param sourceConfig JSON object containing configuration required to simulate stream
      * @return CSVSimulationDTO containing csv simulation configuration

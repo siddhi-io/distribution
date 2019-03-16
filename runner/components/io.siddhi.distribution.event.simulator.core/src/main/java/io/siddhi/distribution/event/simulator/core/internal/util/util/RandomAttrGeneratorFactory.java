@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
- * factory interface used for creating random attribute generators
+ * factory interface used for creating random attribute generators.
  */
 public interface RandomAttrGeneratorFactory {
 

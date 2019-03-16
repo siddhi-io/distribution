@@ -28,6 +28,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Stream Processor util class.
+ */
 public class StreamProcessorUtil implements EventStreamService {
     private HashMap<String, HashMap<String, List<Attribute>>> streamAttributesMap = new HashMap<>();
     private LinkedList<EventData> eventsReceived = new LinkedList<>();

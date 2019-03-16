@@ -35,6 +35,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Kafka test util.
+ */
 public class KafkaTestUtil {
     private static final Logger log = Logger.getLogger(KafkaTestUtil.class);
     private static final String kafkaLogDir = "tmp_kafka_dir";

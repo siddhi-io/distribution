@@ -38,7 +38,7 @@ import java.util.Properties;
 
 
 /**
- * DatabaseConnector is a utility class performs the following tasks
+ * DatabaseConnector is a utility class performs the following tasks.
  * 1. Load the driver
  * 2. Connect to the database
  * 3. Create and execute a SELECT query
@@ -114,7 +114,7 @@ public class DatabaseConnector {
     }
 
     /**
-     * getDatabaseEvenItems method is used to obtain data from a database
+     * getDatabaseEvenItems method is used to obtain data from a database.
      *
      * @param tableName          table from which data must be retrieved
      * @param columnNames        list of columns to be retrieved
@@ -164,7 +164,7 @@ public class DatabaseConnector {
     }
 
     /**
-     * This method loads the JDBC driver and creates a database connection
+     * This method loads the JDBC driver and creates a database connection.
      *
      * @param dataSourceLocation location of database to be used
      * @param username           username
@@ -196,7 +196,7 @@ public class DatabaseConnector {
     }
 
     /**
-     * checkTableExists methods checks whether the table specified exists in the specified database
+     * checkTableExists methods checks whether the table specified exists in the specified database.
      *
      * @param tableName name of table from which data must be retrieved
      * @return true if table exists in the database
@@ -232,7 +232,7 @@ public class DatabaseConnector {
 
     /**
      * validateColumns method checks whether the columns specified exists in the specified table in the
-     * specified database
+     * specified database.
      *
      * @param tableName   table from which data must be retrieved
      * @param columnNames list of columns to be retrieved
@@ -274,7 +274,7 @@ public class DatabaseConnector {
     }
 
     /**
-     * PrepareSQLstatement() method creates the prepared statement needed to retrieve resultset
+     * PrepareSQLstatement() method creates the prepared statement needed to retrieve resultset.
      *
      * @param tableName          table from which data must be retrieved
      * @param columnNames        list of columns to be retrieved

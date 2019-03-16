@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.Objects;
 
 /**
- * InlineResponse200
+ * InlineResponse200.
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-05-31T15:43:24.557Z")
@@ -39,7 +39,7 @@ public class InlineResponse200 {
     }
 
     /**
-     * Siddhi App Name
+     * Siddhi App Name.
      *
      * @return name
      **/
@@ -58,7 +58,7 @@ public class InlineResponse200 {
     }
 
     /**
-     * Siddhi Query
+     * Siddhi Query.
      *
      * @return query
      **/

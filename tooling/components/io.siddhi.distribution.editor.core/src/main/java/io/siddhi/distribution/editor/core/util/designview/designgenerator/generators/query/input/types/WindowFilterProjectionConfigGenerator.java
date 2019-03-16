@@ -30,7 +30,7 @@ import org.wso2.siddhi.query.api.execution.query.input.stream.SingleInputStream;
 import java.util.List;
 
 /**
- * Generates WindowFilterProjection Query Input Config with given Siddhi elements
+ * Generates WindowFilterProjection Query Input Config with given Siddhi elements.
  */
 public class WindowFilterProjectionConfigGenerator {
     private String siddhiAppString;
@@ -40,7 +40,7 @@ public class WindowFilterProjectionConfigGenerator {
     }
 
     /**
-     * Generates a WindowFilterProjectionConfig object, from the given Siddhi Query InputStream object
+     * Generates a WindowFilterProjectionConfig object, from the given Siddhi Query InputStream object.
      *
      * @param queryInputStream Siddhi Query InputStream object
      * @return WindowFilterProjectionConfig object
@@ -56,7 +56,7 @@ public class WindowFilterProjectionConfigGenerator {
     }
 
     /**
-     * Returns the type of WindowFilterProjection Config to generate, from the given Siddhi Query object
+     * Returns the type of WindowFilterProjection Config to generate, from the given Siddhi Query object.
      *
      * @param queryInputStream Siddhi Query InputStream object
      * @return Type of WindowFilterProjection Query to generate
@@ -81,7 +81,7 @@ public class WindowFilterProjectionConfigGenerator {
     }
 
     /**
-     * Specific Type of the WindowFilterProjection Query
+     * Specific Type of the WindowFilterProjection Query.
      */
     private enum WindowFilterProjectionQueryType {
         PROJECTION,

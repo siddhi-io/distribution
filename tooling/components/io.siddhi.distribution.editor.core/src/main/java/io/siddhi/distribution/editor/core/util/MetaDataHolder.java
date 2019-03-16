@@ -21,7 +21,7 @@ package io.siddhi.distribution.editor.core.util;
 import io.siddhi.distribution.editor.core.commons.metadata.MetaData;
 
 /**
- * Used for holding the meta data of the processors available in the siddhi engine
+ * Used for holding the meta data of the processors available in the siddhi engine.
  */
 public class MetaDataHolder {
     private static MetaData inBuiltProcessorMetaData = SourceEditorUtils.getInBuiltProcessorMetaData();
@@ -31,7 +31,7 @@ public class MetaDataHolder {
     }
 
     /**
-     * Returns the in built processor meta data
+     * Returns the in built processor meta data.
      *
      * @return In-built processor meta data
      */

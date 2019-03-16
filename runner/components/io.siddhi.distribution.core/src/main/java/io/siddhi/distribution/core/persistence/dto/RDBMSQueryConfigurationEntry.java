@@ -19,7 +19,7 @@
 package io.siddhi.distribution.core.persistence.dto;
 
 /**
- * Class that maps individual database entries from resources/rdbms-table-config.xml
+ * Class that maps individual database entries from resources/rdbms-table-config.xml.
  */
 public class RDBMSQueryConfigurationEntry {
     private String databaseName;

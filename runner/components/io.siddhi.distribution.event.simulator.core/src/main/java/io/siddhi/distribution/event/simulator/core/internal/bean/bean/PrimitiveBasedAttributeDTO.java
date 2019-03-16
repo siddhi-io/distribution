@@ -22,7 +22,7 @@ import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
  * PrimitiveBasedAttributeDTO represents configuration for  the Random data generator based on primitive data types
- * such as String,int,Float,Double,String,Boolean
+ * such as String,int,Float,Double,String,Boolean.
  */
 public class PrimitiveBasedAttributeDTO implements RandomAttributeDTO {
     /*
@@ -46,7 +46,7 @@ public class PrimitiveBasedAttributeDTO implements RandomAttributeDTO {
     private int length;
 
     /**
-     * Initialize PrimitiveBasedAttributeDTO with parent class
+     * Initialize PrimitiveBasedAttributeDTO with parent class.
      */
     public PrimitiveBasedAttributeDTO() {
     }

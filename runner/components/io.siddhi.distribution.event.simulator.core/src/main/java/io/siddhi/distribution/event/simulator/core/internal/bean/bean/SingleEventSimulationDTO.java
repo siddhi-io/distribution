@@ -20,7 +20,7 @@ package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 import java.util.Arrays;
 
 /**
- * Represents Single Event Simulation Configuration class
+ * Represents Single Event Simulation Configuration class.
  */
 public class SingleEventSimulationDTO extends StreamConfigurationDTO {
     /*

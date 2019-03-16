@@ -19,7 +19,7 @@ package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
 
 /**
- * constants related to Event Simulator
+ * constants related to Event Simulator.
  */
 public class EventSimulatorConstants {
     public static final String DIRECTORY_CSV_FILES = "csv-files";
