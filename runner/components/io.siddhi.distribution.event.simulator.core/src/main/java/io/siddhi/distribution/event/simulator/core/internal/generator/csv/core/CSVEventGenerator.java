@@ -24,9 +24,9 @@ import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigExcept
 import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CSVSimulationDTO;
-import io.siddhi.distribution.event.simulator.core.internal.generator.csv.util.FileStore;
 import io.siddhi.distribution.event.simulator.core.internal.generator.EventGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.csv.util.CSVReader;
+import io.siddhi.distribution.event.simulator.core.internal.generator.csv.util.FileStore;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.util.SourceConfigLogger;
