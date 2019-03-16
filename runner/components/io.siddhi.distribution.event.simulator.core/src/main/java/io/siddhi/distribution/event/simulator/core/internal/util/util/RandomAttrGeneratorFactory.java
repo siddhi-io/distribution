@@ -18,7 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;
 import org.json.JSONObject;
 import org.wso2.siddhi.query.api.definition.Attribute;

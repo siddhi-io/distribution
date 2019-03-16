@@ -18,9 +18,9 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileAlreadyExistsException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.FileAlreadyExistsException;
+import io.siddhi.distribution.event.simulator.core.exception.FileOperationsException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.testng.Assert;

@@ -19,11 +19,11 @@
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util;
 
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.EventGenerationException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulatorInitializationException;
+import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
+import io.siddhi.distribution.event.simulator.core.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CSVSimulationDTO;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventConverter;
-import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
+import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

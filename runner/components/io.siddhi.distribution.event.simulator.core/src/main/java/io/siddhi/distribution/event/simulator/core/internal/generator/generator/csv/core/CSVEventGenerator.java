@@ -19,17 +19,17 @@
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.core;
 
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InsufficientAttributesException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulatorInitializationException;
+import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
+import io.siddhi.distribution.event.simulator.core.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CSVSimulationDTO;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.CSVReader;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.util.FileStore;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
-import io.siddhi.distribution.event.simulator.core.util.util.SourceConfigLogger;
+import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
+import io.siddhi.distribution.event.simulator.core.util.SourceConfigLogger;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;

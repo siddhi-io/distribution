@@ -19,10 +19,10 @@
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileAlreadyExistsException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
-import io.siddhi.distribution.event.simulator.core.util.util.LogEncoder;
+import io.siddhi.distribution.event.simulator.core.exception.FileAlreadyExistsException;
+import io.siddhi.distribution.event.simulator.core.exception.FileOperationsException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.util.LogEncoder;
 import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;

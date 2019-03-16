@@ -18,7 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileOperationsException;
+import io.siddhi.distribution.event.simulator.core.exception.FileOperationsException;
 import org.json.JSONObject;
 
 /**

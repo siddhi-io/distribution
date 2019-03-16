@@ -19,9 +19,9 @@
 package io.siddhi.distribution.event.simulator.core.internal.generator.generator;
 
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InsufficientAttributesException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
-import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
+import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;

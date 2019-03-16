@@ -20,7 +20,7 @@ package io.siddhi.distribution.event.simulator.core.internal.generator.generator
 
 import com.mifmif.common.regex.Generex;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.RegexBasedAttributeDTO;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttrGenAbstractImpl;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;

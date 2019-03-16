@@ -17,7 +17,7 @@
  */
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import io.siddhi.distribution.event.simulator.core.exception.exception.EventGenerationException;
+import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
 import org.wso2.siddhi.core.event.Event;
 import org.wso2.siddhi.query.api.definition.Attribute;
 

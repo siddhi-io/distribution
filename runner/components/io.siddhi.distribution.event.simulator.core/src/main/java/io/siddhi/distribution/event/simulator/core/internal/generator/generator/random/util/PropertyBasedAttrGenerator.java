@@ -27,7 +27,7 @@ import fabricator.Location;
 import fabricator.Words;
 import fabricator.enums.DateFormat;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.PropertyBasedAttributeDTO;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttrGenAbstractImpl;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;

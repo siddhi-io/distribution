@@ -19,13 +19,13 @@
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.csv.core.CSVEventGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.database.core.DatabaseEventGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.core.RandomEventGenerator;
-import io.siddhi.distribution.event.simulator.core.util.util.SourceConfigLogger;
+import io.siddhi.distribution.event.simulator.core.util.SourceConfigLogger;
 import org.json.JSONObject;
 
 import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;

@@ -18,7 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulationValidationException;
+import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
 import org.json.JSONObject;
 

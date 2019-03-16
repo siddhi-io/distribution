@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.RandomAttributeGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util.CustomBasedAttrGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util.PrimitiveBasedAttrGenerator;

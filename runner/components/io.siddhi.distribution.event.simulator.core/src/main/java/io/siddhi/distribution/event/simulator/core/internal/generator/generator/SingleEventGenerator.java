@@ -21,13 +21,13 @@ package io.siddhi.distribution.event.simulator.core.internal.generator.generator
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.EventGenerationException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InsufficientAttributesException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.InvalidConfigException;
+import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
+import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
+import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.SingleEventSimulationDTO;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventConverter;
 import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.event.simulator.core.service.service.EventSimulatorDataHolder;
+import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

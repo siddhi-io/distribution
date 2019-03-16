@@ -18,7 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.util.util;
 
-import io.siddhi.distribution.event.simulator.core.exception.exception.FileLimitExceededException;
+import io.siddhi.distribution.event.simulator.core.exception.FileLimitExceededException;
 import org.apache.commons.fileupload.util.LimitedInputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

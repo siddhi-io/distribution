@@ -21,10 +21,10 @@ package io.siddhi.distribution.event.simulator.core.internal.generator.generator
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-import io.siddhi.distribution.event.simulator.core.exception.exception.EventGenerationException;
-import io.siddhi.distribution.event.simulator.core.exception.exception.SimulatorInitializationException;
-import io.siddhi.distribution.event.simulator.core.model.model.DBConnectionModel;
-import io.siddhi.distribution.event.simulator.core.util.util.LogEncoder;
+import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
+import io.siddhi.distribution.event.simulator.core.exception.SimulatorInitializationException;
+import io.siddhi.distribution.event.simulator.core.model.DBConnectionModel;
+import io.siddhi.distribution.event.simulator.core.util.LogEncoder;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
