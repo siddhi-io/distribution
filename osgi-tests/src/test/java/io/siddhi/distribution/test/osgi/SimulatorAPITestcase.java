@@ -292,7 +292,7 @@ public class SimulatorAPITestcase {
         logger.info(httpResponseMessage.getSuccessContent());
     }
 
-    @Test(dependsOnMethods = {"testDeleteUnavailableFeedConf"})
+    @Test(dependsOnMethods = {"testGetSpecificUnavailableFeedConf"})
     public void testDeleteFilesApi() throws Exception {
         String path = "/simulation/files/sampleCSV.csv";
         String method = "DELETE";
