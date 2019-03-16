@@ -299,6 +299,7 @@ public class SimulatorAPITestcase {
         logger.info("Trying to delete unavailable CSV file");
         HTTPResponseMessage httpResponseMessage = sendHRequest(null, baseURI, path, null,
                 method, true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
+        logger.info(httpResponseMessage.getMessage());
         logger.info(httpResponseMessage.getSuccessContent().toString());
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 200);
     }

@@ -63,10 +63,7 @@ import org.wso2.siddhi.query.api.expression.AttributeFunction;
 import org.wso2.siddhi.query.compiler.SiddhiCompiler;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,15 +89,15 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
         return username != null ? username.toString() : null;
     }
 
-    public Response siddhiAppsPost(String body, String requestURI) throws NotFoundException {
+    public Response siddhiAppsPost(String body) throws NotFoundException {
         String jsonString;
         Response.Status status;
         try {
             String siddhiAppName = StreamProcessorDataHolder.
                     getStreamProcessorService().validateAndSave(body, false);
             if (siddhiAppName != null) {
-                URL resourceUrl = new URL(requestURI + File.separator + siddhiAppName);
-                URI location = resourceUrl.toURI();
+                URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + File.separator +
+                        File.separator + siddhiAppName);
                 jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                         "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
                 return Response.created(location).entity(jsonString).build();
@@ -111,7 +108,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                 status = Response.Status.CONFLICT;
             }
 
-        } catch (SiddhiAppDeploymentException | URISyntaxException | MalformedURLException e) {
+        } catch (SiddhiAppDeploymentException e) {
             jsonString = new Gson().
                     toJson(new ApiResponseMessageWithCode(ApiResponseMessageWithCode.FILE_PROCESSING_ERROR,
                             e.getMessage()));
@@ -125,7 +122,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
         return Response.status(status).entity(jsonString).build();
     }
 
-    public Response siddhiAppsPut(String body, String requestURI) throws NotFoundException {
+    public Response siddhiAppsPut(String body) throws NotFoundException {
         String jsonString = new Gson().toString();
         Response.Status status = Response.Status.OK;
         try {
@@ -138,14 +135,14 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                             "Siddhi App updated succesfully and will be deployed in next deployment cycle"));
                 } else {
-                    URL resourceUrl = new URL(requestURI + File.separator + siddhiAppName);
-                    URI location = resourceUrl.toURI();
+                    URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + File.separator +
+                            File.separator + siddhiAppName);
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                             "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
                     return Response.created(location).entity(jsonString).build();
                 }
             }
-        } catch (SiddhiAppDeploymentException | MalformedURLException | URISyntaxException e) {
+        } catch (SiddhiAppDeploymentException e) {
             jsonString = new Gson().
                     toJson(new ApiResponseMessageWithCode(ApiResponseMessageWithCode.FILE_PROCESSING_ERROR,
                             e.getMessage()));
@@ -868,7 +865,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permissions to add Siddhi Apps")
                     .build();
         }
-        return siddhiAppsPost(body, request.getUri());
+        return siddhiAppsPost(body);
     }
 
     @Override
@@ -878,7 +875,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
             return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permissions to update Siddhi " +
                     "Apps").build();
         }
-        return siddhiAppsPut(body, request.getUri());
+        return siddhiAppsPut(body);
     }
 
     @Override
