@@ -25,9 +25,9 @@ import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigExcept
 import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.SimulationPropertiesDTO;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventGeneratorFactoryImpl;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
+import io.siddhi.distribution.event.simulator.core.internal.generator.EventGenerator;
+import io.siddhi.distribution.event.simulator.core.internal.util.EventGeneratorFactoryImpl;
+import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.util.LogEncoder;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,8 +42,8 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 import javax.annotation.concurrent.NotThreadSafe;
 
-import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
-import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailabilityOfArray;
+import static io.siddhi.distribution.event.simulator.core.internal.util.CommonOperations.checkAvailability;
+import static io.siddhi.distribution.event.simulator.core.internal.util.CommonOperations.checkAvailabilityOfArray;
 
 /**
  * EventSimulator starts the simulation execution for single Event and

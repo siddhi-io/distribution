@@ -20,8 +20,8 @@ package io.siddhi.distribution.event.simulator.core.service;
 
 import io.siddhi.distribution.event.simulator.core.exception.FileOperationsException;
 import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.SimulationConfigUploader;
+import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
+import io.siddhi.distribution.event.simulator.core.internal.util.SimulationConfigUploader;
 import io.siddhi.distribution.event.simulator.core.service.bean.ActiveSimulatorData;
 import io.siddhi.distribution.event.simulator.core.service.bean.ResourceDependencyData;
 import org.slf4j.Logger;

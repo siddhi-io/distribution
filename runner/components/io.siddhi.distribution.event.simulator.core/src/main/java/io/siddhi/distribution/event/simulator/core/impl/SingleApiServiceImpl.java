@@ -4,7 +4,7 @@ import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.common.common.exception.ResponseMapper;
 import io.siddhi.distribution.event.simulator.core.api.SingleApiService;
 import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.SingleEventGenerator;
+import io.siddhi.distribution.event.simulator.core.internal.generator.SingleEventGenerator;
 
 import javax.ws.rs.core.Response;
 

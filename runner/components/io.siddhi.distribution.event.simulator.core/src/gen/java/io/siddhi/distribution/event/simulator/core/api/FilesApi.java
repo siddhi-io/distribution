@@ -21,7 +21,7 @@ package io.siddhi.distribution.event.simulator.core.api;
 
 import io.siddhi.distribution.event.simulator.core.exception.FileOperationsException;
 import io.siddhi.distribution.event.simulator.core.factories.FilesApiServiceFactory;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
+import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.model.InlineResponse2001;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorMap;

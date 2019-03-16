@@ -19,12 +19,12 @@
 package io.siddhi.distribution.event.simulator.core.util;
 
 
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.EventGenerator;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
+import io.siddhi.distribution.event.simulator.core.internal.generator.EventGenerator;
+import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import org.json.JSONObject;
 
-import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailability;
-import static io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations.checkAvailabilityOfArray;
+import static io.siddhi.distribution.event.simulator.core.internal.util.CommonOperations.checkAvailability;
+import static io.siddhi.distribution.event.simulator.core.internal.util.CommonOperations.checkAvailabilityOfArray;
 
 /**
  * Source configuration logger class.

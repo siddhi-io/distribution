@@ -23,7 +23,7 @@ import com.zaxxer.hikari.pool.PoolInitializationException;
 import io.siddhi.distribution.common.common.exception.ResponseMapper;
 import io.siddhi.distribution.event.simulator.core.api.DatabaseApiService;
 import io.siddhi.distribution.event.simulator.core.api.NotFoundException;
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.database.util.DatabaseConnector;
+import io.siddhi.distribution.event.simulator.core.internal.generator.database.util.DatabaseConnector;
 import io.siddhi.distribution.event.simulator.core.model.DBConnectionModel;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import org.wso2.carbon.analytics.permissions.PermissionProvider;

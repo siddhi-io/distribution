@@ -26,9 +26,9 @@ import io.siddhi.distribution.event.simulator.core.exception.FileOperationsExcep
 import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
 import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.CommonOperations;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.EventSimulatorConstants;
-import io.siddhi.distribution.event.simulator.core.internal.util.util.SimulationConfigUploader;
+import io.siddhi.distribution.event.simulator.core.internal.util.CommonOperations;
+import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
+import io.siddhi.distribution.event.simulator.core.internal.util.SimulationConfigUploader;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulator;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorMap;

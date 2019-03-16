@@ -18,7 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.bean.bean;
 
-import io.siddhi.distribution.event.simulator.core.internal.generator.generator.random.util.PropertyBasedAttrGenerator;
+import io.siddhi.distribution.event.simulator.core.internal.generator.random.util.PropertyBasedAttrGenerator;
 
 
 /**
