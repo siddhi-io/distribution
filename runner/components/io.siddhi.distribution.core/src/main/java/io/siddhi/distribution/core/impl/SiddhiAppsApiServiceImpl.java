@@ -62,7 +62,6 @@ import org.wso2.siddhi.query.api.execution.query.selection.OutputAttribute;
 import org.wso2.siddhi.query.api.expression.AttributeFunction;
 import org.wso2.siddhi.query.compiler.SiddhiCompiler;
 
-import java.io.File;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
