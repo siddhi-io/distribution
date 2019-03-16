@@ -28,7 +28,7 @@
 
     <artifactId>io.siddhi.distribution.msf4j.interceptor.common.feature</artifactId>
     <packaging>carbon-feature</packaging>
-    <name>WSO2 Stream Processor - Interceptor Feature</name>
+    <name>Siddhi Distribution - Interceptors Feature</name>
     <url>http://wso2.org</url>
     <description>This feature contains the bundles related to Micro services Interceptor</description>
 

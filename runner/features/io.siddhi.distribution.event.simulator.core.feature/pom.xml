@@ -28,7 +28,7 @@
 
     <artifactId>io.siddhi.distribution.event.simulator.core.feature</artifactId>
     <packaging>carbon-feature</packaging>
-    <name>WSO2 Stream Processor - Event Simulator Feature</name>
+    <name>Siddhi Distribution - Event Simulator Feature</name>
     <url>http://wso2.org</url>
     <description>This feature contains the bundles related to Event Simulator</description>
 

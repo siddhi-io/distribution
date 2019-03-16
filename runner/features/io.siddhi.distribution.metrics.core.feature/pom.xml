@@ -27,7 +27,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>io.siddhi.distribution.metrics.core.feature</artifactId>
-    <name>WSO2 Carbon - Siddhi Metrics Core</name>
+    <name>Siddhi Distribution- Metrics Core Feature</name>
     <packaging>carbon-feature</packaging>
 
     <dependencies>

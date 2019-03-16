@@ -28,7 +28,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>io.siddhi.distribution.common.feature</artifactId>
     <packaging>carbon-feature</packaging>
-    <name>WSO2 Stream Processor - Common Feature</name>
+    <name>Siddhi Distribution - Common Feature</name>
     <url>http://wso2.org</url>
     <description>This feature contains the bundles related to Stream Processor Common</description>
 

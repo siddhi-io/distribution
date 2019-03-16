@@ -28,7 +28,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>coverage-reports</artifactId>
-    <name>Carbon Analytics Tests Coverage Report Aggregation</name>
+    <name>Siddhi Distributions Tests Coverage Report Aggregation</name>
     <packaging>pom</packaging>
 
     <dependencies>

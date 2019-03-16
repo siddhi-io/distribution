@@ -28,7 +28,7 @@
 
     <artifactId>io.siddhi.distribution.siddhi.feature</artifactId>
     <packaging>carbon-feature</packaging>
-    <name>WSO2 Stream Processor - Siddhi Feature</name>
+    <name>Siddhi Distribution - Siddhi Feature</name>
     <url>http://wso2.org</url>
     <description>This feature contains the dependency bundles related to Siddhi Core</description>
 
