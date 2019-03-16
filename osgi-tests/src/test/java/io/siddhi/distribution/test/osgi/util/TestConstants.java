@@ -16,6 +16,9 @@
 
 package io.siddhi.distribution.test.osgi.util;
 
+/**
+ * OSGI test constants.
+ */
 public class TestConstants {
     public static final String HTTP_METHOD_POST = "POST";
     public static final String HTTP_METHOD_GET = "GET";

@@ -29,6 +29,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+/**
+ * RDBMS configuration.
+ */
 public class RDBMSConfig {
 
     private static final Logger log = Logger.getLogger(RDBMSConfig.class);
@@ -128,7 +131,7 @@ public class RDBMSConfig {
     }
 
     /**
-     * Utility for get Docker running host
+     * Utility for get Docker running host.
      *
      * @return docker host
      * @throws URISyntaxException if docker Host url is malformed this will throw

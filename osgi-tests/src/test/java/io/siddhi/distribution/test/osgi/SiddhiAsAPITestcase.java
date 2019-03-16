@@ -108,7 +108,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App deployment related test cases
+     * Siddhi App deployment related test cases.
      */
     @Test
     public void testValidSiddhiAPPDeployment() throws Exception {
@@ -226,7 +226,7 @@ public class SiddhiAsAPITestcase {
 
 
     /**
-     * Siddhi App update related test cases
+     * Siddhi App update related test cases.
      */
 
     @Test(dependsOnMethods = {"testSiddhiAPPDeploymentWithNoBody"})
@@ -327,7 +327,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App retrieval (individual) related test cases
+     * Siddhi App retrieval (individual) related test cases.
      */
 
     @Test(dependsOnMethods = {"testSiddhiAPPUpdateWithInvalidContentType"})
@@ -387,7 +387,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App retrieval (collection) related test cases
+     * Siddhi App retrieval (collection) related test cases.
      */
     @Test(dependsOnMethods = {"testInactiveSiddhiAPPRetrieval"})
     public void testAllSiddhiAPPRetrieval() throws Exception {
@@ -418,7 +418,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App status retrieval related test cases
+     * Siddhi App status retrieval related test cases.
      */
 
     @Test(dependsOnMethods = {"testAllSiddhiAPPRetrievalWithContentType"})
@@ -477,7 +477,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App state backup related test cases
+     * Siddhi App state backup related test cases.
      */
     @Test(dependsOnMethods = {"testiddhiAPPStatusRetrievalWithDifferentContentType"})
     public void testValidSiddhiAPPBackup() throws Exception {
@@ -541,7 +541,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App state restore related test cases
+     * Siddhi App state restore related test cases.
      */
 
     @Test(dependsOnMethods = {"testSiddhiAPPBackupWithInvalidMethod"})
@@ -602,7 +602,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App deletion related test cases
+     * Siddhi App deletion related test cases.
      */
 
     @Test(dependsOnMethods = {"testSiddhiAPPBackupWithInvalidContentType"})
@@ -664,7 +664,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App retrieval after deletion related test cases
+     * Siddhi App retrieval after deletion related test cases.
      */
     @Test(dependsOnMethods = {"testInactiveSiddhiAPPDeletion"})
     public void testSiddhiAPPRetrievalAfterDeletion() throws Exception {
@@ -681,7 +681,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App without authentication
+     * Siddhi App without authentication.
      */
     // TODO: 11/1/17 To enable after the Siddhi-apps API is secured
     @Test(enabled = false)
@@ -699,7 +699,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Siddhi App with wrong credentials
+     * Siddhi App with wrong credentials.
      */
     @Test(enabled = false)
     public void testSiddhiAPPWrongCredentials() {
@@ -716,7 +716,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Persistence clearing of existing Siddhi App
+     * Persistence clearing of existing Siddhi App.
      */
     @Test(dependsOnMethods = {"testValidSiddhiAPPDeployment"})
     public void testSiddhiAppPersistenceStoreClear() throws Exception {
@@ -736,7 +736,7 @@ public class SiddhiAsAPITestcase {
     }
 
     /**
-     * Persistence clearing of non-existing Siddhi App
+     * Persistence clearing of non-existing Siddhi App.
      */
     @Test(dependsOnMethods = {"testValidSiddhiAPPDeployment"})
     public void testInvalidSiddhiAppPersistenceStoreClear() throws Exception {
