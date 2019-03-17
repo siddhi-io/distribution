@@ -27,8 +27,8 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>io-siddhi-distribution-osgi-tests</artifactId>
-    <name>WSO2 Carbon Analytics - OSGi Tests</name>
-    <description>OSGi Tests for WSO2 Carbon Analytics</description>
+    <name>Siddhi Distributions - OSGi Tests</name>
+    <description>OSGi Tests for Siddhi Distributions</description>
     <url>http://wso2.com</url>
 
     <dependencies>

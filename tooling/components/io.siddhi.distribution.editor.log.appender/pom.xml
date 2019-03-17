@@ -28,7 +28,7 @@
     </parent>
 
     <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
-    <name>WSO2 Carbon - Editor Log Appender</name>
+    <name>Siddhi Tooling - Editor Log Appender</name>
     <packaging>bundle</packaging>
     <url>http://wso2.com</url>
 
