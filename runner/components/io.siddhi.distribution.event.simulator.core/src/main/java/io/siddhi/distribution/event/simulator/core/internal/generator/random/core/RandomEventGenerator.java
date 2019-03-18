@@ -67,7 +67,6 @@ public class RandomEventGenerator implements EventGenerator {
      * @param startTimestamp least possible value for timestamp
      * @param endTimestamp   maximum possible value for timestamp
      * @throws InvalidConfigException    if random stream simulation configuration is invalid
-     * @throws ResourceNotFoundException if resources required for simulation are not available
      */
     @Override
     public void init(JSONObject sourceConfig, long startTimestamp, long endTimestamp, String simulationName)
@@ -225,7 +224,6 @@ public class RandomEventGenerator implements EventGenerator {
      *
      * @param sourceConfig JSON object containing configuration required to simulate stream
      * @throws InvalidConfigException    if the stream configuration is invalid
-     * @throws ResourceNotFoundException if resources required for simulation are not available
      */
     @Override
     public void validateSourceConfiguration(JSONObject sourceConfig, String simulationName)

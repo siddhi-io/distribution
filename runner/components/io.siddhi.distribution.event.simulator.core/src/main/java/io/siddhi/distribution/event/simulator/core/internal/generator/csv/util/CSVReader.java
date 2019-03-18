@@ -63,6 +63,9 @@ public class CSVReader {
      * Initialize a file reader for the CSV file.
      * If the CSV file is ordered by timestamp it will create a bufferedReader for the file reader.
      *
+     * @param fileName CSV file name
+     * @param isOrdered bool indicating whether the entries in CSV file are ordered or not
+     *
      * @throws ResourceNotFoundException if the CSV file is not found
      */
     public CSVReader(String fileName, boolean isOrdered) throws ResourceNotFoundException {
@@ -121,7 +124,7 @@ public class CSVReader {
                 if (line != null) {
                     ArrayList<String> attributes = new ArrayList<>(Arrays.asList(line.split(csvConfig.getDelimiter())));
                     long timestamp;
-//                    if the line does not have sufficient data to produce an event, move to next line
+                    // if the line does not have sufficient data to produce an event, move to next line
                     if (timestampPosition == -1) {
                         /*
                          * if timestamp attribute is not specified, take startTimestamp as the first event
@@ -315,6 +318,7 @@ public class CSVReader {
     /**
      * closeParser() method is used to release resources created to read the CSV file.
      *
+     * @param fileName CSV file name
      * @param isOrdered bool indicating whether the entries in CSV file are ordered or not
      */
     public void closeParser(String fileName, boolean isOrdered) {
