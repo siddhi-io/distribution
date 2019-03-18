@@ -80,7 +80,6 @@ public class CSVEventGenerator implements EventGenerator {
      * @param endTimestamp   maximum possible event timestamp
      * @throws InvalidConfigException           if invalid configuration is provided for CSV event generation
      * @throws SimulatorInitializationException if the stream or execution plan doesn't exists
-     * @throws ResourceNotFoundException        if a resource required for simulation is not available
      */
     @Override
     public void init(JSONObject sourceConfig, long startTimestamp, long endTimestamp, String simulationName)
@@ -318,7 +317,6 @@ public class CSVEventGenerator implements EventGenerator {
      *
      * @param sourceConfig JSON object containing configuration required for csv simulation
      * @throws InvalidConfigException          if configuration is invalid
-     * @throws ResourceNotFoundException       if a resource required for simulation is not available
      * @throws InsufficientAttributesException if the number of indices specified is not equal to number of stream
      *                                         attributes
      */

@@ -51,7 +51,7 @@ public class SiddhiBufferedEventsMetric implements BufferedEventsTracker {
      * Register the object that needs to be measured the buffered events count usage.
      *
      * @param eventBufferHolder Buffered object.
-     * @parambufferedEventsTrackerId An unique value to identify the  Buffered object.
+     * @param bufferedEventsTrackerId An unique value to identify the  Buffered object.
      */
     @Override
     public void registerEventBufferHolder(EventBufferHolder eventBufferHolder, String bufferedEventsTrackerId) {

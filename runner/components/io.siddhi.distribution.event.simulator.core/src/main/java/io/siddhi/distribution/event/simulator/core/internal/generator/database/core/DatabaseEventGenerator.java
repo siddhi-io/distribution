@@ -76,7 +76,6 @@ public class DatabaseEventGenerator implements EventGenerator {
      * @param startTimestamp least possible value for timestamp
      * @param endTimestamp   maximum possible value for timestamp
      * @throws InvalidConfigException    if the database source configuration is invalid
-     * @throws ResourceNotFoundException if resources required for simulation are not available
      */
     @Override
     public void init(JSONObject sourceConfig, long startTimestamp, long endTimestamp, String simulationName)
@@ -347,7 +346,6 @@ public class DatabaseEventGenerator implements EventGenerator {
      * @throws InvalidConfigException          if the stream configuration is invalid
      * @throws InsufficientAttributesException if the number of columns specified is not equal to number of stream
      *                                         attributes
-     * @throws ResourceNotFoundException       if resources required for simulation are not available
      */
     @Override
     public void validateSourceConfiguration(JSONObject sourceConfig, String simulationName)

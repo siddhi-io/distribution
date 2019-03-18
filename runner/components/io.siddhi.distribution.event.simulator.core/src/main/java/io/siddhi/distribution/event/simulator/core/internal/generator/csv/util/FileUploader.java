@@ -135,7 +135,7 @@ public class FileUploader {
      *
      * @param fileName    name of CSV file to be deleted
      * @param baseDirPath base path directory
-     * @return
+     * @return boolean value indicating whether deletion is success or not
      * @throws FileOperationsException if an IOException occurs while deleting file
      */
     public boolean deleteFile(String fileName, String baseDirPath) throws FileOperationsException {
@@ -161,6 +161,7 @@ public class FileUploader {
      * validateFileSource() is used to validate that the CSV file exists.
      *
      * @param fileName name of file being validated
+     * @return boolean value indicating whether file exists or not
      */
     public boolean validateFileExists(String fileName) {
         return fileStore.checkExists(fileName);
@@ -171,6 +172,7 @@ public class FileUploader {
      *
      * @param extension         type of files retrieved
      * @param directoryLocation the directory where the files reside
+     * @return list of file names
      * @throws FileOperationsException if an IO error occurs while reading file names
      */
     public List<String> retrieveFileNameList(String extension, Path directoryLocation) throws FileOperationsException {

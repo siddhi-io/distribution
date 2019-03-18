@@ -41,7 +41,6 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
      * @param endTimestamp   maximum possible timestamp an even produced could have
      * @throws InvalidConfigException    if the simulation type is not specified or if an invalid generator type
      *                                   is specified
-     * @throws ResourceNotFoundException if a resource required for simulation is not found
      */
     @Override
     public EventGenerator createEventGenerator(JSONObject sourceConfig, long startTimestamp, long endTimestamp,
