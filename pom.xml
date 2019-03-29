@@ -1572,7 +1572,7 @@
         <osgi.test.util.version>5.1.1</osgi.test.util.version>
         <osgi.framework.import.range>[1.8.0, 2.0.0)</osgi.framework.import.range>
 
-        <swagger.codegen.maven.plugin.version>2.1.6</swagger.codegen.maven.plugin.version>
+        <swagger.codegen.maven.plugin.version>2.4.4</swagger.codegen.maven.plugin.version>
         <swagger.codegen.version>2.2.0.wso2v2</swagger.codegen.version>
         <swagger.models.version>1.5.10</swagger.models.version>
 
