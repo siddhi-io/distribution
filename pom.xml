@@ -1520,7 +1520,7 @@
         <commons.logging.version>1.2</commons.logging.version>
         <geronimo.activation>1.1</geronimo.activation>
         <geronimo.stax>1.0.1</geronimo.stax>
-        <mime4j.version>0.7.2</mime4j.version>
+        <mime4j.version>0.8.3</mime4j.version>
 
         <!--pax-exam dependencies-->
         <javax.inject.version>1</javax.inject.version>
