@@ -1437,7 +1437,7 @@
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
 
         <!--Dashboard-->
-        <carbon.uiserver.version>0.19.5</carbon.uiserver.version>
+        <carbon.uiserver.version>0.19.8</carbon.uiserver.version>
         <carbon.uiserver.version.range>[0.19.3, 1.0.0]</carbon.uiserver.version.range>
 
         <!-- Maven plugins -->
