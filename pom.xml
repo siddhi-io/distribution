@@ -1473,7 +1473,7 @@
         <carbon.kernel.package.import.version.range>[5.2.0, 6.0.0)</carbon.kernel.package.import.version.range>
         <carbon.kernel.pax.version>5.2.8</carbon.kernel.pax.version>
 
-        <org.wso2.transport.http.netty.version>6.0.163</org.wso2.transport.http.netty.version>
+        <org.wso2.transport.http.netty.version>6.0.279</org.wso2.transport.http.netty.version>
         <carbon.transport.package.import.version.range>[6.0.0, 7.0.0)</carbon.transport.package.import.version.range>
 
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
