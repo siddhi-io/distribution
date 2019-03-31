@@ -1412,7 +1412,7 @@
         <org.jacoco.ant.version>0.7.5.201505241946</org.jacoco.ant.version>
         <equinox.simpleconfigurator.version>1.1.200.v20160504-1450</equinox.simpleconfigurator.version>
         <apache.felix.gogo.command.version>0.10.0.v201209301215</apache.felix.gogo.command.version>
-        <apache.felix.gogo.runtime.version>0.10.0.v201209301036</apache.felix.gogo.runtime.version>
+        <apache.felix.gogo.runtime.version>1.1.2</apache.felix.gogo.runtime.version>
         <apache.felix.gogo.shell.version>0.10.0.v201212101605</apache.felix.gogo.shell.version>
         <maven.src.version>1.21.0</maven.src.version>
         <equinox.app.version>1.3.200.v20130910-1609</equinox.app.version>
