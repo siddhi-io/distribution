@@ -1632,7 +1632,7 @@
 
         <zkclient.version>0.10</zkclient.version>
 
-        <curator-test.version>2.7.1</curator-test.version>
+        <curator-test.version>4.2.0</curator-test.version>
         <zookeeper.version>3.4.0</zookeeper.version>
         <commons-io.version>2.5</commons-io.version>
         <org.snakeyaml.import.version.range>[1.17.0,2.0.0)</org.snakeyaml.import.version.range>
