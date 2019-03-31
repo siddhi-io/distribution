@@ -1408,7 +1408,7 @@
         <equinox.osgi.services.version>3.4.0.v20140312-2051</equinox.osgi.services.version>
         <pax.logging.log4j2.version>1.10.0</pax.logging.log4j2.version>
         <pax.exam.container.native.version>4.13.1</pax.exam.container.native.version>
-        <pax.url.aether.version>1.6.0</pax.url.aether.version>
+        <pax.url.aether.version>2.6.1</pax.url.aether.version>
         <org.jacoco.ant.version>0.7.5.201505241946</org.jacoco.ant.version>
         <equinox.simpleconfigurator.version>1.1.200.v20160504-1450</equinox.simpleconfigurator.version>
         <apache.felix.gogo.command.version>0.10.0.v201209301215</apache.felix.gogo.command.version>
