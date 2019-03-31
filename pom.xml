@@ -1596,7 +1596,7 @@
 
 
         <siddhi.io.file.version>1.1.0</siddhi.io.file.version>
-        <siddhi.io.tcp.version>2.1.0</siddhi.io.tcp.version>
+        <siddhi.io.tcp.version>2.1.1</siddhi.io.tcp.version>
         <siddhi.io.jms.version>1.1.1</siddhi.io.jms.version>
         <siddhi.io.email.version>1.1.0</siddhi.io.email.version>
         <siddhi.io.rabbitmq.version>1.1.0</siddhi.io.rabbitmq.version>
