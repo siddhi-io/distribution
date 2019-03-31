@@ -1523,7 +1523,7 @@
         <mime4j.version>0.8.3</mime4j.version>
 
         <!--pax-exam dependencies-->
-        <javax.inject.version>1</javax.inject.version>
+        <javax.inject.version>1.0-PFD-1</javax.inject.version>
         <pax.exam.version>4.6.0</pax.exam.version>
         <pax.exam.testng.version>4.6.0</pax.exam.testng.version>
         <pax.exam.link.mvn.version>4.6.0</pax.exam.link.mvn.version>
