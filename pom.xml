@@ -1422,7 +1422,7 @@
         <equinox.ds.version>1.4.200.v20131126-2331</equinox.ds.version>
         <equinox.frameworkadmin.version>2.0.100.v20131209-2144</equinox.frameworkadmin.version>
         <equinox.frameworkadmin.equinox.version>1.0.500.v20131211-1531</equinox.frameworkadmin.equinox.version>
-        <equinox.launcher.version>1.3.0.v20140415-2008</equinox.launcher.version>
+        <equinox.launcher.version>1.3.200.v20160318-1642</equinox.launcher.version>
         <equinox.preferences.version>3.5.200.v20140224-1527</equinox.preferences.version>
         <equinox.registry.version>3.6.0.v20150318-1503</equinox.registry.version>
         <equinox.simpleconfigurator.manipulator.version>2.0.0.v20131217-1203
