@@ -31,6 +31,7 @@
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
         <module>runner</module>
+        <module>samples/sample-clients</module>
         <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
@@ -844,7 +845,6 @@
             </dependency>
 
             <!--siddhi dependencies start-->
-
             <dependency>
                 <groupId>io.siddhi</groupId>
                 <artifactId>siddhi-query-api</artifactId>
@@ -1279,17 +1279,6 @@
                 <artifactId>encoder</artifactId>
                 <version>${owasp.encoder.version}</version>
             </dependency>
-            <!--UI Server-->
-            <dependency>
-                <groupId>org.wso2.carbon.uiserver</groupId>
-                <artifactId>org.wso2.carbon.uiserver</artifactId>
-                <version>${carbon.uiserver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics-common</groupId>
-                <artifactId>org.wso2.carbon.databridge.commons</artifactId>
-                <version>${carbon.analytics-common.version}</version>
-            </dependency>
 
             <!-- jms test case dependencies-->
             <dependency>
@@ -1355,6 +1344,60 @@
                 <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- wso2Event sample dependencies -->
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.commons</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.commons.thrift</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.commons.binary</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.agent</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.core</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.receiver.binary</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.receiver.thrift</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+
+            <!--dependecies for sample related jars-->
+            <dependency>
+                <groupId>org.wso2.extension.siddhi.io.rabbitmq</groupId>
+                <artifactId>siddhi-io-rabbitmq</artifactId>
+                <version>${siddhi.io.rabbitmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.extension.siddhi.io.mqtt</groupId>
+                <artifactId>siddhi-io-mqtt</artifactId>
+                <version>${siddhi.io.mqtt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.extension.siddhi.map.avro</groupId>
+                <artifactId>siddhi-map-avro</artifactId>
+                <version>${siddhi.map.avro.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
