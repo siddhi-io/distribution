@@ -25,7 +25,7 @@
     <property name="lib.dir" value="../../../lib"/>
     <property name="client.lib.dir" value="../lib/"/>
 
-    <property name="main-class" value="org.wso2.sp.sample.prometheus.client.PrometheusClient"/>
+    <property name="main-class" value="io.siddhi.distribution.sample.prometheus.client.PrometheusClient"/>
 
     <property name="publishURL" value="http://localhost:9080/metrics"/>
 

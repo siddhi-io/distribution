@@ -24,7 +24,7 @@
     <property name="resources.dir" value="src/main/resources"/>
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
-    <property name="main-class" value="org.wso2.carbon.sample.server.DatabridgeTestServer"/>
+    <property name="main-class" value="io.siddhi.distribution.sample.server.DatabridgeTestServer"/>
 
     <property name="host" value="localhost"/>
     <property name="port" value="7612"/>
