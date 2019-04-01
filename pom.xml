@@ -1452,7 +1452,7 @@
         <plugin.version.antlr>4.5.1</plugin.version.antlr>
 
         <!-- Test Dependencies-->
-        <h2.connector.version>1.4.187</h2.connector.version>
+        <h2.connector.version>1.4.199</h2.connector.version>
         <postgresql.version>42.1.4</postgresql.version>
         <mssql-jdbc.version>6.2.1.jre8</mssql-jdbc.version>
         <io.fabric8.version>0.28.0</io.fabric8.version>
