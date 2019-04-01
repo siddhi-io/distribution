@@ -1457,7 +1457,7 @@
         <mssql-jdbc.version>6.2.1.jre8</mssql-jdbc.version>
         <io.fabric8.version>0.28.0</io.fabric8.version>
         <maven.failsafe.plugin.version>2.22.1</maven.failsafe.plugin.version>
-        <awaitility.version>3.0.0</awaitility.version>
+        <awaitility.version>3.1.6</awaitility.version>
 
         <!-- OSGI -->
         <osgi.api.version>6.0.0</osgi.api.version>
