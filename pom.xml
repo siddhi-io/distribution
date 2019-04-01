@@ -1420,7 +1420,7 @@
         <equinox.concurrent.version>1.1.0.v20130327-1442</equinox.concurrent.version>
         <equinox.console.version>1.1.0.v20140131-1639</equinox.console.version>
         <equinox.ds.version>1.4.200.v20131126-2331</equinox.ds.version>
-        <equinox.frameworkadmin.version>2.0.100.v20131209-2144</equinox.frameworkadmin.version>
+        <equinox.frameworkadmin.version>2.0.300.v20160504-1450</equinox.frameworkadmin.version>
         <equinox.frameworkadmin.equinox.version>1.0.500.v20131211-1531</equinox.frameworkadmin.equinox.version>
         <equinox.launcher.version>1.3.200.v20160318-1642</equinox.launcher.version>
         <equinox.preferences.version>3.5.200.v20140224-1527</equinox.preferences.version>
