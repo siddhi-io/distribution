@@ -1629,7 +1629,7 @@
         <siddhi.store.elasticsearch.version>1.0.5</siddhi.store.elasticsearch.version>
 
 
-        <zkclient.version>0.10</zkclient.version>
+        <zkclient.version>0.11</zkclient.version>
 
         <curator-test.version>4.2.0</curator-test.version>
         <zookeeper.version>3.4.0</zookeeper.version>
