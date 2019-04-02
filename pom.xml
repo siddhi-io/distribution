@@ -1423,7 +1423,7 @@
         <equinox.frameworkadmin.version>2.0.300.v20160504-1450</equinox.frameworkadmin.version>
         <equinox.frameworkadmin.equinox.version>1.0.700.v20160102-2223</equinox.frameworkadmin.equinox.version>
         <equinox.launcher.version>1.3.200.v20160318-1642</equinox.launcher.version>
-        <equinox.preferences.version>3.5.200.v20140224-1527</equinox.preferences.version>
+        <equinox.preferences.version>3.6.0.v20160120-1756</equinox.preferences.version>
         <equinox.registry.version>3.6.0.v20150318-1503</equinox.registry.version>
         <equinox.simpleconfigurator.manipulator.version>2.0.200.v20160504-1450</equinox.simpleconfigurator.manipulator.version>
         <equinox.util.version>1.0.500.v20130404-1337</equinox.util.version>
