@@ -30,26 +30,6 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>runner/components/io.siddhi.distribution.common</module>
-        <module>runner/components/io.siddhi.distribution.core</module>
-        <module>runner/components/io.siddhi.distribution.event.simulator.core</module>
-        <module>runner/components/io.siddhi.distribution.metrics.core</module>
-        <module>runner/components/io.siddhi.distribution.store.api.rest</module>
-        <module>runner/components/io.siddhi.distribution.msf4j.interceptor.common</module>
-
-        <module>tooling/components/io.siddhi.distribution.editor.log.appender</module>
-        <module>tooling/components/io.siddhi.distribution.editor.core</module>
-
-        <module>runner/features/io.siddhi.distribution.core.feature</module>
-        <module>runner/features/io.siddhi.distribution.common.feature</module>
-        <module>runner/features/io.siddhi.distribution.event.simulator.core.feature</module>
-        <module>runner/features/io.siddhi.distribution.siddhi.feature</module>
-        <module>runner/features/io.siddhi.distribution.metrics.core.feature</module>
-        <module>runner/features/io.siddhi.distribution.store.api.rest.feature</module>
-        <module>runner/features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
-
-        <module>tooling/features/io.siddhi.distribution.editor.core.feature</module>
-
         <module>runner</module>
         <module>tooling</module>
         <module>osgi-tests</module>
@@ -1488,7 +1468,7 @@
         <carbon.cache.version>1.1.3</carbon.cache.version>
         <carbon.touchpoint.version>1.1.1</carbon.touchpoint.version>
         <carbon.utils.version>2.0.9</carbon.utils.version>
-        <carbon.config.version>2.1.8</carbon.config.version>
+        <carbon.config.version>2.1.11</carbon.config.version>
         <carbon.config.version.range>[2.1.0, 3.0.0)</carbon.config.version.range>
         <carbon.securevault.version>5.0.12</carbon.securevault.version>
 

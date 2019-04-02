@@ -32,6 +32,24 @@
     <description>Siddhi Runner Runtime</description>
     <url>http://siddhi.io</url>
 
+    <modules>
+        <module>components/io.siddhi.distribution.common</module>
+        <module>components/io.siddhi.distribution.core</module>
+        <module>components/io.siddhi.distribution.event.simulator.core</module>
+        <module>components/io.siddhi.distribution.metrics.core</module>
+        <module>components/io.siddhi.distribution.store.api.rest</module>
+        <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
+
+        <module>features/io.siddhi.distribution.core.feature</module>
+        <module>features/io.siddhi.distribution.common.feature</module>
+        <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
+        <module>features/io.siddhi.distribution.siddhi.feature</module>
+        <module>features/io.siddhi.distribution.metrics.core.feature</module>
+        <module>features/io.siddhi.distribution.store.api.rest.feature</module>
+        <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
+
+    </modules>
+
     <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>
