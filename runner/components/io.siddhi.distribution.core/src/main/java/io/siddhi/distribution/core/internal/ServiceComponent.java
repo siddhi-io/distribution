@@ -73,8 +73,6 @@ public class ServiceComponent {
     private ServiceRegistration siddhiAppRuntimeServiceRegistration;
     private ScheduledFuture<?> scheduledFuture = null;
     private ScheduledExecutorService scheduledExecutorService = null;
-    private boolean serviceComponentActivated;
-
 
     /**
      * This is the activation method of ServiceComponent. This will be called when its references are
@@ -87,7 +85,7 @@ public class ServiceComponent {
     protected void start(BundleContext bundleContext) throws Exception {
         log.debug("Service Component is activated");
 
-        String runningFileName = System.getProperty(SiddhiAppProcessorConstants.SYSTEM_PROP_RUN_FILE);
+        String siddhiAppsReference = System.getProperty(SiddhiAppProcessorConstants.SYSTEM_PROP_RUN_SIDDHI_APPS);
         ConfigProvider configProvider = StreamProcessorDataHolder.getInstance().getConfigProvider();
         // Create Stream Processor Service
         StreamProcessorDataHolder.setStreamProcessorService(new StreamProcessorService());
@@ -149,29 +147,49 @@ public class ServiceComponent {
         siddhiManager.setStatisticsConfiguration(statisticsConfiguration);
         StreamProcessorDataHolder.setSiddhiManager(siddhiManager);
 
-        File runningFile;
+        File siddhiAppFileReference;
 
-        if (runningFileName != null) {
+        if (siddhiAppsReference != null) {
             StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.RUN_FILE);
-            if (runningFileName.trim().equals("")) {
+            if (siddhiAppsReference.trim().equals("")) {
                 // Can't Continue. We shouldn't be here. that means there is a bug in the startup script.
                 log.error("Error: Can't get target file to run. System property {} is not set.",
-                        SiddhiAppProcessorConstants.SYSTEM_PROP_RUN_FILE);
+                        SiddhiAppProcessorConstants.SYSTEM_PROP_RUN_SIDDHI_APPS);
                 StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
                 return;
-            }
-            runningFile = new File(runningFileName);
-            if (!runningFile.exists()) {
-                log.error("Error: File " + runningFile.getName() + " not found in the given location.");
-                StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
-                return;
-            }
-            try {
-                StreamProcessorDeployer.deploySiddhiQLFile(runningFile);
-            } catch (Exception e) {
-                StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
-                log.error(e.getMessage(), e);
-                return;
+            } else {
+                siddhiAppFileReference = new File(siddhiAppsReference);
+
+                if (!siddhiAppFileReference.exists()) {
+                    log.error("Error: File " + siddhiAppFileReference.getName() + " not found in the given location.");
+                    StreamProcessorDataHolder.getInstance().
+                            setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
+                    return;
+                }
+
+                if (siddhiAppFileReference.isDirectory()) {
+                    File[] siddhiAppFileArray = siddhiAppFileReference.listFiles();
+                    if (siddhiAppFileArray != null) {
+                        for (File siddhiApp : siddhiAppFileArray) {
+                            try {
+                                StreamProcessorDeployer.deploySiddhiQLFile(siddhiApp);
+                            } catch (Exception e) {
+                                StreamProcessorDataHolder.getInstance().
+                                        setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
+                                log.error(e.getMessage(), e);
+                            }
+                        }
+                    }
+                } else {
+                    try {
+                        StreamProcessorDeployer.deploySiddhiQLFile(siddhiAppFileReference);
+                    } catch (Exception e) {
+                        StreamProcessorDataHolder.getInstance().
+                                setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
+                        log.error(e.getMessage(), e);
+                        return;
+                    }
+                }
             }
         } else {
             StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.SERVER);
@@ -191,8 +209,6 @@ public class ServiceComponent {
         bundleContext.registerService(NodeInfo.class.getName(), nodeInfo, null);
         StreamProcessorDataHolder.setNodeInfo(nodeInfo);
         StreamProcessorDataHolder.getInstance().setBundleContext(bundleContext);
-
-        serviceComponentActivated = true;
     }
 
     /**
@@ -307,21 +323,6 @@ public class ServiceComponent {
         StreamProcessorDataHolder.setDataSourceService(null);
     }
 
-//    @Reference(
-//            name = "io.siddhi.distribution.core.distribution.DistributionService",
-//            service = DistributionService.class,
-//            cardinality = ReferenceCardinality.MANDATORY,
-//            policy = ReferencePolicy.DYNAMIC,
-//            unbind = "unregisterDistributionService"
-//    )
-//    protected void registerDistributionService(DistributionService distributionService) {
-//        StreamProcessorDataHolder.setDistributionService(distributionService);
-//
-//    }
-//
-//    protected void unregisterDistributionService(DistributionService distributionService) {
-//        StreamProcessorDataHolder.setDistributionService(null);
-//    }
 
     @Reference(
             name = "MetricsServiceComponent",
