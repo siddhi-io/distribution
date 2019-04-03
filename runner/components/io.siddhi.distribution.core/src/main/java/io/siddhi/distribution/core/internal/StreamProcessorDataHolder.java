@@ -21,7 +21,6 @@ package io.siddhi.distribution.core.internal;
 import io.siddhi.distribution.core.NodeInfo;
 import io.siddhi.distribution.core.distribution.DistributionService;
 import io.siddhi.distribution.core.internal.beans.DeploymentConfig;
-import io.siddhi.distribution.core.internal.util.SiddhiAppProcessorConstants;
 import org.osgi.framework.BundleContext;
 import org.wso2.carbon.analytics.permissions.PermissionProvider;
 import org.wso2.carbon.config.provider.ConfigProvider;
@@ -58,7 +57,6 @@ public class StreamProcessorDataHolder {
      */
     private static List<ServerEventListener> serverListeners = new ArrayList<>();
     private CarbonRuntime carbonRuntime;
-    private SiddhiAppProcessorConstants.RuntimeMode runtimeMode = SiddhiAppProcessorConstants.RuntimeMode.ERROR;
     private BundleContext bundleContext;
     private ConfigProvider configProvider;
 
@@ -192,14 +190,6 @@ public class StreamProcessorDataHolder {
      */
     public void setCarbonRuntime(CarbonRuntime carbonRuntime) {
         this.carbonRuntime = carbonRuntime;
-    }
-
-    public SiddhiAppProcessorConstants.RuntimeMode getRuntimeMode() {
-        return runtimeMode;
-    }
-
-    public void setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode runtimeMode) {
-        this.runtimeMode = runtimeMode;
     }
 
     public BundleContext getBundleContext() {

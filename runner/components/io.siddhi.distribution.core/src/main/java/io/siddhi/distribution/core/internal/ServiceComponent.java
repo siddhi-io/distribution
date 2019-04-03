@@ -150,21 +150,15 @@ public class ServiceComponent {
         File siddhiAppFileReference;
 
         if (siddhiAppsReference != null) {
-            StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.RUN_FILE);
             if (siddhiAppsReference.trim().equals("")) {
                 // Can't Continue. We shouldn't be here. that means there is a bug in the startup script.
                 log.error("Error: Can't get target file to run. System property {} is not set.",
                         SiddhiAppProcessorConstants.SYSTEM_PROP_RUN_SIDDHI_APPS);
-                StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
-                return;
             } else {
                 siddhiAppFileReference = new File(siddhiAppsReference);
 
                 if (!siddhiAppFileReference.exists()) {
                     log.error("Error: File " + siddhiAppFileReference.getName() + " not found in the given location.");
-                    StreamProcessorDataHolder.getInstance().
-                            setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
-                    return;
                 }
 
                 if (siddhiAppFileReference.isDirectory()) {
@@ -174,9 +168,7 @@ public class ServiceComponent {
                             try {
                                 StreamProcessorDeployer.deploySiddhiQLFile(siddhiApp);
                             } catch (Exception e) {
-                                StreamProcessorDataHolder.getInstance().
-                                        setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
-                                log.error(e.getMessage(), e);
+                                log.error("Exception occurred when deploying the Siddhi App" + siddhiApp.getName(), e);
                             }
                         }
                     }
@@ -184,19 +176,11 @@ public class ServiceComponent {
                     try {
                         StreamProcessorDeployer.deploySiddhiQLFile(siddhiAppFileReference);
                     } catch (Exception e) {
-                        StreamProcessorDataHolder.getInstance().
-                                setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.ERROR);
-                        log.error(e.getMessage(), e);
-                        return;
+                        log.error("Exception occurred when deploying the Siddhi App" +
+                                siddhiAppFileReference.getName(), e);
                     }
                 }
             }
-        } else {
-            StreamProcessorDataHolder.getInstance().setRuntimeMode(SiddhiAppProcessorConstants.RuntimeMode.SERVER);
-        }
-
-        if (log.isDebugEnabled()) {
-            log.debug("Runtime mode is set to : " + StreamProcessorDataHolder.getInstance().getRuntimeMode());
         }
 
         streamServiceRegistration = bundleContext.registerService(EventStreamService.class.getName(),

@@ -55,16 +55,4 @@ public class SiddhiAppProcessorConstants {
     private SiddhiAppProcessorConstants() {
         // Prevents instantiation.
     }
-
-    /**
-     * Runtime modes of Stream Processor engine.
-     */
-    public enum RuntimeMode {
-        // Run File Mode.
-        RUN_FILE,
-        // Run Stream Processor Server Mode.
-        SERVER,
-        // Represents VALIDATION_ERROR Condition.
-        ERROR
-    }
 }
