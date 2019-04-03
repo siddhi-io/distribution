@@ -113,8 +113,6 @@ public class StreamProcessorDeployer implements Deployer {
                 try {
                     inputStream.close();
                 } catch (IOException e) {
-                    StreamProcessorDataHolder.getInstance().setRuntimeMode(
-                            SiddhiAppProcessorConstants.RuntimeMode.ERROR);
                     throw new SiddhiAppDeploymentException("Error when closing the Siddhi QL file stream", e);
                 }
             }
@@ -290,15 +288,11 @@ public class StreamProcessorDeployer implements Deployer {
 
     @Override
     public Object deploy(Artifact artifact) throws CarbonDeploymentException {
-
-        if (StreamProcessorDataHolder.getInstance().getRuntimeMode().equals(SiddhiAppProcessorConstants.
-                RuntimeMode.SERVER)) {
-            try {
-                deploySiddhiQLFile(artifact.getFile());
-            } catch (Throwable e) {
-                log.error(e.getMessage(), e);
-                //throw new CarbonDeploymentException(e.getMessage(), e);
-            }
+        try {
+            deploySiddhiQLFile(artifact.getFile());
+        } catch (Throwable e) {
+            log.error(e.getMessage(), e);
+            //throw new CarbonDeploymentException(e.getMessage(), e);
         }
         broadcastDeploy();
         return artifact.getFile().getName();
@@ -306,27 +300,20 @@ public class StreamProcessorDeployer implements Deployer {
 
     @Override
     public void undeploy(Object key) throws CarbonDeploymentException {
-        if (StreamProcessorDataHolder.getInstance().getRuntimeMode().equals(SiddhiAppProcessorConstants.
-                RuntimeMode.SERVER)) {
-            StreamProcessorDataHolder.getStreamProcessorService().
-                    undeploySiddhiApp(getFileNameWithoutExtenson((String) key));
-        }
+        StreamProcessorDataHolder.getStreamProcessorService().
+                undeploySiddhiApp(getFileNameWithoutExtenson((String) key));
         broadcastDelete();
     }
 
     @Override
     public Object update(Artifact artifact) throws CarbonDeploymentException {
-
-        if (StreamProcessorDataHolder.getInstance().getRuntimeMode().equals(SiddhiAppProcessorConstants.
-                RuntimeMode.SERVER)) {
-            StreamProcessorDataHolder.getStreamProcessorService().
-                    undeploySiddhiApp(getFileNameWithoutExtenson(artifact.getName()));
-            try {
-                deploySiddhiQLFile(artifact.getFile());
-            } catch (Exception e) {
-                log.error(e.getMessage(), e);
-                //throw new CarbonDeploymentException(e.getMessage(), e);
-            }
+        StreamProcessorDataHolder.getStreamProcessorService().
+                undeploySiddhiApp(getFileNameWithoutExtenson(artifact.getName()));
+        try {
+            deploySiddhiQLFile(artifact.getFile());
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            //throw new CarbonDeploymentException(e.getMessage(), e);
         }
         broadcastUpdate();
         return artifact.getName();

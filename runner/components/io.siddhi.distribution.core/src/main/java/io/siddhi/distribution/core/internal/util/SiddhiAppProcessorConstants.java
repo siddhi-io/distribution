@@ -26,7 +26,7 @@ public class SiddhiAppProcessorConstants {
     public static final String SIDDHI_APP_FILES_DIRECTORY = "siddhi-files";
     public static final String SIDDHI_APP_FILE_EXTENSION = ".siddhi";
     public static final String SIDDHI_APP_REST_PREFIX = "siddhi-apps";
-    public static final String SYSTEM_PROP_RUN_FILE = "file";
+    public static final String SYSTEM_PROP_RUN_SIDDHI_APPS = "apps";
     public static final String SIDDHI_APP_DEPLOYMENT_DIRECTORY = "deployment";
     public static final String SIDDHI_APP_STATUS_ACTIVE = "active";
     public static final String SIDDHI_APP_STATUS_INACTIVE = "inactive";
@@ -54,17 +54,5 @@ public class SiddhiAppProcessorConstants {
 
     private SiddhiAppProcessorConstants() {
         // Prevents instantiation.
-    }
-
-    /**
-     * Runtime modes of Stream Processor engine.
-     */
-    public enum RuntimeMode {
-        // Run File Mode.
-        RUN_FILE,
-        // Run Stream Processor Server Mode.
-        SERVER,
-        // Represents VALIDATION_ERROR Condition.
-        ERROR
     }
 }
