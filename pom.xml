@@ -1430,7 +1430,7 @@
         <org.eclipse.equinox.cm.version>1.1.0.v20131021-1936</org.eclipse.equinox.cm.version>
         <org.snakeyaml.version>1.17</org.snakeyaml.version>
         <org.wso2.eclipse.osgi.version>3.4.0.v20140312-2051</org.wso2.eclipse.osgi.version>
-        <junit.version>4.10</junit.version>
+        <junit.version>4.12</junit.version>
         <apache.commons.text.version>1.1</apache.commons.text.version>
         <org.jacoco.version>0.8.3</org.jacoco.version>
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
