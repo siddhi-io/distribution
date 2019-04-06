@@ -25,10 +25,10 @@ import io.siddhi.distribution.event.simulator.core.internal.bean.bean.RegexBased
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.RandomAttrGenAbstractImpl;
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.RandomAttributeGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;

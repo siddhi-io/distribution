@@ -127,7 +127,7 @@ public class SiddhiEditorTestCase {
         Assert.assertEquals(httpResponseMessage.getContentType(), "application/json");
     }
 
-    @Test (enabled = false)
+    @Test(enabled = false)
     public void testListingDirectories() throws Exception {
         String path = "/editor/workspace/root";
         String contentType = "text/plain";

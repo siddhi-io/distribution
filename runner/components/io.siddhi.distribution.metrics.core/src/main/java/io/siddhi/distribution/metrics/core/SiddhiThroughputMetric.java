@@ -18,11 +18,11 @@
  */
 package io.siddhi.distribution.metrics.core;
 
+import io.siddhi.core.util.statistics.ThroughputTracker;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsDataHolder;
 import org.wso2.carbon.metrics.core.Level;
 import org.wso2.carbon.metrics.core.Meter;
 import org.wso2.carbon.metrics.core.MetricService;
-import org.wso2.siddhi.core.util.statistics.ThroughputTracker;
 
 import static org.wso2.carbon.metrics.core.Level.INFO;
 import static org.wso2.carbon.metrics.core.Level.OFF;

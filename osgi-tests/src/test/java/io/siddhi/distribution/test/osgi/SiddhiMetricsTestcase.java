@@ -16,6 +16,12 @@
 
 package io.siddhi.distribution.test.osgi;
 
+import io.siddhi.core.SiddhiAppRuntime;
+import io.siddhi.core.event.Event;
+import io.siddhi.core.stream.input.InputHandler;
+import io.siddhi.core.stream.output.StreamCallback;
+import io.siddhi.core.util.EventPrinter;
+import io.siddhi.core.util.SiddhiTestHelper;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -33,12 +39,6 @@ import org.wso2.carbon.kernel.CarbonServerInfo;
 import org.wso2.carbon.metrics.core.MetricManagementService;
 import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.jmx.MetricsMXBean;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.core.stream.input.InputHandler;
-import org.wso2.siddhi.core.stream.output.StreamCallback;
-import org.wso2.siddhi.core.util.EventPrinter;
-import org.wso2.siddhi.core.util.SiddhiTestHelper;
 
 import java.lang.management.ManagementFactory;
 import java.nio.file.Path;
@@ -193,9 +193,9 @@ public class SiddhiMetricsTestcase {
 //        Assert.assertTrue(metricsMXBean.getMetricsCount() > 0);
 //        Assert.assertEquals(metricsMXBean.getRootLevel(), Level.INFO.name());
 //        Assert.assertEquals(metricsMXBean.getDefaultSource(), "wso2-sp");
-//        Assert.assertEquals(metricsMXBean.getMetricLevel("org.wso2.siddhi.SiddhiApps.TestApp.Siddhi.Streams." +
+//        Assert.assertEquals(metricsMXBean.getMetricLevel("io.siddhi.SiddhiApps.TestApp.Siddhi.Streams." +
 //                "cseEventStream.throughput"), Level.INFO.name());
-//        Assert.assertEquals(metricsMXBean.getMetricLevel("org.wso2.siddhi.SiddhiApps.TestApp.Siddhi.Streams" +
+//        Assert.assertEquals(metricsMXBean.getMetricLevel("io.siddhi.SiddhiApps.TestApp.Siddhi.Streams" +
 //                ".cseEventStream2.throughput"), Level.INFO.name());
 //        siddhiAppRuntime.shutdown();
 //    }

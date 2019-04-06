@@ -18,6 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.random.core;
 
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
 import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
@@ -31,12 +32,11 @@ import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorC
 import io.siddhi.distribution.event.simulator.core.internal.util.RandomAttrGeneratorFactoryImpl;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.util.SourceConfigLogger;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +66,7 @@ public class RandomEventGenerator implements EventGenerator {
      * @param sourceConfig   JSON object containing configuration for random event generation
      * @param startTimestamp least possible value for timestamp
      * @param endTimestamp   maximum possible value for timestamp
-     * @throws InvalidConfigException    if random stream simulation configuration is invalid
+     * @throws InvalidConfigException if random stream simulation configuration is invalid
      */
     @Override
     public void init(JSONObject sourceConfig, long startTimestamp, long endTimestamp, String simulationName)
@@ -223,7 +223,7 @@ public class RandomEventGenerator implements EventGenerator {
      * validateRandomConfiguration() method validates random source configuration provided.
      *
      * @param sourceConfig JSON object containing configuration required to simulate stream
-     * @throws InvalidConfigException    if the stream configuration is invalid
+     * @throws InvalidConfigException if the stream configuration is invalid
      */
     @Override
     public void validateSourceConfiguration(JSONObject sourceConfig, String simulationName)

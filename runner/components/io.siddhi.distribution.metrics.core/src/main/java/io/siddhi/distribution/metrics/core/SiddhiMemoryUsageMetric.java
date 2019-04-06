@@ -18,13 +18,13 @@
  */
 package io.siddhi.distribution.metrics.core;
 
+import io.siddhi.core.util.statistics.MemoryUsageTracker;
+import io.siddhi.core.util.statistics.memory.ObjectSizeCalculator;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsDataHolder;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsManagement;
 import org.wso2.carbon.metrics.core.Gauge;
 import org.wso2.carbon.metrics.core.Level;
 import org.wso2.carbon.metrics.core.MetricService;
-import org.wso2.siddhi.core.util.statistics.MemoryUsageTracker;
-import org.wso2.siddhi.core.util.statistics.memory.ObjectSizeCalculator;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

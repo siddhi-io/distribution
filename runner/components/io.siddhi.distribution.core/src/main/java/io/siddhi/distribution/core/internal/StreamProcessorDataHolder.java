@@ -18,6 +18,10 @@
 
 package io.siddhi.distribution.core.internal;
 
+import io.siddhi.core.SiddhiManager;
+import io.siddhi.core.stream.input.source.SourceHandlerManager;
+import io.siddhi.core.stream.output.sink.SinkHandlerManager;
+import io.siddhi.core.table.record.RecordTableHandlerManager;
 import io.siddhi.distribution.core.NodeInfo;
 import io.siddhi.distribution.core.distribution.DistributionService;
 import io.siddhi.distribution.core.internal.beans.DeploymentConfig;
@@ -27,10 +31,6 @@ import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.databridge.commons.ServerEventListener;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.kernel.CarbonRuntime;
-import org.wso2.siddhi.core.SiddhiManager;
-import org.wso2.siddhi.core.stream.input.source.SourceHandlerManager;
-import org.wso2.siddhi.core.stream.output.sink.SinkHandlerManager;
-import org.wso2.siddhi.core.table.record.RecordTableHandlerManager;
 
 import java.util.ArrayList;
 import java.util.List;

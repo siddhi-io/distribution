@@ -17,8 +17,8 @@
  */
 package io.siddhi.distribution.common.common.utils.config;
 
+import io.siddhi.core.util.config.ConfigReader;
 import org.apache.log4j.Logger;
-import org.wso2.siddhi.core.util.config.ConfigReader;
 
 import java.util.HashMap;
 import java.util.Map;

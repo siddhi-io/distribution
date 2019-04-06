@@ -20,7 +20,7 @@ package io.siddhi.distribution.core.util;
 
 import io.netty.buffer.ByteBuf;
 import io.siddhi.distribution.core.event.queue.EventDataMetaInfo;
-import org.wso2.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.definition.Attribute;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

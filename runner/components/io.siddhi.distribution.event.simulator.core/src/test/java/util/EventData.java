@@ -18,7 +18,7 @@
 
 package util;
 
-import org.wso2.siddhi.core.event.Event;
+import io.siddhi.core.event.Event;
 
 /**
  * Event Data class.

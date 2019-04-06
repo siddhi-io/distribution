@@ -19,6 +19,8 @@
 package io.siddhi.distribution.core.persistence;
 
 import com.zaxxer.hikari.HikariDataSource;
+import io.siddhi.core.exception.CannotClearSiddhiAppStateException;
+import io.siddhi.core.util.persistence.PersistenceStore;
 import io.siddhi.distribution.core.impl.utils.CompressionUtil;
 import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.core.persistence.dto.RDBMSQueryConfigurationEntry;
@@ -29,8 +31,6 @@ import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
 import io.siddhi.distribution.core.persistence.util.RDBMSConfiguration;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
-import org.wso2.siddhi.core.exception.CannotClearSiddhiAppStateException;
-import org.wso2.siddhi.core.util.persistence.PersistenceStore;
 
 import java.io.IOException;
 import java.sql.Blob;

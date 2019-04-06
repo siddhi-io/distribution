@@ -25,8 +25,8 @@ import io.siddhi.distribution.event.simulator.core.internal.generator.random.uti
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.util.PrimitiveBasedAttrGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.util.PropertyBasedAttrGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.util.RegexBasedAttrGenerator;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONObject;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
  * Factory class used to create random attribute generators.

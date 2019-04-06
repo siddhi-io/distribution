@@ -147,7 +147,7 @@ public class SimulationConfigUploader {
             if (configuration.has(EventSimulatorConstants.EVENT_SIMULATION_PROPERTIES)
                     && !configuration.isNull(EventSimulatorConstants.EVENT_SIMULATION_PROPERTIES)) {
                 if (CommonOperations.checkAvailability(configuration.getJSONObject(EventSimulatorConstants.
-                                EVENT_SIMULATION_PROPERTIES), EventSimulatorConstants.EVENT_SIMULATION_NAME)) {
+                        EVENT_SIMULATION_PROPERTIES), EventSimulatorConstants.EVENT_SIMULATION_NAME)) {
                     return configuration.getJSONObject(EventSimulatorConstants.EVENT_SIMULATION_PROPERTIES)
                             .getString(EventSimulatorConstants.EVENT_SIMULATION_NAME);
                 } else {

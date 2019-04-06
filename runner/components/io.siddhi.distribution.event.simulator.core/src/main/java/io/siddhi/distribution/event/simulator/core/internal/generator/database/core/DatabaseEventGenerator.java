@@ -20,6 +20,7 @@ package io.siddhi.distribution.event.simulator.core.internal.generator.database.
 
 import com.zaxxer.hikari.HikariDataSource;
 import com.zaxxer.hikari.pool.PoolInitializationException;
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
 import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
@@ -34,12 +35,11 @@ import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorC
 import io.siddhi.distribution.event.simulator.core.model.DBConnectionModel;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.util.SourceConfigLogger;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -75,7 +75,7 @@ public class DatabaseEventGenerator implements EventGenerator {
      * @param sourceConfig   JSON object containing configuration for database event generation
      * @param startTimestamp least possible value for timestamp
      * @param endTimestamp   maximum possible value for timestamp
-     * @throws InvalidConfigException    if the database source configuration is invalid
+     * @throws InvalidConfigException if the database source configuration is invalid
      */
     @Override
     public void init(JSONObject sourceConfig, long startTimestamp, long endTimestamp, String simulationName)

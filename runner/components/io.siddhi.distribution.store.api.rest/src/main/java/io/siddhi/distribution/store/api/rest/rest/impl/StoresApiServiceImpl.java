@@ -19,6 +19,8 @@
 
 package io.siddhi.distribution.store.api.rest.rest.impl;
 
+import io.siddhi.core.SiddhiAppRuntime;
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.store.api.rest.rest.ApiResponseMessage;
 import io.siddhi.distribution.store.api.rest.rest.NotFoundException;
@@ -28,11 +30,9 @@ import io.siddhi.distribution.store.api.rest.rest.model.ModelApiResponse;
 import io.siddhi.distribution.store.api.rest.rest.model.Query;
 import io.siddhi.distribution.store.api.rest.rest.model.Record;
 import io.siddhi.distribution.store.api.rest.rest.model.RecordDetail;
+import io.siddhi.query.api.definition.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.util.ArrayList;
 import java.util.Arrays;

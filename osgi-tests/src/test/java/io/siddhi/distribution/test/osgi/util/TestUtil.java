@@ -17,11 +17,11 @@
 package io.siddhi.distribution.test.osgi.util;
 
 import io.netty.handler.codec.http.HttpMethod;
+import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import org.awaitility.Duration;
 import org.wso2.msf4j.MicroservicesRegistry;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -42,7 +42,6 @@ import java.util.Optional;
 import static org.awaitility.Awaitility.await;
 import static java.lang.System.currentTimeMillis;
 import static java.net.URLConnection.guessContentTypeFromName;
-
 
 
 /**

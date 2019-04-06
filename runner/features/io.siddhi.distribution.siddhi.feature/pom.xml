@@ -16,7 +16,8 @@
   ~ * limitations under the License.
   ~ */
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -56,19 +57,19 @@
 
         <!--siddhi dependencies start-->
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
+            <groupId>io.siddhi</groupId>
             <artifactId>siddhi-query-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
+            <groupId>io.siddhi</groupId>
             <artifactId>siddhi-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
+            <groupId>io.siddhi</groupId>
             <artifactId>siddhi-query-compiler</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.wso2.siddhi</groupId>
+            <groupId>io.siddhi</groupId>
             <artifactId>siddhi-annotations</artifactId>
         </dependency>
 
@@ -207,7 +208,7 @@
                                     <symbolicName>slf4j.log4j12</symbolicName>
                                     <version>${slf4j.version}</version>
                                 </bundle>
-                                 <bundle>
+                                <bundle>
                                     <symbolicName>antlr4-runtime</symbolicName>
                                     <version>${antlr4.runtime.version}</version>
                                 </bundle>
@@ -264,9 +265,9 @@
                         <phase>install</phase>
                         <configuration>
                             <target>
-                                <delete dir="src/main/resources" />
-                                <delete dir="src/main" />
-                                <delete dir="src" />
+                                <delete dir="src/main/resources"/>
+                                <delete dir="src/main"/>
+                                <delete dir="src"/>
                             </target>
                         </configuration>
                         <goals>

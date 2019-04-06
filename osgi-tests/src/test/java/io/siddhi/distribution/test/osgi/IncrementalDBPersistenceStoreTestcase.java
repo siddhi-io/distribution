@@ -17,6 +17,9 @@
 package io.siddhi.distribution.test.osgi;
 
 import com.zaxxer.hikari.HikariDataSource;
+import io.siddhi.core.SiddhiAppRuntime;
+import io.siddhi.core.SiddhiManager;
+import io.siddhi.core.exception.CannotRestoreSiddhiAppStateException;
 import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.test.osgi.util.RDBMSConfig;
 import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
@@ -38,9 +41,6 @@ import org.wso2.carbon.container.options.CarbonDistributionOption;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.kernel.CarbonServerInfo;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
-import org.wso2.siddhi.core.SiddhiManager;
-import org.wso2.siddhi.core.exception.CannotRestoreSiddhiAppStateException;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

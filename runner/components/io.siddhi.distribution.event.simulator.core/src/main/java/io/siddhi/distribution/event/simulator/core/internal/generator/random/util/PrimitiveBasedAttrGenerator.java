@@ -25,10 +25,10 @@ import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigExcept
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.PrimitiveBasedAttributeDTO;
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.RandomAttributeGenerator;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.text.DecimalFormat;
 

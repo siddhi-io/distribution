@@ -6,23 +6,15 @@ import java.util.Locale;
  * ResourceNotFoundException is used when a resource required is not found.
  */
 public class ResourceNotFoundException extends Exception {
-    /**
-     * ResourceType specifies types of resources.
-     * */
-    public enum ResourceType {
-        SIDDHI_APP_NAME, STREAM_NAME, CSV_FILE, DATABASE, RANDOM_SIMULATION, DATABASE_SIMULATION, SIMULATION
-    }
-
     private String resourceName;
     private ResourceType resourceType;
-
     public ResourceNotFoundException(String message, ResourceType resourceType, String resourceName) {
         super(message);
         this.resourceType = resourceType;
         this.resourceName = resourceName;
     }
 
-    public ResourceNotFoundException(String message,  ResourceType resourceType, String resourceName,
+    public ResourceNotFoundException(String message, ResourceType resourceType, String resourceName,
                                      Throwable cause) {
         super(message, cause);
         this.resourceType = resourceType;
@@ -43,5 +35,12 @@ public class ResourceNotFoundException extends Exception {
 
     public String getResourceTypeString() {
         return resourceType.toString().toLowerCase(Locale.ENGLISH).replace("_", " ");
+    }
+
+    /**
+     * ResourceType specifies types of resources.
+     */
+    public enum ResourceType {
+        SIDDHI_APP_NAME, STREAM_NAME, CSV_FILE, DATABASE, RANDOM_SIMULATION, DATABASE_SIMULATION, SIMULATION
     }
 }

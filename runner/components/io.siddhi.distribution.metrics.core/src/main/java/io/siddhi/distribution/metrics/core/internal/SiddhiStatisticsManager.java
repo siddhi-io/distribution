@@ -18,7 +18,7 @@
  */
 package io.siddhi.distribution.metrics.core.internal;
 
-import org.wso2.siddhi.core.util.statistics.StatisticsManager;
+import io.siddhi.core.util.statistics.StatisticsManager;
 
 /**
  * Functionality of SiddhiStatisticsManager is not required to be implemented,
