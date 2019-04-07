@@ -18,7 +18,7 @@
  */
 package io.siddhi.distribution.core.internal.beans;
 
-import org.wso2.siddhi.query.api.execution.partition.PartitionType;
+import io.siddhi.query.api.execution.partition.PartitionType;
 
 import java.util.Map;
 

@@ -19,10 +19,10 @@
 
 package io.siddhi.distribution.core.internal;
 
+import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
 
 import java.util.HashMap;
 import java.util.Map;

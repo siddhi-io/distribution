@@ -18,13 +18,13 @@
  */
 package io.siddhi.distribution.metrics.core;
 
+import io.siddhi.core.util.statistics.BufferedEventsTracker;
+import io.siddhi.core.util.statistics.EventBufferHolder;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsDataHolder;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsManagement;
 import org.wso2.carbon.metrics.core.Gauge;
 import org.wso2.carbon.metrics.core.Level;
 import org.wso2.carbon.metrics.core.MetricService;
-import org.wso2.siddhi.core.util.statistics.BufferedEventsTracker;
-import org.wso2.siddhi.core.util.statistics.EventBufferHolder;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -50,7 +50,7 @@ public class SiddhiBufferedEventsMetric implements BufferedEventsTracker {
     /**
      * Register the object that needs to be measured the buffered events count usage.
      *
-     * @param eventBufferHolder Buffered object.
+     * @param eventBufferHolder       Buffered object.
      * @param bufferedEventsTrackerId An unique value to identify the  Buffered object.
      */
     @Override

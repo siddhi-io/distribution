@@ -17,6 +17,11 @@
  */
 package io.siddhi.distribution.core.internal;
 
+import io.siddhi.core.SiddhiManager;
+import io.siddhi.core.config.StatisticsConfiguration;
+import io.siddhi.core.util.SiddhiComponentActivator;
+import io.siddhi.core.util.persistence.IncrementalPersistenceStore;
+import io.siddhi.core.util.persistence.PersistenceStore;
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.common.common.utils.config.FileConfigManager;
@@ -45,11 +50,6 @@ import org.wso2.carbon.databridge.commons.ServerEventListener;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.kernel.CarbonRuntime;
 import org.wso2.carbon.kernel.config.model.CarbonConfiguration;
-import org.wso2.siddhi.core.SiddhiManager;
-import org.wso2.siddhi.core.config.StatisticsConfiguration;
-import org.wso2.siddhi.core.util.SiddhiComponentActivator;
-import org.wso2.siddhi.core.util.persistence.IncrementalPersistenceStore;
-import org.wso2.siddhi.core.util.persistence.PersistenceStore;
 
 import java.io.File;
 import java.util.Map;
@@ -114,8 +114,8 @@ public class ServiceComponent {
                 } else {
                     throw new PersistenceStoreConfigurationException("Persistence Store class with name "
                             + persistenceStoreClassName + " is invalid. The given class has to implement either " +
-                            "org.wso2.siddhi.core.util.persistence.PersistenceStore or " +
-                            "org.wso2.siddhi.core.util.persistence.IncrementalPersistenceStore.");
+                            "io.siddhi.core.util.persistence.PersistenceStore or " +
+                            "io.siddhi.core.util.persistence.IncrementalPersistenceStore.");
                 }
                 if (log.isDebugEnabled()) {
                     log.debug(persistenceStoreClassName + " chosen as persistence store");

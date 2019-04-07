@@ -19,7 +19,7 @@
 
 package io.siddhi.distribution.common.common;
 
-import org.wso2.siddhi.core.SiddhiAppRuntime;
+import io.siddhi.core.SiddhiAppRuntime;
 
 import java.util.Map;
 
@@ -28,5 +28,6 @@ import java.util.Map;
  */
 public interface SiddhiAppRuntimeService {
     Map<String, SiddhiAppRuntime> getActiveSiddhiAppRuntimes();
+
     void enableSiddhiAppStatistics(boolean statsEnabled);
 }

@@ -24,8 +24,8 @@ import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigExcept
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CustomBasedAttributeDTO;
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.RandomAttrGenAbstractImpl;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONObject;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

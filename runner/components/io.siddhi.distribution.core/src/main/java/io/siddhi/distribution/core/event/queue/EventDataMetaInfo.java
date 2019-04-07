@@ -18,7 +18,7 @@
 
 package io.siddhi.distribution.core.event.queue;
 
-import org.wso2.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.definition.Attribute;
 
 /**
  * Class which holds event data meta information.

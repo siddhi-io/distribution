@@ -16,6 +16,8 @@
 
 package io.siddhi.distribution.test.osgi;
 
+import io.siddhi.core.SiddhiAppRuntime;
+import io.siddhi.core.SiddhiManager;
 import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
 import org.apache.log4j.Logger;
@@ -31,8 +33,6 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.wso2.carbon.container.CarbonContainerFactory;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
-import org.wso2.siddhi.core.SiddhiManager;
 
 import java.io.File;
 import java.nio.file.Path;

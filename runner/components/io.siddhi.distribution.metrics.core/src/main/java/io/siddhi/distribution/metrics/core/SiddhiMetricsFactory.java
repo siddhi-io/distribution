@@ -18,17 +18,17 @@
  */
 package io.siddhi.distribution.metrics.core;
 
+import io.siddhi.core.util.statistics.BufferedEventsTracker;
+import io.siddhi.core.util.statistics.LatencyTracker;
+import io.siddhi.core.util.statistics.MemoryUsageTracker;
+import io.siddhi.core.util.statistics.StatisticsManager;
+import io.siddhi.core.util.statistics.StatisticsTrackerFactory;
+import io.siddhi.core.util.statistics.ThroughputTracker;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsDataHolder;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsManagement;
 import io.siddhi.distribution.metrics.core.internal.SiddhiStatisticsManager;
+import io.siddhi.query.api.annotation.Element;
 import org.wso2.carbon.metrics.core.MetricService;
-import org.wso2.siddhi.core.util.statistics.BufferedEventsTracker;
-import org.wso2.siddhi.core.util.statistics.LatencyTracker;
-import org.wso2.siddhi.core.util.statistics.MemoryUsageTracker;
-import org.wso2.siddhi.core.util.statistics.StatisticsManager;
-import org.wso2.siddhi.core.util.statistics.StatisticsTrackerFactory;
-import org.wso2.siddhi.core.util.statistics.ThroughputTracker;
-import org.wso2.siddhi.query.api.annotation.Element;
 
 import java.util.List;
 

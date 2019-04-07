@@ -20,8 +20,8 @@ package io.siddhi.distribution.event.simulator.core.internal.util;
 
 import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.random.RandomAttributeGenerator;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONObject;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 /**
  * factory interface used for creating random attribute generators.

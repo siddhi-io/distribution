@@ -22,12 +22,12 @@ import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
 import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
+import io.siddhi.query.api.definition.Attribute;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import org.wso2.siddhi.query.api.definition.Attribute;
 import util.StreamProcessorUtil;
 
 import java.util.ArrayList;

@@ -20,6 +20,7 @@
 package io.siddhi.distribution.test.osgi;
 
 import com.google.gson.Gson;
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.store.api.rest.rest.ApiResponseMessage;
@@ -43,7 +44,6 @@ import org.testng.annotations.Test;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
 import org.wso2.msf4j.MicroservicesRegistry;
-import org.wso2.siddhi.core.event.Event;
 
 import java.net.URI;
 import java.nio.file.Path;

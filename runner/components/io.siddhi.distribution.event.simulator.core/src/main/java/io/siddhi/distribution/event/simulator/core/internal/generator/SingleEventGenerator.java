@@ -20,6 +20,7 @@ package io.siddhi.distribution.event.simulator.core.internal.generator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
 import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
@@ -28,11 +29,10 @@ import io.siddhi.distribution.event.simulator.core.internal.bean.bean.SingleEven
 import io.siddhi.distribution.event.simulator.core.internal.util.EventConverter;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.io.IOException;
 import java.util.ArrayList;

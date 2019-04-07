@@ -18,6 +18,7 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.csv.core;
 
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.InsufficientAttributesException;
 import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
@@ -30,12 +31,11 @@ import io.siddhi.distribution.event.simulator.core.internal.generator.csv.util.F
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.util.SourceConfigLogger;
+import io.siddhi.query.api.definition.Attribute;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.util.ArrayList;
 import java.util.Arrays;

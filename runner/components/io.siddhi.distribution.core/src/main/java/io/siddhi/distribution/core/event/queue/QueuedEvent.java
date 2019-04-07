@@ -19,7 +19,7 @@
 package io.siddhi.distribution.core.event.queue;
 
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
-import org.wso2.siddhi.core.event.Event;
+import io.siddhi.core.event.Event;
 
 /**
  * Class which represents Queued event.

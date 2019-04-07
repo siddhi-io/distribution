@@ -166,7 +166,7 @@ public class DatabaseConnector {
     /**
      * This method loads the JDBC driver and creates a database connection.
      *
-     * @param driver database driver
+     * @param driver             database driver
      * @param dataSourceLocation location of database to be used
      * @param username           username
      * @param password           password

@@ -16,7 +16,8 @@
   ~ * limitations under the License.
   ~ */
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -186,7 +187,9 @@
                             <outputDirectory>src/main/resources/api-docs/docs/</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.parent.basedir}/components/io.siddhi.distribution.core/src/main/resources/doc-templates</directory>
+                                    <directory>
+                                        ${project.parent.basedir}/components/io.siddhi.distribution.core/src/main/resources/doc-templates
+                                    </directory>
                                     <excludes>
                                         <exclude>**/*.mustache</exclude>
                                     </excludes>
@@ -220,7 +223,7 @@
                                 </advice>
                             </adviceFileContents>
                             <bundles>
-                                 <bundle>
+                                <bundle>
                                     <symbolicName>antlr4-runtime</symbolicName>
                                     <version>${antlr4.runtime.version}</version>
                                 </bundle>
@@ -288,9 +291,13 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.parent.basedir}/components/io.siddhi.distribution.core/src/main/resources/siddhi-apps-api.yaml</inputSpec>
+                            <inputSpec>
+                                ${project.parent.basedir}/components/io.siddhi.distribution.core/src/main/resources/siddhi-apps-api.yaml
+                            </inputSpec>
                             <language>io.siddhi.distribution.core.codegen.DynamicHtmlGen</language>
-                            <templateDirectory>${project.parent.basedir}/components/io.siddhi.distribution.core/src/main/resources/doc-templates</templateDirectory>
+                            <templateDirectory>
+                                ${project.parent.basedir}/components/io.siddhi.distribution.core/src/main/resources/doc-templates
+                            </templateDirectory>
                             <output>src/main/resources/api-docs</output>
                         </configuration>
                     </execution>
@@ -312,9 +319,9 @@
                         <phase>install</phase>
                         <configuration>
                             <target>
-                                <delete dir="src/main/resources" />
-                                <delete dir="src/main" />
-                                <delete dir="src" />
+                                <delete dir="src/main/resources"/>
+                                <delete dir="src/main"/>
+                                <delete dir="src"/>
                             </target>
                         </configuration>
                         <goals>

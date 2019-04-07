@@ -18,19 +18,19 @@
 
 package io.siddhi.distribution.event.simulator.core.internal.generator.csv.util;
 
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.EventGenerationException;
 import io.siddhi.distribution.event.simulator.core.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.internal.bean.bean.CSVSimulationDTO;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventConverter;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
+import io.siddhi.query.api.definition.Attribute;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -63,9 +63,8 @@ public class CSVReader {
      * Initialize a file reader for the CSV file.
      * If the CSV file is ordered by timestamp it will create a bufferedReader for the file reader.
      *
-     * @param fileName CSV file name
+     * @param fileName  CSV file name
      * @param isOrdered bool indicating whether the entries in CSV file are ordered or not
-     *
      * @throws ResourceNotFoundException if the CSV file is not found
      */
     public CSVReader(String fileName, boolean isOrdered) throws ResourceNotFoundException {
@@ -318,7 +317,7 @@ public class CSVReader {
     /**
      * closeParser() method is used to release resources created to read the CSV file.
      *
-     * @param fileName CSV file name
+     * @param fileName  CSV file name
      * @param isOrdered bool indicating whether the entries in CSV file are ordered or not
      */
     public void closeParser(String fileName, boolean isOrdered) {

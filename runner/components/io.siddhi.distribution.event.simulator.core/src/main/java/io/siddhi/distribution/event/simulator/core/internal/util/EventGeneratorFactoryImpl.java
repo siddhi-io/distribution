@@ -39,8 +39,8 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
      * @param sourceConfig   json object containing source configuration used for simulation
      * @param startTimestamp least possible timestamp an event produced could have
      * @param endTimestamp   maximum possible timestamp an even produced could have
-     * @throws InvalidConfigException    if the simulation type is not specified or if an invalid generator type
-     *                                   is specified
+     * @throws InvalidConfigException if the simulation type is not specified or if an invalid generator type
+     *                                is specified
      */
     @Override
     public EventGenerator createEventGenerator(JSONObject sourceConfig, long startTimestamp, long endTimestamp,
@@ -95,8 +95,8 @@ public class EventGeneratorFactoryImpl implements EventGeneratorFactory {
      * validateGeneratorConfiguration() validates event generator configurations provided.
      *
      * @param sourceConfig json object containing source configuration used for simulation
-     * @throws InvalidConfigException          if the simulation type is not specified or if an invalid generator type
-     *                                         is specified
+     * @throws InvalidConfigException if the simulation type is not specified or if an invalid generator type
+     *                                is specified
      */
     @Override
     public void validateGeneratorConfiguration(JSONObject sourceConfig, String simulationName)

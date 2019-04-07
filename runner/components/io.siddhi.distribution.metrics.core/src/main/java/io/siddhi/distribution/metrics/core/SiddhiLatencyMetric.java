@@ -19,10 +19,10 @@
 
 package io.siddhi.distribution.metrics.core;
 
+import io.siddhi.core.util.statistics.LatencyTracker;
 import io.siddhi.distribution.metrics.core.internal.SiddhiMetricsDataHolder;
 import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.Timer;
-import org.wso2.siddhi.core.util.statistics.LatencyTracker;
 
 import static org.wso2.carbon.metrics.core.Level.INFO;
 import static org.wso2.carbon.metrics.core.Level.OFF;

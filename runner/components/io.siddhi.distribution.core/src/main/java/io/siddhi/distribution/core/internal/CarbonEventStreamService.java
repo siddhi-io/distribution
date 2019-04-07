@@ -19,14 +19,14 @@
 package io.siddhi.distribution.core.internal;
 
 
+import io.siddhi.core.SiddhiAppRuntime;
+import io.siddhi.core.event.Event;
+import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
+import io.siddhi.query.api.definition.Attribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.siddhi.core.SiddhiAppRuntime;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.core.stream.input.InputHandler;
-import org.wso2.siddhi.query.api.definition.Attribute;
 
 import java.util.ArrayList;
 import java.util.List;

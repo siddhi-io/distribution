@@ -18,11 +18,11 @@
 
 package io.siddhi.distribution.core.util;
 
+import io.siddhi.core.event.Event;
 import io.siddhi.distribution.core.event.queue.EventDataMetaInfo;
 import io.siddhi.distribution.core.event.queue.EventMetaInfo;
 import io.siddhi.distribution.core.event.queue.QueuedEvent;
-import org.wso2.siddhi.core.event.Event;
-import org.wso2.siddhi.query.api.definition.Attribute;
+import io.siddhi.query.api.definition.Attribute;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
