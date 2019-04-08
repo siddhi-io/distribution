@@ -18,8 +18,8 @@
 
 package io.siddhi.distribution.sample.tcp.client;
 
+import io.siddhi.core.stream.input.InputHandler;
 import org.apache.log4j.Logger;
-import org.wso2.siddhi.core.stream.input.InputHandler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
