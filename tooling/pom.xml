@@ -238,15 +238,15 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                    <!--<execution>-->
-                        <!--<id>copy</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<artifactItems>-->
-                                <!--Execution Extensions-->
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                Execution Extensions
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.execution.string</groupId>-->
                                     <!--<artifactId>siddhi-execution-string</artifactId>-->
@@ -426,12 +426,12 @@
                                     <!--<version>${siddhi.store.mongodb.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.store.rdbms</groupId>-->
-                                    <!--<artifactId>siddhi-store-rdbms</artifactId>-->
-                                    <!--<version>${siddhi.store.rdbms.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.store.rdbms</groupId>
+                                    <artifactId>siddhi-store-rdbms</artifactId>
+                                    <version>${siddhi.store.rdbms.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.io.mqtt</groupId>-->
                                     <!--<artifactId>siddhi-io-mqtt</artifactId>-->
@@ -474,13 +474,12 @@
                                     <!--<version>${siddhi.io.websocket.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                            <!--</artifactItems>-->
-                            <!--<outputDirectory>${project.build.directory}/extensions</outputDirectory>-->
-                            <!--<overWriteReleases>false</overWriteReleases>-->
-                            <!--<overWriteSnapshots>true</overWriteSnapshots>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/extensions</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
