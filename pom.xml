@@ -1508,7 +1508,7 @@
         <ow2.jta.spec.version>1.0.13</ow2.jta.spec.version>
         <jacoco.version>0.8.3</jacoco.version>
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
-        <mockito.version>1.9.0</mockito.version>
+        <mockito.version>1.10.19</mockito.version>
 
         <!-- Stream Processor Dependencies -->
         <disruptor.version>3.3.2.wso2v2</disruptor.version>
