@@ -53,14 +53,14 @@ PRGDIR=`dirname "$PRG"`
 # Only set CARBON_HOME if not already set
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
-[ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$PRGDIR/../wso2/worker" ; pwd`
+[ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$PRGDIR/../wso2/runner" ; pwd`
 
 ###########################################################################
-NAME=start-worker
+NAME=start-runner
 # Daemon name, where is the actual executable
 
-WORKER_INIT_SCRIPT="$CARBON_HOME/wso2/worker/bin/carbon.sh"
+RUNNER_INIT_SCRIPT="$CARBON_HOME/wso2/runner/bin/carbon.sh"
 
 # If the daemon is not there, then exit.
-$WORKER_INIT_SCRIPT $*
+$RUNNER_INIT_SCRIPT $*
 exit;

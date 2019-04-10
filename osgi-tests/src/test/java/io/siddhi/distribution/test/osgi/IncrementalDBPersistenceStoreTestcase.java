@@ -89,7 +89,7 @@ public class IncrementalDBPersistenceStoreTestcase {
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
                 "conf", "persistence", "incremental-db", CARBON_YAML_FILENAME);
-        return copyFile(carbonYmlFilePath, Paths.get("conf", "worker", CARBON_YAML_FILENAME));
+        return copyFile(carbonYmlFilePath, Paths.get("conf", "runner", CARBON_YAML_FILENAME));
     }
 
     /**
@@ -124,7 +124,7 @@ public class IncrementalDBPersistenceStoreTestcase {
                 CarbonDistributionOption.copyOSGiLibBundle(maven(
                         "com.microsoft.sqlserver", "mssql-jdbc").versionAsInProject()),
                 carbonDistribution(Paths.get("target", "siddhi-runner-" +
-                        System.getProperty("io.siddhi.distribution.version")), "worker")
+                        System.getProperty("io.siddhi.distribution.version")), "runner")
         };
     }
 

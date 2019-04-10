@@ -31,7 +31,7 @@ limitations under the License.
             <!--TODO mohan should fix after extensions are migrated-->
             <!--<class name="io.siddhi.distribution.test.osgi.SiddhiStoreAPITestcase"/>-->
             <class name="io.siddhi.distribution.test.osgi.SimulatorAPITestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.SiddhiEditorTestCase"/>
+            <class name="io.siddhi.distribution.test.osgi.SiddhiToolingTestCase"/>
         </classes>
     </test>
 </suite>

@@ -17,15 +17,13 @@
   # Carbon Configuration Parameters
 wso2.carbon:
     # value to uniquely identify a server
-  id: wso2-sp
+  id: siddhi-tooling
     # server name
-  name: WSO2 Stream Processor
-    # server type
-#  type: wso2-sp
+  name: Siddhi Tooling Distribution
     # ports used by this server
   ports:
       # port offset
-    offset: 0
+    offset: 3
 
 wso2.transport.http:
   transportProperties:
@@ -43,11 +41,11 @@ wso2.transport.http:
     -
       id: "default"
       host: "0.0.0.0"
-      port: 9090
+      port: 9390
     -
       id: "msf4j-https"
       host: "0.0.0.0"
-      port: 9443
+      port: 9743
       scheme: https
       keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
       keyStorePassword: wso2carbon
@@ -209,68 +207,10 @@ data.agent.config:
         # Ciphers
       ciphers: TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256
 
-# This is the main configuration for metrics
-wso2.metrics:
-  # Enable Metrics
-  enabled: false
-  reporting:
-    console:
-      - # The name for the Console Reporter
-        name: Console
-
-        # Enable Console Reporter
-        enabled: false
-
-        # Polling Period in seconds.
-        # This is the period for polling metrics from the metric registry and printing in the console
-        pollingPeriod: 5
-
-wso2.metrics.jdbc:
-  # Data Source Configurations for JDBC Reporters
-  dataSource:
-    # Default Data Source Configuration
-    - &JDBC01
-      # JNDI name of the data source to be used by the JDBC Reporter.
-      # This data source should be defined in a *-datasources.xml file in conf/datasources directory.
-      dataSourceName: java:comp/env/jdbc/WSO2MetricsDB
-      # Schedule regular deletion of metrics data older than a set number of days.
-      # It is recommended that you enable this job to ensure your metrics tables do not get extremely large.
-      # Deleting data older than seven days should be sufficient.
-      scheduledCleanup:
-        # Enable scheduled cleanup to delete Metrics data in the database.
-        enabled: true
-
-        # The scheduled job will cleanup all data older than the specified days
-        daysToKeep: 3
-
-        # This is the period for each cleanup operation in seconds.
-        scheduledCleanupPeriod: 86400
-
-  # The JDBC Reporter is in the Metrics JDBC Core feature
-  reporting:
-    # The JDBC Reporter configurations will be ignored if the Metrics JDBC Core feature is not available in runtime
-    jdbc:
-      - # The name for the JDBC Reporter
-        name: JDBC
-
-        # Enable JDBC Reporter
-        enabled: true
-
-        # Source of Metrics, which will be used to identify each metric in database -->
-        # Commented to use the hostname by default
-        # source: Carbon
-
-        # Alias referring to the Data Source configuration
-        dataSource: *JDBC01
-
-        # Polling Period in seconds.
-        # This is the period for polling metrics from the metric registry and updating the database with the values
-        pollingPeriod: 60
-
   # Deployment configuration parameters
 wso2.artifact.deployment:
     # Scheduler update interval
-  updateInterval: 5
+  updateInterval: 2
 
   # Periodic Persistence Configuration
 state.persistence:
@@ -297,72 +237,39 @@ wso2.securevault:
   # Datasource Configurations
 wso2.datasources:
   dataSources:
-    -
-      name: WSO2_CLUSTER_DB
-      description: "The datasource used by cluster coordinators in HA deployment"
-      definition:
-        type: RDBMS
-        configuration:
-          connectionTestQuery: "SELECT 1"
-          driverClassName: org.h2.Driver
-          idleTimeout: 60000
-          isAutoCommit: false
-          jdbcUrl: "jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CLUSTER_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;AUTO_SERVER=TRUE"
-          maxPoolSize: 10
-          password: wso2carbon
-          username: wso2carbon
-          validationTimeout: 30000
+  - name: WSO2_CARBON_DB
+    description: The datasource used for registry and user manager
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/WSO2_CARBON_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 10
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false
 
-    # carbon metrics data source
-    - name: WSO2_METRICS_DB
-      description: The datasource used for dashboard feature
-      jndiConfig:
-        name: jdbc/WSO2MetricsDB
-      definition:
-        type: RDBMS
-        configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/metrics;AUTO_SERVER=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
-          maxPoolSize: 30
-          idleTimeout: 60000
-          connectionTestQuery: SELECT 1
-          validationTimeout: 30000
-          isAutoCommit: false
+  - name: Message_Tracing_DB
+    description: "The datasource used for message tracer to store span information."
+    jndiConfig:
+      name: jdbc/Message_Tracing_DB
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/dashboard/database/MESSAGE_TRACING_DB;AUTO_SERVER=TRUE'
+        username: wso2carbon
+        password: wso2carbon
+        driverClassName: org.h2.Driver
+        maxPoolSize: 20
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false
 
-    - name: WSO2_PERMISSIONS_DB
-      description: The datasource used for permission feature
-      jndiConfig:
-        name: jdbc/PERMISSION_DB
-        useJndiReference: true
-      definition:
-        type: RDBMS
-        configuration:
-          jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/PERMISSION_DB;IFEXISTS=TRUE;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000;MVCC=TRUE'
-          username: wso2carbon
-          password: wso2carbon
-          driverClassName: org.h2.Driver
-          maxPoolSize: 10
-          idleTimeout: 60000
-          connectionTestQuery: SELECT 1
-          validationTimeout: 30000
-          isAutoCommit: false
-
-# Authentication configuration
+    #Authentication Configurations: Authentication is disabled in editor profile
 auth.configs:
-  type: 'local'        # Type of the IdP client used
-  userManager:
-    adminRole: admin   # Admin role which is granted all permissions
-    userStore:         # User store
-      users:
-       -
-         user:
-           username: admin
-           password: YWRtaW4=
-           roles: 1
-      roles:
-       -
-         role:
-           id: 1
-           displayName: admin
+  restAPIAuthConfigs:
+    authEnable: false
