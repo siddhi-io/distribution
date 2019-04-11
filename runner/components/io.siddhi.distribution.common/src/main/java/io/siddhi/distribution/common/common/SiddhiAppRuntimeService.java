@@ -20,6 +20,7 @@
 package io.siddhi.distribution.common.common;
 
 import io.siddhi.core.SiddhiAppRuntime;
+import io.siddhi.core.util.statistics.metrics.Level;
 
 import java.util.Map;
 
@@ -29,5 +30,5 @@ import java.util.Map;
 public interface SiddhiAppRuntimeService {
     Map<String, SiddhiAppRuntime> getActiveSiddhiAppRuntimes();
 
-    void enableSiddhiAppStatistics(boolean statsEnabled);
+    void enableSiddhiAppStatistics(Level enabledStatsLevel);
 }

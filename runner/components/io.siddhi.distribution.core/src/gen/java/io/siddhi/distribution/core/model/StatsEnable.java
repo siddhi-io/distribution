@@ -19,36 +19,65 @@
 package io.siddhi.distribution.core.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.siddhi.core.util.statistics.metrics.Level;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Objects;
 
 /**
- * StatsEnable.
+ * StatsEnable
  */
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-02T13:49:11.445Z")
 public class StatsEnable {
+    @JsonProperty("enabledStatLevel")
+    private String enabledStatLevel = null;
+    private Level enabledSiddhiStatLevel = null;
     @JsonProperty("statsEnable")
     private Boolean statsEnable = null;
 
-    public StatsEnable statsEnable(Boolean statsEnable) {
+    public void setStatsEnable(Boolean statsEnable) {
         this.statsEnable = statsEnable;
-        return this;
+        if (statsEnable) {
+            this.enabledSiddhiStatLevel = Level.BASIC;
+        } else {
+            this.enabledSiddhiStatLevel = Level.OFF;
+        }
     }
 
-    /**
-     * Get statsEnable.
-     *
-     * @return statsEnable
-     **/
+    public void setEnabledStatLevel() {
+        this.enabledSiddhiStatLevel = Level.valueOf(enabledStatLevel);
+        if (this.enabledSiddhiStatLevel.compareTo(Level.OFF) != 0) {
+            this.statsEnable = true;
+        } else {
+            this.statsEnable = false;
+        }
+    }
+
     @ApiModelProperty(required = true, value = "")
     public Boolean getStatsEnable() {
         return statsEnable;
     }
 
-    public void setStatsEnable(Boolean statsEnable) {
-        this.statsEnable = statsEnable;
+    /**
+     * Get statsEnable
+     *
+     * @return statsEnable
+     **/
+    @ApiModelProperty(required = true, value = "")
+    public Level getEnabledSiddhiStatLevel() {
+        if (enabledSiddhiStatLevel == null) {
+            if (enabledStatLevel == null) {
+                if (statsEnable) {
+                    enabledSiddhiStatLevel = Level.DETAIL;
+                } else {
+                    enabledSiddhiStatLevel = Level.OFF;
+                }
+            } else {
+                enabledSiddhiStatLevel = Level.valueOf(enabledStatLevel);
+            }
+        }
+        return enabledSiddhiStatLevel;
     }
 
 
@@ -61,20 +90,19 @@ public class StatsEnable {
             return false;
         }
         StatsEnable statsEnable = (StatsEnable) o;
-        return Objects.equals(this.statsEnable, statsEnable.statsEnable);
+        return this.enabledSiddhiStatLevel.compareTo(statsEnable.enabledSiddhiStatLevel) == 0;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(statsEnable);
+        return Objects.hash(enabledSiddhiStatLevel);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class StatsEnable {\n");
-
-        sb.append("    statsEnable: ").append(toIndentedString(statsEnable)).append("\n");
+        sb.append("    enabledStatLevel: ").append(toIndentedString(enabledSiddhiStatLevel.toString())).append("\n");
         sb.append("}");
         return sb.toString();
     }
@@ -90,4 +118,5 @@ public class StatsEnable {
         return o.toString().replace("\n", "\n    ");
     }
 }
+
 

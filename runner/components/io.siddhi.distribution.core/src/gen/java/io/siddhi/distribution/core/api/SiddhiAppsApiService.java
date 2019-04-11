@@ -17,6 +17,8 @@
 package io.siddhi.distribution.core.api;
 
 
+import io.siddhi.core.util.statistics.metrics.Level;
+import io.siddhi.distribution.core.model.StatsEnable;
 import org.wso2.msf4j.Request;
 
 import javax.ws.rs.core.Response;
@@ -54,10 +56,10 @@ public abstract class SiddhiAppsApiService {
 
     public abstract Response siddhiAppsStatisticsGet(String isActive, Request request) throws NotFoundException;
 
-    public abstract Response siddhiAppStatsEnable(String appName, boolean statsEnabled, Request request) throws
+    public abstract Response siddhiAppStatsEnable(String appName, StatsEnable statsEnabled, Request request) throws
             NotFoundException;
 
-    public abstract Response siddhiAppsStatsEnable(boolean statsEnabled, Request request) throws
+    public abstract Response siddhiAppsStatsEnable(Level statsEnabled, Request request) throws
             NotFoundException;
 
     public abstract Response siddhiAppsElementsGet(String appName, Request request) throws NotFoundException;

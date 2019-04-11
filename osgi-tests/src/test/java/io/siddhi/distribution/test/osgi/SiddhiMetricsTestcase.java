@@ -22,6 +22,7 @@ import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.core.stream.output.StreamCallback;
 import io.siddhi.core.util.EventPrinter;
 import io.siddhi.core.util.SiddhiTestHelper;
+import io.siddhi.core.util.statistics.metrics.Level;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -203,7 +204,7 @@ public class SiddhiMetricsTestcase {
     private void testMBean(String mBeanName) throws Exception {
 
         SiddhiAppRuntime siddhiAppRuntime = siddhiAppRuntimeService.getActiveSiddhiAppRuntimes().get("MetricsTestApp2");
-        siddhiAppRuntime.enableStats(true);
+        siddhiAppRuntime.setStatisticsLevel(Level.BASIC);
 
         siddhiAppRuntime.addCallback("outputStream", new StreamCallback() {
             @Override

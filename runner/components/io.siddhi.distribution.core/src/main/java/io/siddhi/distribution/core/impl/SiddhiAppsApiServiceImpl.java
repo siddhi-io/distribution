@@ -22,6 +22,7 @@ import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.stream.input.source.Source;
 import io.siddhi.core.stream.output.sink.Sink;
 import io.siddhi.core.util.snapshot.PersistenceReference;
+import io.siddhi.core.util.statistics.metrics.Level;
 import io.siddhi.distribution.core.api.ApiResponseMessage;
 import io.siddhi.distribution.core.api.ApiResponseMessageWithCode;
 import io.siddhi.distribution.core.api.NotFoundException;
@@ -37,6 +38,7 @@ import io.siddhi.distribution.core.model.SiddhiAppContent;
 import io.siddhi.distribution.core.model.SiddhiAppMetrics;
 import io.siddhi.distribution.core.model.SiddhiAppRevision;
 import io.siddhi.distribution.core.model.SiddhiAppStatus;
+import io.siddhi.distribution.core.model.StatsEnable;
 import io.siddhi.query.api.SiddhiApp;
 import io.siddhi.query.api.SiddhiElement;
 import io.siddhi.query.api.annotation.Annotation;
@@ -437,7 +439,8 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                         SiddhiAppMetrics appMetrics = new SiddhiAppMetrics();
                         appMetrics.setAge(age);
                         appMetrics.appName(siddhiAppFileEntry.getKey());
-                        appMetrics.isStatEnabled(siddiAppData.getSiddhiAppRuntime().isStatsEnabled());
+                        appMetrics.isStatEnabled(siddiAppData.getSiddhiAppRuntime()
+                                .getStatisticsLevel().compareTo(Level.OFF) != 0);
                         appMetrics.status(siddiAppData.isActive() ?
                                 SiddhiAppProcessorConstants.SIDDHI_APP_STATUS_ACTIVE :
                                 SiddhiAppProcessorConstants.SIDDHI_APP_STATUS_INACTIVE);
@@ -456,7 +459,8 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                     }
                     appMetrics.appName(siddhiAppFileEntry.getKey());
                     if (siddiAppData.isActive()) {
-                        appMetrics.isStatEnabled(siddiAppData.getSiddhiAppRuntime().isStatsEnabled());
+                        appMetrics.isStatEnabled(siddiAppData.getSiddhiAppRuntime()
+                                .getStatisticsLevel().compareTo(Level.OFF) != 0);
                     } else {
                         appMetrics.isStatEnabled(false);
                     }
@@ -474,26 +478,37 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
         }
     }
 
-    public Response siddhiAppStatsEnable(String appFileName, boolean statsEnabled)
-            throws NotFoundException {
+    public Response siddhiAppStatsEnable(String appFileName, StatsEnable statsEnabled) throws NotFoundException {
         String jsonString;
-
         Map<String, SiddhiAppData> siddhiAppMap = StreamProcessorDataHolder.getStreamProcessorService()
                 .getSiddhiAppMap();
         SiddhiAppData siddiAppData = siddhiAppMap.get(appFileName);
         if (siddiAppData != null) {
-            if (statsEnabled && siddiAppData.getSiddhiAppRuntime().isStatsEnabled()) {
-                log.info("Stats has already annabled for siddhi app :" + appFileName);
-                jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
-                        "Stats has already annabled for siddhi app :" + appFileName));
-            } else if (!(statsEnabled) && !(siddiAppData.getSiddhiAppRuntime().isStatsEnabled())) {
-                log.info("Stats has already disabled for siddhi app :" + appFileName);
-                jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
-                        "Stats has already disabled for siddhi app :" + appFileName));
-            } else {
-                siddiAppData.getSiddhiAppRuntime().enableStats(statsEnabled);
+            boolean appStatChanged = false;
+            if (statsEnabled.getEnabledSiddhiStatLevel() != null) {
+                if (statsEnabled.getEnabledSiddhiStatLevel().compareTo(siddiAppData.getSiddhiAppRuntime().
+                        getStatisticsLevel()) != 0) {
+                    siddiAppData.getSiddhiAppRuntime().setStatisticsLevel(statsEnabled.getEnabledSiddhiStatLevel());
+                    appStatChanged = true;
+                }
+            }
+            if (statsEnabled.getStatsEnable() !=
+                    (siddiAppData.getSiddhiAppRuntime().getStatisticsLevel().compareTo(Level.OFF) != 0)) {
+                if (statsEnabled.getStatsEnable()) {
+                    siddiAppData.getSiddhiAppRuntime().setStatisticsLevel(Level.DETAIL);
+                } else {
+                    siddiAppData.getSiddhiAppRuntime().setStatisticsLevel(Level.OFF);
+                }
+                appStatChanged = true;
+            }
+            if (appStatChanged) {
                 jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
                         "Sucessfully updated Aiddhi App : " + appFileName));
+            } else {
+                log.info("Stats level is already set to :" + statsEnabled.getEnabledSiddhiStatLevel());
+                jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
+                        "Stats level is already set to :" + statsEnabled.toString() + " for siddhi app" +
+                                appFileName));
             }
             return Response.status(Response.Status.OK).entity(jsonString).build();
         } else {
@@ -504,15 +519,13 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
         }
     }
 
-    public Response siddhiAppsStatsEnable(boolean statsEnabled) throws NotFoundException {
-
+    public Response siddhiAppsStatsEnable(Level statsEnabled) throws NotFoundException {
         Map<String, SiddhiAppData> siddhiAppMap = StreamProcessorDataHolder.getStreamProcessorService()
                 .getSiddhiAppMap();
         for (Map.Entry siddhiAppEntry : siddhiAppMap.entrySet()) {
             SiddhiAppData siddiAppData = (SiddhiAppData) siddhiAppEntry.getValue();
-            if ((statsEnabled && !siddiAppData.getSiddhiAppRuntime().isStatsEnabled()) || (!statsEnabled &&
-                    siddiAppData.getSiddhiAppRuntime().isStatsEnabled())) {
-                siddiAppData.getSiddhiAppRuntime().enableStats(statsEnabled);
+            if (statsEnabled.compareTo(siddiAppData.getSiddhiAppRuntime().getStatisticsLevel()) != 0) {
+                siddiAppData.getSiddhiAppRuntime().setStatisticsLevel(statsEnabled);
                 if (log.isDebugEnabled()) {
                     log.debug("Stats has been sucessfull updated for siddhi app :" + siddhiAppEntry.getKey());
                 }
@@ -989,7 +1002,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     }
 
     @Override
-    public Response siddhiAppStatsEnable(String appFileName, boolean statsEnabled, Request request)
+    public Response siddhiAppStatsEnable(String appFileName, StatsEnable statsEnabled, Request request)
             throws NotFoundException {
 
         if (getUserName(request) != null && !getPermissionProvider().hasPermission
@@ -1002,7 +1015,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
     }
 
     @Override
-    public Response siddhiAppsStatsEnable(boolean statsEnabled, Request request) throws NotFoundException {
+    public Response siddhiAppsStatsEnable(Level statsEnabled, Request request) throws NotFoundException {
 
         if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
                 Permission(PERMISSION_APP_NAME, MANAGE_SIDDHI_APP_PERMISSION_STRING))) {
@@ -1011,6 +1024,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
         }
         return siddhiAppsStatsEnable(statsEnabled);
     }
+
 
     @Override
     public Response siddhiAppsElementsGet(String appName, Request request) throws NotFoundException {
