@@ -72,7 +72,7 @@ public class FileSystemPersistenceStoreTestcase {
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
                 "conf", "persistence", "file", "default", DEPLOYMENT_FILENAME);
-        return copyFile(carbonYmlFilePath, Paths.get("conf", "worker", DEPLOYMENT_FILENAME));
+        return copyFile(carbonYmlFilePath, Paths.get("conf", "runner", DEPLOYMENT_FILENAME));
     }
 
 
@@ -83,7 +83,7 @@ public class FileSystemPersistenceStoreTestcase {
                 copyCarbonYAMLOption(),
                 carbonDistribution(
                         Paths.get("target", "siddhi-runner-"
-                                + System.getProperty("io.siddhi.distribution.version")), "worker")
+                                + System.getProperty("io.siddhi.distribution.version")), "runner")
         };
     }
 

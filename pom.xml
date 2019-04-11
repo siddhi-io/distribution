@@ -30,8 +30,8 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>runner</module>
         <module>tooling</module>
+        <module>runner</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>
@@ -1600,7 +1600,7 @@
         <siddhi.map.csv.version>1.1.0</siddhi.map.csv.version>
 
         <siddhi.store.mongodb.version>1.1.0</siddhi.store.mongodb.version>
-        <siddhi.store.rdbms.version>5.1.7-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>6.0.0</siddhi.store.rdbms.version>
         <siddhi.store.solr.version>1.1.0</siddhi.store.solr.version>
         <siddhi.store.hbase.version>4.1.0</siddhi.store.hbase.version>
         <siddhi.store.cassandra.version>1.1.0</siddhi.store.cassandra.version>
