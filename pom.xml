@@ -30,9 +30,9 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>tooling</module>
         <module>runner</module>
         <module>samples/sample-clients</module>
+        <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>
@@ -46,6 +46,11 @@
         </extensions>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven.resources.plugin.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.wso2.carbon.maven</groupId>
                     <artifactId>carbon-feature-plugin</artifactId>
@@ -1404,8 +1409,8 @@
 
     <properties>
         <io.siddhi.distribution.version>1.0.0-SNAPSHOT</io.siddhi.distribution.version>
-        <siddhi.version>5.0.0-m10</siddhi.version>
-        <siddhi.bundle.version>5.0.0.m10</siddhi.bundle.version>
+        <siddhi.version>5.0.0-m11</siddhi.version>
+        <siddhi.bundle.version>5.0.0.m11</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.0.73</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.0.66, 6.1.0)</carbon.analytics-common.version.range>
@@ -1469,6 +1474,7 @@
 
         <carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
         <carbon.feature.plugin.version>3.1.4</carbon.feature.plugin.version>
+        <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
 
         <testng.version>6.14.3</testng.version>
         <plugin.version.antlr>4.5.1</plugin.version.antlr>
@@ -1517,7 +1523,7 @@
         <!-- Clustering Dependencies -->
         <carbon.coordination.version>2.0.18</carbon.coordination.version>
 
-        <slf4j.version>1.7.12</slf4j.version>
+        <slf4j.version>1.7.26</slf4j.version>
         <slf4j.logging.package.import.version.range>[1.7.1, 2.0.0)
         </slf4j.logging.package.import.version.range>
 
@@ -1616,13 +1622,14 @@
         <siddhi.execution.json.version>1.1.0</siddhi.execution.json.version>
 
 
-        <siddhi.io.tcp.version>3.0.0</siddhi.io.tcp.version>
-        <siddhi.io.nats.version>2.0.0</siddhi.io.nats.version>
-        <siddhi.io.http.version>2.0.0</siddhi.io.http.version>
+        <siddhi.io.tcp.version>3.0.1</siddhi.io.tcp.version>
+        <siddhi.io.nats.version>2.0.1</siddhi.io.nats.version>
+        <siddhi.io.http.version>2.0.2</siddhi.io.http.version>
+        <siddhi.io.email.version>2.0.1</siddhi.io.email.version>
+        <siddhi.io.jms.version>2.0.1</siddhi.io.jms.version>
+        <siddhi.io.cdc.version>2.0.0</siddhi.io.cdc.version>
 
         <siddhi.io.file.version>1.1.0</siddhi.io.file.version>
-        <siddhi.io.jms.version>1.1.1</siddhi.io.jms.version>
-        <siddhi.io.email.version>1.1.0</siddhi.io.email.version>
         <siddhi.io.rabbitmq.version>1.1.0</siddhi.io.rabbitmq.version>
         <siddhi.io.mqtt.version>1.0.22</siddhi.io.mqtt.version>
         <siddhi.io.kafka.version>4.2.1</siddhi.io.kafka.version>
@@ -1631,7 +1638,6 @@
         <siddhi.io.sqs.version>1.0.8</siddhi.io.sqs.version>
         <siddhi.io.websocket.version>1.1.0</siddhi.io.websocket.version>
         <siddhi.io.ibmmq.version>1.0.7</siddhi.io.ibmmq.version>
-        <siddhi.io.cdc.version>1.0.9</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>1.0.3</siddhi.io.prometheus.version>
 
         <siddhi.map.json.version>5.0.1</siddhi.map.json.version>

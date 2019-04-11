@@ -304,24 +304,24 @@
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
                                 <!--&lt;!&ndash;IO Extensions&ndash;&gt;-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.jms</groupId>-->
-                                    <!--<artifactId>siddhi-io-jms</artifactId>-->
-                                    <!--<version>${siddhi.io.jms.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.jms</groupId>
+                                    <artifactId>siddhi-io-jms</artifactId>
+                                    <version>${siddhi.io.jms.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.io.rabbitmq</groupId>-->
                                     <!--<artifactId>siddhi-io-rabbitmq</artifactId>-->
                                     <!--<version>${siddhi.io.rabbitmq.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.email</groupId>-->
-                                    <!--<artifactId>siddhi-io-email</artifactId>-->
-                                    <!--<version>${siddhi.io.email.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.email</groupId>
+                                    <artifactId>siddhi-io-email</artifactId>
+                                    <version>${siddhi.io.email.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <artifactItem>
                                     <groupId>org.wso2.extension.siddhi.io.tcp</groupId>
                                     <artifactId>siddhi-io-tcp</artifactId>
@@ -371,12 +371,12 @@
                                     <!--&lt;!&ndash;<version>${siddhi.io.nats.version}</version>&ndash;&gt;-->
                                     <!--&lt;!&ndash;<type>jar</type>&ndash;&gt;-->
                                 <!--&lt;!&ndash;</artifactItem>&ndash;&gt;-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.cdc</groupId>-->
-                                    <!--<artifactId>siddhi-io-cdc</artifactId>-->
-                                    <!--<version>${siddhi.io.cdc.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.cdc</groupId>
+                                    <artifactId>siddhi-io-cdc</artifactId>
+                                    <version>${siddhi.io.cdc.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.io.prometheus</groupId>-->
                                     <!--<artifactId>siddhi-io-prometheus</artifactId>-->
