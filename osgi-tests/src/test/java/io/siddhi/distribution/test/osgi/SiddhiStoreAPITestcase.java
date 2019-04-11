@@ -98,7 +98,7 @@ public class SiddhiStoreAPITestcase {
                 copySiddhiFileOption(),
                 carbonDistribution(
                         Paths.get("target", "siddhi-runner-"
-                                + System.getProperty("io.siddhi.distribution.version")), "worker")
+                                + System.getProperty("io.siddhi.distribution.version")), "runner")
         };
     }
 
@@ -113,7 +113,7 @@ public class SiddhiStoreAPITestcase {
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources", "deployment", "siddhi-files",
                 APP_NAME + SIDDHI_EXTENSION);
-        return copyFile(carbonYmlFilePath, Paths.get("wso2", "worker", "deployment", "siddhi-files",
+        return copyFile(carbonYmlFilePath, Paths.get("wso2", "runner", "deployment", "siddhi-files",
                 APP_NAME + SIDDHI_EXTENSION));
     }
 

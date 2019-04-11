@@ -19,7 +19,7 @@ under the License.
 
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
-<suite name="wso2-test-suite">
+<suite name="siddhi-distribution-test-suite">
     <test name="MSF4J interceptor common tests">
 
     </test>

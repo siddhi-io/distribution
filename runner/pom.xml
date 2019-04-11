@@ -252,14 +252,14 @@
                             </artifactItems>
                         </configuration>
                     </execution>
-                    <!--<execution>-->
-                        <!--<id>copy</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<artifactItems>-->
+                    <execution>
+                        <id>copy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
                                 <!--&lt;!&ndash;Execution Extensions&ndash;&gt;-->
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.execution.string</groupId>-->
@@ -285,12 +285,12 @@
                                     <!--<version>${siddhi.execution.map.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.execution.math</groupId>-->
-                                    <!--<artifactId>siddhi-execution-math</artifactId>-->
-                                    <!--<version>${siddhi.execution.math.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.execution.math</groupId>
+                                    <artifactId>siddhi-execution-math</artifactId>
+                                    <version>${siddhi.execution.math.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.execution.unitconversion</groupId>-->
                                     <!--<artifactId>siddhi-execution-unitconversion</artifactId>-->
@@ -346,12 +346,12 @@
                                     <!--<version>${siddhi.io.file.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.http</groupId>-->
-                                    <!--<artifactId>siddhi-io-http</artifactId>-->
-                                    <!--<version>${siddhi.io.http.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.http</groupId>
+                                    <artifactId>siddhi-io-http</artifactId>
+                                    <version>${siddhi.io.http.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.io.twitter</groupId>-->
                                     <!--<artifactId>siddhi-io-twitter</artifactId>-->
@@ -391,42 +391,42 @@
                                     <!--<version>${siddhi.map.wso2event.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.map.xml</groupId>-->
-                                    <!--<artifactId>siddhi-map-xml</artifactId>-->
-                                    <!--<version>${siddhi.map.xml.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.map.json</groupId>-->
-                                    <!--<artifactId>siddhi-map-json</artifactId>-->
-                                    <!--<version>${siddhi.map.json.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.map.text</groupId>-->
-                                    <!--<artifactId>siddhi-map-text</artifactId>-->
-                                    <!--<version>${siddhi.map.text.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.map.binary</groupId>-->
-                                    <!--<artifactId>siddhi-map-binary</artifactId>-->
-                                    <!--<version>${siddhi.map.binary.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.map.keyvalue</groupId>-->
-                                    <!--<artifactId>siddhi-map-keyvalue</artifactId>-->
-                                    <!--<version>${siddhi.map.keyvalue.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.map.csv</groupId>-->
-                                    <!--<artifactId>siddhi-map-csv</artifactId>-->
-                                    <!--<version>${siddhi.map.csv.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.map.xml</groupId>
+                                    <artifactId>siddhi-map-xml</artifactId>
+                                    <version>${siddhi.map.xml.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.map.json</groupId>
+                                    <artifactId>siddhi-map-json</artifactId>
+                                    <version>${siddhi.map.json.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.map.text</groupId>
+                                    <artifactId>siddhi-map-text</artifactId>
+                                    <version>${siddhi.map.text.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.map.binary</groupId>
+                                    <artifactId>siddhi-map-binary</artifactId>
+                                    <version>${siddhi.map.binary.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.map.keyvalue</groupId>
+                                    <artifactId>siddhi-map-keyvalue</artifactId>
+                                    <version>${siddhi.map.keyvalue.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.map.csv</groupId>
+                                    <artifactId>siddhi-map-csv</artifactId>
+                                    <version>${siddhi.map.csv.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--&lt;!&ndash;Store Extensions&ndash;&gt;-->
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.store.solr</groupId>-->
@@ -440,12 +440,12 @@
                                     <!--<version>${siddhi.store.mongodb.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.store.rdbms</groupId>-->
-                                    <!--<artifactId>siddhi-store-rdbms</artifactId>-->
-                                    <!--<version>${siddhi.store.rdbms.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.store.rdbms</groupId>
+                                    <artifactId>siddhi-store-rdbms</artifactId>
+                                    <version>${siddhi.store.rdbms.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.io.mqtt</groupId>-->
                                     <!--<artifactId>siddhi-io-mqtt</artifactId>-->
@@ -488,13 +488,12 @@
                                     <!--<version>${siddhi.io.websocket.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                            <!--</artifactItems>-->
-                            <!--<outputDirectory>${project.build.directory}/extensions</outputDirectory>-->
-                            <!--<overWriteReleases>false</overWriteReleases>-->
-                            <!--<overWriteSnapshots>true</overWriteSnapshots>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/extensions</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -665,7 +664,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>materialize-worker</id>
+                        <id>materialize-runner</id>
                         <phase>package</phase>
                         <goals>
                             <goal>generate-runtime</goal>
@@ -675,17 +674,17 @@
                             <targetPath>
                                 file:${basedir}/target/wso2carbon-kernel-${carbon.kernel.version}/wso2
                             </targetPath>
-                            <runtime>worker</runtime>
+                            <runtime>runner</runtime>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>feature-installation-worker</id>
+                        <id>feature-installation-runner</id>
                         <phase>package</phase>
                         <goals>
                             <goal>install</goal>
                         </goals>
                         <configuration>
-                            <runtime>worker</runtime>
+                            <runtime>runner</runtime>
                             <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
                             <destination>
                                 ${basedir}/target/wso2carbon-kernel-${carbon.kernel.version}/wso2

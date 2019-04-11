@@ -18,7 +18,6 @@ limitations under the License.
     <test name="siddhi-distribution-tests" preserve-order="true" parallel="false" thread-count="1">
         <classes>
             <class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreTestcase"/>
-            <!-- TODO mohan due to RDBMS extension -->
             <!--<class name="io.siddhi.distribution.test.osgi.IncrementalFileSystemPersistenceStoreTestcase"/>-->
             <class name="io.siddhi.distribution.test.osgi.SiddhiAsAPITestcase"/>
             <class name="io.siddhi.distribution.test.osgi.SiddhiMetricsTestcase"/>
@@ -26,12 +25,11 @@ limitations under the License.
             <!--TODO mohan disabled due to snapshot changes -->
             <!--<class name="io.siddhi.distribution.test.osgi.IncrementalDBPersistenceStoreTestcase"/>-->
             <!--<class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase"/>-->
-            <!-- TODO mohan due to RDBMS extension -->
-            <!--<class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase"/>-->
+            <class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase"/>
             <!--TODO mohan should fix after extensions are migrated-->
             <!--<class name="io.siddhi.distribution.test.osgi.SiddhiStoreAPITestcase"/>-->
             <class name="io.siddhi.distribution.test.osgi.SimulatorAPITestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.SiddhiEditorTestCase"/>
+            <class name="io.siddhi.distribution.test.osgi.SiddhiToolingTestCase"/>
         </classes>
     </test>
 </suite>

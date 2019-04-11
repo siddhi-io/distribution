@@ -49,13 +49,13 @@
             </includes>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/conf/editor</directory>
-            <outputDirectory>conf/editor</outputDirectory>
+            <directory>../resources/carbon-home/conf/tooling</directory>
+            <outputDirectory>conf/tooling</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/conf/transports/editor</directory>
-            <outputDirectory>wso2/editor/conf/transports</outputDirectory>
+            <directory>../resources/carbon-home/conf/transports/tooling</directory>
+            <outputDirectory>wso2/tooling/conf/transports</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
@@ -72,8 +72,8 @@
             <directory>../resources/carbon-home/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
-                <include>editor.sh</include>
-                <include>editor.bat</include>
+                <include>tooling.sh</include>
+                <include>tooling.bat</include>
             </includes>
             <fileMode>755</fileMode>
         </fileSet>
@@ -111,7 +111,7 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/editor/deployment/workspace</outputDirectory>
+            <outputDirectory>wso2/tooling/deployment/workspace</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -119,7 +119,7 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/editor/deployment/csv-files</outputDirectory>
+            <outputDirectory>wso2/tooling/deployment/csv-files</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -127,7 +127,7 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/editor/deployment/simulation-configs</outputDirectory>
+            <outputDirectory>wso2/tooling/deployment/simulation-configs</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>
             </excludes>
@@ -210,14 +210,14 @@
         <!--TODO: Workaround for issue trustStore and keystore certificate system properties
         fixed-->
         <file>
-            <source>../resources/carbon-home/runtime/editor/carbon.sh</source>
-            <outputDirectory>wso2/editor/bin/</outputDirectory>
+            <source>../resources/carbon-home/runtime/tooling/carbon.sh</source>
+            <outputDirectory>wso2/tooling/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
         </file>
         <file>
-            <source>../resources/carbon-home/runtime/editor/carbon.bat</source>
-            <outputDirectory>wso2/editor/bin/</outputDirectory>
+            <source>../resources/carbon-home/runtime/tooling/carbon.bat</source>
+            <outputDirectory>wso2/tooling/bin/</outputDirectory>
             <filtered>true</filtered>
             <fileMode>755</fileMode>
         </file>

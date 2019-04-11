@@ -76,7 +76,7 @@ public class SimulatorAPITestcase {
     public Option[] createConfiguration() {
         return new Option[]{
                 carbonDistribution(Paths.get("target", "siddhi-tooling-" +
-                        System.getProperty("io.siddhi.distribution.version")), "editor"),
+                        System.getProperty("io.siddhi.distribution.version")), "tooling"),
                 copySiddhiFileOption(),
                 copyCSVFileOption(),
         };
@@ -89,8 +89,8 @@ public class SimulatorAPITestcase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "editor", "siddhi-apps", "ReceiveAndCount.siddhi");
-        return copyFile(carbonYmlFilePath, Paths.get("wso2", "editor", "deployment", "workspace",
+                "tooling", "siddhi-apps", "ReceiveAndCount.siddhi");
+        return copyFile(carbonYmlFilePath, Paths.get("wso2", "tooling", "deployment", "workspace",
                 "ReceiveAndCount.siddhi"));
     }
 
@@ -102,7 +102,7 @@ public class SimulatorAPITestcase {
         }
         csvFilePath = Paths.get(basedir, "src", "test", "resources",
                 "files", "sampleCSV.csv");
-        return copyFile(csvFilePath, Paths.get("wso2", "editor",
+        return copyFile(csvFilePath, Paths.get("wso2", "tooling",
                 "sampleCSV.csv"));
     }
 
