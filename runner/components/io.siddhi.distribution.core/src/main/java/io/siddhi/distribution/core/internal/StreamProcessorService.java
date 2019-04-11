@@ -161,7 +161,7 @@ public class StreamProcessorService {
 
     public String getSiddhiAppName(String siddhiApp) throws SiddhiAppConfigurationException {
         try {
-            SiddhiApp parsedSiddhiApp = SiddhiCompiler.parse(siddhiApp);
+            SiddhiApp parsedSiddhiApp = SiddhiCompiler.parse(SiddhiCompiler.updateVariables(siddhiApp));
             Element nameAnnotation = AnnotationHelper.
                     getAnnotationElement(SiddhiAppProcessorConstants.ANNOTATION_NAME_NAME,
                             null, parsedSiddhiApp.getAnnotations());
