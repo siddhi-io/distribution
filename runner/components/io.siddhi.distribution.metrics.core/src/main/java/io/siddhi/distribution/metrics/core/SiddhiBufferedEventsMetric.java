@@ -73,6 +73,20 @@ public class SiddhiBufferedEventsMetric implements BufferedEventsTracker {
         }
     }
 
+    @Override
+    public void enableEventBufferHolderMetrics() {
+        for (ObjectMetric objectMetric : registeredObjects.values()) {
+            objectMetric.enable();
+        }
+    }
+
+    @Override
+    public void disableEventBufferHolderMetrics() {
+        for (ObjectMetric objectMetric : registeredObjects.values()) {
+            objectMetric.disable();
+        }
+    }
+
     class ObjectMetric {
         private final EventBufferHolder eventBufferHolder;
         private String name;
@@ -110,6 +124,14 @@ public class SiddhiBufferedEventsMetric implements BufferedEventsTracker {
             } else {
                 SiddhiMetricsDataHolder.getInstance().getMetricManagementService().setMetricLevel(name, OFF);
             }
+        }
+
+        public void enable() {
+            SiddhiMetricsDataHolder.getInstance().getMetricManagementService().setMetricLevel(name, INFO);
+        }
+
+        public void disable() {
+            SiddhiMetricsDataHolder.getInstance().getMetricManagementService().setMetricLevel(name, OFF);
         }
     }
 }

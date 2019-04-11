@@ -30,9 +30,9 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>runner</module>
         <module>samples/sample-clients</module>
         <module>tooling</module>
+        <module>runner</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>
@@ -1408,8 +1408,8 @@
 
     <properties>
         <io.siddhi.distribution.version>1.0.0-SNAPSHOT</io.siddhi.distribution.version>
-        <siddhi.version>5.0.0-SNAPSHOT</siddhi.version>
-        <siddhi.bundle.version>5.0.0.SNAPSHOT</siddhi.bundle.version>
+        <siddhi.version>5.0.0</siddhi.version>
+        <siddhi.bundle.version>5.0.0</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.0.73</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.0.66, 6.1.0)</carbon.analytics-common.version.range>
