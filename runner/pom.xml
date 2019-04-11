@@ -322,12 +322,12 @@
                                     <!--<version>${siddhi.io.email.version}</version>-->
                                     <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.tcp</groupId>-->
-                                    <!--<artifactId>siddhi-io-tcp</artifactId>-->
-                                    <!--<version>${siddhi.io.tcp.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.tcp</groupId>
+                                    <artifactId>siddhi-io-tcp</artifactId>
+                                    <version>${siddhi.io.tcp.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.io.kafka</groupId>-->
                                     <!--<artifactId>siddhi-io-kafka</artifactId>-->

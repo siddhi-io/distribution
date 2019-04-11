@@ -30,9 +30,9 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
+        <module>tooling</module>
         <module>runner</module>
         <module>samples/sample-clients</module>
-        <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>
@@ -1616,22 +1616,23 @@
         <siddhi.execution.json.version>1.1.0</siddhi.execution.json.version>
 
 
+        <siddhi.io.tcp.version>3.0.0</siddhi.io.tcp.version>
+        <siddhi.io.nats.version>2.0.0</siddhi.io.nats.version>
+        <siddhi.io.http.version>2.0.0</siddhi.io.http.version>
+
         <siddhi.io.file.version>1.1.0</siddhi.io.file.version>
-        <siddhi.io.tcp.version>2.1.1</siddhi.io.tcp.version>
         <siddhi.io.jms.version>1.1.1</siddhi.io.jms.version>
         <siddhi.io.email.version>1.1.0</siddhi.io.email.version>
         <siddhi.io.rabbitmq.version>1.1.0</siddhi.io.rabbitmq.version>
         <siddhi.io.mqtt.version>1.0.22</siddhi.io.mqtt.version>
         <siddhi.io.kafka.version>4.2.1</siddhi.io.kafka.version>
         <siddhi.io.wso2event.version>4.0.17</siddhi.io.wso2event.version>
-        <siddhi.io.http.version>2.0.0</siddhi.io.http.version>
         <siddhi.io.twitter.version>1.0.12</siddhi.io.twitter.version>
         <siddhi.io.sqs.version>1.0.8</siddhi.io.sqs.version>
         <siddhi.io.websocket.version>1.1.0</siddhi.io.websocket.version>
         <siddhi.io.ibmmq.version>1.0.7</siddhi.io.ibmmq.version>
         <siddhi.io.cdc.version>1.0.9</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>1.0.3</siddhi.io.prometheus.version>
-        <siddhi.io.nats.version>1.0.3</siddhi.io.nats.version>
 
         <siddhi.map.json.version>5.0.1</siddhi.map.json.version>
         <siddhi.map.avro.version>2.0.0</siddhi.map.avro.version>
