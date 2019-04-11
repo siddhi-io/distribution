@@ -654,7 +654,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>materialize-worker</id>
+                        <id>materialize-runner</id>
                         <phase>package</phase>
                         <goals>
                             <goal>generate-runtime</goal>
@@ -664,17 +664,17 @@
                             <targetPath>
                                 file:${basedir}/target/wso2carbon-kernel-${carbon.kernel.version}/wso2
                             </targetPath>
-                            <runtime>worker</runtime>
+                            <runtime>runner</runtime>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>feature-installation-worker</id>
+                        <id>feature-installation-runner</id>
                         <phase>package</phase>
                         <goals>
                             <goal>install</goal>
                         </goals>
                         <configuration>
-                            <runtime>worker</runtime>
+                            <runtime>runner</runtime>
                             <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
                             <destination>
                                 ${basedir}/target/wso2carbon-kernel-${carbon.kernel.version}/wso2

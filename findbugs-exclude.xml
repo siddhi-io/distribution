@@ -50,9 +50,4 @@
         <Class name="RDBMSDataProviderConfBean"/>
         <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2, OBL_UNSATISFIED_OBLIGATION"/>
     </Match>
-    <!--<Match>-->
-        <!--<Package name="~org\.wso2\.siddhi\.query\.api.*"/>-->
-        <!--<Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2"/>-->
-    <!--</Match>-->
-
 </FindBugsFilter>

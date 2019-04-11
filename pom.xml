@@ -30,8 +30,8 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>runner</module>
         <module>tooling</module>
+        <module>runner</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>

@@ -53,14 +53,14 @@ PRGDIR=`dirname "$PRG"`
 # Only set CARBON_HOME if not already set
 [ -z "$CARBON_HOME" ] && CARBON_HOME=`cd "$PRGDIR/.." ; pwd`
 
-[ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$PRGDIR/../wso2/editor" ; pwd`
+[ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$PRGDIR/../wso2/tooling" ; pwd`
 
 ###########################################################################
-NAME=start-editor
+NAME=start-tooling
 # Daemon name, where is the actual executable
-EDITOR_INIT_SCRIPT="$CARBON_HOME/wso2/editor/bin/carbon.sh"
+TOOLING_INIT_SCRIPT="$CARBON_HOME/wso2/tooling/bin/carbon.sh"
 
 # If the daemon is not there, then exit.
 
-"$EDITOR_INIT_SCRIPT" $*
+"$TOOLING_INIT_SCRIPT" $*
 exit;

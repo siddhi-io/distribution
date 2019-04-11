@@ -43,14 +43,15 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.carbonD
 import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFile;
 
 /**
- * OSGI Tests for siddhi-editor.
+ * OSGI Tests for siddhi-tooling.
  */
 
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
-public class SiddhiEditorTestCase {
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SiddhiEditorTestCase.class);
+public class SiddhiToolingTestCase {
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(
+            SiddhiToolingTestCase.class);
 
     private static final String DEFAULT_USER_NAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";
@@ -66,8 +67,9 @@ public class SiddhiEditorTestCase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "editor", "samples", "ReceiveAndCount.siddhi");
-        return copyFile(carbonYmlFilePath, Paths.get("wso2", "editor", "deployment", "ReceiveAndCount.siddhi"));
+                "tooling", "samples", "ReceiveAndCount.siddhi");
+        return copyFile(carbonYmlFilePath, Paths.get("wso2", "tooling", "deployment",
+                "ReceiveAndCount.siddhi"));
     }
 
     private Option copySampleFileOption() {
@@ -77,7 +79,7 @@ public class SiddhiEditorTestCase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "editor", "samples", "ReceiveAndCount.siddhi");
+                "tooling", "samples", "ReceiveAndCount.siddhi");
         return copyFile(carbonYmlFilePath, Paths.get("samples"));
     }
 
@@ -88,8 +90,8 @@ public class SiddhiEditorTestCase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "editor", "siddhi-apps", "TestSiddhiApp.siddhi");
-        return copyFile(carbonYmlFilePath, Paths.get("wso2", "editor", "deployment", "workspace",
+                "tooling", "siddhi-apps", "TestSiddhiApp.siddhi");
+        return copyFile(carbonYmlFilePath, Paths.get("wso2", "tooling", "deployment", "workspace",
                 "TestSiddhiApp.siddhi"));
     }
 
@@ -101,7 +103,7 @@ public class SiddhiEditorTestCase {
                 //copySampleFileOption(),
                 copyImportingFileOption(),
                 carbonDistribution(Paths.get("target", "siddhi-tooling-" +
-                        System.getProperty("io.siddhi.distribution.version")), "editor")/*,
+                        System.getProperty("io.siddhi.distribution.version")), "tooling")/*,
                 CarbonDistributionOption.debug(5005)*/
         };
     }

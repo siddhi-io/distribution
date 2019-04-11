@@ -41,6 +41,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.metrics.core.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
         </dependency>
@@ -660,7 +665,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>materialize-editor</id>
+                        <id>materialize-tooling</id>
                         <phase>package</phase>
                         <goals>
                             <goal>generate-runtime</goal>
@@ -670,17 +675,17 @@
                             <targetPath>
                                 file:${basedir}/target/wso2carbon-kernel-${carbon.kernel.version}/wso2
                             </targetPath>
-                            <runtime>editor</runtime>
+                            <runtime>tooling</runtime>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>feature-installation-editor</id>
+                        <id>feature-installation-tooling</id>
                         <phase>package</phase>
                         <goals>
                             <goal>install</goal>
                         </goals>
                         <configuration>
-                            <runtime>editor</runtime>
+                            <runtime>tooling</runtime>
                             <repositoryURL>file:${basedir}/target/p2-repo</repositoryURL>
                             <destination>
                                 ${basedir}/target/wso2carbon-kernel-${carbon.kernel.version}/wso2
