@@ -61,6 +61,20 @@ public class SiddhiMemoryUsageMetric implements MemoryUsageTracker {
         }
     }
 
+    @Override
+    public void enableMemoryUsageMetrics() {
+        for (ObjectMetric objectMetric : registeredObjects.values()) {
+            objectMetric.enable();
+        }
+    }
+
+    @Override
+    public void disableMemoryUsageMetrics() {
+        for (ObjectMetric objectMetric : registeredObjects.values()) {
+            objectMetric.disable();
+        }
+    }
+
     /**
      * @return Name of the memory usage tracker.
      */
@@ -106,6 +120,14 @@ public class SiddhiMemoryUsageMetric implements MemoryUsageTracker {
             } else {
                 SiddhiMetricsDataHolder.getInstance().getMetricManagementService().setMetricLevel(name, OFF);
             }
+        }
+
+        public void enable() {
+            SiddhiMetricsDataHolder.getInstance().getMetricManagementService().setMetricLevel(name, INFO);
+        }
+
+        public void disable() {
+            SiddhiMetricsDataHolder.getInstance().getMetricManagementService().setMetricLevel(name, OFF);
         }
     }
 }

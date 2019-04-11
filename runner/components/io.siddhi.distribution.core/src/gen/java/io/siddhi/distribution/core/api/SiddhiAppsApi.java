@@ -306,7 +306,7 @@ public class SiddhiAppsApi implements Microservice {
                     String appName,
             @ApiParam(value = "statsEnable", required = true) StatsEnable statsEnable)
             throws NotFoundException {
-        return delegate.siddhiAppStatsEnable(appName, statsEnable.getStatsEnable(), request);
+        return delegate.siddhiAppStatsEnable(appName, statsEnable, request);
     }
 
     @PUT
@@ -324,6 +324,6 @@ public class SiddhiAppsApi implements Microservice {
             @Context Request request,
             @ApiParam(value = "statsEnable", required = true) StatsEnable statsEnable)
             throws NotFoundException {
-        return delegate.siddhiAppsStatsEnable(statsEnable.getStatsEnable(), request);
+        return delegate.siddhiAppsStatsEnable(statsEnable.getEnabledSiddhiStatLevel(), request);
     }
 }
