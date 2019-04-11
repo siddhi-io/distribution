@@ -61,7 +61,7 @@ public class ConfigReaderTestCase {
                 copyCarbonYAMLOption(),
                 carbonDistribution(
                         Paths.get("target", "siddhi-runner-" + System.getProperty("io.siddhi.distribution.version")),
-                        "worker")
+                        "runner")
         };
     }
 
@@ -76,7 +76,7 @@ public class ConfigReaderTestCase {
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
                 "conf", "configuration", CARBON_YAML_FILENAME);
-        return copyFile(carbonYmlFilePath, Paths.get("conf", "worker", CARBON_YAML_FILENAME));
+        return copyFile(carbonYmlFilePath, Paths.get("conf", "runner", CARBON_YAML_FILENAME));
     }
 
     @Test

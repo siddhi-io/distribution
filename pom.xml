@@ -30,8 +30,9 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>runner</module>
+        <module>samples/sample-clients</module>
         <module>tooling</module>
+        <module>runner</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
     </modules>
@@ -844,7 +845,6 @@
             </dependency>
 
             <!--siddhi dependencies start-->
-
             <dependency>
                 <groupId>io.siddhi</groupId>
                 <artifactId>siddhi-query-api</artifactId>
@@ -1279,17 +1279,6 @@
                 <artifactId>encoder</artifactId>
                 <version>${owasp.encoder.version}</version>
             </dependency>
-            <!--UI Server-->
-            <dependency>
-                <groupId>org.wso2.carbon.uiserver</groupId>
-                <artifactId>org.wso2.carbon.uiserver</artifactId>
-                <version>${carbon.uiserver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.wso2.carbon.analytics-common</groupId>
-                <artifactId>org.wso2.carbon.databridge.commons</artifactId>
-                <version>${carbon.analytics-common.version}</version>
-            </dependency>
 
             <!-- jms test case dependencies-->
             <dependency>
@@ -1355,6 +1344,60 @@
                 <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
                 <scope>test</scope>
+            </dependency>
+
+            <!-- wso2Event sample dependencies -->
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.commons</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.commons.thrift</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.commons.binary</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.agent</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.core</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.receiver.binary</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.analytics-common</groupId>
+                <artifactId>org.wso2.carbon.databridge.receiver.thrift</artifactId>
+                <version>${carbon.analytics-common.version}</version>
+            </dependency>
+
+            <!--dependecies for sample related jars-->
+            <dependency>
+                <groupId>org.wso2.extension.siddhi.io.rabbitmq</groupId>
+                <artifactId>siddhi-io-rabbitmq</artifactId>
+                <version>${siddhi.io.rabbitmq.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.extension.siddhi.io.mqtt</groupId>
+                <artifactId>siddhi-io-mqtt</artifactId>
+                <version>${siddhi.io.mqtt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.extension.siddhi.map.avro</groupId>
+                <artifactId>siddhi-map-avro</artifactId>
+                <version>${siddhi.map.avro.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -1451,7 +1494,7 @@
         <carbon.kernel.package.import.version.range>[5.2.0, 6.0.0)</carbon.kernel.package.import.version.range>
         <carbon.kernel.pax.version>5.2.8</carbon.kernel.pax.version>
 
-        <org.wso2.transport.http.netty.version>6.0.163</org.wso2.transport.http.netty.version>
+        <org.wso2.transport.http.netty.version>6.0.272</org.wso2.transport.http.netty.version>
         <carbon.transport.package.import.version.range>[6.0.0, 7.0.0)</carbon.transport.package.import.version.range>
 
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
@@ -1522,8 +1565,8 @@
         <common.collections4.version>4.3</common.collections4.version>
 
         <!--MSF4J related-->
-        <msf4j.version>2.6.4</msf4j.version>
-        <msf4j.import.version.range>[2.6.2, 3.0.0)</msf4j.import.version.range>
+        <msf4j.version>2.7.0</msf4j.version>
+        <msf4j.import.version.range>[2.7.0, 3.0.0)</msf4j.import.version.range>
         <com.fasterxml.jackson.core.version>2.9.8</com.fasterxml.jackson.core.version>
         <com.fasterxml.jackson.core.version.range>[2.9.0, 2.10.0)</com.fasterxml.jackson.core.version.range>
         <io.swagger.version>1.5.16</io.swagger.version>
@@ -1563,7 +1606,7 @@
         <servlet-api-version>2.5</servlet-api-version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.math.version>4.1.0</siddhi.execution.math.version>
+        <siddhi.execution.math.version>5.0.0</siddhi.execution.math.version>
         <siddhi.execution.unitconversion.version>1.1.0</siddhi.execution.unitconversion.version>
         <siddhi.execution.regex.version>4.1.0</siddhi.execution.regex.version>
         <siddhi.execution.streamingml.version>1.1.0</siddhi.execution.streamingml.version>
@@ -1581,23 +1624,23 @@
         <siddhi.io.mqtt.version>1.0.22</siddhi.io.mqtt.version>
         <siddhi.io.kafka.version>4.2.1</siddhi.io.kafka.version>
         <siddhi.io.wso2event.version>4.0.17</siddhi.io.wso2event.version>
-        <siddhi.io.http.version>1.1.4</siddhi.io.http.version>
+        <siddhi.io.http.version>2.0.1</siddhi.io.http.version>
         <siddhi.io.twitter.version>1.0.12</siddhi.io.twitter.version>
         <siddhi.io.sqs.version>1.0.8</siddhi.io.sqs.version>
-        <siddhi.io.websocket.version>1.0.11</siddhi.io.websocket.version>
+        <siddhi.io.websocket.version>1.1.0</siddhi.io.websocket.version>
         <siddhi.io.ibmmq.version>1.0.7</siddhi.io.ibmmq.version>
         <siddhi.io.cdc.version>1.0.9</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>1.0.3</siddhi.io.prometheus.version>
         <siddhi.io.nats.version>1.0.3</siddhi.io.nats.version>
 
-        <siddhi.map.json.version>4.1.0</siddhi.map.json.version>
-        <siddhi.map.avro.version>1.0.66</siddhi.map.avro.version>
-        <siddhi.map.wso2event.version>4.1.0</siddhi.map.wso2event.version>
-        <siddhi.map.binary.version>1.1.1</siddhi.map.binary.version>
-        <siddhi.map.text.version>1.1.0</siddhi.map.text.version>
+        <siddhi.map.json.version>5.0.1</siddhi.map.json.version>
+        <siddhi.map.avro.version>2.0.0</siddhi.map.avro.version>
+        <siddhi.map.wso2event.version>5.0.0</siddhi.map.wso2event.version>
+        <siddhi.map.binary.version>2.0.0</siddhi.map.binary.version>
+        <siddhi.map.text.version>2.0.0</siddhi.map.text.version>
         <siddhi.map.xml.version>5.0.0</siddhi.map.xml.version>
-        <siddhi.map.keyvalue.version>1.1.0</siddhi.map.keyvalue.version>
-        <siddhi.map.csv.version>1.1.0</siddhi.map.csv.version>
+        <siddhi.map.keyvalue.version>2.0.0</siddhi.map.keyvalue.version>
+        <siddhi.map.csv.version>2.0.0</siddhi.map.csv.version>
 
         <siddhi.store.mongodb.version>1.1.0</siddhi.store.mongodb.version>
         <siddhi.store.rdbms.version>6.0.0</siddhi.store.rdbms.version>
