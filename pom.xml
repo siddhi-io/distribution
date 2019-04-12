@@ -1623,7 +1623,7 @@
 
 
         <siddhi.io.tcp.version>3.0.1</siddhi.io.tcp.version>
-        <siddhi.io.nats.version>2.0.1</siddhi.io.nats.version>
+        <siddhi.io.nats.version>2.0.2</siddhi.io.nats.version>
         <siddhi.io.http.version>2.0.4</siddhi.io.http.version>
         <siddhi.io.email.version>2.0.1</siddhi.io.email.version>
         <siddhi.io.jms.version>2.0.1</siddhi.io.jms.version>
