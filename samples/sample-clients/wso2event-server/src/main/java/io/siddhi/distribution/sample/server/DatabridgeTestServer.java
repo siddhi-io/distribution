@@ -35,7 +35,6 @@ import org.wso2.carbon.databridge.receiver.binary.conf.BinaryDataReceiverConfigu
 import org.wso2.carbon.databridge.receiver.binary.internal.BinaryDataReceiver;
 import org.wso2.carbon.databridge.receiver.thrift.ThriftDataReceiver;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -126,7 +125,7 @@ public class DatabridgeTestServer {
                     receiverPort), databridge);
             try {
                 binaryDataReceiver.start();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 log.error("Error occurred when reading the file : " + e.getMessage(), e);
             }
         } else {
