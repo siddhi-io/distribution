@@ -211,5 +211,17 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
+        <file>
+            <source>target/launch.properties</source>
+            <outputDirectory>conf/tooling/osgi/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
+        <file>
+            <source>../README.md</source>
+            <outputDirectory>/</outputDirectory>
+            <filtered>true</filtered>
+            <fileMode>644</fileMode>
+        </file>
     </files>
 </assembly>
