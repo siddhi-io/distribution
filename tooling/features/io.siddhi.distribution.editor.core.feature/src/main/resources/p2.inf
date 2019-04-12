@@ -2,7 +2,7 @@ instructions.configure = \
 org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../../conf/);\
 org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../../conf/tooling/);\
 org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../../conf/tooling/osgi);\
-org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../lib/features/io.siddhi.distribution.editor.core_${feature.version}/resources/launch.properties/,target:${installFolder}/../../conf/tooling/osgi/launch.properties,overwrite:true);\
+org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../lib/features/io.siddhi.distribution.editor.core_${feature.version}/resources/launch.properties/,target:${installFolder}/../../../launch.properties,overwrite:true);\
 org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../tooling/);\
 org.eclipse.equinox.p2.touchpoint.natives.mkdir(path:${installFolder}/../tooling/resources/);\
 org.eclipse.equinox.p2.touchpoint.natives.copy(source:${installFolder}/../lib/features/io.siddhi.distribution.editor.core_${feature.version}/docker-export,target:${installFolder}/../tooling/resources/docker-export,overwrite:true);\
