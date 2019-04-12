@@ -1,10 +1,10 @@
-# WSO2 Stream Processor Studio Docker Artifacts
+# WSO2 Siddhi Editor Docker Artifacts
 
-Docker artifacts in WSO2 Stream Processor Studio can be used to build Docker containers with Siddhi files.
+Docker artifacts in WSO2 Siddhi Editor can be used to build Docker containers with Siddhi files.
 
 ## Directory Structure
 
-In WSO2 Stream Processor Studio, Docker artifacts can be created for either **Editor** profile or **Worker** profile. Directory structure of the ZIP file is as follows.
+In WSO2 Siddhi Editor , Docker artifacts can be created for either **Editor** profile or **Worker** profile. Directory structure of the ZIP file is as follows.
 
 ```
 .

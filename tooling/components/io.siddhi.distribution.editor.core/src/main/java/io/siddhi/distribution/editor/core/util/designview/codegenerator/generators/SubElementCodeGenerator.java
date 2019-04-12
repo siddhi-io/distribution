@@ -30,24 +30,25 @@ import io.siddhi.distribution.editor.core.util.designview.exceptions.CodeGenerat
 import io.siddhi.distribution.editor.core.util.designview.utilities.CodeGeneratorUtils;
 
 import java.util.List;
-import java.util.Map;
 
 /**
- * Generates the code for a sub-element of a Siddhi element.
+ * Generates the code for a sub-element of a Siddhi element
  */
 public class SubElementCodeGenerator {
 
     private SubElementCodeGenerator() {
+
     }
 
     /**
-     * Generates the Siddhi code representation of a CommentCodeSegment object.
+     * Generates the Siddhi code representation of a CommentCodeSegment object
      *
      * @param comment The CommentCodeSegment object
      * @return The Siddhi code representation of the given CommentCodeSegment object
      * @throws CodeGenerationException Error when generating the code
      */
     public static String generateComment(CommentCodeSegment comment) throws CodeGenerationException {
+
         if (comment == null) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         } else if (comment.getContent() == null || comment.getContent().isEmpty()) {
@@ -57,12 +58,13 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of the query's name.
+     * Generates the Siddhi code representation of the query's name
      *
      * @param queryName The Siddhi query's name
      * @return The Siddhi code representation of a Siddhi query name annotation
      */
     public static String generateQueryName(String queryName) {
+
         StringBuilder queryNameStringBuilder = new StringBuilder();
         if (queryName != null && !queryName.isEmpty()) {
             queryNameStringBuilder.append(SiddhiCodeBuilderConstants.QUERY_NAME_ANNOTATION)
@@ -77,13 +79,14 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a AttributeConfig list.
+     * Generates the Siddhi code representation of a AttributeConfig list
      *
      * @param attributes The AttributeConfig list
      * @return The Siddhi code representation of the given AttributeConfig list
      * @throws CodeGenerationException Error when generating the code
      */
     static String generateAttributes(List<AttributeConfig> attributes) throws CodeGenerationException {
+
         if (attributes == null || attributes.isEmpty()) {
             throw new CodeGenerationException("A given attribute list is empty");
         }
@@ -105,12 +108,13 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a annotations list.
+     * Generates the Siddhi code representation of a annotations list
      *
      * @param annotations The annotations list
      * @return The Siddhi code representation of the given annotations list
      */
     public static String generateAnnotations(List<String> annotations) {
+
         if (annotations == null || annotations.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -124,13 +128,14 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a StoreConfig object.
+     * Generates the Siddhi code representation of a StoreConfig object
      *
      * @param store The StoreConfig object
      * @return The Siddhi code representation of the given StoreConfig object
      * @throws CodeGenerationException Error when generating the code
      */
     static String generateStore(StoreConfig store) throws CodeGenerationException {
+
         if (store == null) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -141,35 +146,22 @@ public class SubElementCodeGenerator {
         storeStringBuilder.append(SiddhiCodeBuilderConstants.STORE_ANNOTATION)
                 .append(store.getType())
                 .append(SiddhiCodeBuilderConstants.SINGLE_QUOTE);
-        Map<String, String> options = store.getOptions();
-
-        if (options != null && options.size() != 0) {
-            storeStringBuilder.append(SiddhiCodeBuilderConstants.COMMA);
-            int optionsLeft = options.size();
-            for (Map.Entry<String, String> entry : options.entrySet()) {
-                storeStringBuilder.append(entry.getKey())
-                        .append(SiddhiCodeBuilderConstants.EQUAL)
-                        .append(SiddhiCodeBuilderConstants.SINGLE_QUOTE)
-                        .append(entry.getValue())
-                        .append(SiddhiCodeBuilderConstants.SINGLE_QUOTE);
-                if (optionsLeft != 1) {
-                    storeStringBuilder.append(SiddhiCodeBuilderConstants.COMMA);
-                }
-                optionsLeft--;
-            }
-        }
+        List<String> options = store.getOptions();
+        storeStringBuilder.append(SiddhiCodeBuilderConstants.COMMA);
+        storeStringBuilder.append(generateParameterList(options));
         storeStringBuilder.append(SiddhiCodeBuilderConstants.CLOSE_BRACKET);
 
         return storeStringBuilder.toString();
     }
 
     /**
-     * Generates the Siddhi code representation of a parameters list.
+     * Generates the Siddhi code representation of a parameters list
      *
      * @param parameters The parameters list
      * @return The Siddhi code representation of the given parameters list
      */
     public static String generateParameterList(List<String> parameters) {
+
         if (parameters == null || parameters.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -188,31 +180,7 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a element list.
-     *
-     * @param elements The elements list
-     * @return The Siddhi code representation of the given elements list
-     */
-    public static String generateElementList(List<String> elements) {
-        if (elements == null || elements.isEmpty()) {
-            return SiddhiCodeBuilderConstants.EMPTY_STRING;
-        }
-
-        StringBuilder parametersStringBuilder = new StringBuilder();
-        int parametersLeft = elements.size();
-        for (String parameter : elements) {
-            parametersStringBuilder.append(toStringWithEscapeChars(parameter));
-            if (parametersLeft != 1) {
-                parametersStringBuilder.append(SiddhiCodeBuilderConstants.COMMA);
-            }
-            parametersLeft--;
-        }
-
-        return parametersStringBuilder.toString();
-    }
-
-    /**
-     * Generates the Siddhi code representation of a StreamHandlerConfig list.
+     * Generates the Siddhi code representation of a StreamHandlerConfig list
      *
      * @param streamHandlerList The StreamHandlerConfig list
      * @return The Siddhi code representation of the given StreamHandlerConfig list
@@ -220,6 +188,7 @@ public class SubElementCodeGenerator {
      */
     public static String generateStreamHandlerList(List<StreamHandlerConfig> streamHandlerList)
             throws CodeGenerationException {
+
         if (streamHandlerList == null || streamHandlerList.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -233,13 +202,14 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a StreamHandlerConfig object.
+     * Generates the Siddhi code representation of a StreamHandlerConfig object
      *
      * @param streamHandler The StreamHandlerConfig object
      * @return The Siddhi code representation of the given StreamHandlerConfig object
      * @throws CodeGenerationException Error when generating the code
      */
     private static String generateStreamHandler(StreamHandlerConfig streamHandler) throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(streamHandler);
 
         StringBuilder streamHandlerStringBuilder = new StringBuilder();
@@ -277,13 +247,14 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Generates the Siddhi code representation of a output event type.
+     * Generates the Siddhi code representation of a output event type
      *
      * @param eventType The output event type
      * @return The Siddhi code representation of the given output event type
      * @throws CodeGenerationException Error when generating the code
      */
     public static String generateForEventType(String eventType) throws CodeGenerationException {
+
         if (eventType == null || eventType.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -311,13 +282,15 @@ public class SubElementCodeGenerator {
     }
 
     /**
-     * Converts an io.siddhi.query.api.annotation.Element in string format to another string with escape
-     * characters which is the siddhi app code representation of the Element.
+     * Converts an org.wso2.siddhi.query.api.annotation.Element in string format to another string with escape
+     * characters
+     * which is the siddhi app code representation of the Element.
      *
      * @param elementStr The Element in String format. E.g. title = "The wonder of "foo""
      * @return The code representation of the Element. E.g. title = """The wonder of "foo""""
      */
     private static String toStringWithEscapeChars(String elementStr) {
+
         String key = null, value;
         if (elementStr == null || elementStr.isEmpty()) {
             throw new IllegalArgumentException("Input string is either null or empty.");

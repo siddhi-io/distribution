@@ -29,12 +29,12 @@ import io.siddhi.distribution.editor.core.util.designview.exceptions.CodeGenerat
 import io.siddhi.distribution.editor.core.util.designview.utilities.CodeGeneratorUtils;
 
 /**
- * Generates the code for a Siddhi query element.
+ * Generates the code for a Siddhi query element
  */
 public class QueryCodeGenerator {
 
     /**
-     * Generates the Siddhi code representation of a QueryConfig object.
+     * Generates the Siddhi code representation of a QueryConfig object
      *
      * @param query               The QueryConfig object
      * @param isGeneratingToolTip If it is generating a tooltip or not
@@ -42,6 +42,7 @@ public class QueryCodeGenerator {
      * @throws CodeGenerationException Error when generating the code
      */
     public String generateQuery(QueryConfig query, boolean isGeneratingToolTip) throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(query);
 
         StringBuilder queryStringBuilder = new StringBuilder();
@@ -69,6 +70,10 @@ public class QueryCodeGenerator {
         if (query.getLimit() != 0) {
             queryStringBuilder.append(SiddhiCodeBuilderConstants.SPACE)
                     .append(QuerySubElementCodeGenerator.generateQueryLimit(query.getLimit()));
+        }
+        if (query.getOffset() != 0) {
+            queryStringBuilder.append(SiddhiCodeBuilderConstants.SPACE)
+                    .append(QuerySubElementCodeGenerator.generateQueryOffset(query.getOffset()));
         }
         if (query.getOutputRateLimit() != null && !query.getOutputRateLimit().isEmpty()) {
             queryStringBuilder.append(SiddhiCodeBuilderConstants.SPACE)
