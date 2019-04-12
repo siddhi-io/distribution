@@ -126,7 +126,7 @@ public class DatabridgeTestServer {
                     receiverPort), databridge);
             try {
                 binaryDataReceiver.start();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 log.error("Error occurred when reading the file : " + e.getMessage(), e);
             }
         } else {
