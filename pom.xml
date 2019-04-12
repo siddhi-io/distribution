@@ -1413,7 +1413,7 @@
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.0.73</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.0.66, 6.1.0)</carbon.analytics-common.version.range>
-        <io.siddhi.distribution.version.range>[1.0.0, 3.0.0)</io.siddhi.distribution.version.range>
+        <io.siddhi.distribution.version.range>[0.0.0, 2.0.0)</io.siddhi.distribution.version.range>
 
         <geronimo.jms.spec.version>1.1.1</geronimo.jms.spec.version>
         <apache.activemq.version>5.7.0</apache.activemq.version>
