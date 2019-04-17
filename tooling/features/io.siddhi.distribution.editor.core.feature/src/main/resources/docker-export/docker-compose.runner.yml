@@ -15,14 +15,14 @@
 version: '2.3'
 services:
   editor:
-    image: docker.wso2.com/wso2sp-editor:{{PRODUCT_VERSION}}
-    container_name: wso2sp-editor
+    image: siddhiio/siddhi-runner-alpine:{{PRODUCT_VERSION}}
+    container_name: siddhi-runner
     ports:
-      - "9390:9390"
+      - "9090:9090"
     healthcheck:
-      test: ["CMD", "nc", "-z","localhost", "9390"]
+      test: ["CMD", "nc", "-z","localhost", "9090"]
       interval: 10s
       timeout: 120s
       retries: 5
     volumes:
-      - ./siddhi-files:/home/wso2carbon/wso2-artifact-volume/wso2/editor/deployment/workspace
+      - ./siddhi-files:/home/siddhi_user/artifact-volume/wso2/runner/deployment/siddhi-files
