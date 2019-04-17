@@ -14,7 +14,7 @@
 
 version: '2.3'
 services:
-  editor:
+  runner:
     image: siddhiio/siddhi-runner-alpine:{{PRODUCT_VERSION}}
     container_name: siddhi-runner
     ports:
@@ -25,4 +25,4 @@ services:
       timeout: 120s
       retries: 5
     volumes:
-      - ./siddhi-files:/home/siddhi_user/artifact-volume/wso2/runner/deployment/siddhi-files
+      - ./siddhi-files:/home/siddhi_user/artifact-volume/wso2/worker/deployment/siddhi-files
