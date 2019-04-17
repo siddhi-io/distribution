@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.siddhi.distribution</groupId>
     <artifactId>io.siddhi.distribution.parent</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
@@ -1407,13 +1407,13 @@
     </dependencyManagement>
 
     <properties>
-        <io.siddhi.distribution.version>1.0.0-SNAPSHOT</io.siddhi.distribution.version>
+        <io.siddhi.distribution.version>0.1.1-SNAPSHOT</io.siddhi.distribution.version>
         <siddhi.version>5.0.0</siddhi.version>
         <siddhi.bundle.version>5.0.0</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.0.73</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.0.66, 6.1.0)</carbon.analytics-common.version.range>
-        <io.siddhi.distribution.version.range>[1.0.0, 3.0.0)</io.siddhi.distribution.version.range>
+        <io.siddhi.distribution.version.range>[0.0.0, 2.0.0)</io.siddhi.distribution.version.range>
 
         <geronimo.jms.spec.version>1.1.1</geronimo.jms.spec.version>
         <apache.activemq.version>5.7.0</apache.activemq.version>
@@ -1499,7 +1499,7 @@
         <carbon.kernel.package.import.version.range>[5.2.0, 6.0.0)</carbon.kernel.package.import.version.range>
         <carbon.kernel.pax.version>5.2.8</carbon.kernel.pax.version>
 
-        <org.wso2.transport.http.netty.version>6.0.272</org.wso2.transport.http.netty.version>
+        <org.wso2.transport.http.netty.version>6.0.289</org.wso2.transport.http.netty.version>
         <carbon.transport.package.import.version.range>[6.0.0, 7.0.0)</carbon.transport.package.import.version.range>
 
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
@@ -1570,7 +1570,7 @@
         <common.collections4.version>4.3</common.collections4.version>
 
         <!--MSF4J related-->
-        <msf4j.version>2.7.0</msf4j.version>
+        <msf4j.version>2.7.3</msf4j.version>
         <msf4j.import.version.range>[2.7.0, 3.0.0)</msf4j.import.version.range>
         <com.fasterxml.jackson.core.version>2.9.8</com.fasterxml.jackson.core.version>
         <com.fasterxml.jackson.core.version.range>[2.9.0, 2.10.0)</com.fasterxml.jackson.core.version.range>
@@ -1624,7 +1624,7 @@
 
         <siddhi.io.tcp.version>3.0.1</siddhi.io.tcp.version>
         <siddhi.io.nats.version>2.0.1</siddhi.io.nats.version>
-        <siddhi.io.http.version>2.0.2</siddhi.io.http.version>
+        <siddhi.io.http.version>2.0.4</siddhi.io.http.version>
         <siddhi.io.email.version>2.0.1</siddhi.io.email.version>
         <siddhi.io.jms.version>2.0.1</siddhi.io.jms.version>
         <siddhi.io.mqtt.version>2.0.1</siddhi.io.mqtt.version>

@@ -40,7 +40,6 @@ Siddhi maintains two distributions as Siddhi-Runner and Siddhi-Tooling distribut
 ### Prerequisites
 * [Oracle JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](http://openjdk.java.net/install/) (Java 8 should be used for building in order to support both Java 8 and Java 11 at runtime)
 * [Maven 3.5.x version](https://maven.apache.org/install.html)
-* [Node.js](https://nodejs.org/en/) 8.x.x or above
 
 ### Steps to Build ###
 1. Get a clone or download source from [Github](https://github.com/siddhi-io/distribution.git)
@@ -61,23 +60,42 @@ Siddhi maintains two distributions as Siddhi-Runner and Siddhi-Tooling distribut
 Download the latest released distributions from [here](https://github.com/siddhi-io/distribution/releases)
 
 1. Extract the Siddhi runner distribution.
-2. Navigate to the <RUNNER_HOME>/bin directory and issue the following command:<br />
-   For Windows: worker.bat <br />
-   For Linux: ./worker.sh <br />
+2. Unzip the siddhi-runner-x.x.x.zip.
+3. Navigate to the <RUNNER_HOME>/bin directory. Start SiddhiApps with the runner config by executing the following commands from the distribution directory
+     
+     Linux/Mac : 
+     ```bash 
+     ./bin/runner.sh -Dapps=<siddhi-file> -Dconfig=<config-yaml-file>
+     ```
+     
+     Windows : 
+     ```bash
+     bin\runner.bat -Dapps=<siddhi-file> -Dconfig=<config-yaml-file>
+     ```
+   
+#### Running Multiple SiddhiApps in one runner ####
+To run multiple SiddhiApps in one runtime, have all SiddhiApps in a directory and pass its location through `-Dapps` parameter as follows,<br/>
 
-   In order to start the runner with only one Siddhi application deployed, use the -Dfile property with the path to the relevant Siddhi file as shown below.<br />
-   For Windows: worker.bat -Dfile=<SIDDHI_FILE_PATH><br />
-   For Linux : ./worker.sh -Dfile=<SIDDHI_FILE_PATH>
+```bash
+-Dapps=<siddhi-apps-directory>
+```
+   
+>"Always use **absolute path** for SiddhiApps and runner configs."
+       Providing absolute path of SiddhiApp file, or directory in `-Dapps` parameter, and when providing the Siddhi runner config yaml on `-Dconfig` parameter while starting Siddhi runner.
+
 
 ### Siddhi Tooling Distribution ###
 Download the latest released distributions from [here](https://github.com/siddhi-io/distribution/releases)
 
 1. Extract the Siddhi tooling distribution.
-2. Navigate to the <TOOLING_HOME>/bin directory and issue the following command:<br />
-   For Windows: editor.bat<br />
-   For Linux: ./editor.sh<br />
-3. Access the Editor UI using the following URL.<br />
-   http://localhost:<EDITOR_PORT>/editor   (e.g: https://localhost:9390/portal )
+2. Navigate to the <TOOLING_HOME>/bin directory and issue the following command:<br/>
+   For Windows: ```tooling.bat``` <br/>
+   For Linux: ```./tooling.sh``` <br/>
+3. Access the Editor UI using the following URL.<br/>
+   http://localhost:<EDITOR_PORT>/editor   (e.g: https://localhost:9390/editor)
+   
+
+Please refer the [link](https://siddhi-io.github.io/siddhi/documentation/siddhi-5.x/user-guide-5.x/#using-siddhi-as-local-micro-service) for more details.
 
 ## Reporting Issues ##
 
