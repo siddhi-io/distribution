@@ -1661,7 +1661,7 @@
         <zkclient.version>0.11</zkclient.version>
 
         <curator-test.version>4.2.0</curator-test.version>
-        <zookeeper.version>3.4.0</zookeeper.version>
+        <zookeeper.version>3.5.5</zookeeper.version>
         <commons-io.version>2.5</commons-io.version>
         <org.snakeyaml.import.version.range>[1.17.0,2.0.0)</org.snakeyaml.import.version.range>
         <org.wso2.carbon.datasource.version.range>[1.0.0, 2.0.0)</org.wso2.carbon.datasource.version.range>
