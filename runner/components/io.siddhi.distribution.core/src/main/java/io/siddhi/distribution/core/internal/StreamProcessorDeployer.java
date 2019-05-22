@@ -61,7 +61,6 @@ import java.util.Map;
 )
 public class StreamProcessorDeployer implements Deployer {
 
-
     private static final Logger log = LoggerFactory.getLogger(StreamProcessorDeployer.class);
     private static ServerType serverType = ServerType.SP; // Default server type
     private static boolean isAnalyticsEnabledOnSP = false;
@@ -76,37 +75,41 @@ public class StreamProcessorDeployer implements Deployer {
         String siddhiAppName;
 
         try {
-            inputStream = new FileInputStream(file);
-            String siddhiAppFileName = file.getName();
-            if (siddhiAppFileName.endsWith(SiddhiAppProcessorConstants.SIDDHI_APP_FILE_EXTENSION)) {
-                String siddhiAppFileNameWithoutExtension = getFileNameWithoutExtenson(siddhiAppFileName);
-                SiddhiAppType siddhiAppType = getArtifactType(siddhiAppFileNameWithoutExtension);
-                if (!isDeploymentAllowed(siddhiAppType)) {
-                    return;
-                }
-                String siddhiApp = getStringFromInputStream(inputStream);
-                try {
-                    siddhiAppName = StreamProcessorDataHolder.getStreamProcessorService().
-                            getSiddhiAppName(siddhiApp);
-                    if (siddhiAppFileNameWithoutExtension.equals(siddhiAppName)) {
-                        StreamProcessorDataHolder.getStreamProcessorService().deploySiddhiApp(siddhiApp,
-                                siddhiAppName);
-                    } else {
-                        throw new SiddhiAppDeploymentException("Siddhi App file name needs be identical with the " +
-                                "name defined in the Siddhi App content");
+            if (file.isFile()) {
+                inputStream = new FileInputStream(file);
+                String siddhiAppFileName = file.getName();
+                if (siddhiAppFileName.endsWith(SiddhiAppProcessorConstants.SIDDHI_APP_FILE_EXTENSION)) {
+                    String siddhiAppFileNameWithoutExtension = getFileNameWithoutExtenson(siddhiAppFileName);
+                    SiddhiAppType siddhiAppType = getArtifactType(siddhiAppFileNameWithoutExtension);
+                    if (!isDeploymentAllowed(siddhiAppType)) {
+                        return;
                     }
-                } catch (SiddhiAppAlreadyExistException e) {
-                    throw e;
-                } catch (Exception e) {
-                    SiddhiAppData siddhiAppData = new SiddhiAppData(siddhiApp, false);
-                    StreamProcessorDataHolder.getStreamProcessorService().
-                            addSiddhiAppFile(siddhiAppFileNameWithoutExtension, siddhiAppData);
-                    throw new SiddhiAppDeploymentException(e);
+                    String siddhiApp = getStringFromInputStream(inputStream);
+                    try {
+                        siddhiAppName = StreamProcessorDataHolder.getStreamProcessorService().
+                                getSiddhiAppName(siddhiApp);
+                        if (siddhiAppFileNameWithoutExtension.equals(siddhiAppName)) {
+                            StreamProcessorDataHolder.getStreamProcessorService().deploySiddhiApp(siddhiApp,
+                                    siddhiAppName);
+                        } else {
+                            throw new SiddhiAppDeploymentException("Siddhi App file name needs be identical with the " +
+                                    "name defined in the Siddhi App content");
+                        }
+                    } catch (SiddhiAppAlreadyExistException e) {
+                        throw e;
+                    } catch (Exception e) {
+                        SiddhiAppData siddhiAppData = new SiddhiAppData(siddhiApp, false);
+                        StreamProcessorDataHolder.getStreamProcessorService().
+                                addSiddhiAppFile(siddhiAppFileNameWithoutExtension, siddhiAppData);
+                        throw new SiddhiAppDeploymentException(e);
+                    }
+                } else {
+                    log.error(("Error: File extension of file name "
+                            + siddhiAppFileName + " is not supported. Siddhi App only supports '"
+                            + SiddhiAppProcessorConstants.SIDDHI_APP_FILE_EXTENSION + "' ."));
                 }
             } else {
-                log.error(("Error: File extension of file name "
-                        + siddhiAppFileName + " is not supported. Siddhi App only supports '"
-                        + SiddhiAppProcessorConstants.SIDDHI_APP_FILE_EXTENSION + "' ."));
+                log.error("Error: '" + file.getName() + "' is a sub-directory; hence, ignored.");
             }
         } finally {
             if (inputStream != null) {
