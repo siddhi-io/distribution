@@ -1681,6 +1681,6 @@
 
         <!-- nats test dependencies -->
         <io.nats.version>2.1.3</io.nats.version>
-        <org.testcontainers.version>1.8.0</org.testcontainers.version>
+        <org.testcontainers.version>1.11.3</org.testcontainers.version>
     </properties>
 </project>
