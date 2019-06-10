@@ -6,24 +6,22 @@ import org.testcontainers.containers.SocatContainer;
 import org.testcontainers.utility.Base58;
 import org.testcontainers.utility.TestcontainersConfiguration;
 
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- * This container wraps Confluent Kafka and Zookeeper (optionally)
+ * This container wraps Kafka and Zookeeper
  *
  */
 public class KafkaContainer extends GenericContainer<KafkaContainer> {
-
+    public static final String DEFAULT_KAFKA_VERSION = "4.0.0";
     public static final int KAFKA_PORT = 9093;
-
     public static final int ZOOKEEPER_PORT = 2181;
+    private String externalZookeeperConnect = null;
+    private SocatContainer proxy;
 
-    protected String externalZookeeperConnect = null;
-
-    protected SocatContainer proxy;
-
-    public KafkaContainer() {
-        this("4.0.0");
+   public KafkaContainer() {
+        this(DEFAULT_KAFKA_VERSION);
     }
 
     public KafkaContainer(String confluentPlatformVersion) {
@@ -49,16 +47,12 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
 
     public KafkaContainer withEmbeddedZookeeper() {
         externalZookeeperConnect = null;
-        return self();
+        return this;
     }
 
     public KafkaContainer withExternalZookeeper(String connectString) {
         externalZookeeperConnect = connectString;
-        return self();
-    }
-
-    public String getBootstrapServers() {
-        return String.format("PLAINTEXT://%s:%s", proxy.getContainerIpAddress(), proxy.getFirstMappedPort());
+        return this;
     }
 
     @Override
@@ -68,10 +62,8 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
                 .withNetwork(getNetwork())
                 .withTarget(KAFKA_PORT, networkAlias)
                 .withTarget(ZOOKEEPER_PORT, networkAlias);
-
         proxy.start();
         withEnv("KAFKA_ADVERTISED_LISTENERS", "BROKER://" + networkAlias + ":9092" + "," + getBootstrapServers());
-
         if (externalZookeeperConnect != null) {
             withEnv("KAFKA_ZOOKEEPER_CONNECT", externalZookeeperConnect);
         } else {
@@ -80,20 +72,37 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
             withCommand(
                 "sh",
                 "-c",
-                // Use command to create the file to avoid file mounting (useful when you run your tests against
-                    // a remote Docker daemon)
+                // Use command to create the file to avoid file mounting
                 "printf 'clientPort=2181\ndataDir=/var/lib/zookeeper/data\ndataLogDir=/var/lib/zookeeper/log' " +
                         "> /zookeeper.properties" +
                     " && zookeeper-server-start /zookeeper.properties" +
                     " & /etc/confluent/docker/run"
             );
         }
-
         super.doStart();
+    }
+
+    public String getBootstrapServers() {
+        return String.format("PLAINTEXT://%s:%s", proxy.getContainerIpAddress(), proxy.getFirstMappedPort());
     }
 
     @Override
     public void stop() {
         Stream.<Runnable>of(super::stop, proxy::stop).parallel().forEach(Runnable::run);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        KafkaContainer that = (KafkaContainer) o;
+        return Objects.equals(externalZookeeperConnect, that.externalZookeeperConnect) &&
+                Objects.equals(proxy, that.proxy);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), externalZookeeperConnect, proxy);
     }
 }

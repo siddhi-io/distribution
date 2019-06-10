@@ -1,4 +1,4 @@
-/*
+package io.siddhi.distribution.test.framework;/*
  * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-package io.siddhi.distribution.test.framework;
-
 import com.google.common.collect.ImmutableMap;
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.stream.input.InputHandler;
+import io.siddhi.distribution.test.framework.util.HTTPRequestSender;
 import io.siddhi.distribution.test.framework.util.HTTPResponseMessage;
-import io.siddhi.distribution.test.framework.util.TestUtil;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -42,6 +40,7 @@ import org.testcontainers.containers.Network;
 import org.testcontainers.containers.output.OutputFrame;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.output.WaitingConsumer;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.wso2.extension.siddhi.io.http.sink.HttpSink;
@@ -75,7 +74,6 @@ public class SiddhiTestFramworkTests {
 //            ;
 
     private GenericContainer createSiddhiRunnerConatiner(int[] portsToExport, String deploymentDirPath) {
-
         GenericContainer simpleWebServer
                 = new GenericContainer("siddhiio/siddhi-runner-alpine:0.1.0");
         for (int port : portsToExport) {
@@ -90,7 +88,6 @@ public class SiddhiTestFramworkTests {
     }
 
     private GenericContainer createKafkaContainer(int zkPort, int kafkaPort) {
-
         GenericContainer zkContainer
                 = new GenericContainer("wurstmeister/zookeeper")
                 .withExposedPorts(zkPort).withLogConsumer(new Slf4jLogConsumer(log));
@@ -113,59 +110,6 @@ public class SiddhiTestFramworkTests {
         return kafkaContainer;
     }
 
-    @Test
-    public void testUsage() throws Exception {
-
-        try (KafkaContainer kafka = new KafkaContainer()) {
-            kafka.start();
-            testKafkaFunctionality(kafka.getBootstrapServers());
-        }
-    }
-
-    protected void testKafkaFunctionality(String bootstrapServers) throws Exception {
-
-        try (
-                KafkaProducer<String, String> producer = new KafkaProducer<>(
-                        ImmutableMap.of(
-                                ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-                                ProducerConfig.CLIENT_ID_CONFIG, UUID.randomUUID().toString()
-                        ),
-                        new StringSerializer(),
-                        new StringSerializer()
-                );
-
-                KafkaConsumer<String, String> consumer = new KafkaConsumer<>(
-                        ImmutableMap.of(
-                                ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-                                ConsumerConfig.GROUP_ID_CONFIG, "tc-" + UUID.randomUUID(),
-                                ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest"
-                        ),
-                        new StringDeserializer(),
-                        new StringDeserializer()
-                );
-        ) {
-            String topicName = "messages";
-            consumer.subscribe(Arrays.asList(topicName));
-            producer.send(new ProducerRecord<>(topicName, "testcontainers", "rulezzz")).get();
-
-            Unreliables.retryUntilTrue(10, TimeUnit.SECONDS, () -> {
-                ConsumerRecords<String, String> records = consumer.poll(100);
-
-                if (records.isEmpty()) {
-                    return false;
-                }
-
-                Assertions.assertThat(records)
-                        .hasSize(1)
-                        .extracting(ConsumerRecord::topic, ConsumerRecord::key, ConsumerRecord::value)
-                        .containsExactly(StrictAssertions.tuple(topicName, "testcontainers", "rulezzz"));
-
-                return true;
-            });
-
-            consumer.unsubscribe();
-        }
-    }
 
     @Test
     public void receiveAndCountTest() throws TimeoutException, InterruptedException {
@@ -259,51 +203,13 @@ public class SiddhiTestFramworkTests {
 
     }
 
-    @Test
-    public void testExternalZookeeperWithKafkaNetwork() throws Exception {
-
-        try (
-                KafkaContainer kafka = new KafkaContainer()
-                        .withExternalZookeeper("zookeeper:2181");
-
-                GenericContainer zookeeper = new GenericContainer("confluentinc/cp-zookeeper:4.0.0")
-                        .withNetwork(kafka.getNetwork())
-                        .withNetworkAliases("zookeeper")
-                        .withEnv("ZOOKEEPER_CLIENT_PORT", "2181");
-        ) {
-            Stream.of(kafka, zookeeper).parallel().forEach(GenericContainer::start);
-
-            testKafkaFunctionality(kafka.getBootstrapServers());
-        }
-    }
-
-    @Test
-    public void testExternalZookeeperWithExternalNetwork() throws Exception {
-
-        try (
-                Network network = Network.newNetwork();
-
-                KafkaContainer kafka = new KafkaContainer()
-                        .withNetwork(network)
-                        .withExternalZookeeper("zookeeper:2181");
-
-                GenericContainer zookeeper = new GenericContainer("confluentinc/cp-zookeeper:4.0.0")
-                        .withNetwork(network)
-                        .withNetworkAliases("zookeeper")
-                        .withEnv("ZOOKEEPER_CLIENT_PORT", "2181");
-        ) {
-            Stream.of(kafka, zookeeper).parallel().forEach(GenericContainer::start);
-
-            testKafkaFunctionality(kafka.getBootstrapServers());
-        }
-    }
 
     private HTTPResponseMessage sendHRequest(String body, URI baseURI, String path, String contentType,
                                              String methodType, Boolean auth, String userName, String password) {
 
-        TestUtil testUtil = new TestUtil(baseURI, path, auth, false, methodType,
+        HTTPRequestSender HTTPRequestSender = new HTTPRequestSender(baseURI, path, auth, false, methodType,
                 contentType, userName, password);
-        testUtil.addBodyContent(body);
-        return testUtil.getResponse();
+        HTTPRequestSender.addBodyContent(body);
+        return HTTPRequestSender.getResponse();
     }
 }

@@ -17,15 +17,8 @@
 package io.siddhi.distribution.test.framework.util;
 
 import io.netty.handler.codec.http.HttpMethod;
-import io.siddhi.core.SiddhiAppRuntime;
-import io.siddhi.distribution.common.common.EventStreamService;
-import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
-import org.awaitility.Duration;
-import org.wso2.msf4j.MicroservicesRegistry;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,29 +28,23 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
-import static org.awaitility.Awaitility.await;
 import static java.lang.System.currentTimeMillis;
-import static java.net.URLConnection.guessContentTypeFromName;
-
 
 /**
  * Util class for test cases.
  */
-public class TestUtil {
+public class HTTPRequestSender {
     private static final String LINE_FEED = "\r\n";
     private static final String CHARSET = "UTF-8";
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TestUtil.class);
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(HTTPRequestSender.class);
     private HttpURLConnection connection = null;
     private OutputStream outputStream = null;
     private PrintWriter writer = null;
     private String boundary = null;
 
-    public TestUtil(URI baseURI, String path, Boolean auth, Boolean keepAlive, String methodType,
-                    String contentType, String userName, String password) {
+    public HTTPRequestSender(URI baseURI, String path, Boolean auth, Boolean keepAlive, String methodType,
+                             String contentType, String userName, String password) {
         try {
             URL url = baseURI.resolve(path).toURL();
             boundary = "---------------------------" + currentTimeMillis();
@@ -95,36 +82,6 @@ public class TestUtil {
         }
     }
 
-    public static void waitForAppDeployment(SiddhiAppRuntimeService runtimeService,
-                                            EventStreamService streamService, String appName, Duration atMost) {
-        await().atMost(atMost).until(() -> {
-            SiddhiAppRuntime app = runtimeService.getActiveSiddhiAppRuntimes().get(appName);
-            if (app != null) {
-                List<String> streams = streamService.getStreamNames(appName);
-                if (!streams.isEmpty()) {
-                    return true;
-                }
-            }
-            return false;
-        });
-    }
-
-    public static void waitForAppUndeployment(SiddhiAppRuntimeService runtimeService, String appName,
-                                              Duration atMost) {
-        await().atMost(atMost).until(() -> {
-            SiddhiAppRuntime app = runtimeService.getActiveSiddhiAppRuntimes().get(appName);
-            return app == null;
-        });
-    }
-
-    public static void waitForMicroServiceDeployment(MicroservicesRegistry microservicesRegistry, String basePath,
-                                                     Duration duration) {
-        await().atMost(duration).until(() -> {
-            Optional<Map.Entry<String, Object>> entry = microservicesRegistry.getServiceWithBasePath(basePath);
-            return entry.isPresent();
-        });
-    }
-
     public HttpURLConnection getConnection() {
         return this.connection;
     }
@@ -136,38 +93,6 @@ public class TestUtil {
         }
     }
 
-    public void addFormField(final String name, final String value) {
-        writer.append("--").append(boundary).append(LINE_FEED)
-                .append("Content-Disposition: form-data; name=\"").append(name)
-                .append("\"").append(LINE_FEED)
-                .append("Content-Type: text/plain; charset=").append(CHARSET)
-                .append(LINE_FEED).append(LINE_FEED).append(value).append(LINE_FEED);
-    }
-
-    public void addFilePart(final String fieldName, final File uploadFile)
-            throws IOException {
-        final String fileName = uploadFile.getName();
-        writer.append("--").append(boundary).append(LINE_FEED)
-                .append("Content-Disposition: form-data; name=\"")
-                .append(fieldName).append("\"; filename=\"").append(fileName)
-                .append("\"").append(LINE_FEED).append("Content-Type: ")
-                .append(guessContentTypeFromName(fileName)).append(LINE_FEED)
-                .append("Content-Transfer-Encoding: binary").append(LINE_FEED)
-                .append(LINE_FEED);
-
-        writer.flush();
-        outputStream.flush();
-        try (final FileInputStream inputStream = new FileInputStream(uploadFile)) {
-            final byte[] buffer = new byte[4096];
-            int bytesRead = -1;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-            outputStream.flush();
-        }
-        writer.append(LINE_FEED);
-        writer.flush();
-    }
 
     public HTTPResponseMessage getResponse() {
         assert connection != null;
