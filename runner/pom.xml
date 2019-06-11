@@ -39,13 +39,15 @@
         <module>components/io.siddhi.distribution.metrics.core</module>
         <module>components/io.siddhi.distribution.store.api.rest</module>
         <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
+        <module>components/io.siddhi.distribution.health.check.core</module>
 
         <module>features/io.siddhi.distribution.core.feature</module>
         <module>features/io.siddhi.distribution.common.feature</module>
         <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
         <module>features/io.siddhi.distribution.metrics.core.feature</module>
         <module>features/io.siddhi.distribution.store.api.rest.feature</module>
-        <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
+        <module>features/io.siddhi.distribution.health.check.core.feature</module>
+
 
     </modules>
 
@@ -221,6 +223,11 @@
         <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>
             <artifactId>org.wso2.carbon.analytics.permissions.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.health.check.core.feature</artifactId>
             <type>zip</type>
         </dependency>
     </dependencies>
@@ -646,6 +653,11 @@
                                     <id>org.wso2.carbon.databridge.commons.feature</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+                                <!-- Heath Check API -->
+                                <feature>
+                                    <id>io.siddhi.distribution.health.check.core.feature</id>
+                                    <version>${io.siddhi.distribution.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -807,6 +819,11 @@
                                 <feature>
                                     <id>org.wso2.carbon.analytics.permissions.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
+                                </feature>
+                                <!-- Heath Check API -->
+                                <feature>
+                                    <id>io.siddhi.distribution.health.check.core.feature</id>
+                                    <version>${io.siddhi.distribution.version}</version>
                                 </feature>
                             </features>
                         </configuration>
