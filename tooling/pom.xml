@@ -877,7 +877,7 @@
                             <descriptors>
                                 <descriptor>${basedir}/assembly/bin.xml</descriptor>
                             </descriptors>
-                            <finalName>siddhi-tooling-${project.version}</finalName>
+                            <finalName>${distribution.name}-${project.version}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
@@ -895,4 +895,7 @@
             </resource>
         </resources>
     </build>
+    <properties>
+        <distribution.name>siddhi-tooling</distribution.name>
+    </properties>
 </project>
