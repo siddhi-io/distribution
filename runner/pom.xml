@@ -47,7 +47,6 @@
         <module>features/io.siddhi.distribution.metrics.core.feature</module>
         <module>features/io.siddhi.distribution.store.api.rest.feature</module>
         <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
-
     </modules>
 
     <dependencies>
@@ -855,10 +854,8 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
-
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -883,7 +880,23 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>io.siddhi</groupId>
+                <artifactId>siddhi-doc-gen</artifactId>
+                <version>${siddhi.version}</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate-md-docs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <moduleTargetDirectory>target/</moduleTargetDirectory>
+                    <includeOrigin>true</includeOrigin>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
