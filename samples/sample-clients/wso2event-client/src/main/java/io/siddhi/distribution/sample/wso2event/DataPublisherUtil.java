@@ -21,7 +21,7 @@ package io.siddhi.distribution.sample.wso2event;
 import java.io.File;
 
 /**
- * Datapublisher Util Implementataion.
+ * Datapublisher Util Implementation.
  */
 public class DataPublisherUtil {
 

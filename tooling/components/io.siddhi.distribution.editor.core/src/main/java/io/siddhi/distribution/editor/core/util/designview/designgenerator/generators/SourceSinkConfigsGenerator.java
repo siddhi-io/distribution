@@ -39,9 +39,9 @@ import java.util.Map;
  * Generator to create Source or Sink config.
  */
 public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
+
     private static final String TYPE = "TYPE";
     private static final String SINK_ID = "SINK.ID";
-    private static final String SOURCE_ID = "SOURCE.ID";
     private static final String MAP = "MAP";
 
     /**
@@ -52,6 +52,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      * @throws DesignGenerationException Error while generating SourceConfigs
      */
     public List<SourceSinkConfig> generateSourceConfigs(List<Source> sourceList) throws DesignGenerationException {
+
         return generateSourceOrSinkConfigs(SourceOrSinkAnnotation.SOURCE, sourceList);
     }
 
@@ -63,6 +64,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      * @throws DesignGenerationException Error while generating SinkConfigs
      */
     public List<SourceSinkConfig> generateSinkConfigs(List<Sink> sinkList) throws DesignGenerationException {
+
         return generateSourceOrSinkConfigs(SourceOrSinkAnnotation.SINK, sinkList);
     }
 
@@ -78,6 +80,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      */
     private <T> List<SourceSinkConfig> generateSourceOrSinkConfigs(
             SourceOrSinkAnnotation sourceOrSinkAnnotation, List<T> sourceOrSinkList) throws DesignGenerationException {
+
         Map<Annotation, String> connectedElementsMap =
                 getSourceOrSinkAnnotationStreamIdMap(sourceOrSinkAnnotation, sourceOrSinkList);
         List<SourceSinkConfig> sourceOrSinkConfigs = new ArrayList<>();
@@ -99,6 +102,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
     private SourceSinkConfig generateSourceOrSinkConfig(SourceOrSinkAnnotation annotationType,
                                                         Map.Entry<Annotation, String> sourceOrSinkAndConnectedElement)
             throws DesignGenerationException {
+
         String connectedElementName = sourceOrSinkAndConnectedElement.getValue();
         // Options of the Source/Sink
         String type = null;
@@ -110,7 +114,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
             } else {
                 options.add(element.toString());
             }
-            if (element.getKey().equalsIgnoreCase(SINK_ID) || element.getKey().equalsIgnoreCase(SOURCE_ID)) {
+            if (element.getKey().equalsIgnoreCase(SINK_ID)) {
                 correlationId = element.getValue();
             }
         }
@@ -145,6 +149,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      * @throws DesignGenerationException Error while generating MapperConfig
      */
     private MapperConfig generateMapperConfig(Annotation mapAnnotation) throws DesignGenerationException {
+
         String type = null;
         List<String> options = new ArrayList<>();
         for (Element element : mapAnnotation.getElements()) {
@@ -173,6 +178,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      * @return MapperPayloadOrAttribute object
      */
     private MapperPayloadOrAttribute generateMapperPayloadOrAttributes(Annotation attributesOrPayloadAnnotation) {
+
         List<PayloadOrAttributeElement> elements = new ArrayList<>();
         for (Element element : attributesOrPayloadAnnotation.getElements()) {
             elements.add(generatePayloadOrAttributesElement(element));
@@ -191,6 +197,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      * @return PayloadOrAttributeElement object
      */
     private PayloadOrAttributeElement generatePayloadOrAttributesElement(Element element) {
+
         PayloadOrAttributeElement payloadOrAttributeElement = new PayloadOrAttributeElement();
         payloadOrAttributeElement.key = element.getKey();
         payloadOrAttributeElement.value = element.getValue();
@@ -204,6 +211,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      * @return MapperPayloadOrAttributeType
      */
     private MapperPayloadOrAttributeType getMapperAttributeOrPayloadType(List<PayloadOrAttributeElement> elements) {
+
         for (PayloadOrAttributeElement element : elements) {
             // Either all the keys are null, or all the keys are not null
             if (element.key != null) {
@@ -222,6 +230,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      */
     private MapperListPayloadOrAttribute generateMapperListAttribute(
             String annotationType, List<PayloadOrAttributeElement> elements) {
+
         List<String> values = new ArrayList<>();
         for (PayloadOrAttributeElement element : elements) {
             values.add(element.value);
@@ -238,6 +247,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      */
     private MapperMapPayloadOrAttribute generateMapperMapAttribute(
             String annotationType, List<PayloadOrAttributeElement> elements) {
+
         Map<String, String> values = new HashMap<>();
         for (PayloadOrAttributeElement element : elements) {
             values.put(element.key, element.value);
@@ -256,6 +266,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      */
     private <T> Map<Annotation, String> getSourceOrSinkAnnotationStreamIdMap(
             SourceOrSinkAnnotation sourceOrSinkAnnotation, List<T> sourceOrSinkList) throws DesignGenerationException {
+
         Map<Annotation, String> connectedElements = new HashMap<>();
         for (T sourceOrSink : sourceOrSinkList) {
             List<Annotation> streamDefinitionAnnotations = null;
@@ -294,6 +305,7 @@ public class SourceSinkConfigsGenerator extends CodeSegmentsPreserver {
      * Represents a PayloadOrAttribute element.
      */
     private static class PayloadOrAttributeElement {
+
         private String key;
         private String value;
     }

@@ -18,6 +18,7 @@
 
 package io.siddhi.distribution.editor.core.util.designview.beans.configs.siddhielements;
 
+import io.siddhi.distribution.editor.core.util.Constants;
 import io.siddhi.query.api.annotation.Annotation;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.Map;
  * Represents configuration of a Siddhi Stream.
  */
 public class StreamConfig extends SiddhiElementConfig {
+
     private String name;
     private List<AttributeConfig> attributeList;
     private List<String> annotationList;
@@ -39,6 +41,7 @@ public class StreamConfig extends SiddhiElementConfig {
                         List<AttributeConfig> attributeList,
                         List<String> annotationList,
                         List<Annotation> annotationListObjects) {
+
         super(id);
         this.name = name;
         this.attributeList = attributeList;
@@ -47,50 +50,67 @@ public class StreamConfig extends SiddhiElementConfig {
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
     public List<AttributeConfig> getAttributeList() {
+
         return attributeList;
     }
 
     public void setAttributeList(List<AttributeConfig> attributeList) {
+
         this.attributeList = attributeList;
     }
 
     public List<Annotation> getAnnotationListObjects() {
+
         return annotationListObjects;
     }
 
     public void setAnnotationListObjects(List<Annotation> annotationListObjects) {
+
         this.annotationListObjects = annotationListObjects;
     }
 
     public List<String> getAnnotationList() {
+
         return annotationList;
     }
 
     public void setAnnotationList(List<String> annotationList) {
+
         this.annotationList = annotationList;
     }
 
     public String getPartitionId() {
+
         return partitionId;
     }
 
     public void setPartitionId(String partitionId) {
+
         this.partitionId = partitionId;
     }
 
     public Map<String, String> getConnectorsAndStreams() {
+
         return connectorsAndStreams;
     }
 
     public void setConnectorsAndStreams(Map<String, String> connectorsAndStreams) {
+
         this.connectorsAndStreams = connectorsAndStreams;
+    }
+
+    public boolean isFaultStream() {
+
+        return name.startsWith(Constants.FAULT_STREAM_PREFIX);
     }
 }

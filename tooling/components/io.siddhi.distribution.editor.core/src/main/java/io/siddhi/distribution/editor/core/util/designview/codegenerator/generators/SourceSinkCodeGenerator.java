@@ -45,6 +45,7 @@ public class SourceSinkCodeGenerator {
      */
     public String generateSourceSink(SourceSinkConfig sourceSink, boolean isGeneratingToolTip)
             throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(sourceSink);
 
         StringBuilder sourceSinkStringBuilder = new StringBuilder();
@@ -66,7 +67,7 @@ public class SourceSinkCodeGenerator {
 
         if (sourceSink.getOptions() != null && !sourceSink.getOptions().isEmpty()) {
             sourceSinkStringBuilder.append(SiddhiCodeBuilderConstants.COMMA)
-                    .append(SubElementCodeGenerator.generateElementList(sourceSink.getOptions()));
+                    .append(SubElementCodeGenerator.generateParameterList(sourceSink.getOptions()));
         }
 
         if (sourceSink.getMap() != null) {
@@ -87,6 +88,7 @@ public class SourceSinkCodeGenerator {
      * @throws CodeGenerationException Error when generating the code
      */
     private String generateMapper(MapperConfig mapper) throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(mapper);
 
         StringBuilder mapperStringBuilder = new StringBuilder();
@@ -97,7 +99,7 @@ public class SourceSinkCodeGenerator {
 
         if (mapper.getOptions() != null && !mapper.getOptions().isEmpty()) {
             mapperStringBuilder.append(SiddhiCodeBuilderConstants.COMMA)
-                    .append(SubElementCodeGenerator.generateElementList(mapper.getOptions()));
+                    .append(SubElementCodeGenerator.generateParameterList(mapper.getOptions()));
         }
 
         if (mapper.getPayloadOrAttribute() != null) {
@@ -126,6 +128,7 @@ public class SourceSinkCodeGenerator {
      */
     private String generateMapperPayloadOrAttribute(MapperPayloadOrAttribute payloadOrAttribute)
             throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(payloadOrAttribute);
 
         StringBuilder mapperAttributeStringBuilder = new StringBuilder();
@@ -155,6 +158,7 @@ public class SourceSinkCodeGenerator {
      */
     private String generateListPayloadOrAttribute(MapperListPayloadOrAttribute mapperListAttribute)
             throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(mapperListAttribute);
 
         StringBuilder mapperListAttributeStringBuilder = new StringBuilder();
@@ -187,6 +191,7 @@ public class SourceSinkCodeGenerator {
      */
     private String generateMapPayloadOrAttribute(MapperMapPayloadOrAttribute mapperMapAttribute)
             throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(mapperMapAttribute);
 
         StringBuilder mapperMapAttributeStringBuilder = new StringBuilder();

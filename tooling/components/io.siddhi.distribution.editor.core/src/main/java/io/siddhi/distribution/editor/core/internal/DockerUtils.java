@@ -44,30 +44,30 @@ import java.util.zip.ZipOutputStream;
  * This class creates Docker artifacts with given Siddhi files.
  */
 public class DockerUtils {
+
     private static final Logger log = LoggerFactory.getLogger(DockerUtils.class);
     private static final String RESOURCES_DIR = "resources/docker-export";
     private static final String SIDDHI_FILES_DIR = "siddhi-files";
     private static final String README_FILE = "README.md";
     private static final String DOCKER_COMPOSE_FILE = "docker-compose.yml";
-    private static final String DOCKER_COMPOSE_EDITOR_FILE = "docker-compose.editor.yml";
-    private static final String DOCKER_COMPOSE_WORKER_FILE = "docker-compose.worker.yml";
+    private static final String DOCKER_COMPOSE_RUNNER_FILE = "docker-compose.runner.yml";
     private static final String PRODUCT_VERSION_TOKEN = "\\{\\{PRODUCT_VERSION}}";
     private final ConfigProvider configProvider;
     private DockerConfigs dockerConfigs;
 
     public DockerUtils(ConfigProvider configProvider) {
+
         this.configProvider = configProvider;
     }
 
     /**
      * Create a zip archive.
      *
-     * @param profile     Siddhi profile name
      * @param siddhiFiles List of Siddhi siddhiFiles
      * @return Zip archive file
      * @throws DockerGenerationException if docker generation fails
      */
-    public File createArchive(String profile, List<String> siddhiFiles) throws DockerGenerationException {
+    public File createArchive(List<String> siddhiFiles) throws DockerGenerationException {
         // Create <CARBON_HOME>/tmp/docker-export directory.
         String tmpDirPath = Paths.get(Constants.CARBON_HOME, "tmp", "docker-export").toString();
         File tmpDir = new File(tmpDirPath);
@@ -85,7 +85,7 @@ public class DockerUtils {
         ZipOutputStream outputStream = null;
         try {
             outputStream = new ZipOutputStream(new FileOutputStream(zipFile));
-            for (Map.Entry<String, Path> entry : getFileMap(profile, siddhiFiles).entrySet()) {
+            for (Map.Entry<String, Path> entry : getFileMap(siddhiFiles).entrySet()) {
                 // Create zip entry for each file in the map.
                 ZipEntry zipEntry = new ZipEntry(entry.getKey());
                 outputStream.putNextEntry(zipEntry);
@@ -116,13 +116,13 @@ public class DockerUtils {
      * @param siddhiFiles Siddhi files to be included
      * @return File map
      */
-    private Map<String, Path> getFileMap(String profile, List<String> siddhiFiles) {
+    private Map<String, Path> getFileMap(List<String> siddhiFiles) {
+
         Map<String, Path> files = new HashMap<>();
 
         // Add readme.md and the respective docker-compose.yml files.
         files.put(README_FILE, Paths.get(Constants.RUNTIME_PATH, RESOURCES_DIR, README_FILE));
-        files.put(DOCKER_COMPOSE_FILE, Paths.get(Constants.RUNTIME_PATH, RESOURCES_DIR,
-                "editor".equals(profile) ? DOCKER_COMPOSE_EDITOR_FILE : DOCKER_COMPOSE_WORKER_FILE));
+        files.put(DOCKER_COMPOSE_FILE, Paths.get(Constants.RUNTIME_PATH, RESOURCES_DIR, DOCKER_COMPOSE_RUNNER_FILE));
 
         // Add selected Siddhi files.
         for (String siddhiFile : siddhiFiles) {
@@ -143,6 +143,7 @@ public class DockerUtils {
      * @throws ConfigurationException
      */
     private byte[] readDockerComposeFile(Path path) throws IOException, ConfigurationException {
+
         String productVersion = this.getConfigrations().getProductVersion();
 
         byte[] data = Files.readAllBytes(path);
@@ -159,6 +160,7 @@ public class DockerUtils {
      * @throws ConfigurationException
      */
     private DockerConfigs getConfigrations() throws ConfigurationException {
+
         if (this.dockerConfigs == null) {
             this.dockerConfigs = configProvider.getConfigurationObject(DockerConfigs.class);
         }

@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.1.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -43,7 +43,6 @@
         <module>features/io.siddhi.distribution.core.feature</module>
         <module>features/io.siddhi.distribution.common.feature</module>
         <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
-        <module>features/io.siddhi.distribution.siddhi.feature</module>
         <module>features/io.siddhi.distribution.metrics.core.feature</module>
         <module>features/io.siddhi.distribution.store.api.rest.feature</module>
         <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
@@ -183,8 +182,8 @@
         <type>zip</type>
         </dependency>
         <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.siddhi.feature</artifactId>
+            <groupId>io.siddhi</groupId>
+            <artifactId>io.siddhi.feature</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -259,123 +258,123 @@
                         </goals>
                         <configuration>
                             <artifactItems>
-                                <!--&lt;!&ndash;Execution Extensions&ndash;&gt;-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.execution.string</groupId>-->
-                                    <!--<artifactId>siddhi-execution-string</artifactId>-->
-                                    <!--<version>${siddhi.execution.string.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.execution.time</groupId>-->
-                                    <!--<artifactId>siddhi-execution-time</artifactId>-->
-                                    <!--<version>${siddhi.execution.time.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.execution.regex</groupId>-->
-                                    <!--<artifactId>siddhi-execution-regex</artifactId>-->
-                                    <!--<version>${siddhi.execution.regex.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.execution.map</groupId>-->
-                                    <!--<artifactId>siddhi-execution-map</artifactId>-->
-                                    <!--<version>${siddhi.execution.map.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <!--Execution Extensions-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.execution.string</groupId>
+                                    <artifactId>siddhi-execution-string</artifactId>
+                                    <version>${siddhi.execution.string.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.execution.time</groupId>
+                                    <artifactId>siddhi-execution-time</artifactId>
+                                    <version>${siddhi.execution.time.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.execution.regex</groupId>
+                                    <artifactId>siddhi-execution-regex</artifactId>
+                                    <version>${siddhi.execution.regex.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <artifactItem>
                                     <groupId>org.wso2.extension.siddhi.execution.math</groupId>
                                     <artifactId>siddhi-execution-math</artifactId>
                                     <version>${siddhi.execution.math.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.execution.json</groupId>
+                                    <artifactId>siddhi-execution-json</artifactId>
+                                    <version>${siddhi.execution.json.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.execution.unitconversion</groupId>-->
-                                    <!--<artifactId>siddhi-execution-unitconversion</artifactId>-->
-                                    <!--<version>${siddhi.execution.unitconversion.version}</version>-->
-                                    <!--<type>jar</type>-->
+                                <!--<groupId>org.wso2.extension.siddhi.execution.map</groupId>-->
+                                <!--<artifactId>siddhi-execution-map</artifactId>-->
+                                <!--<version>${siddhi.execution.map.version}</version>-->
+                                <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
                                 <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.execution.json</groupId>-->
-                                    <!--<artifactId>siddhi-execution-json</artifactId>-->
-                                    <!--<version>${siddhi.execution.json.version}</version>-->
-                                    <!--<type>jar</type>-->
+                                <!--<groupId>org.wso2.extension.siddhi.execution.unitconversion</groupId>-->
+                                <!--<artifactId>siddhi-execution-unitconversion</artifactId>-->
+                                <!--<version>${siddhi.execution.unitconversion.version}</version>-->
+                                <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                                <!--&lt;!&ndash;IO Extensions&ndash;&gt;-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.jms</groupId>-->
-                                    <!--<artifactId>siddhi-io-jms</artifactId>-->
-                                    <!--<version>${siddhi.io.jms.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.rabbitmq</groupId>-->
-                                    <!--<artifactId>siddhi-io-rabbitmq</artifactId>-->
-                                    <!--<version>${siddhi.io.rabbitmq.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.email</groupId>-->
-                                    <!--<artifactId>siddhi-io-email</artifactId>-->
-                                    <!--<version>${siddhi.io.email.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.tcp</groupId>-->
-                                    <!--<artifactId>siddhi-io-tcp</artifactId>-->
-                                    <!--<version>${siddhi.io.tcp.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.kafka</groupId>-->
-                                    <!--<artifactId>siddhi-io-kafka</artifactId>-->
-                                    <!--<version>${siddhi.io.kafka.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.wso2event</groupId>-->
-                                    <!--<artifactId>siddhi-io-wso2event</artifactId>-->
-                                    <!--<version>${siddhi.io.wso2event.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.file</groupId>-->
-                                    <!--<artifactId>siddhi-io-file</artifactId>-->
-                                    <!--<version>${siddhi.io.file.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
+                                <!--IO Extensions-->
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.jms</groupId>
+                                    <artifactId>siddhi-io-jms</artifactId>
+                                    <version>${siddhi.io.jms.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.email</groupId>
+                                    <artifactId>siddhi-io-email</artifactId>
+                                    <version>${siddhi.io.email.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.tcp</groupId>
+                                    <artifactId>siddhi-io-tcp</artifactId>
+                                    <version>${siddhi.io.tcp.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.kafka</groupId>
+                                    <artifactId>siddhi-io-kafka</artifactId>
+                                    <version>${siddhi.io.kafka.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <artifactItem>
                                     <groupId>org.wso2.extension.siddhi.io.http</groupId>
                                     <artifactId>siddhi-io-http</artifactId>
                                     <version>${siddhi.io.http.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.nats</groupId>
+                                    <artifactId>siddhi-io-nats</artifactId>
+                                    <version>${siddhi.io.nats.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.cdc</groupId>
+                                    <artifactId>siddhi-io-cdc</artifactId>
+                                    <version>${siddhi.io.cdc.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.twitter</groupId>-->
-                                    <!--<artifactId>siddhi-io-twitter</artifactId>-->
-                                    <!--<version>${siddhi.io.twitter.version}</version>-->
-                                    <!--<type>jar</type>-->
+                                <!--<groupId>org.wso2.extension.siddhi.io.rabbitmq</groupId>-->
+                                <!--<artifactId>siddhi-io-rabbitmq</artifactId>-->
+                                <!--<version>${siddhi.io.rabbitmq.version}</version>-->
+                                <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
-                              <!--&lt;!&ndash;  //Temperory avoid bundling NATS and IBMMQ extensions due to dependency errors&ndash;&gt;-->
-                                <!--&lt;!&ndash;<artifactItem>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<groupId>org.wso2.extension.siddhi.io.ibmmq</groupId>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<artifactId>siddhi-io-ibmmq</artifactId>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<version>${siddhi.io.ibmmq.version}</version>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<type>jar</type>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</artifactItem>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<artifactItem>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<groupId>org.wso2.extension.siddhi.io.nats</groupId>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<artifactId>siddhi-io-nats</artifactId>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<version>${siddhi.io.nats.version}</version>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<type>jar</type>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</artifactItem>&ndash;&gt;-->
                                 <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.cdc</groupId>-->
-                                    <!--<artifactId>siddhi-io-cdc</artifactId>-->
-                                    <!--<version>${siddhi.io.cdc.version}</version>-->
-                                    <!--<type>jar</type>-->
+                                <!--<groupId>org.wso2.extension.siddhi.io.wso2event</groupId>-->
+                                <!--<artifactId>siddhi-io-wso2event</artifactId>-->
+                                <!--<version>${siddhi.io.wso2event.version}</version>-->
+                                <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
+                                <!--<artifactItem>-->
+                                <!--<groupId>org.wso2.extension.siddhi.io.file</groupId>-->
+                                <!--<artifactId>siddhi-io-file</artifactId>-->
+                                <!--<version>${siddhi.io.file.version}</version>-->
+                                <!--<type>jar</type>-->
+                                <!--</artifactItem>-->
+                                <!--<artifactItem>-->
+                                <!--<groupId>org.wso2.extension.siddhi.io.twitter</groupId>-->
+                                <!--<artifactId>siddhi-io-twitter</artifactId>-->
+                                <!--<version>${siddhi.io.twitter.version}</version>-->
+                                <!--<type>jar</type>-->
+                                <!--</artifactItem>-->
+                                <!--&lt;!&ndash;  //Temperory avoid bundling NATS and IBMMQ extensions due to dependency errors&ndash;&gt;-->
+                                <!--&lt;!&ndash;<artifactItem>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<groupId>org.wso2.extension.siddhi.io.ibmmq</groupId>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<artifactId>siddhi-io-ibmmq</artifactId>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<version>${siddhi.io.ibmmq.version}</version>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<type>jar</type>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</artifactItem>&ndash;&gt;-->
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.io.prometheus</groupId>-->
                                     <!--<artifactId>siddhi-io-prometheus</artifactId>-->
@@ -426,30 +425,31 @@
                                     <version>${siddhi.map.csv.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
-                                <!--&lt;!&ndash;Store Extensions&ndash;&gt;-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.store.solr</groupId>-->
-                                    <!--<artifactId>siddhi-store-solr</artifactId>-->
-                                    <!--<version>${siddhi.store.solr.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
-                                <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.store.mongodb</groupId>-->
-                                    <!--<artifactId>siddhi-store-mongodb</artifactId>-->
-                                    <!--<version>${siddhi.store.mongodb.version}</version>-->
-                                    <!--<type>jar</type>-->
-                                <!--</artifactItem>-->
                                 <artifactItem>
                                     <groupId>org.wso2.extension.siddhi.store.rdbms</groupId>
                                     <artifactId>siddhi-store-rdbms</artifactId>
                                     <version>${siddhi.store.rdbms.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wso2.extension.siddhi.io.mqtt</groupId>
+                                    <artifactId>siddhi-io-mqtt</artifactId>
+                                    <version>${siddhi.io.mqtt.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+
+                                <!--&lt;!&ndash;Store Extensions&ndash;&gt;-->
                                 <!--<artifactItem>-->
-                                    <!--<groupId>org.wso2.extension.siddhi.io.mqtt</groupId>-->
-                                    <!--<artifactId>siddhi-io-mqtt</artifactId>-->
-                                    <!--<version>${siddhi.io.mqtt.version}</version>-->
-                                    <!--<type>jar</type>-->
+                                <!--<groupId>org.wso2.extension.siddhi.store.solr</groupId>-->
+                                <!--<artifactId>siddhi-store-solr</artifactId>-->
+                                <!--<version>${siddhi.store.solr.version}</version>-->
+                                <!--<type>jar</type>-->
+                                <!--</artifactItem>-->
+                                <!--<artifactItem>-->
+                                <!--<groupId>org.wso2.extension.siddhi.store.mongodb</groupId>-->
+                                <!--<artifactId>siddhi-store-mongodb</artifactId>-->
+                                <!--<version>${siddhi.store.mongodb.version}</version>-->
+                                <!--<type>jar</type>-->
                                 <!--</artifactItem>-->
                                 <!--<artifactItem>-->
                                     <!--<groupId>org.wso2.extension.siddhi.store.hbase</groupId>-->
@@ -599,10 +599,9 @@
                                     <id>io.siddhi.distribution.event.simulator.core.feature</id>
                                     <version>${io.siddhi.distribution.version}</version>
                                 </feature>
-
                                 <feature>
-                                    <id>io.siddhi.distribution.siddhi.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <id>io.siddhi.feature</id>
+                                    <version>${siddhi.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.msf4j.interceptor.common.feature</id>
@@ -770,8 +769,8 @@
                                     <version>${io.siddhi.distribution.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>io.siddhi.distribution.siddhi.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <id>io.siddhi.feature.group</id>
+                                    <version>${siddhi.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.store.api.rest.feature.group</id>

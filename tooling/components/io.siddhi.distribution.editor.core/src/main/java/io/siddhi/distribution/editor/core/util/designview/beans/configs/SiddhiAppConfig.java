@@ -29,6 +29,7 @@ import io.siddhi.distribution.editor.core.util.designview.beans.configs.siddhiel
 import io.siddhi.distribution.editor.core.util.designview.beans.configs.siddhielements.query.QueryConfig;
 import io.siddhi.distribution.editor.core.util.designview.beans.configs.siddhielements.sourcesink.SourceSinkConfig;
 import io.siddhi.distribution.editor.core.util.designview.constants.query.QueryListType;
+import io.siddhi.query.api.annotation.Annotation;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -42,11 +43,13 @@ import java.util.Set;
  * Contains elements of a Siddhi app.
  */
 public class SiddhiAppConfig {
+
     private int finalElementCount = 0;
 
     private String siddhiAppDescription = "";
     private String siddhiAppName = "";
     private List<String> appAnnotationList = new ArrayList<>();
+    private List<Annotation> appAnnotationListObjects = new ArrayList<>();
     private List<SourceSinkConfig> sourceList = new ArrayList<>();
     private List<SourceSinkConfig> sinkList = new ArrayList<>();
     private List<StreamConfig> streamList = new ArrayList<>();
@@ -62,6 +65,7 @@ public class SiddhiAppConfig {
     private Set<CommentCodeSegment> commentCodeSegments = new HashSet<>();
 
     public SiddhiAppConfig() {
+
         queryLists.put(QueryListType.WINDOW_FILTER_PROJECTION, new ArrayList<>());
         queryLists.put(QueryListType.JOIN, new ArrayList<>());
         queryLists.put(QueryListType.PATTERN, new ArrayList<>());
@@ -74,6 +78,7 @@ public class SiddhiAppConfig {
      * @return Id for the element
      */
     private String generateNextElementId() {
+
         return String.valueOf(++finalElementCount);
     }
 
@@ -85,6 +90,7 @@ public class SiddhiAppConfig {
      * @return PartitionConnector id
      */
     private String generatePartitionConnectorId(String partitionId, String connectorId) {
+
         return partitionId + "_pc" + connectorId;
     }
 
@@ -96,18 +102,20 @@ public class SiddhiAppConfig {
      * @param <T>           Generic type of the Siddhi ElementConfig object, and each membe of the list
      */
     private <T> void addElement(List<T> elementList, T elementConfig) {
+
         ((SiddhiElementConfig) elementConfig).setId(generateNextElementId());
         addElementCodeSegment((SiddhiElementConfig) elementConfig);
         elementList.add(elementConfig);
     }
 
     /**
-     * Adds the given list of ElementCodeSegment objects representing code segments of Siddhi elements.
-     * to the existing list
+     * Adds the given list of ElementCodeSegment objects representing code segments of Siddhi elements,
+     * to the existing list.
      *
      * @param elementCodeSegments List of ElementCodeSegment objects
      */
     public void addElementCodeSegments(Set<ElementCodeSegment> elementCodeSegments) {
+
         this.elementCodeSegments.addAll(elementCodeSegments);
     }
 
@@ -117,6 +125,7 @@ public class SiddhiAppConfig {
      * @param siddhiElementConfig SiddhiElementConfig object
      */
     private void addElementCodeSegment(SiddhiElementConfig siddhiElementConfig) {
+
         ElementCodeSegment elementCodeSegment =
                 new ElementCodeSegment(
                         siddhiElementConfig.getQueryContextStartIndex(),
@@ -133,6 +142,7 @@ public class SiddhiAppConfig {
      * @param queryConfig   QueryConfig object
      */
     public void addQuery(QueryListType queryListType, QueryConfig queryConfig) {
+
         queryConfig.setId(generateNextElementId());
         addElementCodeSegment(queryConfig);
         queryLists.get(queryListType).add(queryConfig);
@@ -144,6 +154,7 @@ public class SiddhiAppConfig {
      * @param partitionConfig PartitionConfig object
      */
     public void addPartition(PartitionConfig partitionConfig) {
+
         partitionConfig.setId(generateNextElementId());
         // Assign connectorsAndStreams with renamed Ids
         Map<String, String> connectorsAndStreams = new HashMap<>();
@@ -173,114 +184,152 @@ public class SiddhiAppConfig {
     }
 
     public void addSource(SourceSinkConfig sourceConfig) {
+
         addElement(sourceList, sourceConfig);
     }
 
     public void addSink(SourceSinkConfig sinkConfig) {
+
         addElement(sinkList, sinkConfig);
     }
 
     public void add(StreamConfig streamConfig) {
+
         addElement(streamList, streamConfig);
     }
 
     public void add(TableConfig tableConfig) {
+
         addElement(tableList, tableConfig);
     }
 
     public void add(TriggerConfig triggerConfig) {
+
         addElement(triggerList, triggerConfig);
     }
 
     public void add(WindowConfig windowConfig) {
+
         addElement(windowList, windowConfig);
     }
 
     public void add(AggregationConfig aggregationConfig) {
+
         addElement(aggregationList, aggregationConfig);
     }
 
     public void add(FunctionConfig functionConfig) {
+
         addElement(functionList, functionConfig);
     }
 
     public void add(PartitionConfig partitionConfig) {
+
         addElement(partitionList, partitionConfig);
     }
 
     public String getSiddhiAppDescription() {
+
         return siddhiAppDescription;
     }
 
     public void setSiddhiAppDescription(String siddhiAppDescription) {
+
         this.siddhiAppDescription = siddhiAppDescription;
     }
 
     public String getSiddhiAppName() {
+
         return siddhiAppName;
     }
 
     public void setSiddhiAppName(String siddhiAppName) {
+
         this.siddhiAppName = siddhiAppName;
     }
 
     public List<String> getAppAnnotationList() {
+
         return appAnnotationList;
     }
 
     public void setAppAnnotationList(List<String> appAnnotationList) {
+
         this.appAnnotationList = appAnnotationList;
     }
 
+    public List<Annotation> getAppAnnotationListObjects() {
+
+        return appAnnotationListObjects;
+    }
+
+    public void setAppAnnotationListObjects(List<Annotation> appAnnotationListObjects) {
+
+        this.appAnnotationListObjects = appAnnotationListObjects;
+    }
+
     public List<SourceSinkConfig> getSourceList() {
+
         return sourceList;
     }
 
     public List<SourceSinkConfig> getSinkList() {
+
         return sinkList;
     }
 
     public List<StreamConfig> getStreamList() {
+
         return streamList;
     }
 
     public List<TableConfig> getTableList() {
+
         return tableList;
     }
 
     public List<TriggerConfig> getTriggerList() {
+
         return triggerList;
     }
 
     public List<WindowConfig> getWindowList() {
+
         return windowList;
     }
 
     public List<AggregationConfig> getAggregationList() {
+
         return aggregationList;
     }
 
     public Map<QueryListType, List<QueryConfig>> getQueryLists() {
+
         return queryLists;
     }
 
     public List<FunctionConfig> getFunctionList() {
+
         return functionList;
     }
 
     public List<PartitionConfig> getPartitionList() {
+
         return partitionList;
     }
 
     public Set<ElementCodeSegment> getElementCodeSegments() {
+
         return elementCodeSegments;
     }
 
     public Set<CommentCodeSegment> getCommentCodeSegments() {
+
         return commentCodeSegments;
     }
 
     public void assignCommentCodeSegments(List<CommentCodeSegment> commentCodeSegments) {
+
         this.commentCodeSegments.addAll(commentCodeSegments);
     }
 
@@ -288,10 +337,12 @@ public class SiddhiAppConfig {
      * Removes unnecessarily remaining comments.
      */
     public void clearCommentCodeSegments() {
+
         commentCodeSegments = new HashSet<>();
     }
 
     public int getFinalElementCount() {
+
         return finalElementCount;
     }
 }

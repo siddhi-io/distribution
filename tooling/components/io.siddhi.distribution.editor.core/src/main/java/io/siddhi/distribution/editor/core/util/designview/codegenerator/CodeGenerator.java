@@ -65,6 +65,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     public String generateSiddhiAppCode(EventFlow eventFlow) throws CodeGenerationException {
+
         SiddhiAppConfig siddhiApp = eventFlow.getSiddhiAppConfig();
 
         List<QueryConfig> queries = new ArrayList<>();
@@ -101,11 +102,12 @@ public class CodeGenerator {
     /**
      * Generates list of tooltips for a given SiddhiAppconfig object.
      *
-     * @param siddhiAppConfig Siddhi APP configuration
-     * @return list of tooltips
-     * @throws CodeGenerationException Error while generating the code
+     * @param siddhiAppConfig Siddhi app configuration
+     * @return tool tip which generated based on Siddhi App configuration
+     * @throws CodeGenerationException  Error when loading code view
      */
     public List<ToolTip> generateSiddhiAppToolTips(SiddhiAppConfig siddhiAppConfig) throws CodeGenerationException {
+
         SiddhiAppConfig siddhiApp = siddhiAppConfig;
 
         List<ToolTip> toolTipList = new ArrayList<>();
@@ -128,6 +130,7 @@ public class CodeGenerator {
      * @return The Siddhi code representation of a Siddhi app name annotation
      */
     private String generateAppName(String appName) {
+
         StringBuilder appNameStringBuilder = new StringBuilder();
 
         if (appName != null && !appName.isEmpty()) {
@@ -149,6 +152,7 @@ public class CodeGenerator {
      * @return The Siddhi code representation of a Siddhi app description annotation
      */
     private String generateAppDescription(String appDescription) {
+
         StringBuilder appDescriptionStringBuilder = new StringBuilder();
 
         if (appDescription != null && !appDescription.isEmpty()) {
@@ -174,6 +178,7 @@ public class CodeGenerator {
      */
     private String generateStreams(List<StreamConfig> streamList, List<SourceSinkConfig> sourceList,
                                    List<SourceSinkConfig> sinkList) throws CodeGenerationException {
+
         if (streamList == null || streamList.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -188,6 +193,10 @@ public class CodeGenerator {
         SourceSinkCodeGenerator sourceSinkCodeGenerator = new SourceSinkCodeGenerator();
         StreamCodeGenerator streamCodeGenerator = new StreamCodeGenerator();
         for (StreamConfig stream : streamList) {
+            // If the stream is a fault stream, do not generate the stream definition.
+            if (stream.isFaultStream()) {
+                continue;
+            }
             CodeGeneratorUtils.NullValidator.validateConfigObject(stream);
             if (stream.getPartitionId() != null && !stream.getPartitionId().isEmpty()) {
                 continue;
@@ -195,7 +204,8 @@ public class CodeGenerator {
 
             for (SourceSinkConfig sourceSink : sourcesAndSinks) {
                 if (stream.getName().equals(sourceSink.getConnectedElementName())) {
-                    streamListStringBuilder.append(sourceSinkCodeGenerator.generateSourceSink(sourceSink, false));
+                    streamListStringBuilder.append(sourceSinkCodeGenerator.generateSourceSink(sourceSink,
+                            false));
                 }
             }
 
@@ -220,6 +230,7 @@ public class CodeGenerator {
                                                            List<SourceSinkConfig> sourceList,
                                                            List<SourceSinkConfig> sinkList)
             throws CodeGenerationException {
+
         List<ToolTip> streamSourceSinkToolTipList = new ArrayList<>();
         List<SourceSinkConfig> sourcesAndSinks = new ArrayList<>();
         sourcesAndSinks.addAll(sourceList);
@@ -242,7 +253,6 @@ public class CodeGenerator {
         return streamSourceSinkToolTipList;
     }
 
-
     /**
      * Generates the Siddhi code representation of a Siddhi app's table definitions.
      *
@@ -251,6 +261,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private String generateTables(List<TableConfig> tableList) throws CodeGenerationException {
+
         if (tableList == null || tableList.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -276,13 +287,15 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private List<ToolTip> generateTableToolTips(List<TableConfig> tableList) throws CodeGenerationException {
+
         List<ToolTip> tableTooltipList = new ArrayList<>();
         if (tableList == null || tableList.isEmpty()) {
             return tableTooltipList;
         }
         TableCodeGenerator tableCodeGenerator = new TableCodeGenerator();
         for (TableConfig table : tableList) {
-            tableTooltipList.add(new ToolTip(table.getId(), tableCodeGenerator.generateTable(table, true)));
+            tableTooltipList.add(new ToolTip(table.getId(), tableCodeGenerator.generateTable(table,
+                    true)));
         }
 
         return tableTooltipList;
@@ -296,6 +309,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private String generateWindows(List<WindowConfig> windowList) throws CodeGenerationException {
+
         if (windowList == null || windowList.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -321,6 +335,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private List<ToolTip> generateWindowToolTips(List<WindowConfig> windowList) throws CodeGenerationException {
+
         List<ToolTip> windowToolTipList = new ArrayList<>();
         if (windowList == null || windowList.isEmpty()) {
             return windowToolTipList;
@@ -343,6 +358,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private String generateTriggers(List<TriggerConfig> triggerList) throws CodeGenerationException {
+
         if (triggerList == null || triggerList.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -368,6 +384,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private List<ToolTip> generateTriggerToolTips(List<TriggerConfig> triggerList) throws CodeGenerationException {
+
         List<ToolTip> triggerToolTipList = new ArrayList<>();
         if (triggerList == null || triggerList.isEmpty()) {
             return triggerToolTipList;
@@ -390,6 +407,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private String generateAggregations(List<AggregationConfig> aggregationList) throws CodeGenerationException {
+
         if (aggregationList == null || aggregationList.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -416,6 +434,7 @@ public class CodeGenerator {
      */
     private List<ToolTip> generateAggregationToolTips(List<AggregationConfig> aggregationList)
             throws CodeGenerationException {
+
         List<ToolTip> aggregationToolTipList = new ArrayList<>();
         if (aggregationList == null || aggregationList.isEmpty()) {
             return aggregationToolTipList;
@@ -438,6 +457,7 @@ public class CodeGenerator {
      * @throws CodeGenerationException Error while generating the code
      */
     private String generateFunctions(List<FunctionConfig> functionList) throws CodeGenerationException {
+
         if (functionList == null || functionList.isEmpty()) {
             return SiddhiCodeBuilderConstants.EMPTY_STRING;
         }
@@ -462,7 +482,9 @@ public class CodeGenerator {
      * @return List of tooltips for functions
      * @throws CodeGenerationException Error while generating the code
      */
-    private List<ToolTip> generateFunctionToolTips(List<FunctionConfig> functionList) throws CodeGenerationException {
+    private List<ToolTip> generateFunctionToolTips(List<FunctionConfig> functionList) throws
+            CodeGenerationException {
+
         List<ToolTip> functionTooltipList = new ArrayList<>();
         if (functionList == null || functionList.isEmpty()) {
             return functionTooltipList;
@@ -491,6 +513,7 @@ public class CodeGenerator {
                                              List<PartitionConfig> partitions, List<String> definitionsToBeGenerated,
                                              List<String> allDefinitions)
             throws CodeGenerationException {
+
         StringBuilder executionElementStringBuilder = new StringBuilder();
         executionElementStringBuilder.append(SiddhiCodeBuilderConstants.NEW_LINE);
         List<QueryConfig> queries = new LinkedList<>();
@@ -531,6 +554,7 @@ public class CodeGenerator {
     private List<ToolTip> generateExcecutionElementToolTips(Map<QueryListType, List<QueryConfig>> queryLists,
                                                             List<PartitionConfig> partitions)
             throws CodeGenerationException {
+
         List<ToolTip> excecutionElementTooltipList = new ArrayList<>();
 
         List<QueryConfig> queries = new LinkedList<>();

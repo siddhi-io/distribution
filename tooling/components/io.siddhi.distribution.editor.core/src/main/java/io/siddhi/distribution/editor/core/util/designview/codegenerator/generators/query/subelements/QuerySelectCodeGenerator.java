@@ -32,6 +32,7 @@ import io.siddhi.distribution.editor.core.util.designview.utilities.CodeGenerato
 public class QuerySelectCodeGenerator {
 
     private QuerySelectCodeGenerator() {
+
     }
 
     /**
@@ -43,6 +44,7 @@ public class QuerySelectCodeGenerator {
      */
     public static String generateQuerySelect(AttributesSelectionConfig attributesSelection)
             throws CodeGenerationException {
+
         CodeGeneratorUtils.NullValidator.validateConfigObject(attributesSelection);
 
         StringBuilder attributesSelectionStringBuilder = new StringBuilder();
@@ -74,6 +76,7 @@ public class QuerySelectCodeGenerator {
      */
     private static String generateUserDefinedSelection(UserDefinedSelectionConfig userDefinedSelection)
             throws CodeGenerationException {
+
         if (userDefinedSelection == null || userDefinedSelection.getValue() == null ||
                 userDefinedSelection.getValue().isEmpty()) {
             throw new CodeGenerationException("A given user defined selection value is empty");

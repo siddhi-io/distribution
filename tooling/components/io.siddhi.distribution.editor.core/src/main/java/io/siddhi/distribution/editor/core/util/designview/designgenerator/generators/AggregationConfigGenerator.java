@@ -39,9 +39,11 @@ import java.util.List;
  * Generator to create AggregationConfig.
  */
 public class AggregationConfigGenerator extends CodeSegmentsPreserver {
+
     private String siddhiAppString;
 
     public AggregationConfigGenerator(String siddhiAppString) {
+
         this.siddhiAppString = siddhiAppString;
     }
 
@@ -54,6 +56,7 @@ public class AggregationConfigGenerator extends CodeSegmentsPreserver {
      */
     public AggregationConfig generateAggregationConfig(AggregationDefinition aggregationDefinition)
             throws DesignGenerationException {
+
         AggregationConfig aggregationConfig = new AggregationConfig();
 
         aggregationConfig.setName(aggregationDefinition.getId());
@@ -83,15 +86,18 @@ public class AggregationConfigGenerator extends CodeSegmentsPreserver {
         AnnotationConfigGenerator annotationConfigGenerator = new AnnotationConfigGenerator();
         StoreConfig storeConfig = null;
         List<String> annotationList = new ArrayList<>();
+        List<Annotation> annotationListObjects = new ArrayList<>();
         for (Annotation annotation : aggregationDefinition.getAnnotations()) {
             if (annotation.getName().equalsIgnoreCase("STORE")) {
                 storeConfig = storeConfigGenerator.generateStoreConfig(annotation);
             } else {
+                annotationListObjects.add(annotation);
                 annotationList.add(annotationConfigGenerator.generateAnnotationConfig(annotation));
             }
         }
         aggregationConfig.setStore(storeConfig);
         aggregationConfig.setAnnotationList(annotationList);
+        aggregationConfig.setAnnotationListObjects(annotationListObjects);
 
         preserveCodeSegmentsOf(annotationConfigGenerator, storeConfigGenerator, attributesSelectionConfigGenerator);
         preserveAndBindCodeSegment(aggregationDefinition, aggregationConfig);
@@ -106,6 +112,7 @@ public class AggregationConfigGenerator extends CodeSegmentsPreserver {
      * @throws DesignGenerationException Error while generating groupBy variables
      */
     private List<String> generateGroupBy(List<Variable> groupByVariables) throws DesignGenerationException {
+
         List<String> groupByList = new ArrayList<>();
         for (Variable variable : groupByVariables) {
             preserveCodeSegment(variable);
@@ -122,6 +129,7 @@ public class AggregationConfigGenerator extends CodeSegmentsPreserver {
      * @throws DesignGenerationException Unknown type of TimePeriod operator
      */
     private AggregateByTimePeriod generateAggregateByTime(TimePeriod timePeriod) throws DesignGenerationException {
+
         preserveCodeSegment(timePeriod);
         if (("INTERVAL").equalsIgnoreCase(timePeriod.getOperator().toString())) {
             return generateAggregateByTimeInterval(timePeriod.getDurations());
@@ -138,6 +146,7 @@ public class AggregationConfigGenerator extends CodeSegmentsPreserver {
      * @return AggregateByTimeInterval object
      */
     private AggregateByTimeInterval generateAggregateByTimeInterval(List<TimePeriod.Duration> durations) {
+
         List<String> intervals = new ArrayList<>();
         for (TimePeriod.Duration duration : durations) {
             intervals.add(duration.name());
@@ -152,6 +161,7 @@ public class AggregationConfigGenerator extends CodeSegmentsPreserver {
      * @return AggregateByTimeRange object
      */
     private AggregateByTimeRange generateAggregateByTimeRange(List<TimePeriod.Duration> durations) {
+
         return new AggregateByTimeRange(
                 new AggregationByTimeRangeValue(
                         (durations.get(0)).name(),
@@ -165,6 +175,7 @@ public class AggregationConfigGenerator extends CodeSegmentsPreserver {
      * @return String representing the aggregateAttribute
      */
     private String generateAggregateByAttribute(Variable aggregateAttribute) {
+
         if (aggregateAttribute != null) {
             preserveCodeSegment(aggregateAttribute);
             return aggregateAttribute.getAttributeName();

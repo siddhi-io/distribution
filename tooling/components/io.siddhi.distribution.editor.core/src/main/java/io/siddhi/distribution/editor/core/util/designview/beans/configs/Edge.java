@@ -26,42 +26,68 @@ import java.util.Objects;
  * Represents a connection between two Siddhi app design view elements.
  */
 public class Edge {
+
     private String id;
     private String parentId;
     private NodeType parentType;
     private String childId;
     private NodeType childType;
+    private boolean fromFaultStream;
 
     public Edge(String id, String parentId, NodeType parentType, String childId, NodeType childType) {
+
+        this(id, parentId, parentType, childId, childType, false);
+    }
+
+    public Edge(String id, String parentId, NodeType parentType, String childId, NodeType childType,
+                boolean fromFaultStream) {
+
         this.id = id;
         this.parentId = parentId;
         this.parentType = parentType;
         this.childId = childId;
         this.childType = childType;
+        this.fromFaultStream = fromFaultStream;
     }
 
     public String getId() {
+
         return id;
     }
 
     public String getParentId() {
+
         return parentId;
     }
 
     public NodeType getParentType() {
+
         return parentType;
     }
 
     public String getChildId() {
+
         return childId;
     }
 
     public NodeType getChildType() {
+
         return childType;
+    }
+
+    public boolean isFromFaultStream() {
+
+        return fromFaultStream;
+    }
+
+    public void setFromFaultStream(boolean fromFaultStream) {
+
+        this.fromFaultStream = fromFaultStream;
     }
 
     @Override
     public boolean equals(Object o) {
+
         if (this == o) {
             return true;
         }
@@ -69,11 +95,12 @@ public class Edge {
             return false;
         }
         Edge edge = (Edge) o;
-        return Objects.equals(id, edge.id);
+        return Objects.equals(id, edge.id) && Objects.equals(fromFaultStream, edge.fromFaultStream);
     }
 
     @Override
     public int hashCode() {
+
         return Objects.hash(id);
     }
 }

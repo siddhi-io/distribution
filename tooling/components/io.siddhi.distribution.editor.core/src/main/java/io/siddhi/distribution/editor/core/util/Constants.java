@@ -37,6 +37,7 @@ import java.util.Map;
  * Constants related to Editor.
  */
 public class Constants {
+
     public static final String RUNTIME_PATH = Utils.getRuntimePath().normalize().toString();
     public static final String CARBON_HOME = Utils.getCarbonHome().normalize().toString();
     public static final String DIRECTORY_DEPLOYMENT = "deployment";
@@ -63,8 +64,9 @@ public class Constants {
     public static final String ATTR_TYPE_STRING = "string";
     public static final String ATTR_TYPE_BOOL = "bool";
     public static final String EVENT_ATTRIBUTE_VALUE_SEPARATOR = ":";
+    public static final String FAULT_STREAM_PREFIX = "!";
     static final String FUNCTION_EXECUTOR = "FunctionExecutor";
-    static final String ATTRIBUTE_AGGREGATOR = "AttributeAggregator";
+    static final String ATTRIBUTE_AGGREGATOR = "AttributeAggregatorExecutor";
     static final String WINDOW_PROCESSOR = "WindowProcessor";
     static final String STREAM_FUNCTION_PROCESSOR = "StreamFunctionProcessor";
     static final String STREAM_PROCESSOR = "StreamProcessor";
