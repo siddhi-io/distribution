@@ -1,4 +1,4 @@
-@App:name("ReceiveAndCount")
+@App:name("AppDeploymentTestResource")
 
 @App:description('Receive events via HTTP transport and view the output on the console')
 
@@ -15,7 +15,7 @@ Executing the Sample:
 
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
         * Source Listener has created for url http://localhost:8006/productionStream
-        * ReceiveAndCount.siddhi - Started Successfully!
+        * AppDeploymentTestResource.siddhi - Started Successfully!
 
     Notes:
     If you edit this application while it's running, stop the application -> Save -> Start.

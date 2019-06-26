@@ -1,0 +1,14 @@
+@App:name("ConsumeAndStore")
+@App:description("Consume events from HTTP and write to TEST_DB")
+
+@source(type = 'http', receiver.url = "http://0.0.0.0:8006/production",
+	@map(type = 'json'))
+define stream ProductionStream (name string, amount double);
+
+@store(type='rdbms', datasource='TEST_DB')
+define table ProductionTable (name string, amount double);
+
+-- Store all events to the table
+@info(name = 'query1')
+from ProductionStream
+insert into ProductionTable;

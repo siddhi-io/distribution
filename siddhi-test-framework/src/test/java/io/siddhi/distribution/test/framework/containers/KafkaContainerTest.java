@@ -1,6 +1,24 @@
-package io.siddhi.distribution.test.framework;
+/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.siddhi.distribution.test.framework.containers;
 
 import com.google.common.collect.ImmutableMap;
+import io.siddhi.distribution.test.framework.KafkaContainer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -55,7 +73,6 @@ public class KafkaContainerTest {
                 KafkaContainer kafka = new KafkaContainer()
                         .withNetwork(network)
                         .withExternalZookeeper("zookeeper:2181");
-
                 GenericContainer zookeeper = new GenericContainer("confluentinc/cp-zookeeper:4.0.0")
                         .withNetwork(network)
                         .withNetworkAliases("zookeeper")
@@ -88,17 +105,15 @@ public class KafkaContainerTest {
         ) {
             String topicName = "messages";
             consumer.subscribe(Arrays.asList(topicName));
-            producer.send(new ProducerRecord<>(topicName, "testcontainers", "rulezzz")).get();
+            producer.send(new ProducerRecord<>(topicName, "Siddhi", "rulezzz")).get();
             Unreliables.retryUntilTrue(10, TimeUnit.SECONDS, () -> {
                 ConsumerRecords<String, String> records = consumer.poll(100);
                 if (records.isEmpty()) {
                     return false;
                 }
-                //todo change to testng
-                assertThat(records)
-                        .hasSize(1)
-                        .extracting(ConsumerRecord::topic, ConsumerRecord::key, ConsumerRecord::value)
-                        .containsExactly(tuple(topicName, "testcontainers", "rulezzz"));
+                assertThat(records).hasSize(1).extracting(ConsumerRecord::topic,
+                        ConsumerRecord::key, ConsumerRecord::value)
+                        .containsExactly(tuple(topicName, "Siddhi", "rulezzz"));
                 return true;
             });
             consumer.unsubscribe();

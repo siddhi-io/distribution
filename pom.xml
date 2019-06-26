@@ -921,7 +921,7 @@
                 <artifactId>siddhi-store-rdbms</artifactId>
                 <version>${siddhi.store.rdbms.version}</version>
             </dependency>
-            <!-- Dependencies for Siddhi related jars -->
+            <!-- Dependencies for Siddhi related ExtendingLibTestResource.jars -->
             <dependency>
                 <groupId>org.wso2.orbit.com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
@@ -1096,6 +1096,13 @@
                 <groupId>org.wso2.carbon</groupId>
                 <artifactId>org.wso2.carbon.pax.exam.feature</artifactId>
                 <version>${carbon.kernel.version}</version>
+                <type>zip</type>
+            </dependency>
+            <!-- Heakth Check API -->
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.health.check.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
 
@@ -1315,7 +1322,7 @@
                 <groupId>io.nats</groupId>
                 <artifactId>java-nats-streaming</artifactId>
                 <version>${io.nats.version}</version>
-                <scope>test</scope>
+                <!--<scope>test</scope>-->
             </dependency>
             <dependency>
                 <groupId>org.wso2.extension.siddhi.io.nats</groupId>
@@ -1388,7 +1395,7 @@
                 <version>${carbon.analytics-common.version}</version>
             </dependency>
 
-            <!--dependecies for sample related jars-->
+            <!--dependecies for sample related ExtendingLibTestResource.jars-->
             <dependency>
                 <groupId>org.wso2.extension.siddhi.io.rabbitmq</groupId>
                 <artifactId>siddhi-io-rabbitmq</artifactId>
@@ -1615,7 +1622,7 @@
         <siddhi.execution.string.version>5.0.1</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.0</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.0</siddhi.execution.regex.version>
-        <siddhi.execution.time.version>4.1.0</siddhi.execution.time.version>
+        <siddhi.execution.time.version>5.0.1</siddhi.execution.time.version>
         <siddhi.execution.json.version>2.0.0</siddhi.execution.json.version>
 
         <siddhi.execution.unitconversion.version>1.1.0</siddhi.execution.unitconversion.version>

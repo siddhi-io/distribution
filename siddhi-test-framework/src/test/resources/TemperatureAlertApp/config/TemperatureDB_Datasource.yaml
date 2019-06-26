@@ -1,0 +1,16 @@
+wso2.datasources:
+  dataSources:
+  - name: EnergyDB
+    description: The datasource used for testing
+    definition:
+      type: RDBMS
+      configuration:
+        jdbcUrl: '${DATABASE_URL}'
+        username: ${USERNAME}
+        password: ${PASSWORD}
+        driverClassName: ${JDBC_DRIVER_NAME}
+        maxPoolSize: 10
+        idleTimeout: 60000
+        connectionTestQuery: SELECT 1
+        validationTimeout: 30000
+        isAutoCommit: false 

@@ -1,23 +1,42 @@
+/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package io.siddhi.distribution.test.framework;
 
 import org.testcontainers.containers.ContainerLaunchException;
+import org.testcontainers.containers.Network;
 
 import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * MySQL docker container
  *
  */
 public class MySQLContainer extends JdbcDatabaseContainer {
-    public static final String IMAGE = "mysql";
-    public static final String DEFAULT_TAG = "5.7.22";
 
-    private static final String MY_CNF_CONFIG_OVERRIDE_PARAM_NAME = "TC_MY_CNF";
-    public static final Integer MYSQL_PORT = 3306;
-    private String databaseName = "test-siddhi";
+    private static final String IMAGE = "mysql";
+    private static final String DEFAULT_TAG = "5.7.22";
+    private static final Integer MYSQL_PORT = 3306;
+    private String databaseName = "siddhi-distribution-testdb";
     private String username = "test";
     private String password = "test";
     private static final String MYSQL_ROOT_USER = "root";
+    private boolean isNetworkingEnabled = false;
 
     public MySQLContainer() {
         super(IMAGE + ":" + DEFAULT_TAG);
@@ -34,9 +53,6 @@ public class MySQLContainer extends JdbcDatabaseContainer {
 
     @Override
     protected void configure() {
-//        optionallyMapResourceParameterAsVolume(MY_CNF_CONFIG_OVERRIDE_PARAM_NAME, "/etc/mysql/conf.d",
-//                "mysql-default-conf");
-
         addExposedPort(MYSQL_PORT);
         addEnv("MYSQL_DATABASE", databaseName);
         addEnv("MYSQL_USER", username);
@@ -46,7 +62,7 @@ public class MySQLContainer extends JdbcDatabaseContainer {
         } else if (MYSQL_ROOT_USER.equalsIgnoreCase(username)) {
             addEnv("MYSQL_ALLOW_EMPTY_PASSWORD", "yes");
         } else {
-            throw new ContainerLaunchException("Empty password can be used only with the root user");
+            throw new ContainerLaunchException("Empty password can only be used with the root user");
         }
         setStartupAttempts(3);
     }
@@ -61,20 +77,36 @@ public class MySQLContainer extends JdbcDatabaseContainer {
         return "jdbc:mysql://" + getContainerIpAddress() + ":" + getMappedPort(MYSQL_PORT) + "/" + databaseName;
     }
 
+    public String getNetworkedJdbcUrl() {
+        if (isNetworkingEnabled) {
+            return "jdbc:mysql://" + getNetworkAliases().get(0).toString() + ":" + MYSQL_PORT + "/" + databaseName;
+        }
+        return getJdbcUrl();
+    }
+
     @Override
     protected String constructUrlForConnection(String queryString) {
         String url = super.constructUrlForConnection(queryString);
-
-        if (! url.contains("useSSL=")) {
+        if (!url.contains("useSSL=")) {
             String separator = url.contains("?") ? "&" : "?";
             url = url + separator + "useSSL=false";
         }
-
-        if (! url.contains("allowPublicKeyRetrieval=")) {
+        //to handle connections from another host
+        if (!url.contains("allowPublicKeyRetrieval=")) {
             url = url + "&allowPublicKeyRetrieval=true";
         }
-
         return url;
+    }
+
+    public MySQLContainer withNetwork(Network network) {
+        super.withNetwork(network);
+        isNetworkingEnabled = true;
+        return this;
+    }
+
+    public MySQLContainer withNetworkAliases(String networkAlias) {
+        super.withNetworkAliases(networkAlias);
+        return this;
     }
 
     @Override
@@ -95,11 +127,6 @@ public class MySQLContainer extends JdbcDatabaseContainer {
     @Override
     public String getTestQueryString() {
         return "SELECT 1";
-    }
-
-    public MySQLContainer withConfigurationOverride(String s) {
-        parameters.put(MY_CNF_CONFIG_OVERRIDE_PARAM_NAME, s);
-        return this;
     }
 
     @Override

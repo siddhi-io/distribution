@@ -1,4 +1,4 @@
-@App:name('ReceiveAndCount')
+@App:name('AppDeploymentTestResource')
 @source(type='inMemory', topic='symbol', @map(type='passThrough'))
 Define stream CustomerInformationStream(name string, age int, country string);
 @sink(type='log')

@@ -274,7 +274,7 @@
                                     <type>jar</type>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>org.wso2.extension.siddhi.execution.time</groupId>
+                                    <groupId>io.siddhi.extension.execution.time</groupId>
                                     <artifactId>siddhi-execution-time</artifactId>
                                     <version>${siddhi.execution.time.version}</version>
                                     <type>jar</type>
@@ -904,7 +904,7 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.0.0</version>
                 <configuration>
-                    <imageName>${distribution.name}:${project.version}</imageName>
+                    <imageName>${distribution.name}:test</imageName>
                     <dockerDirectory>./resources/docker</dockerDirectory>
                     <resources>
                         <resource>

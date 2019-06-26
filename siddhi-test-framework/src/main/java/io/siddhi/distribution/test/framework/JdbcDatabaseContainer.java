@@ -1,39 +1,34 @@
 package io.siddhi.distribution.test.framework;
 
-import com.github.dockerjava.api.command.InspectContainerResponse;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.rnorth.ducttape.ratelimits.RateLimiter;
 import org.rnorth.ducttape.ratelimits.RateLimiterBuilder;
 import org.rnorth.ducttape.unreliables.Unreliables;
 import org.testcontainers.containers.ContainerLaunchException;
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.utility.MountableFile;
 
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import javax.sql.DataSource;
 
 /**
  * Base class for containers that expose a JDBC connection
  *
- * @author richardnorth
  */
 public abstract class JdbcDatabaseContainer extends GenericContainer {
 
     private static final Object DRIVER_LOAD_MUTEX = new Object();
-    private Driver driver;
-    private String initScriptPath;
-    protected Map<String, String> parameters = new HashMap<>();
-
     private static final RateLimiter DB_CONNECT_RATE_LIMIT = RateLimiterBuilder.newBuilder()
         .withRate(10, TimeUnit.SECONDS)
         .withConstantThroughput()
         .build();
-
+    private Driver driver;
+    private DataSource dataSource;
     private int startupTimeoutSeconds = 120;
     private int connectTimeoutSeconds = 120;
 
@@ -87,7 +82,6 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
 
     public JdbcDatabaseContainer withDatabaseName(String dbName) {
         throw new UnsupportedOperationException();
-
     }
 
     /**
@@ -104,7 +98,8 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
     /**
      * Set time to allow for the database to start and establish an initial connection, in seconds.
      *
-     * @param connectTimeoutSeconds time to allow for the database to start and establish an initial connection in seconds
+     * @param connectTimeoutSeconds time to allow for the database to start
+     *                              and establish an initial connection in seconds
      * @return self
      */
     public JdbcDatabaseContainer withConnectTimeoutSeconds(int connectTimeoutSeconds) {
@@ -112,22 +107,15 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
         return this;
     }
 
-    public JdbcDatabaseContainer withInitScript(String initScriptPath) {
-        this.initScriptPath = initScriptPath;
-        return this;
-    }
-
     @Override
     protected void waitUntilContainerStarted() {
         // Repeatedly try and open a connection to the DB and execute a test query
-
-        logger().info("Waiting for database connection to become available at {} using query '{}'", getJdbcUrl(), getTestQueryString());
+        logger().info("Waiting for database connection to become available at {} using query '{}'",
+                getJdbcUrl(), getTestQueryString());
         Unreliables.retryUntilSuccess(getStartupTimeoutSeconds(), TimeUnit.SECONDS, () -> {
-
             if (!isRunning()) {
                 throw new ContainerLaunchException("Container failed to start");
             }
-
             try (Connection connection = createConnection("")) {
                 boolean success = connection.createStatement().execute(JdbcDatabaseContainer.this.getTestQueryString());
 
@@ -135,16 +123,10 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
                     logger().info("Obtained a connection to container ({})", JdbcDatabaseContainer.this.getJdbcUrl());
                     return null;
                 } else {
-                    throw new SQLException("Failed to execute test query");
+                    throw new SQLException("Failed to execute test query:" + getTestQueryString());
                 }
             }
         });
-    }
-
-    @Override
-    protected void containerIsStarted(InspectContainerResponse containerInfo) {
-//
-//        runInitScriptIfRequired();
     }
 
     /**
@@ -153,7 +135,6 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
      * @return a JDBC Driver
      */
     public Driver getJdbcDriverInstance() {
-
         synchronized (DRIVER_LOAD_MUTEX) {
             if (driver == null) {
                 try {
@@ -163,7 +144,6 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
                 }
             }
         }
-
         return driver;
     }
 
@@ -180,9 +160,7 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
         info.put("user", this.getUsername());
         info.put("password", this.getPassword());
         final String url = constructUrlForConnection(queryString);
-
         final Driver jdbcDriverInstance = getJdbcDriverInstance();
-
         try {
             return Unreliables.retryUntilSuccess(getConnectTimeoutSeconds(), TimeUnit.SECONDS, () ->
                 DB_CONNECT_RATE_LIMIT.getWhenReady(() ->
@@ -190,6 +168,21 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
         } catch (Exception e) {
             throw new SQLException("Could not create new connection", e);
         }
+    }
+
+    public DataSource getDataSource() {
+        if (dataSource == null) {
+            dataSource = createDataSource();
+        }
+        return dataSource;
+    }
+
+    private DataSource createDataSource() {
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(getJdbcUrl());
+        hikariConfig.setUsername(getUsername());
+        hikariConfig.setPassword(getPassword());
+        return new HikariDataSource(hikariConfig);
     }
 
     /**
@@ -205,53 +198,17 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
         return getJdbcUrl() + queryString;
     }
 
-    protected void optionallyMapResourceParameterAsVolume(String paramName, String pathNameInContainer,String defaultResource) {
-        //todo null check for all
-        String resourceName = parameters.getOrDefault(paramName, defaultResource);
-
-        if (resourceName != null) {
-            final MountableFile mountableFile = MountableFile.forClasspathResource(resourceName);
-            withCopyFileToContainer(mountableFile, pathNameInContainer);
-        }
-    }
-
-//    /**
-//     * Load init script content and apply it to the database if initScriptPath is set
-//     */
-//    protected void runInitScriptIfRequired() {
-//        if (initScriptPath != null) {
-//            ScriptUtils.runInitScript(getDatabaseDelegate(), initScriptPath);
-//        }
-//    }
-
-    public void setParameters(Map<String, String> parameters) {
-        this.parameters = parameters;
-    }
-
-    @SuppressWarnings("unused")
-    public void addParameter(String paramName, String value) {
-        this.parameters.put(paramName, value);
-    }
-
     /**
      * @return startup time to allow, including image pull time, in seconds
-     * @deprecated should not be overridden anymore, use {@link #withStartupTimeoutSeconds(int)} in constructor instead
      */
-    @Deprecated
     protected int getStartupTimeoutSeconds() {
         return startupTimeoutSeconds;
     }
 
     /**
      * @return time to allow for the database to start and establish an initial connection, in seconds
-     * @deprecated should not be overridden anymore, use {@link #withConnectTimeoutSeconds(int)} in constructor instead
      */
-    @Deprecated
-    protected int getConnectTimeoutSeconds() {
+    private int getConnectTimeoutSeconds() {
         return connectTimeoutSeconds;
     }
-//
-//    protected DatabaseDelegate getDatabaseDelegate() {
-//        return new JdbcDatabaseDelegate(this, "");
-//    }
 }

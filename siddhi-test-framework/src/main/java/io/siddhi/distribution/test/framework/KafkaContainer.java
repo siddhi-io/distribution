@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package io.siddhi.distribution.test.framework;
 
 import org.testcontainers.containers.GenericContainer;
@@ -14,9 +31,9 @@ import java.util.stream.Stream;
  *
  */
 public class KafkaContainer extends GenericContainer<KafkaContainer> {
-    public static final String DEFAULT_KAFKA_VERSION = "4.0.0";
-    public static final int KAFKA_PORT = 9093;
-    public static final int ZOOKEEPER_PORT = 2181;
+    private static final String DEFAULT_KAFKA_VERSION = "4.0.0";
+    private static final int KAFKA_PORT = 9093;
+    private static final int ZOOKEEPER_PORT = 2181;
     private String externalZookeeperConnect = null;
     private SocatContainer proxy;
 
@@ -25,7 +42,8 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
     }
 
     public KafkaContainer(String confluentPlatformVersion) {
-        super(TestcontainersConfiguration.getInstance().getKafkaImage() + ":" + confluentPlatformVersion);
+        super(TestcontainersConfiguration.getInstance().getKafkaImage() + ":"
+                + confluentPlatformVersion);
 
         withNetwork(Network.newNetwork());
         withNetworkAliases("kafka-" + Base58.randomString(6));

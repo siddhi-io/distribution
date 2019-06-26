@@ -163,7 +163,7 @@ rem ----------------- Execute The Requested Command ----------------------------
 :runServer
 cd %RUNTIME_HOME%
 
-rem ---------- Add jars to classpath ----------------
+rem ---------- Add ExtendingLibTestResource.jars to classpath ----------------
 
 set CARBON_CLASSPATH="%CARBON_HOME%\bin\bootstrap\*";%CARBON_CLASSPATH%
 

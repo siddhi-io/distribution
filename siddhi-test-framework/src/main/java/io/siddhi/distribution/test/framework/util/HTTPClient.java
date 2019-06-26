@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package io.siddhi.distribution.test.framework.util;
 
 import io.netty.handler.codec.http.HttpMethod;
@@ -32,20 +31,18 @@ import java.net.URL;
 import static java.lang.System.currentTimeMillis;
 
 /**
- * Util class for test cases.
+ * HTTP Request Sender Util
  */
-public class HTTPRequestSender {
+public class HTTPClient {
     private static final String LINE_FEED = "\r\n";
     private static final String CHARSET = "UTF-8";
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(HTTPRequestSender.class);
     private HttpURLConnection connection = null;
     private OutputStream outputStream = null;
     private PrintWriter writer = null;
     private String boundary = null;
 
-    public HTTPRequestSender(URI baseURI, String path, Boolean auth, Boolean keepAlive, String methodType,
-                             String contentType, String userName, String password) {
-        try {
+    public HTTPClient(URI baseURI, String path, Boolean auth, Boolean keepAlive, String methodType,
+                      String contentType, String userName, String password) throws IOException {
             URL url = baseURI.resolve(path).toURL();
             boundary = "---------------------------" + currentTimeMillis();
 
@@ -77,9 +74,6 @@ public class HTTPRequestSender {
                 writer = new PrintWriter(new OutputStreamWriter(outputStream, CHARSET),
                         true);
             }
-        } catch (IOException e) {
-            handleException("IOException occurred while running the HttpsSourceTestCaseForSSL", e);
-        }
     }
 
     public HttpURLConnection getConnection() {
@@ -93,8 +87,7 @@ public class HTTPRequestSender {
         }
     }
 
-
-    public HTTPResponseMessage getResponse() {
+    public HTTPResponseMessage getResponse() throws IOException {
         assert connection != null;
         String successContent = null;
         String errorContent = null;
@@ -111,12 +104,9 @@ public class HTTPRequestSender {
             }
             return new HTTPResponseMessage(connection.getResponseCode(),
                     connection.getContentType(), connection.getResponseMessage(), successContent, errorContent);
-        } catch (IOException e) {
-            handleException("IOException occurred while running the HttpsSourceTestCaseForSSL", e);
         } finally {
             connection.disconnect();
         }
-        return new HTTPResponseMessage();
     }
 
     private String readSuccessContent() throws IOException {
@@ -151,8 +141,70 @@ public class HTTPRequestSender {
         }
     }
 
-    private void handleException(String msg, Exception ex) {
-        logger.error(msg, ex);
+    public static class HTTPResponseMessage {
+        private int responseCode;
+        private String contentType;
+        private String message;
+        private Object successContent;
+        private Object errorContent;
+
+        public HTTPResponseMessage(int responseCode, String contentType, String message) {
+            this.responseCode = responseCode;
+            this.contentType = contentType;
+            this.message = message;
+        }
+
+        public HTTPResponseMessage(int responseCode, String contentType, String message, Object successContent, Object
+                errorContent) {
+            this.responseCode = responseCode;
+            this.contentType = contentType;
+            this.message = message;
+            this.successContent = successContent;
+            this.errorContent = errorContent;
+        }
+
+        public HTTPResponseMessage() {
+        }
+
+        public int getResponseCode() {
+            return responseCode;
+        }
+
+        public void setResponseCode(int responseCode) {
+            this.responseCode = responseCode;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getContentType() {
+            return contentType;
+        }
+
+        public void setContentType(String contentType) {
+            this.contentType = contentType;
+        }
+
+        public Object getSuccessContent() {
+            return successContent;
+        }
+
+        public void setSuccessContent(Object content) {
+            this.successContent = content;
+        }
+
+        public Object getErrorContent() {
+            return errorContent;
+        }
+
+        public void setErrorContent(Object errorContent) {
+            this.errorContent = errorContent;
+        }
     }
 
 }
