@@ -390,7 +390,6 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <!--<scope>test</scope>-->
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -921,7 +920,7 @@
                 <artifactId>siddhi-store-rdbms</artifactId>
                 <version>${siddhi.store.rdbms.version}</version>
             </dependency>
-            <!-- Dependencies for Siddhi related ExtendingLibTestResource.jars -->
+            <!-- Dependencies for Siddhi related jars -->
             <dependency>
                 <groupId>org.wso2.orbit.com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
@@ -1322,7 +1321,6 @@
                 <groupId>io.nats</groupId>
                 <artifactId>java-nats-streaming</artifactId>
                 <version>${io.nats.version}</version>
-                <!--<scope>test</scope>-->
             </dependency>
             <dependency>
                 <groupId>org.wso2.extension.siddhi.io.nats</groupId>

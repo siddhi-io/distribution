@@ -10,7 +10,7 @@ Purpose:
 Prerequisites:
     1) The following steps must be executed to enable Siddhi to receive and publish events via the Kafka transport. Since you need to shut down the server to execute these steps, get a copy of these instructions prior to proceeding.
         a) Download the Kafka broker from here: https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz
-        b) Convert and copy the Kafka client ExtendingLibTestResource.jars from the {KafkaHome}/libs directory to the {Siddhi_Distribution_Home}/libs directory as follows.
+        b) Convert and copy the Kafka client jars from the {KafkaHome}/libs directory to the {Siddhi_Distribution_Home}/libs directory as follows.
               i) Create a directory named {Source} in a preferred location in your machine and copy the following JARs to it from the {KafkaHome}/libs directory.
                  * kafka_2.11-0.10.2.1.jar
                  * kafka-clients-0.10.2.1.jar
@@ -20,7 +20,7 @@ Prerequisites:
                  * zkclient-0.10.jar
                  * zookeeper-3.4.9.jar
              ii) Create another directory named {Destination} in a preferred location in your machine.
-            iii) To convert all the Kafka ExtendingLibTestResource.jars you copied into the {Source} directory, issue the following command,
+            iii) To convert all the Kafka jars you copied into the {Source} directory, issue the following command,
                  * For Windows: {Siddhi_Distribution_Home}/bin/jartobundle.bat <{Source} Directory Path> <{Destination} Directory Path>
                  * For Linux: sh {Siddhi_Distribution_Home}/bin/jartobundle.sh <{Source} Directory Path> <{Destination} Directory Path>
              iv) Add the OSGI converted kafka libs from {Destination} directory to {Siddhi_Distribution_Home}/lib

@@ -195,7 +195,6 @@
         <dependency>
             <groupId>io.nats</groupId>
             <artifactId>java-nats-streaming</artifactId>
-            <!--<scope>test</scope>-->
         </dependency>
         <dependency>
             <groupId>org.wso2.extension.siddhi.io.nats</groupId>
