@@ -1619,7 +1619,7 @@
         <siddhi.execution.string.version>5.0.1</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.0</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.0</siddhi.execution.regex.version>
-        <siddhi.execution.time.version>5.0.1</siddhi.execution.time.version>
+        <siddhi.execution.time.version>4.1.0</siddhi.execution.time.version>
         <siddhi.execution.json.version>2.0.0</siddhi.execution.json.version>
 
         <siddhi.execution.unitconversion.version>1.1.0</siddhi.execution.unitconversion.version>

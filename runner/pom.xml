@@ -906,7 +906,7 @@
                 <version>1.0.0</version>
                 <configuration>
                     <imageName>${distribution.name}:test</imageName>
-                    <dockerDirectory>./resources/docker</dockerDirectory>
+                    <dockerDirectory>${project.basedir}/resources/docker</dockerDirectory>
                     <resources>
                         <resource>
                             <targetPath>/</targetPath>
