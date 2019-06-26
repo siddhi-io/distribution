@@ -46,6 +46,7 @@
         <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
         <module>features/io.siddhi.distribution.metrics.core.feature</module>
         <module>features/io.siddhi.distribution.store.api.rest.feature</module>
+        <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
         <module>features/io.siddhi.distribution.health.check.core.feature</module>
 
 
@@ -274,7 +275,7 @@
                                     <type>jar</type>
                                 </artifactItem>
                                 <artifactItem>
-                                    <groupId>io.siddhi.extension.execution.time</groupId>
+                                    <groupId>org.wso2.extension.siddhi.execution.time</groupId>
                                     <artifactId>siddhi-execution-time</artifactId>
                                     <version>${siddhi.execution.time.version}</version>
                                     <type>jar</type>

@@ -1334,7 +1334,6 @@
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers</artifactId>
                 <version>${org.testcontainers.version}</version>
-                <!--<scope>compile</scope>-->
             </dependency>
 
             <!-- MSF4J related -->
@@ -1395,7 +1394,7 @@
                 <version>${carbon.analytics-common.version}</version>
             </dependency>
 
-            <!--dependecies for sample related ExtendingLibTestResource.jars-->
+            <!--dependecies for sample related jars-->
             <dependency>
                 <groupId>org.wso2.extension.siddhi.io.rabbitmq</groupId>
                 <artifactId>siddhi-io-rabbitmq</artifactId>

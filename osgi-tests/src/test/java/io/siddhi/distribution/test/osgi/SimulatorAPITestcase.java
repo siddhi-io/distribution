@@ -52,7 +52,7 @@ public class SimulatorAPITestcase {
     private static final String HOSTNAME = "localhost";
     private static final String VALID_SINGLE_EVENT_CONFIG = "{\n" +
             "  \"streamName\": \"CountStream\",\n" +
-            "  \"siddhiAppName\": \"AppDeploymentTestResource\",\n" +
+            "  \"siddhiAppName\": \"ReceiveAndCount\",\n" +
             "  \"data\": ['Customer1', 26, 'USA', 15 ]\n" +
             "}";
     private static final String IN_VALID_SINGLE_EVENT_CONFIG = "{\n" +
@@ -61,7 +61,7 @@ public class SimulatorAPITestcase {
             "}";
     private static final String VALID_FEED_EVENT_CONFIG = "{\"properties\":{\"simulationName\":\"FeedSimulation\"," +
             "\"startTimestamp\":\"\",\"endTimestamp\":\"\",\"noOfEvents\":\"\",\"description\":\"\"," +
-            "\"timeInterval\":\"1000\"},\"sources\":[{\"siddhiAppName\":\"AppDeploymentTestResource\",\"streamName\":" +
+            "\"timeInterval\":\"1000\"},\"sources\":[{\"siddhiAppName\":\"ReceiveAndCount\",\"streamName\":" +
             "\"CountStream\",\"timestampInterval\":\"1000\",\"simulationType\":\"CSV_SIMULATION\",\"fileName\":" +
             "\"sampleCSV.csv\",\"delimiter\":\",\",\"isOrdered\":true,\"indices\":\"0,1,2,3\"}]}";
     private static final String DEFAULT_USER_NAME = "admin";
@@ -89,9 +89,9 @@ public class SimulatorAPITestcase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "tooling", "siddhi-apps", "AppDeploymentTestResource.siddhi");
+                "tooling", "siddhi-apps", "ReceiveAndCount.siddhi");
         return copyFile(carbonYmlFilePath, Paths.get("wso2", "tooling", "deployment", "workspace",
-                "AppDeploymentTestResource.siddhi"));
+                "ReceiveAndCount.siddhi"));
     }
 
     private Option copyCSVFileOption() {

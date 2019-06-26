@@ -67,9 +67,9 @@ public class SiddhiToolingTestCase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "tooling", "samples", "AppDeploymentTestResource.siddhi");
+                "tooling", "samples", "ReceiveAndCount.siddhi");
         return copyFile(carbonYmlFilePath, Paths.get("wso2", "tooling", "deployment",
-                "AppDeploymentTestResource.siddhi"));
+                "ReceiveAndCount.siddhi"));
     }
 
     private Option copySampleFileOption() {
@@ -79,7 +79,7 @@ public class SiddhiToolingTestCase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "tooling", "samples", "AppDeploymentTestResource.siddhi");
+                "tooling", "samples", "ReceiveAndCount.siddhi");
         return copyFile(carbonYmlFilePath, Paths.get("samples"));
     }
 
@@ -397,7 +397,7 @@ public class SiddhiToolingTestCase {
         String path = "/editor/workspace/read/sample";
         String contentType = "text/plain";
         String method = "POST";
-        String body = "artifacts/1001/AppDeploymentTestResource.siddhi";
+        String body = "artifacts/1001/ReceiveAndCount.siddhi";
 
         logger.info("Reading a sample.");
         HTTPResponseMessage httpResponseMessage = sendHRequest(body, baseURI, path, contentType, method,
@@ -412,7 +412,7 @@ public class SiddhiToolingTestCase {
         String path = "/editor/workspace/read/sample";
         String contentType = "text/plain";
         String method = "POST";
-        String body = "wso2/editor/directoryNotExisted/AppDeploymentTestResource.siddhi";
+        String body = "wso2/editor/directoryNotExisted/ReceiveAndCount.siddhi";
 
         logger.info("Reading a sample.");
         HTTPResponseMessage httpResponseMessage = sendHRequest(body, baseURI, path, contentType, method,
