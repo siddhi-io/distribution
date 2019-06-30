@@ -894,6 +894,7 @@
                 <configuration>
                     <moduleTargetDirectory>target/</moduleTargetDirectory>
                     <includeOrigin>true</includeOrigin>
+                    <loadFromAllJars>true</loadFromAllJars>
                 </configuration>
             </plugin>
         </plugins>
