@@ -28,6 +28,7 @@
     <link href="/editor/commons/css/jquery-ui-timepicker-addon.css" rel="stylesheet" type="text/css"/>
     <link href="/editor/commons/css/simulator.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="/editor/commons/css/notification.css"/>
+    <link rel="stylesheet" type="text/css" href="/editor/commons/lib/perfect-scrollbar-1.4.0/css/perfect-scrollbar.css"/>
 
     <!--Enjoy Hint CSS-->
 
@@ -163,8 +164,8 @@
                         <button type="button" class="close pull-right output-console-activate-btn close-console-btn"><i
                                 class="fw fw-cancel"></i></button>
                     </div>
-                    <div class="nano console-wrap">
-                        <div class="output-console-content-wrapper nano-content">
+                    <div class="console-wrap">
+                        <div class="output-console-content-wrapper">
                             <div class="consoleToolbar">
                                 <a href="#" class="clear-console-btn" data-placement="right" data-toggle="tooltip"
                                    title="Clear">
@@ -193,13 +194,15 @@
 
 <!-- Start: Template for a console -->
 <div id="console-template">
-    <div class="output-console-content output-console-content-default">
+    <div class="output-console-content output-console-content-default perfect-scroller">
     </div>
 </div>
 <!-- End: Template for console -->
 <div class="hidden">
     <div id="form-template">
-        <div class="design-view-form-content">
+        <div class="form-wrapper">
+            <div class="design-view-form-content perfect-scroller"></div>
+            <div class="query-form-actions"></div>
         </div>
     </div>
 </div>
@@ -1288,7 +1291,7 @@
                     {{#ifId ../id "sink"}}
                     <input type = "text" value = "{{key}}" class = "attr-key"/>
                     {{else}}
-                    <input value = "{{key}}" class = "attr-key" readonly/>
+                    <input type = "text" value = "{{key}}" class = "attr-key" readonly/>
                     {{/ifId}}
                     <input type = "text" value = "{{value}}" class = "attr-value"/>
                     {{else}}
@@ -1338,6 +1341,76 @@
             </div>
             {{/each}}
         </div>
+    </div>
+</script>
+
+<script id="window-function-unknown-parameters-template" type = "text/template">
+    {{#if predefinedParameters}}
+    <div class="display-predefined-parameters">
+        <div class="clearfix collapse-div" data-toggle="collapse" href="#predefined-param-content"
+             aria-controls="join-{{type}}-content" aria-expanded="false">
+            <label class="parameter-label"> Supported Parameters </label>
+            <a class="collapse-icon"> </a>
+        </div>
+        <div class = "collapse" id ="predefined-param-content">
+            {{#each predefinedParameters}}
+            <div class="predefined-param">
+                {{#if optional}}
+                <label class = "predefined-param-name clearfix"> {{name}}
+                    <span class="optional-label"> (optional) </span>
+                </label>
+                {{else}}
+                <label class = "clearfix predefined-param-name"> {{name}}
+                    <span class = "optional-label"> (mandatory)</span>
+                </label>
+                {{/if}}
+                <label class="clearfix predefined-param-desc"> {{description}} </label>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
+
+    {{#if parameters}}
+        <h4> Parameters </h4>
+    <div id = "{{id}}-unknown-parameters">
+        <div class = "sub-{{id}}-parameter-div">
+            {{#each parameters}}
+            <div class = "parameter" id="{{name}}">
+                {{#if optional}}
+                <div class = "clearfix">
+                    <label class = "parameter-name optional-parameter"> {{name}} </label>
+                </div>
+                {{else}}
+                <div class="clearfix">
+                    <span class = "mandatory-symbol"> * </span>
+                    <label class = "parameter-name mandatory-parameter"> {{name}} </label>
+                </div>
+                {{/if}}
+                {{#if isMultiValue}}
+                    <div class = "clearfix param-content attribute-param">
+                    {{#each value}}
+                        <div class="attribute-param-value">
+                            <input class = "parameter-value" type = "text" value = "{{this}}">
+                            <a class = "btn-del-option"> <i class = "fw fw-delete"> </i></a>
+                        </div>
+                    {{/each}}
+                    </div>
+                {{else}}
+                    <div class = "clearfix param-content">
+                    <input class = "parameter-value" type = "text" value = "{{value}}">
+                    </div>
+                {{/if}}
+                <label class = "error-message"></label>
+            </div>
+            {{#if (isDivisor (sum @index 1) ../parameters)}}
+                </div>
+                <div class = "sub-{{../id}}-parameter-div">
+            {{/if}}
+            {{/each}}
+        </div>
+    </div>
+    {{/if}}
 </script>
 
 <script id="window-function-parameters-template" type = "text/template">
@@ -1348,32 +1421,12 @@
             {{#each parameters}}
             <div class = "parameter" id="{{name}}-parameter">
                 {{#if optional}}
-                {{#if value}}
                 <div class = "clearfix">
-                    <label class = "parameter-name optional-parameter">
-                        <input type = "checkbox" class = "parameter-checkbox" checked> {{name}}
-                    </label>
+                    <label class = "parameter-name optional-parameter">{{name}} </label>
                     <i class = "fw fw-info">
                         <span style = "display:none"> {{description}} </span>
                     </i>
                 </div>
-                <div class = "clearfix optional-param-content">
-                    <input class = "parameter-value" type = "text" value = "{{value}}">
-                </div>
-                {{else}}
-                <div class="clearfix">
-                    <label class = "parameter-name optional-parameter">
-                        <input type = "checkbox" class = "parameter-checkbox"> {{name}}
-                    </label>
-                    <i class = "fw fw-info">
-                        <span style = "display:none"> {{description}} </span>
-                    </i>
-                </div>
-                <div class="clearfix optional-param-content" style ="display:none">
-                    <input class = "parameter-value" type = "text" value="{{defaultValue}}">
-                </div>
-                {{/if}}
-                <label class = "error-message"></label>
                 {{else}}
                 <div class="clearfix">
                     <span class = "mandatory-symbol"> * </span>
@@ -1384,11 +1437,22 @@
                         <span style="display:none"> {{description}} </span>
                     </i>
                 </div>
-                <div class = "clearfix">
-                    <input class = "parameter-value" type = "text" value = "{{value}}">
-                </div>
-                <label class = "error-message"></label>
                 {{/if}}
+                    {{#if isMultiValue}}
+                    <div class = "param-content attribute-param clearfix">
+                    {{#each value}}
+                        <div class="attribute-param-value">
+                            <input class = "parameter-value" type = "text" value = "{{this}}">
+                            <a class = "btn-del-option"> <i class = "fw fw-delete"> </i></a>
+                        </div>
+                    {{/each}}
+                    </div>
+                    {{else}}
+                    <div class = "param-content clearfix">
+                    <input class = "parameter-value" type = "text" value = "{{value}}">
+                    </div>
+                    {{/if}}
+                <label class = "error-message"></label>
             </div>
             {{#if (isDivisor (sum @index 1) ../parameters)}}
         </div>
@@ -1411,7 +1475,9 @@
         <div class="partition-key">
             <div class="clearfix">
                 <div class="partition-expression"> {{> renderDropDown streamAttributes}} </div>
-                <div class="partition-stream-name"> <input class="partition-by-stream-name" value="{{streamName}}" readonly> </div>
+                <div class="partition-stream-name">
+                    <input type = "text" class="partition-by-stream-name" value="{{streamName}}" readonly>
+                </div>
             </div>
             <label class="error-message"></label>
         </div>
@@ -1433,7 +1499,7 @@
             <li class="attribute">
                 <div class="clearfix">
                     <div class="clearfix">
-                        <input type="text" class = "attribute-expression-as name" value="{{this}}">
+                        <input type="text" class = "attribute-expression name" value="{{this}}">
                         <a class = "btn-del-option"> <i class = "fw fw-delete"> </i></a>
                     </div>
                     <label class = "error-message"></label>
@@ -1464,7 +1530,7 @@
                 <div class="clearfix">
                     <div class="clearfix">
                         <input type="text" class = "attribute-expression" value="{{expression}}">
-                        <input class = "attribute-as" value="{{as}}" readonly>
+                        <input type = "text" class = "attribute-as" value="{{as}}" readonly>
                     </div>
                     <label class = "error-message"></label>
                 </div>
@@ -1560,7 +1626,7 @@
         </div>
         <div id="aggregation-from-div" class="aggregation-info">
             <label> From </label>
-            <input id="aggregation-from" class="clearfix name" value="{{from}}" readonly>
+            <input type = "text" id="aggregation-from" class="clearfix name" value="{{from}}" readonly>
         </div>
         <div id="define-aggregate-annotations">
             <h4> Annotations </h4>
@@ -1693,7 +1759,7 @@
     </div>
     <div class="define-query-into define-output-content">
         <label> Into </label>
-        <input class="clearfix name query-into" value="{{into}}" readonly>
+        <input type = "text" class="clearfix name query-into" value="{{into}}" readonly>
     </div>
     <div class="define-output-events define-output-content"> </div>
 </script>
@@ -1892,7 +1958,7 @@
         </div>
         <div class="query-from-div">
             <label> From </label>
-            <input class="clearfix name query-from" value="{{from}}" readonly>
+            <input type = "text" class="clearfix name query-from" value="{{from}}" readonly>
         </div>
         <div class="define-query-source define-source">
             <div class="define-stream-handler">
@@ -2353,6 +2419,7 @@
             js_tree: "commons/lib/js-tree-v3.3.2/jstree",
             render_json: "commons/lib/renderjson/renderjson",
             nano_scroller: "commons/lib/nanoscroller_0.8.7/jquery.nanoscroller.min",
+            perfect_scrollbar: "commons/lib/perfect-scrollbar-1.4.0/perfect-scrollbar",
             theme_wso2: "commons/lib/theme-wso2-2.0.0/js/theme-wso2.min",
             ace: "commons/lib/ace-editor",
             overlay_scroller: "commons/lib/overlay_scroll/js/jquery.overlayScrollbars.min",
@@ -2708,9 +2775,9 @@
                     "condition."
                 }
             ],
-            query_condition_syntax: ["==", ">=", ">", "<=", "<", "&&", "||", "AND", "OR"],
-            other_query_syntax: ["snapshot", "every", "within"],
-            incremental_aggregator: ["sum", "min", "max", "avg", "count", "distinctCount"],
+            query_operators: ["==", ">=", ">", "<=", "<", "AND", "OR", "NOT", "IN", "IS NULL"],
+            output_rate_limit_keywords: ["snapshot", "every", "within", "events", "ALL", "LAST", "FIRST"],
+            logic_statement_keywords: ["for", "every", "within"],
             join_types: ["join", "left_outer_join", "right_outer_join", "full_outer_join"],
             stream_handler_types: ["filter", "function","window"],
             query_output_operations: ["insert", "delete", "update", "update_or_insert_into"],
