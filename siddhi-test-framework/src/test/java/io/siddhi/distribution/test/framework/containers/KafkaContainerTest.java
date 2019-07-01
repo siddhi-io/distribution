@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.StrictAssertions.tuple;
+import static org.assertj.core.api.AssertionsForClassTypes.tuple;
 
 public class KafkaContainerTest {
 
@@ -74,6 +74,7 @@ public class KafkaContainerTest {
                 .withNetworkAliases("zookeeper")
                 .withEnv("ZOOKEEPER_CLIENT_PORT", "2181");
         zookeeper.start();
+        Thread.sleep(5000);
         KafkaContainer kafka = new KafkaContainer()
                 .withNetwork(network)
                 .withExternalZookeeper("zookeeper:2181");

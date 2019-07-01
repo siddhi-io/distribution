@@ -823,7 +823,7 @@
                                 </feature>
                                 <!-- Heath Check API -->
                                 <feature>
-                                    <id>io.siddhi.distribution.health.check.core.feature</id>
+                                    <id>io.siddhi.distribution.health.check.core.feature.group</id>
                                     <version>${io.siddhi.distribution.version}</version>
                                 </feature>
                             </features>
