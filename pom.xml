@@ -1551,7 +1551,7 @@
 
         <!--pax-exam dependencies-->
         <javax.inject.version>1.0-PFD-1</javax.inject.version>
-        <pax.exam.version>4.6.0</pax.exam.version>
+        <pax.exam.version>4.13.1</pax.exam.version>
         <pax.exam.testng.version>4.13.1</pax.exam.testng.version>
         <pax.exam.link.mvn.version>4.13.1</pax.exam.link.mvn.version>
         <ow2.jta.spec.version>1.0.13</ow2.jta.spec.version>
