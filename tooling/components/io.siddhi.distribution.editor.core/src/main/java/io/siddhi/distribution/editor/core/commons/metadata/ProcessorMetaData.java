@@ -30,6 +30,7 @@ public class ProcessorMetaData {
     private String namespace;
     private String description;
     private List<ParameterMetaData> parameters;
+    private List<String[]> parameterOverloads;
     private List<AttributeMetaData> returnAttributes;
     private String[] examples;
 
@@ -91,6 +92,16 @@ public class ProcessorMetaData {
     public void setReturnAttributes(List<AttributeMetaData> returnAttributes) {
 
         this.returnAttributes = returnAttributes;
+    }
+
+    public void setParameterOverloads(List<String[]> parameterOverloads) {
+
+        this.parameterOverloads = parameterOverloads;
+    }
+
+    public List<String[]> getParameterOverloads() {
+
+        return parameterOverloads;
     }
 
 }

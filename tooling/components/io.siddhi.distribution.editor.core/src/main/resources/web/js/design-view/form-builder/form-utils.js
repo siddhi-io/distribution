@@ -18,10 +18,10 @@
 
 define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annotationObject', 'annotationElement',
         'designViewUtils', 'queryWindowOrFunction', 'streamHandler', 'patternOrSequenceQueryCondition', 'queryOutputInsert',
-        'queryOutputDelete', 'queryOutputUpdate', 'queryOutputUpdateOrInsertInto'],
+        'queryOutputDelete', 'queryOutputUpdate', 'queryOutputUpdateOrInsertInto', 'perfect_scrollbar'],
     function (require, _, AppData, log, Constants, Handlebars, AnnotationObject, AnnotationElement, DesignViewUtils,
               QueryWindowOrFunction, StreamHandler, PatternOrSequenceQueryCondition, QueryOutputInsert, QueryOutputDelete,
-              QueryOutputUpdate, QueryOutputUpdateOrInsertInto) {
+              QueryOutputUpdate, QueryOutputUpdateOrInsertInto, PerfectScrollbar) {
 
         /**
          * @class FormUtils Contains utility methods for forms
@@ -29,7 +29,8 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @param {Object} configurationData Siddhi app data
          * @param {Object} jsPlumbInstance JsPlumb instance of the current tab
          */
-        var FormUtils = function (configurationData, jsPlumbInstance) {
+        var FormUtils = function (application, configurationData, jsPlumbInstance) {
+            this.application = application;
             this.configurationData = configurationData;
             this.jsPlumbInstance = jsPlumbInstance;
         };
@@ -167,6 +168,44 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
         };
 
         /**
+         * @function to determine if the other connection needs to be updated on click of submit
+         * @param previousObject object with the previous changes
+         * @param currentObject object with the new changes
+         * @param elementType
+         * @returns {boolean}
+         */
+        FormUtils.prototype.isUpdatingOtherElementsRequired = function (previousObject, currentObject, elementType) {
+            var isObjectChanged = false;
+            if (previousObject.getName()) {
+                if (previousObject.getName() !== currentObject.getName()) {
+                    isObjectChanged = true;
+                } else if (elementType === Constants.STREAM || elementType === Constants.TABLE ||
+                    elementType === Constants.WINDOW) {
+                    if (_.differenceWith(previousObject.getAttributeList(), currentObject.getAttributeList(),
+                        _.isEqual).length !== 0) {
+                        isObjectChanged = true;
+                    }
+                } else if (elementType === Constants.AGGREGATION) {
+                    if (!previousObject.getSelect()) {
+                        isObjectChanged = true;
+                    } else if (previousObject.getSelect().getType() != currentObject.getSelect().getType()) {
+                        isObjectChanged = true;
+                    } else if (previousObject.getSelect().getType().toLowerCase() == Constants.TYPE_USER_DEFINED) {
+                        if (_(previousObject.getSelect().getValue())
+                            .differenceBy(currentObject.getSelect().getValue(), 'expression', 'as')
+                            .map(_.partial(_.pick, _, 'expression', 'as'))
+                            .value().length !== 0) {
+                            isObjectChanged = true;
+                        }
+                    }
+                }
+            } else {
+                isObjectChanged = true;
+            }
+            return isObjectChanged;
+        };
+
+        /**
          * @function to delete the connections
          */
         FormUtils.prototype.deleteConnectionsAfterDefinitionElementNameChange = function (outConnections, inConnections) {
@@ -204,11 +243,10 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function Builds HTML for form buttons.
          * @returns {string} HTML string
          */
-        FormUtils.prototype.buildFormButtons = function () {
-            var html = '<div class="query-form-actions">' +
-                '<button type="button" id="btn-submit" class="btn btn-primary">Submit</button>' +
-                '<button type="button" id="btn-cancel" class="btn btn-default">Cancel</button> </div>';
-            return html;
+        FormUtils.prototype.buildFormButtons = function (formConsoleId) {
+            var buttonHtml = '<button type="button" id="btn-submit" class="btn btn-primary">Submit</button>' +
+                '<button type="button" id="btn-cancel" class="btn btn-default">Cancel</button>';
+            $('#' + formConsoleId).find('.query-form-actions').html(buttonHtml);
         };
 
         /**
@@ -281,7 +319,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          */
         FormUtils.prototype.appendUserSelectAttribute = function () {
             var userSelectDiv = '<li class="attribute"> <div class="clearfix"> <div class="clearfix"> ' +
-                '<input type="text" class = "attribute-expression-as name" value=""><a class = "btn-del-option"> ' +
+                '<input type="text" class = "attribute-expression name" value=""><a class = "btn-del-option"> ' +
                 '<i class = "fw fw-delete"> </i></a> </div> <label class = "error-message"></label> ' +
                 '</div> </li>';
             $('.user-defined-attributes').append(userSelectDiv);
@@ -307,7 +345,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var self = this;
             var outputConfig = self.configurationData.application.config.query_output_options;
             var queryOutputTemplate = Handlebars.compile($('#query-output-template').html())
-            ({ into: outputElement.element.name, outputConfig: outputConfig });
+            ({into: outputElement.element.name, outputConfig: outputConfig});
             $('.define-query-output').html(queryOutputTemplate);
             self.renderQueryOperation(outputElement, queryOutput);
         };
@@ -319,7 +357,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var self = this;
             if (outputElement.type.toLowerCase() == Constants.TABLE) {
                 var operationTypes = self.configurationData.application.config.query_output_operations;
-                var setAttributes = [{ attribute: "", value: "" }];
+                var setAttributes = [{attribute: "", value: ""}];
                 if (queryOutput.output) {
                     if (queryOutput.output.on) {
                         var on = queryOutput.output.on;
@@ -339,7 +377,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 });
                 $('.define-query-output .define-query-operation').append(queryOutputDiv);
                 //remove the first del button of the set attribute
-                $('.define-operation-set-condition .set-condition li:eq(0) .btn-del-option').remove();
+                $('.define-operation-set-condition .set-condition .setAttributeValue:eq(0) .btn-del-option').remove();
                 self.mapQueryOperation(queryOutput);
             } else {
                 var operationInsertDiv = '<input class="clearfix name query-operation" value="insert" readonly>';
@@ -377,7 +415,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          */
         FormUtils.prototype.renderSourceSinkStoreTypeDropDown = function (id, predefinedTypes) {
             var selectionFormTemplate = Handlebars.compile($('#type-selection-form-template').html())
-            ({ id: id, types: predefinedTypes });
+            ({id: id, types: predefinedTypes});
             $('#define-' + id).html(selectionFormTemplate);
         };
 
@@ -432,7 +470,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
         FormUtils.prototype.renderMap = function (predefinedMaps) {
             if (!$.trim($('#define-map').html()).length) {
                 var mapFormTemplate = Handlebars.compile($('#type-selection-form-template').html())
-                ({ id: "map", types: predefinedMaps });
+                ({id: "map", types: predefinedMaps});
                 $('#define-map').html(mapFormTemplate);
                 $('#define-map #map-type').val('passThrough');
                 $('#define-map #map-type option:contains("' + Constants.DEFAULT_MAPPER_TYPE + '")').
@@ -459,7 +497,8 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 customizedOptions: customizedOptions
             });
             $('#' + id + '-options-div').html(optionsTemplate);
-            self.changeCustomizedOptDiv(id);;
+            self.changeCustomizedOptDiv(id);
+            self.updatePerfectScroller();
         };
 
         /**
@@ -492,7 +531,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 $('.define-conditions .tab-content').append(wrappedHtml);
             });
             //removes the first delete button
-            $('.define-conditions').find('.nav-tabs li:eq(0) .btn-del-condition').remove();
+            $('.define-conditions').find('.nav-tabs .condition-navigation :eq(0) .btn-del-condition').remove();
         };
 
         /**
@@ -512,9 +551,46 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @param {String} id window or stream-function
          */
         FormUtils.prototype.renderFunctions = function (predefinedFunctions, className, id) {
+            var self = this;
+            var overloadParameters = self.getParameterOverloadNames(predefinedFunctions);
             var windowFunctionNameTemplate = Handlebars.compile($('#type-selection-form-template').html())
-            ({ id: id, types: predefinedFunctions });
+            ({id: id, types: overloadParameters});
             $(className).find('.defineFunctionName').html(windowFunctionNameTemplate);
+        };
+
+        /**
+         * @function to construct the stream function or window name with overload parameters
+         * @param predefinedFunctions
+         * @returns {Array}
+         */
+        FormUtils.prototype.getParameterOverloadNames = function (predefinedFunctions) {
+            var overloadParameters = [];
+            _.forEach(predefinedFunctions, function (predefinedFunction) {
+                if (predefinedFunction.parameterOverloads) {
+                    _.forEach(predefinedFunction.parameterOverloads, function (overloads) {
+                        var possibleParamNames = predefinedFunction.name + "(";
+                        _.forEach(overloads, function (overload) {
+                            possibleParamNames = possibleParamNames + overload + ","
+                        });
+                        if (overloads.length !== 0) {
+                            possibleParamNames = possibleParamNames.slice(0, -1);
+                        }
+                        possibleParamNames = possibleParamNames + ")";
+                        overloadParameters.push({name: possibleParamNames});
+                    })
+                } else {
+                    var possibleParamNames = predefinedFunction.name + "(";
+                    _.forEach(predefinedFunction.parameters, function (parameter) {
+                        possibleParamNames = possibleParamNames + parameter.name + ","
+                    });
+                    if (predefinedFunction.parameters && predefinedFunction.parameters.length !== 0) {
+                        possibleParamNames = possibleParamNames.slice(0, -1);
+                    }
+                    possibleParamNames = possibleParamNames + ")";
+                    overloadParameters.push({name: possibleParamNames});
+                }
+            });
+            return overloadParameters;
         };
 
         /**
@@ -524,6 +600,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @param {String} parameterDiv div to embed the parameters
          */
         FormUtils.prototype.renderParameters = function (parameterArray, id, parameterDiv) {
+            var self = this;
             parameterArray.sort(function (val1, val2) {
                 if (val1.optional && !val2.optional) return 1;
                 else if (!val1.optional && val2.optional) return -1;
@@ -534,6 +611,25 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 parameters: parameterArray
             });
             $(parameterDiv).find('.defineFunctionParameters').html(parameterTemplate);
+            self.updatePerfectScroller();
+        };
+
+        /**
+         * @function to render parameters if a particular function has same no of parameters in 2 or more overloads
+         * @param {Object} parameters saved parameters
+         * @param {Object} supportedParameters
+         * @param {String} id window or stream-function
+         * @param {String} parameterDiv div to embed the parameters
+         */
+        FormUtils.prototype.renderUnknownParameters = function (parameters, supportedParameters, id, parameterDiv) {
+            var self = this;
+            var parameterTemplate = Handlebars.compile($('#window-function-unknown-parameters-template').html())({
+                id: id,
+                parameters: parameters,
+                predefinedParameters: supportedParameters
+            });
+            $(parameterDiv).find('.defineFunctionParameters').html(parameterTemplate);
+            self.updatePerfectScroller();
         };
 
         /**
@@ -541,7 +637,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @param {String} type left or right
          */
         FormUtils.prototype.renderLeftRightSource = function (type) {
-            var sourceTemplate = Handlebars.compile($('#query-source-form-template').html())({ type: type });
+            var sourceTemplate = Handlebars.compile($('#query-source-form-template').html())({type: type});
             $('.define-' + type + '-source').html(sourceTemplate);
         };
 
@@ -722,7 +818,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             }
             self.renderUserDefinedAttributeSelection(attributes, "aggregate-projection");
             //removes the first delete button
-            $('.define-select').find('.user-defined-attributes li:eq(0) .btn-del-option').remove();
+            $('.define-select').find('.user-defined-attributes .attribute:eq(0) .btn-del-option').remove();
             self.selectAttributeSelection(selectedType);
         };
 
@@ -818,7 +914,9 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @return {object} parameters
          */
         FormUtils.prototype.getSelectedTypeParameters = function (selectedType, predefinedTypes) {
+            var self = this;
             var parameters = [];
+            selectedType = self.getFunctionNameWithoutParameterOverload(selectedType);
             _.forEach(predefinedTypes, function (type) {
                 if (type.name.toLowerCase() == selectedType.toLowerCase()) {
                     if (type.parameters) {
@@ -828,6 +926,54 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 }
             });
             return parameters;
+        };
+
+        /**
+         * @function to return the function name if it is concated with the parameter overloads
+         * @param functionName
+         * @returns {String}
+         */
+        FormUtils.prototype.getFunctionNameWithoutParameterOverload = function (functionName) {
+            if (functionName.includes("(")) {
+                return functionName.split("(")[0].trim();
+            }
+            return functionName;
+        };
+
+        /**
+         * @function to get only the parameters which are included in the overload
+         * @returns {Array}
+         */
+        FormUtils.prototype.getParameterOverloads = function (functionName, predefinedParameters) {
+            var parameterOverloads = [];
+            var multiValue;
+            if (functionName.includes("(")) {
+                var regexToGetTextInsideBrackets = /\(([^)]+)\)/;
+                var overloads = regexToGetTextInsideBrackets.exec(functionName)[1].trim();
+                var listOfOverloads = overloads.split(",");
+                _.forEach(listOfOverloads, function (overload, index) {
+                    multiValue = false;
+                    overload = overload.trim();
+                    _.forEach(predefinedParameters, function (parameter) {
+                        if (listOfOverloads[index+1] === Constants.MULTI_VALUE) {
+                            multiValue = true;
+                        }
+                        if (overload === parameter.name) {
+                            parameterOverloads.push({
+                                name: parameter.name,
+                                description: parameter.description,
+                                optional: parameter.optional,
+                                defaultValue: parameter.defaultValue,
+                                isMultiValue: multiValue
+                            });
+                            return false;
+                        }
+                    });
+                });
+            } else {
+                parameterOverloads = predefinedParameters;
+            }
+            return parameterOverloads;
         };
 
         /**
@@ -864,14 +1010,37 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
         /**
          * @function to obtain only the stream function names
          */
-        FormUtils.prototype.getStreamFunctionNames = function () {
+        FormUtils.prototype.getFunctionNames = function (functionType) {
             var self = this;
-            var streamFunctions = self.configurationData.rawExtensions["streamFunctions"];
-            var streamFunctionNames = [];
-            _.forEach(streamFunctions, function (streamFunction) {
-                streamFunctionNames.push(streamFunction.name);
+            var functions = [];
+            var functionNames = [];
+            if (functionType === Constants.STREAM_FUNCTION) {
+                functions = self.getParameterOverloadNames(self.configurationData.rawExtensions["streamFunctions"]);
+            } else if (functionType === Constants.AGGREGATE_FUNCTION) {
+                functions = self.getParameterOverloadNames(self.configurationData.rawExtensions["incrementalAggregators"]);
+            } else if (functionType === Constants.FUNCTION) {
+                functions = self.getParameterOverloadNames(self.configurationData.rawExtensions["functions"]);
+            }
+            _.forEach(functions, function (functionObject) {
+                functionNames.push(self.replaceDotsInParameterNamesWithUnderscore(functionObject.name));
             });
-            return streamFunctionNames;
+            return functionNames;
+        };
+
+        /**
+         * @function to replace the dots in the parameter names with underscores so that it will be easy for the user
+         * to edit the name
+         * @param parameterName
+         * @returns {String}
+         */
+        FormUtils.prototype.replaceDotsInParameterNamesWithUnderscore = function (parameterName) {
+            var name;
+            if (parameterName.includes(".")) {
+                name = parameterName.replace(/\./g, '_');
+            } else {
+                name = parameterName;
+            }
+            return name;
         };
 
         /**
@@ -894,7 +1063,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     }
                 })
                 if (!foundSavedOption) {
-                    customizedOptions.push({ name: optionName, value: optionValue });
+                    customizedOptions.push({name: optionName, value: optionValue});
                 }
             });
             return customizedOptions;
@@ -932,7 +1101,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var streamAttributesObject = [];
 
             _.forEach(streamAttributes, function (attribute) {
-                streamAttributesObject.push({ key: attribute.getName(), value: "" });
+                streamAttributesObject.push({key: attribute.getName(), value: ""});
             })
             return streamAttributesObject;
         };
@@ -1004,7 +1173,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var operationType = $('.define-query-operation .operation-type-selection').val();
             if (operationType == Constants.UPDATE_OR_INSERT_INTO || operationType == Constants.UPDATE) {
                 if ($('.define-query-operation .set-checkbox').is(':checked')) {
-                    $('.define-operation-set-condition .set-condition li').each(function () {
+                    $('.define-operation-set-condition .set-condition .setAttributeValue').each(function () {
                         var setAttribute = $(this).find('.setAttribute');
                         var setValue = $(this).find('.setValue');
                         if ((setAttribute.val().trim() != "") || (setValue.val().trim() != "")) {
@@ -1028,7 +1197,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     });
 
                     if (!isErrorOccurred && noOfSet == 0) {
-                        var firstSet = $('.define-operation-set-condition .set-condition li:eq(0)')
+                        var firstSet = $('.define-operation-set-condition .set-condition .setAttributeValue:eq(0)')
                         self.addErrorClass(firstSet.find('.setAttribute'));
                         self.addErrorClass(firstSet.find('.setValue'));
                         firstSet.find('.error-message').text("Minimum one set is required");
@@ -1095,9 +1264,9 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     }
                 }
                 if (isErrorOccurred) {
-                    $(this).addClass('active');
                     var conditionIndex = $(this).index();
-                    $('.define-conditions .nav-tabs .active').removeClass('active');
+                    $('.define-conditions .active').removeClass('active')
+                    $(this).addClass('active');
                     $('.define-conditions .condition-navigation:eq(' + conditionIndex + ')').addClass('active');
                     return false;
                 }
@@ -1117,7 +1286,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 var checkBox = $(this).find('input:checkbox');
                 if ((checkBox.length == 0 || (checkBox.length > 0 && checkBox.is(":checked")))) {
                     var inputValue = $(this).find('input:text');
-                    if (inputValue.is("visible")) {
+                    if (inputValue.is(":visible")) {
                         if (inputValue.val().trim() == "") {
                             self.addErrorClass(inputValue);
                             $(className).find('.error-message').text('Value is required');
@@ -1152,7 +1321,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var isErrorOccurred = false;
             var streamHandlerDiv = $(div).find('.define-stream-handler');
             if ($(streamHandlerDiv).find('.stream-handler-checkbox').is(':checked')) {
-                $(streamHandlerDiv).find('.stream-handler-list li').each(function () {
+                $(streamHandlerDiv).find('.stream-handler-list .define-stream-handler-content').each(function () {
                     var streamHandlerContent = $(this).find('.define-stream-handler-type-content');
                     if (streamHandlerContent.hasClass('define-filter-stream-handler')) {
                         var filterCondition = streamHandlerContent.find('.filter-condition-content')
@@ -1173,10 +1342,18 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                             predefinedParameters = self.getPredefinedParameters(streamHandlerContent,
                                 self.configurationData.rawExtensions["streamFunctions"])
                         }
-                        if (self.validateParameters(streamHandlerContent, predefinedParameters)) {
-                            self.expandCollapsedDiv($(this));
-                            isErrorOccurred = true;
-                            return false;
+                        if (streamHandlerContent.find('.display-predefined-parameters').length === 0) {
+                            if (self.validateParameters(streamHandlerContent, predefinedParameters)) {
+                                self.expandCollapsedDiv($(this));
+                                isErrorOccurred = true;
+                                return false;
+                            }
+                        } else {
+                            if (self.validateUnknownParameters(streamHandlerContent)) {
+                                self.expandCollapsedDiv($(this));
+                                isErrorOccurred = true;
+                                return false;
+                            }
                         }
                     }
                 });
@@ -1188,8 +1365,10 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to obtain the predefined parameters of particular window or stream-function type
          */
         FormUtils.prototype.getPredefinedParameters = function (div, predefinedFunctions) {
+            var self = this;
             var predefinedParameters = [];
-            var functionName = $(div).find('.defineFunctionName select').val().toLowerCase()
+            var functionName = self.getFunctionNameWithoutParameterOverload
+            ($(div).find('.defineFunctionName .custom-combobox-input').val().toLowerCase());
             _.forEach(predefinedFunctions, function (predefinedFunction) {
                 if (functionName == predefinedFunction.name.toLowerCase()) {
                     predefinedParameters = predefinedFunction.parameters;
@@ -1201,6 +1380,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
 
         /**
          * @function for generic validation of parameter values
+         * @param parameterDiv the div where the parameters are embedded
          * @param {Object} predefinedParameters predefined parameters of the selected window type
          * @return {boolean} isError
          */
@@ -1209,19 +1389,47 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var isError = false;
             $(parameterDiv).find('.parameter').each(function () {
                 var parameterValue = $(this).find('.parameter-value').val().trim();
-                var parameterName = $(this).find('.parameter-name').text().trim();;
+                var parameterName = $(this).find('.parameter-name').text().trim();
                 var predefinedParameter = self.getObject(parameterName, predefinedParameters);
                 if (!predefinedParameter.optional) {
-                    if (!self.checkParameterValue(parameterValue, predefinedParameter, this)) {
+                    if (!self.checkParameterValue(parameterValue, predefinedParameter, this, true)) {
                         isError = true;
                         return false;
                     }
                 } else {
-                    if ($(this).find('.parameter-checkbox').is(":checked")) {
-                        if (!self.checkParameterValue(parameterValue, predefinedParameter, this)) {
+                    if ($(this).find('.param-content').hasClass('attribute-param')) {
+                        $(this).find('.parameter-value').each(function (attribute) {
+                            if (!self.checkParameterValue(attribute, predefinedParameter, this, false)) {
+                                isError = true;
+                                return false;
+                            }
+                        });
+                    } else {
+                        if (!self.checkParameterValue(parameterValue, predefinedParameter, this, false)) {
                             isError = true;
                             return false;
                         }
+                    }
+                }
+            });
+            return isError;
+        };
+
+        /**
+         * @function to validate the parameters which are unknown
+         * @param parameterDiv the div where the parameters are embedded
+         * @returns {boolean}
+         */
+        FormUtils.prototype.validateUnknownParameters = function (parameterDiv) {
+            var self = this;
+            var isError = false;
+            $(parameterDiv).find('.parameter').each(function () {
+                if($(this).find('.mandatory-symbol').length !== 0) {
+                    var parameterValue = $(this).find('.parameter-value');
+                    if(parameterValue.val().trim() === "") {
+                        isError = true;
+                        $(this).find('.error-message').text('Parameter Value is required.');
+                        self.addErrorClass(parameterValue);
                     }
                 }
             });
@@ -1255,7 +1463,11 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                         .autocomplete({
                             delay: 0,
                             minLength: 0,
-                            source: $.proxy(this, "_source")
+                            classes: {
+                                "ui-autocomplete": "design-view-form-auto-complete design-view-combobox"
+                            },
+                            source: $.proxy(this, "_source"),
+                            appendTo: this.wrapper
                         })
                         .tooltip({
                             classes: {
@@ -1362,7 +1574,9 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 }
             });
 
-            $("#stream-function-type").combobox();
+            $(".define-function-stream-handler select").combobox();
+            $(".define-window-stream-handler select").combobox();
+            $("#window-type").combobox();
             $("#toggle").on("click", function () {
                 $("#combobox").toggle();
             });
@@ -1373,26 +1587,29 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @param {String} parameterValue value which needs to be validated
          * @param {Object} predefinedParameter predefined parameter object
          * @param {Object} parent div of the html to locate the parameter
+         * @param {boolean} checkForEmpty to enable empty check or not
          * @return {boolean}
          */
-        FormUtils.prototype.checkParameterValue = function (parameterValue, predefinedParameter, parent) {
+        FormUtils.prototype.checkParameterValue = function (parameterValue, predefinedParameter, parent, checkForEmpty) {
             var self = this;
-            if (parameterValue === "") {
+            if (parameterValue === "" && checkForEmpty) {
                 $(parent).find('.error-message').text('Parameter Value is required.');
                 self.addErrorClass($(parent).find('.parameter-value'));
                 return false;
             } else {
-                var dataType = predefinedParameter.type;
-                if (self.validateDataType(dataType, parameterValue)) {
-                    var errorMessage = "Invalid data-type. ";
-                    _.forEach(dataType, function (type) {
-                        errorMessage += type + " or ";
-                    });
-                    errorMessage = errorMessage.substring(0, errorMessage.length - 4);
-                    errorMessage += " is required";
-                    $(parent).find('.error-message').text(errorMessage);
-                    self.addErrorClass($(parent).find('.parameter-value'));
-                    return false;
+                if (parameterValue !== "") {
+                    var dataType = predefinedParameter.type;
+                    if (self.validateDataType(dataType, parameterValue)) {
+                        var errorMessage = "Invalid data-type. ";
+                        _.forEach(dataType, function (type) {
+                            errorMessage += type + " or ";
+                        });
+                        errorMessage = errorMessage.substring(0, errorMessage.length - 4);
+                        errorMessage += " is required";
+                        $(parent).find('.error-message').text(errorMessage);
+                        self.addErrorClass($(parent).find('.parameter-value'));
+                        return false;
+                    }
                 }
             }
             return true;
@@ -1557,8 +1774,8 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var attributes = 0;
             var projectionType = $('.define-select .attribute-selection-type');
             if (projectionType.val() == Constants.TYPE_USER_DEFINED) {
-                $('.define-select .user-defined-attributes li').each(function () {
-                    var expressionAs = $(this).find('.attribute-expression-as');
+                $('.define-select .user-defined-attributes .attribute').each(function () {
+                    var expressionAs = $(this).find('.attribute-expression');
                     var expressionAsValue = expressionAs.val().trim();
                     var separateExpression = expressionAsValue.split(/as/i);
                     if (expressionAsValue != "") {
@@ -1583,9 +1800,9 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
 
                 if (attributes == 0) {
                     isErrorOccurred = true;
-                    var firstAttributeList = '.user-defined-attributes li:first';
+                    var firstAttributeList = '.user-defined-attributes .attribute:first';
                     $(firstAttributeList).find('.error-message').text("Minimum one attribute is required.")
-                    self.addErrorClass($(firstAttributeList).find('.attribute-expression-as'));
+                    self.addErrorClass($(firstAttributeList).find('.attribute-expression'));
                 }
             } else if (!projectionType.val()) {
                 isErrorOccurred = true;
@@ -1602,7 +1819,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var isErrorOccurred = false;
             var projectionType = $('.define-select .attribute-selection-type');
             if (projectionType.val() == Constants.TYPE_USER_DEFINED) {
-                $('.define-select .user-defined-attributes li').each(function () {
+                $('.define-select .user-defined-attributes .attribute').each(function () {
                     var expression = $(this).find('.attribute-expression').val().trim();
                     if (expression == "") {
                         isErrorOccurred = true;
@@ -1699,7 +1916,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          */
         FormUtils.prototype.generateOrderByDiv = function (savedOrderBy, possibleAttributes) {
             var self = this;
-            var orderByAttributes = [{ value: "", order: "" }];
+            var orderByAttributes = [{value: "", order: ""}];
             if ((savedOrderBy && savedOrderBy.length != 0)) {
                 orderByAttributes = savedOrderBy.slice();
             }
@@ -1744,7 +1961,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          */
         FormUtils.prototype.buildQueryExpressions = function () {
             var attributes = [];
-            $('.define-select .user-defined-attributes li').each(function () {
+            $('.define-select .user-defined-attributes .attribute').each(function () {
                 var expressionValue = $(this).find('.attribute-expression').val().trim();
                 var asValue = $(this).find('.attribute-as').val().trim();
                 var expressionObject = {
@@ -1761,18 +1978,18 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          */
         FormUtils.prototype.buildAggregateExpressions = function () {
             var attributes = [];
-            $('.define-select .user-defined-attributes li').each(function () {
-                var expressionAsValue = $(this).find('.attribute-expression-as').val().trim();
-                if (expressionAsValue != "") {
+            $('.define-select .user-defined-attributes .attribute').each(function () {
+                var expressionAsValue = $(this).find('.attribute-expression').val().trim();
+                if (expressionAsValue !== "") {
                     var separateExpression = expressionAsValue.split(/as/i);
-                    if (separateExpression.length == 1) {
+                    if (separateExpression.length === 1) {
                         var expressionAs = {
                             expression: separateExpression[0].trim(),
                             as: ""
                         }
-                    } else if (separateExpression.length = 2) {
+                    } else if (separateExpression.length === 2) {
                         var asValue = "";
-                        if (separateExpression[0].trim() != separateExpression[1].trim()) {
+                        if (separateExpression[0].trim() !== separateExpression[1].trim()) {
                             asValue = separateExpression[1].trim();
                         }
                         var expressionAs = {
@@ -1822,11 +2039,11 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 var setCheckbox = $('.define-query-operation .set-checkbox');
                 if (setCheckbox.length != 0 && setCheckbox.is(":checked")) {
                     var sets = [];
-                    $('.define-operation-set-condition .set-condition li').each(function () {
+                    $('.define-operation-set-condition .set-condition .setAttributeValue').each(function () {
                         var setAttribute = $(this).find('.setAttribute').val().trim();
                         var setValue = $(this).find('.setValue').val().trim();
                         if ((setAttribute != "") && (setValue != "")) {
-                            sets.push({ attribute: setAttribute, value: setValue });
+                            sets.push({attribute: setAttribute, value: setValue});
                         }
                     });
                     _.set(outputConfig, 'set', sets);
@@ -1880,7 +2097,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var self = this;
             var streamHandlers = [];
             if (sourceDiv.find('.stream-handler-checkbox').is(':checked')) {
-                sourceDiv.find('.stream-handler-list li').each(function () {
+                sourceDiv.find('.stream-handler-list .define-stream-handler-content').each(function () {
                     var streamHandlerOptions = {};
                     var streamHandlerContent = $(this).find('.define-stream-handler-type-content');
                     if (streamHandlerContent.hasClass('define-filter-stream-handler')) {
@@ -1889,19 +2106,15 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                         _.set(streamHandlerOptions, 'value', filterCondition);
                     } else if (streamHandlerContent.hasClass('define-window-stream-handler') ||
                         streamHandlerContent.hasClass('define-function-stream-handler')) {
-                        var functionName = streamHandlerContent.find('.defineFunctionName select').val();
+                        var functionName = self.getFunctionNameWithoutParameterOverload(streamHandlerContent.find
+                        ('.defineFunctionName .custom-combobox-input').val());
                         var parameters;
-                        var predefinedFunctions;
                         var handlerType;
-                        var predefinedParameters;
                         if (streamHandlerContent.hasClass('define-window-stream-handler')) {
-                            predefinedFunctions = self.configurationData.rawExtensions["windowFunctionNames"]
-                            parameters = self.buildWindowParameters(streamHandlerContent, functionName, predefinedFunctions)
+                            parameters = self.buildParameterValues(streamHandlerContent);
                             handlerType = Constants.WINDOW.toUpperCase()
                         } else {
-                            predefinedFunctions = self.configurationData.rawExtensions["streamFunctions"]
-                            predefinedParameters = self.getPredefinedParameters(streamHandlerContent, predefinedFunctions);
-                            parameters = self.buildParameterValues(streamHandlerContent, predefinedParameters)
+                            parameters = self.buildParameterValues(streamHandlerContent);
                             handlerType = Constants.FUNCTION.toUpperCase()
                         }
                         var windowFunctionOptions = {};
@@ -1919,97 +2132,20 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
         };
 
         /**
-         * @function to build the parameters of window
-         */
-        FormUtils.prototype.buildWindowParameters = function (div, selectedType, predefinedFunctions) {
-            var self = this;
-            var parameters = [];
-            var predefinedParameters = self.getPredefinedParameters(div, predefinedFunctions)
-            if (selectedType.toLowerCase() === Constants.SORT) {
-                parameters = self.buildParameterValuesSort(div)
-            } else if (selectedType.toLowerCase() === Constants.FREQUENT ||
-                selectedType.toLowerCase() === Constants.LOSSY_FREQUENT) {
-                parameters = self.buildParameterValuesFrequentOrLossyFrequent(div,
-                    predefinedParameters)
-            } else {
-                parameters = self.buildParameterValues(div, predefinedParameters);
-            }
-            return parameters;
-        };
-
-        /**
          * @function to build the parameter values
          * @param {Object} div division where the parameters are in html
          * @param {Object} predefinedParameters predefined parameters
          */
-        FormUtils.prototype.buildParameterValues = function (div, predefinedParameters) {
+        FormUtils.prototype.buildParameterValues = function (div) {
             var self = this;
             var parameterValues = [];
-            $(div).find('.parameter').each(function () {
-                if ($(this).find('.parameter-name').hasClass('mandatory-parameter') || ($(this).find('.parameter-name')
-                        .hasClass('optional-parameter') && $(this).find('.parameter-checkbox').is(":checked"))) {
-                    var parameterValue = $(this).find('.parameter-value').val().trim();
-                    var parameterName = $(this).find('.parameter-name').text().trim();;
-                    var predefinedParameter = self.getObject(parameterName, predefinedParameters);
-                    if (predefinedParameter.type.includes("STRING")) {
-                        parameterValue = "'" + parameterValue + "'";
-                    }
-                    parameterValues.push(parameterValue);
-                }
-            });
-            return parameterValues;
-        };
-
-        /**
-         * @function to build parameters for sort type
-         * @param {Object} div where the parameters are in html
-         * @returns {Object} parameterValues
-         */
-        FormUtils.prototype.buildParameterValuesSort = function (div) {
-            var self = this;
-            var parameterValues = [];
-            $(div).find('.parameter').each(function () {
-                var parameterValue = $(this).find('.parameter-value').val().trim();
-                var parameterName = $(this).find('.parameter-name').text().trim();;
-                if (parameterName === "window.length") {
-                    parameterValues.push(parameterValue)
-                } else if (parameterName === "attribute") {
-                    if ($('#attribute-parameter').find('.parameter-checkbox').is(":checked")) {
-                        self.buildAttributes(parameterValue, parameterValues);
-                    }
+            $(div).find('.parameter .param-content').each(function () {
+                if ($(this).hasClass('attribute-param')) {
+                    self.buildAttributesParameters($(this), parameterValues);
                 } else {
-                    if (($('#attribute-parameter').find('.parameter-checkbox').is(":checked")) && ($
-                        ('#order-parameter').find('.parameter-checkbox').is(":checked"))) {
-                        parameterValue = "'" + parameterValue + "'";
-                        parameterValues.push(parameterValue)
-                    }
-                }
-            });
-            return parameterValues;
-        };
-
-        /**
-         * @function to build parameters for frequent and lossyFrequent type
-         * @param {Object} div where the parameters are in html
-         * @param {Object} predefinedParameters predefined parameters
-         * @returns {Object} parameterValues
-         */
-        FormUtils.prototype.buildParameterValuesFrequentOrLossyFrequent = function (div, predefinedParameters) {
-            var self = this;
-            var parameterValues = [];
-            $(div).find('.parameter').each(function () {
-                if ($(this).find('.parameter-name').hasClass('mandatory-parameter') || ($(this).find('.parameter-name')
-                        .hasClass('optional-parameter') && $(this).find('.parameter-checkbox').is(":checked"))) {
                     var parameterValue = $(this).find('.parameter-value').val().trim();
-                    var parameterName = $(this).find('.parameter-name').text().trim();
-                    var predefinedParameter = self.getObject(parameterName, predefinedParameters);
-                    if (parameterName === "attribute") {
-                        self.buildAttributes(parameterValue, parameterValues);
-                    } else {
-                        if (predefinedParameter.type.includes("STRING")) {
-                            parameterValue = "'" + parameterValue + "'";
-                        }
-                        parameterValues.push(parameterValue)
+                    if (parameterValue !== "") {
+                        parameterValues.push(parameterValue);
                     }
                 }
             });
@@ -2021,12 +2157,11 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @param {String} parameterValue the attribute value
          * @param {Object} parameterValues array to add the parameters
          */
-        FormUtils.prototype.buildAttributes = function (parameterValue, parameterValues) {
-            var attributeArray = parameterValue.split(',');
-            _.forEach(attributeArray, function (attribute) {
-                attribute = attribute.trim();
-                if (attribute !== "") {
-                    parameterValues.push(attribute);
+        FormUtils.prototype.buildAttributesParameters = function (attributeContent, parameterValues) {
+            $(attributeContent).find('.parameter-value').each(function () {
+                var parameterValue = $(this).val().trim();
+                if (parameterValue !== "") {
+                    parameterValues.push(parameterValue);
                 }
             });
         };
@@ -2042,10 +2177,10 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 var optionName = option.text().trim();
                 var optionValue = $(this).find('.option-value').val().trim();
                 if (option.hasClass('mandatory-option')) {
-                    elements.push({ key: optionName, value: optionValue });
+                    elements.push({key: optionName, value: optionValue});
                 } else {
                     if ($(this).find('.option-checkbox').is(":checked")) {
-                        elements.push({ key: optionName, value: optionValue });
+                        elements.push({key: optionName, value: optionValue});
                     }
                 }
             });
@@ -2262,15 +2397,13 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             self.removeNavigationForWindow(sourceDiv)
             self.showHideStreamHandlerWindowButton(sourceDiv)
             self.preventMultipleSelectionOfWindowStreamHandler(sourceDiv)
-            self.addEventListenersForParameterDiv();
-            self.showDropDown();
         };
 
         /**
          * @function to select the first condition as default
          */
         FormUtils.prototype.selectFirstConditionByDefault = function () {
-            $('.define-conditions .nav-tabs').find('li:first-child').addClass('active');
+            $('.define-conditions .nav-tabs').find('.condition-navigation:first-child').addClass('active');
             $('.define-conditions .tab-content').find('.tab-pane:first-child').addClass('active');
         };
 
@@ -2286,46 +2419,193 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 var predefinedWindowFunctions = _.orderBy(JSON.parse(JSON.stringify
                 (self.configurationData.rawExtensions["windowFunctionNames"]), ['name'], ['asc']));
                 self.renderFunctions(predefinedWindowFunctions, div, Constants.WINDOW);
-                self.mapStreamHandlerWindow(div, predefinedWindowFunctions, streamHandler);
+                self.showDropDown();
+                self.mapParameterValues(streamHandler, div, false);
             } else if (type === Constants.FUNCTION) {
                 var predefinedStreamFunctions = _.orderBy(JSON.parse(JSON.stringify
                 (self.configurationData.rawExtensions["streamFunctions"]), ['name'], ['asc']));
                 self.renderFunctions(predefinedStreamFunctions, div, Constants.STREAM_FUNCTION);
-                self.mapStreamHandlerStreamFunction(div, predefinedStreamFunctions, streamHandler)
+                self.showDropDown();
+                self.mapParameterValues(streamHandler, div, false);
             }
         };
 
         /**
-         * @function to map the window stream handler
+         * @function to map the parameters of the stream function/window
+         * @param streamHandler object which has the stream handler to be mapped
+         * @param div the div to embed the parameters
+         * @param onChange to check if the method is called on change of the drop-down or on load of the form
          */
-        FormUtils.prototype.mapStreamHandlerWindow = function (div, predefinedFunctions, streamHandler) {
+        FormUtils.prototype.mapParameterValues = function (streamHandler, div, onChange) {
             var self = this;
-            var windowType = streamHandler.value.function.toLowerCase();
-            $(div).find('#window-type option').filter(function () {
-                return ($(this).val().toLowerCase() == (windowType));
-            }).prop('selected', true);
-            var savedParameterValues = streamHandler.value.parameters;
-            var functionParameters = self.getSelectedTypeParameters(windowType, predefinedFunctions);
-            self.callToMapParameters(windowType, functionParameters, savedParameterValues, div)
-            if (windowType === Constants.SORT) {
-                self.showHideOrderForSort();
-                self.addEventListenerForSortWindow(selectedType)
+            var predefinedFunctions;
+            var functionName;
+            var parameters;
+            var savedType = streamHandler.value.function.toLowerCase();
+            var savedParameters = streamHandler.value.parameters;
+            var windowFunctionType = streamHandler.type.toLowerCase();
+            var parameterLength = {sameLength: 0};
+            if (windowFunctionType === Constants.WINDOW) {
+                predefinedFunctions = _.orderBy(_.cloneDeep
+                (self.configurationData.rawExtensions["windowFunctionNames"]), ['name'], ['asc']);
+            } else {
+                predefinedFunctions = _.orderBy(_.cloneDeep
+                (self.configurationData.rawExtensions["streamFunctions"]), ['name'], ['asc']);
             }
+            var functionParameters = self.getSelectedTypeParameters(savedType, predefinedFunctions);
+            if (!onChange) {
+                functionName = self.getFunctionNameWithParameterOverloads(predefinedFunctions, savedType,
+                    savedParameters, parameterLength)
+            } else {
+                functionName = savedType;
+            }
+            var overloadParameters = self.getParameterOverloads(functionName, functionParameters);
+            if (parameterLength.sameLength > 1 && !onChange) {
+                $(div).find('.custom-combobox-input').val(self.getFunctionNameWithoutParameterOverload(functionName));
+                parameters = self.createObjectsForUnknownParameters(functionParameters, savedParameters);
+                self.renderUnknownParameters(parameters, functionParameters, windowFunctionType, div);
+            } else {
+                $(div).find('.custom-combobox-input').val(functionName);
+                parameters = self.createObjectsForKnownParameters(overloadParameters, savedParameters);
+                self.renderParameters(parameters, windowFunctionType, div);
+            }
+            $('.attribute-param .attribute-param-value:first .btn-del-option').remove();
+            $('.attribute-param .attribute-param-value:first')
+                .append('<button class="btn btn-default btn-add-param-attribute"> + </button>');
+
+            self.addEventListenersForParameterDiv();
         };
 
         /**
-         * @function to map the stream function stream handler
+         * @function to construct the function name with corresponding parameter overload when the form is opened
          */
-        FormUtils.prototype.mapStreamHandlerStreamFunction = function (div, predefinedFunctions, streamHandler) {
-            var self = this;
-            var functionType = streamHandler.value.function.toLowerCase();
-            $(div).find('#stream-function-type option').filter(function () {
-                return ($(this).val().toLowerCase() == (functionType));
-            }).prop('selected', true);
-            var savedParameterValues = streamHandler.value.parameters;
-            var functionParameters = self.getSelectedTypeParameters(functionType, predefinedFunctions);
-            var functionParametersWithValues = self.mapUserParameterValues(functionParameters, savedParameterValues);
-            self.renderParameters(functionParametersWithValues, Constants.STREAM_FUNCTION, div);
+        FormUtils.prototype.getFunctionNameWithParameterOverloads = function (predefinedFunctions, savedType,
+                                                                              savedParameters, sameParameterLengths) {
+            var functionName = "";
+            _.forEach(predefinedFunctions, function (predefinedFunction) {
+                if (predefinedFunction.name.toLowerCase() === savedType) {
+                    if (predefinedFunction.parameterOverloads) {
+                        var nameWithUniqueOverload = predefinedFunction.name + "(";
+                        for (var i = 0; i < predefinedFunction.parameterOverloads.length; i++) {
+                            var overload = predefinedFunction.parameterOverloads[i];
+                            var lengthOfSavedParameters = savedParameters.length;
+                            var noOfOverloadParameters = overload.length;
+                            for (var k = 0; k < overload.length; k++) {
+                                if (overload[k + 1] === Constants.MULTI_VALUE) {
+                                    var multiValues = [];
+                                    for (var j = k; j < savedParameters.length; j++) {
+                                        multiValues.push(savedParameters[j])
+                                    }
+                                    lengthOfSavedParameters = lengthOfSavedParameters - (multiValues.length - 1);
+                                    noOfOverloadParameters = noOfOverloadParameters - 1;
+                                }
+                            }
+                            if (noOfOverloadParameters === lengthOfSavedParameters) {
+                                sameParameterLengths.sameLength = sameParameterLengths.sameLength + 1;
+                                nameWithUniqueOverload += overload;
+                            }
+                        }
+                        nameWithUniqueOverload += ")";
+                        functionName = nameWithUniqueOverload;
+                    } else {
+                        var nameWithAllParameters = predefinedFunction.name + "(";
+                        _.forEach(predefinedFunction.parameters, function (parameter) {
+                            nameWithAllParameters += parameter.name + ",";
+                        });
+                        if (predefinedFunction.parameters && predefinedFunction.parameters.length !== 0) {
+                            nameWithAllParameters = nameWithAllParameters.slice(0, -1);
+                        }
+                        nameWithAllParameters += ")";
+                        functionName = nameWithAllParameters
+                    }
+                }
+            });
+            return functionName;
+        };
+
+        /**
+         * @function to create parameter objects for unknown parameters
+         */
+        FormUtils.prototype.createObjectsForUnknownParameters = function (predefinedParameters, savedParameters) {
+            var parameters = [];
+            var lengthOfSavedParameters = savedParameters.length;
+            var savedParamIndex = 0;
+            for (var i = 0; i < predefinedParameters.length; i++) {
+                var name = "Parameter " + (i + 1);
+                if (i < lengthOfSavedParameters) {
+                    var savedValue = savedParameters[savedParamIndex];
+                    if (predefinedParameters[i].isMultiValue) {
+                        var parameterValue = [];
+                        for (var j = i; j < savedParameters.length; j++) {
+                            parameterValue.push(savedParameters[j]);
+                        }
+                        savedValue = parameterValue;
+                        lengthOfSavedParameters = lengthOfSavedParameters - (parameterValue.length - 1);
+                        savedParamIndex = savedParamIndex + (parameterValue.length - 1);
+                    }
+                    parameters.push({
+                        name: name, value: savedValue, optional: predefinedParameters[i].optional,
+                        isMultiValue: predefinedParameters[i].isMultiValue
+                    });
+                } else {
+                    var value;
+                    if (predefinedParameters[i].isMultiValue) {
+                        value = [""];
+                    } else {
+                        value = ""
+                    }
+                    parameters.push({
+                        name: name, value: value, optional: predefinedParameters[i].optional,
+                        isMultiValue: predefinedParameters[i].isMultiValue
+                    });
+                }
+                savedParamIndex++;
+            }
+            return parameters;
+        };
+
+        /**
+         * @function to create parameter objects for known parameters
+         */
+        FormUtils.prototype.createObjectsForKnownParameters = function (predefinedParameters, savedParameters) {
+            var parameters = [];
+            var lengthOfSavedParameters = savedParameters.length;
+            var savedParamIndex = 0;
+            for (var i = 0; i < predefinedParameters.length; i++) {
+                if (i < lengthOfSavedParameters) {
+                    var savedValue = savedParameters[savedParamIndex];
+                    if (predefinedParameters[i].isMultiValue) {
+                        var parameterValue = [];
+                        for (var j = i; j < savedParameters.length; j++) {
+                            parameterValue.push(savedParameters[j]);
+                        }
+                        savedValue = parameterValue;
+                        lengthOfSavedParameters = lengthOfSavedParameters - (parameterValue.length - 1);
+                        savedParamIndex = savedParamIndex + (parameterValue.length - 1);
+                    }
+                    parameters.push({
+                        name: predefinedParameters[i].name, value: savedValue, description:
+                        predefinedParameters[i].description, optional: predefinedParameters[i].optional,
+                        defaultValue: predefinedParameters[i].defaultValue,
+                        isMultiValue: predefinedParameters[i].isMultiValue
+                    });
+                } else {
+                    var value;
+                    if (predefinedParameters[i].isMultiValue) {
+                        value = [""];
+                    } else {
+                        value = ""
+                    }
+                    parameters.push({
+                        name: predefinedParameters[i].name, value: value, description: predefinedParameters[i]
+                            .description, optional: predefinedParameters[i].optional,
+                        defaultValue: predefinedParameters[i].defaultValue,
+                        isMultiValue: predefinedParameters[i].isMultiValue
+                    });
+                }
+                savedParamIndex++;
+            }
+            return parameters;
         };
 
         /**
@@ -2340,181 +2620,12 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                         predefinedAnnotation.isChecked = true;
                         predefinedAnnotation.values = [];
                         _.forEach(savedAnnotation.elements, function (element) {
-                            predefinedAnnotation.values.push({ value: element.value });
-                        })
+                            predefinedAnnotation.values.push({value: element.value});
+                        });
                         return false;
                     }
                 })
             });
-        };
-
-        /**
-         * @function to map the saved parameter values to the parameter object
-         * @param {Object} predefinedParameters Predefined parameters of a particular window type
-         * @param {Object} savedParameterValues Saved parameter values
-         * @return {Object} parameters
-         */
-        FormUtils.prototype.mapUserParameterValues = function (predefinedParameters, savedParameterValues) {
-            var parameters = [];
-            for (var i = 0; i < predefinedParameters.length; i++) {
-                var timeStamp = "";
-                if (i < savedParameterValues.length) {
-                    var parameterValue = savedParameterValues[i];
-                    if (predefinedParameters[i].type.includes("STRING")) {
-                        parameterValue = parameterValue.slice(1, parameterValue.length - 1)
-                    }
-                    parameters.push({
-                        name: predefinedParameters[i].name, value: parameterValue, description:
-                        predefinedParameters[i].description, optional: predefinedParameters[i].optional,
-                        defaultValue: predefinedParameters[i].defaultValue, timeStamp: timeStamp
-                    });
-                } else {
-                    parameters.push({
-                        name: predefinedParameters[i].name, value: "", description: predefinedParameters[i]
-                            .description, optional: predefinedParameters[i].optional,
-                        defaultValue: predefinedParameters[i].defaultValue, timeStamp: timeStamp
-                    });
-                }
-            }
-            return parameters;
-        };
-
-        /**
-         * @function to map the user saved parameters of lossyFrequent
-         * @param {Object} predefinedParameters predefined parameters
-         * @param {Object} savedParameterValues user saved parameters
-         * @return {Object} parameters
-         *
-         */
-        FormUtils.prototype.mapParameterValuesLossyFrequent = function (predefinedParameters, savedParameterValues) {
-            var parameters = [];
-            var attributes = "";
-            //add the two mandatory params of the saved values to the predefined param objects
-            for (var i = 0; i <= 1; i++) {
-                parameters.push({
-                    name: predefinedParameters[i].name, value: savedParameterValues[i], description:
-                    predefinedParameters[i].description, optional: predefinedParameters[i].optional,
-                    defaultValue: predefinedParameters[i].defaultValue
-                });
-            }
-            // add the attributes
-            for (var i = 2; i < savedParameterValues.length; i++) {
-                attributes += savedParameterValues[i] + ", "
-            }
-            //cutting off the last white space and the comma
-            attributes = attributes.substring(0, attributes.length - 2);
-            //add the attributes to the third obj of the predefined parameter
-            parameters.push({
-                name: predefinedParameters[2].name, value: attributes, description:
-                predefinedParameters[2].description, optional: predefinedParameters[2].optional,
-                defaultValue: predefinedParameters[2].defaultValue
-            });
-            return parameters;
-        };
-
-        /**
-         * @function to map the user saved parameters of frequent
-         * @param {Object} predefinedParameters predefined parameters
-         * @param {Object} savedParameterValues user saved parameters
-         * @return {Object} parameters
-         */
-        FormUtils.prototype.mapParameterValuesFrequent = function (predefinedParameters, savedParameterValues) {
-            var parameters = [];
-            var attributes = "";
-            //add the first saved param to predefined param's first index (event.count)
-            parameters.push({
-                name: predefinedParameters[0].name, value: savedParameterValues[0], description:
-                predefinedParameters[0].description, optional: predefinedParameters[0].optional,
-                defaultValue: predefinedParameters[0].defaultValue
-            });
-            // add the attributes
-            for (var i = 1; i < savedParameterValues.length; i++) {
-                attributes += savedParameterValues[i] + ", "
-            }
-            //cutting off the last white space and the comma
-            attributes = attributes.substring(0, attributes.length - 2);
-            //add the attributes to second obj of the predefined parameter
-            parameters.push({
-                name: predefinedParameters[1].name, value: attributes, description:
-                predefinedParameters[1].description, optional: predefinedParameters[1].optional,
-                defaultValue: predefinedParameters[1].defaultValue
-            });
-            return parameters;
-        };
-
-        /**
-         * @function to map the user saved parameters of sort
-         * @param {Object} predefinedParameters predefined parameters
-         * @param {Object} savedParameterValues user saved parameters
-         * @return {Object} parameters
-         */
-        FormUtils.prototype.mapParameterValuesSort = function (predefinedParameters, savedParameterValues) {
-            var parameters = [];
-            var attributes = "";
-            var order = "";
-            var length = "";
-            if (savedParameterValues.length != 0) {
-                length = savedParameterValues[0];
-            }
-            //add the first saved param to predefined param's first index (window.length)
-            parameters.push({
-                name: predefinedParameters[0].name, value: length, description:
-                predefinedParameters[0].description, optional: predefinedParameters[0].optional,
-                defaultValue: predefinedParameters[0].defaultValue
-            });
-            // to determine the attributes and order
-            if (savedParameterValues.length > 1) {
-                for (var i = 1; i < savedParameterValues.length; i++) {
-                    if (savedParameterValues[i].indexOf("'") >= 0 || savedParameterValues[i].indexOf('"') >= 0) {
-                        order = savedParameterValues[i];
-                        order = order.slice(1, order.length - 1)
-                    } else {
-                        //attributes
-                        attributes += savedParameterValues[i] + ", ";
-
-                    }
-                }
-                //cutting off the last white space and the comma
-                attributes = attributes.substring(0, attributes.length - 2);
-            }
-            //add the attributes to second obj of the predefined parameter
-            parameters.push({
-                name: predefinedParameters[1].name, value: attributes, description:
-                predefinedParameters[1].description, optional: predefinedParameters[1].optional,
-                defaultValue: predefinedParameters[1].defaultValue
-            });
-            //add the order to the third obj of the predefined parameter
-            parameters.push({
-                name: predefinedParameters[2].name, value: order, description:
-                predefinedParameters[2].description, optional: predefinedParameters[2].optional,
-                defaultValue: predefinedParameters[2].defaultValue
-            });
-            return parameters;
-        };
-
-        /**
-         * Function to select the parameter mapping method
-         * @param {String} selectedType selected window type
-         * @param {Object} functionParameters parameters of the selected window type
-         * @param {Object} savedParameterValues saved parameter values
-         * @param {Object} functionParametersWithValues array to hold the parameter of the mapped value
-         */
-        FormUtils.prototype.callToMapParameters = function (selectedType, functionParameters, savedParameterValues,
-                                                            parameterDiv) {
-            var self = this;
-            var functionParametersWithValues;
-            if (selectedType === Constants.SORT) {
-                functionParametersWithValues = self.mapParameterValuesSort(functionParameters, savedParameterValues);
-            } else if (selectedType === Constants.FREQUENT) {
-                functionParametersWithValues = self.mapParameterValuesFrequent(functionParameters,
-                    savedParameterValues);
-            } else if (selectedType === Constants.LOSSY_FREQUENT) {
-                functionParametersWithValues = self.mapParameterValuesLossyFrequent(functionParameters,
-                    savedParameterValues);
-            } else {
-                functionParametersWithValues = self.mapUserParameterValues(functionParameters, savedParameterValues);
-            }
-            self.renderParameters(functionParametersWithValues, Constants.WINDOW, parameterDiv);
         };
 
         /**
@@ -2536,7 +2647,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 if (!found) {
                     $(this).find('.group-by-selection option').filter(function () {
                         return ($(this).val().includes(attributes[i]));
-                    }).prop('selected', true);;
+                    }).prop('selected', true);
                 }
                 i++;
             });
@@ -2847,7 +2958,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     return false;
                 }
                 if (self.validateMandatoryElementsOfPredefinedObjects(annotation_key_info,
-                        annotation_value_info, predefinedAnnotationObject)) {
+                    annotation_value_info, predefinedAnnotationObject)) {
                     isErrorOccurred = true;
                     return false;
                 }
@@ -2867,7 +2978,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var isErrorOccurred = false;
             _.forEach(predefinedAnnotationObject.elements, function (predefinedObjectElement) {
                 if (annotationKey.text.trim().toLowerCase() == predefinedObjectElement.name
-                        .toLowerCase()) {
+                    .toLowerCase()) {
                     if (predefinedObjectElement.isMandatory) {
                         if (annotationValue.text.trim() == "") {
                             DesignViewUtils.prototype.errorAlert("Property '" + predefinedObjectElement
@@ -2886,7 +2997,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @param {Object} checkedBoxes array of saved annotation names
          */
         FormUtils.prototype.checkPredefinedAnnotations = function (checkedBoxes) {
-            var jsTreeNodes = $('#annotation-div').jstree(true).get_json('#', { 'flat': true });
+            var jsTreeNodes = $('#annotation-div').jstree(true).get_json('#', {'flat': true});
             _.forEach(checkedBoxes, function (checkedBoxName) {
                 _.forEach(jsTreeNodes, function (node) {
                     if (node.text.trim().toLowerCase() == checkedBoxName.toLowerCase()) {
@@ -3126,21 +3237,23 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to add event listeners for jstree annotations
          */
         FormUtils.prototype.addEventListenersForJstree = function (tree) {
+            var self = this;
             //to add key-value for annotation node
             $("#btn-add-key-val").on("click", function () {
                 var selectedNode = $("#annotation-div").jstree("get_selected");
                 tree.create_node(selectedNode,
                     {
-                        text: "property", class: "annotation-key", state: { "opened": true },
-                        "a_attr": { "class": "annotation-key" }, icon: "/editor/commons/images/properties.png",
+                        text: "property", class: "annotation-key", state: {"opened": true},
+                        "a_attr": {"class": "annotation-key"}, icon: "/editor/commons/images/properties.png",
                         children: [{
-                            text: "value", class: "annotation-value", "a_attr": { "class": "annotation-value" },
+                            text: "value", class: "annotation-value", "a_attr": {"class": "annotation-value"},
                             icon: "/editor/commons/images/value.png"
                         }]
                     }
                 );
                 tree.open_node(selectedNode);
                 tree.deselect_all();
+                self.updatePerfectScroller();
             });
 
             //to add annotation node
@@ -3150,13 +3263,13 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     selectedNode = "#"
                 }
                 tree.create_node(selectedNode, {
-                    text: "Annotation", class: "annotation", state: { "opened": true },
-                    "a_attr": { "class": "annotation" }, icon: "/editor/commons/images/annotation.png",
+                    text: "Annotation", class: "annotation", state: {"opened": true},
+                    "a_attr": {"class": "annotation"}, icon: "/editor/commons/images/annotation.png",
                     children: [{
                         text: "property", class: "annotation-key", icon: "/editor/commons/images/properties.png",
-                        "a_attr": { "class": "annotation-key" },
+                        "a_attr": {"class": "annotation-key"},
                         children: [{
-                            text: "value", class: "annotation-value", "a_attr": { "class": "annotation-value" },
+                            text: "value", class: "annotation-value", "a_attr": {"class": "annotation-value"},
                             icon: "/editor/commons/images/value.png"
                         }]
                     }]
@@ -3164,6 +3277,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 });
                 tree.open_node(selectedNode);
                 tree.deselect_all();
+                self.updatePerfectScroller();
             });
 
             //to delete an annotation or a key-value node
@@ -3171,6 +3285,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 var selectedNode = $("#annotation-div").jstree("get_selected");
                 tree.delete_node([selectedNode]);
                 tree.deselect_all();
+                self.updatePerfectScroller();
             })
 
             //to edit the selected node
@@ -3222,12 +3337,14 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 } else {
                     $('.group-by-content').hide();
                 }
+                self.updatePerfectScroller();
             });
 
             $('.btn-add-group-by-attribute').on('click', function () {
                 self.appendGroupBy(possibleAttributes);
                 self.preventMultipleSelection(Constants.GROUP_BY);
                 self.checkForAttributeLength(possibleAttributes.length, Constants.GROUP_BY);
+                self.updatePerfectScroller();
             });
 
             $('.define-group-by-attributes').on('change', '.group-by-selection', function () {
@@ -3239,6 +3356,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 $(this).closest('li').remove();
                 self.preventMultipleSelection(Constants.GROUP_BY);
                 self.checkForAttributeLength(possibleAttributes.length, Constants.GROUP_BY);
+                self.updatePerfectScroller();
             });
         };
 
@@ -3246,6 +3364,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to add event listeners for parameter division
          */
         FormUtils.prototype.addEventListenersForParameterDiv = function () {
+            var self = this;
             //event listener when the parameter checkbox is changed
             $('.defineFunctionParameters').on('change', '.parameter-checkbox', function () {
                 var parameterParent = $(this).parents(".parameter");
@@ -3256,6 +3375,22 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     parameterParent.find(".parameter-value").removeClass("required-input-field");
                     parameterParent.find(".error-message").text("");
                 }
+                self.updatePerfectScroller();
+            });
+
+            //event listener to delete an attribute of the attribute parameters
+            $('.defineFunctionParameters').on('click', '.btn-del-option', function () {
+                $(this).parents('.attribute-param-value').remove();
+                self.updatePerfectScroller();
+            });
+
+            var attributeParam =  '<div class="attribute-param-value">' +
+                '<input class = "parameter-value" type = "text" value = ""> ' +
+                '<a class = "btn-del-option"> <i class = "fw fw-delete"> </i></a> </div>';
+            //event listener to add an attribute of the attribute parameter
+            $('.btn-add-param-attribute').on('click', function () {
+                $(this).parents('.attribute-param').append(attributeParam);
+                self.updatePerfectScroller();
             });
         };
 
@@ -3275,56 +3410,270 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
         /**
          * @function to get the attributes of the streams connected to pattern/sequence query
          */
-        FormUtils.prototype.getInputAttributes = function (inputStreams) {
+        FormUtils.prototype.getInputAttributes = function (inputElementNames) {
             var self = this;
             var attributes = [];
-            _.forEach(inputStreams, function (stream) {
-                if (stream) {
+            _.forEach(inputElementNames, function (inputElementName) {
+                if (inputElementName) {
                     var inputElement = self.configurationData.getSiddhiAppConfig()
-                        .getDefinitionElementByName(stream);
+                        .getDefinitionElementByName(inputElementName);
                     if (inputElement.type.toLowerCase() === Constants.TRIGGER) {
-                        attributes.push(Constants.TRIGGERED_TIME);
+                        attributes.push({name: Constants.TRIGGERED_TIME});
+                    } else if (inputElement.type.toLowerCase() === Constants.AGGREGATION) {
+                        attributes = attributes.concat(self.getInputAttributesForAggregation(inputElement))
                     } else {
-                        _.forEach(inputElement.element.getAttributeList(), function (attribute) {
-                            attributes.push(attribute.getName());
-                        });
+                        attributes = attributes.concat(inputElement.element.getAttributeList());
                     }
                 }
-            })
+            });
+            return attributes;
+        };
+
+        /**
+         * @function to get the attributes of the connected aggregation element
+         * @param aggregationElement
+         */
+        FormUtils.prototype.getInputAttributesForAggregation = function (aggregationElement) {
+            var self = this;
+            var attributes = [];
+            var selectType = aggregationElement.element.getSelect().getType().toLowerCase();
+            if (selectType === Constants.TYPE_ALL) {
+                var elementConnectedToAggregation = self.configurationData.getSiddhiAppConfig().getDefinitionElementByName(aggregationElement.element.getConnectedSource());
+                if (elementConnectedToAggregation.type === Constants.STREAM) {
+                    attributes = elementConnectedToAggregation.element.getAttributeList();
+                } else {
+                    attributes.push({name: Constants.TRIGGERED_TIME});
+                }
+            } else {
+                _.forEach(aggregationElement.element.getSelect().getValue(), function (selectAttribute) {
+                    if (selectAttribute.as.trim() === "") {
+                        attributes.push({name: selectAttribute.expression})
+                    } else {
+                        attributes.push({name: selectAttribute.as})
+                    }
+                });
+            }
             return attributes;
         };
 
         /**
          * @function to add auto completion for query output operation section
          */
-        FormUtils.prototype.addAutoCompleteForOutputOperation = function (outputAttributesWithStreamName, inputAttributes) {
+        FormUtils.prototype.addAutoCompleteForOutputOperation = function (outputAttributes, inputAttributes) {
             var self = this;
-            var outputOperationMatches = outputAttributesWithStreamName.concat(inputAttributes);
-            self.createAutocomplete($('.define-query-operation input[type="text"]'), outputOperationMatches);
+            self.createAutocomplete($('.setAttribute'),
+                self.addLabelsForAutocompleteDropDowns(outputAttributes, Constants.ATTRIBUTE));
+            self.createAutocomplete($('.setValue'),
+                self.addLabelsForAutocompleteDropDowns(inputAttributes, Constants.ATTRIBUTE));
         };
+
+        /**
+         * @function to add auto-complete for select expression
+         */
+        FormUtils.prototype.addAutoCompleteForSelectExpressions = function (attributes, elementType) {
+            var self = this;
+            var incrementalAggregator = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.AGGREGATE_FUNCTION), Constants.AGGREGATE_FUNCTION);
+            var functions = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.FUNCTION), Constants.FUNCTION);
+            var selectExpressionMatches = self.addLabelsForAutocompleteDropDowns
+            (attributes, Constants.ATTRIBUTE);
+            selectExpressionMatches = selectExpressionMatches.concat(incrementalAggregator);
+            selectExpressionMatches = selectExpressionMatches.concat(functions);
+            if (elementType === Constants.AGGREGATION) {
+                selectExpressionMatches = selectExpressionMatches.concat(self.addLabelsForAutocompleteDropDowns
+                ([Constants.AS], Constants.KEYWORD));
+            }
+            self.createAutocomplete($('.attribute-expression'), selectExpressionMatches);
+        };
+
+        /**
+         * @function to add auto-complete for attributes of stream and window functions
+         */
+        FormUtils.prototype.addAutoCompleteForStreamWindowFunctionAttributes = function (attributes) {
+            var self = this;
+            var matches = self.addLabelsForAutocompleteDropDowns
+            (attributes, Constants.ATTRIBUTE);
+            var incrementalAggregator = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.AGGREGATE_FUNCTION), Constants.AGGREGATE_FUNCTION);
+            var functions = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.FUNCTION), Constants.FUNCTION);
+            matches = matches.concat(incrementalAggregator);
+            matches = matches.concat(functions);
+            self.createAutocomplete($('.parameter-value'), matches);
+        };
+
+        /**
+         * @function to add auto-complete for filter conditions
+         */
+        FormUtils.prototype.addAutoCompleteForFilterConditions = function (attributes) {
+            var self = this;
+            var queryOperators = self.addLabelsForAutocompleteDropDowns
+            (self.configurationData.application.config.query_operators, Constants.OPERATOR)
+            var incrementalAggregator = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.AGGREGATE_FUNCTION), Constants.AGGREGATE_FUNCTION);
+            var functions = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.FUNCTION), Constants.FUNCTION);
+            var filterMatches = self.addLabelsForAutocompleteDropDowns
+            (attributes, Constants.ATTRIBUTE).concat(incrementalAggregator);
+            filterMatches = filterMatches.concat(functions);
+            filterMatches = filterMatches.concat(queryOperators);
+            self.createAutocomplete($('.filter-condition-content '), filterMatches);
+        };
+
+        /**
+         * @function to add auto-complete for rate limits[query output]
+         */
+        FormUtils.prototype.addAutoCompleteForRateLimits = function () {
+            var self = this;
+            var keywords = self.addLabelsForAutocompleteDropDowns
+            (self.configurationData.application.config.output_rate_limit_keywords, Constants.KEYWORD)
+            var rateLimitingMatches = keywords.concat(self.addLabelsForAutocompleteDropDowns
+            (Constants.SIDDHI_TIME, Constants.TIME));
+            self.createAutocomplete($('.rate-limiting-value'), rateLimitingMatches);
+        };
+
+        /**
+         * @function to add auto-complete for logic statements in pattern and sequence queries
+         */
+        FormUtils.prototype.addAutoCompleteForLogicStatements = function () {
+            var self = this;
+            var conditionNames = self.addLabelsForAutocompleteDropDowns(self.getPatternSequenceInputs(), Constants.INPUT);
+            var keywords = self.addLabelsForAutocompleteDropDowns
+            (self.configurationData.application.config.logic_statement_keywords, Constants.KEYWORD);
+            var queryOperators = self.addLabelsForAutocompleteDropDowns
+            (self.configurationData.application.config.query_operators, Constants.OPERATOR);
+            var logicMatches = conditionNames.concat(keywords);
+            logicMatches = logicMatches.concat(queryOperators);
+            self.createAutocomplete($('.logic-statement'), logicMatches);
+        };
+
+        /**
+         * @function to get the condition id of pattern and sequence queries
+         * @returns {Array}
+         */
+        FormUtils.prototype.getPatternSequenceInputs = function () {
+            var conditionNames = [];
+            $('.condition-container .condition-id').each(function () {
+                var conditionName = $(this).val().trim();
+                if (conditionName !== "") {
+                    conditionNames.push(conditionName);
+                }
+            });
+            return conditionNames;
+        };
+
+        /**
+         * @function to add auto-complete for on condition in join and store queries
+         */
+        FormUtils.prototype.addAutoCompleteForOnCondition = function (attributes, inputSources) {
+            var self = this;
+            var queryOperators = self.addLabelsForAutocompleteDropDowns
+            (self.configurationData.application.config.query_operators, Constants.OPERATOR);
+            var incrementalAggregator = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.AGGREGATE_FUNCTION), Constants.AGGREGATE_FUNCTION);
+            var functions = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.FUNCTION), Constants.FUNCTION);
+            var onConditionMatches = self.addLabelsForAutocompleteDropDowns(attributes, Constants.ATTRIBUTE);
+            onConditionMatches = onConditionMatches.concat(self.addLabelsForAutocompleteDropDowns
+            (inputSources, Constants.INPUT));
+            onConditionMatches = onConditionMatches.concat(incrementalAggregator);
+            onConditionMatches = onConditionMatches.concat(functions);
+            onConditionMatches = onConditionMatches.concat(queryOperators);
+            self.createAutocomplete($('.on-condition-value'), onConditionMatches);
+            self.createAutocomplete($('.define-operation-on-condition .query-content-value'), onConditionMatches)
+        };
+
+        /**
+         * @function to add auto-complete for per and within conditions in join query
+         */
+        FormUtils.prototype.addAutoCompleteForPerWithinConditions = function (attributes) {
+            var self = this;
+            var perWithinMatches = self.addLabelsForAutocompleteDropDowns(attributes, Constants.ATTRIBUTE);
+            perWithinMatches = perWithinMatches.concat(self.addLabelsForAutocompleteDropDowns
+            (Constants.SIDDHI_TIME, Constants.TIME));
+            self.createAutocomplete($('.per-within'), perWithinMatches);
+        };
+
+        /**
+         * @function to add auto-complete for having conditions in queries
+         */
+        FormUtils.prototype.addAutoCompleteForHavingCondition = function (attributes) {
+            var self = this;
+            var queryOperators = self.addLabelsForAutocompleteDropDowns
+            (self.configurationData.application.config.query_operators, Constants.OPERATOR);
+            var incrementalAggregator = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.AGGREGATE_FUNCTION), Constants.AGGREGATE_FUNCTION);
+            var functions = self.addLabelsForAutocompleteDropDowns
+            (self.getFunctionNames(Constants.FUNCTION), Constants.FUNCTION);
+            var havingMatches = self.addLabelsForAutocompleteDropDowns(attributes, Constants.ATTRIBUTE);
+            havingMatches = havingMatches.concat(incrementalAggregator);
+            havingMatches = havingMatches.concat(functions);
+            havingMatches = havingMatches.concat(queryOperators);
+            self.createAutocomplete($('.having-value'), havingMatches);
+        };
+
 
         /**
          * @function to show the input field content on hover
          */
         FormUtils.prototype.addEventListenerToShowInputContentOnHover = function () {
             var self = this;
-            var divToShowInputContent = '<div class="hovered-content" style="display: none"> </div>';
             $('.design-view-form-content').on('mouseover', 'input[type="text"]', function () {
                 var inputField = $(this);
-                if (!inputField.next().hasClass('hovered-content')) {
-                    inputField.after(divToShowInputContent);
+                if (!inputField.is("[data-toggle]")) {
+                    inputField.attr('data-toggle', 'popover');
+                    inputField.attr('data-placement', 'bottom');
                 }
+                inputField.popover({trigger: "hover", container: 'body'}).data('bs.popover').tip()
+                    .addClass('design-view-popover');
+
                 if (inputField.val().trim() != "" && self.isElementContentOverflown(inputField)) {
-                    inputField.next('.hovered-content').html(inputField.val().trim());
-                    inputField.next('.hovered-content').show();
+                    inputField.attr('data-content', inputField.val());
+                    inputField.popover('show');
+                } else {
+                    inputField.popover('hide');
                 }
             });
-            $('.design-view-form-content').on('mouseout', 'input[type="text"]', function () {
-                $(this).next('.hovered-content').hide();
-            });
-            $('.design-view-form-content').on('focus', 'input[type="text"]', function () {
-                $(this).next('.hovered-content').hide();
-            });
+        };
+
+        /**
+         * @function to return unique condition names
+         */
+        FormUtils.prototype.getUniqueConditionName = function () {
+            var conditionName;
+            var i = 1;
+            var isUnique = false;
+            while (!isUnique) {
+                conditionName = 'e' + i;
+                $('.condition-container .nav-tabs .condition-navigation').each(function () {
+                    var name = $(this).find('a').text().trim();
+                    if (name === conditionName) {
+                        isUnique = false;
+                        return false;
+                    } else {
+                        isUnique = true;
+                    }
+                });
+                i++;
+            }
+            return conditionName;
+        };
+
+        /**
+         * @function to add new pattern or sequence condition
+         * @param inputStreamNames
+         */
+        FormUtils.prototype.addNewCondition = function (inputStreamNames) {
+            var self = this;
+            var conditionName = self.getUniqueConditionName();
+            var conditionList = [{conditionId: conditionName, streamHandlerList: [], streamName: ""}];
+            self.renderConditions(conditionList, inputStreamNames);
+            self.mapConditions(conditionList);
+            self.addEventListenersForStreamHandlersDiv([]);
+            $('.define-conditions .active').removeClass('active');
+            $('.define-conditions .nav-tabs .condition-navigation:last').addClass('active');
+            $('.define-conditions .tab-pane:last').addClass('active');
         };
 
         /**
@@ -3332,19 +3681,6 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          */
         FormUtils.prototype.isElementContentOverflown = function (element) {
             return element[0].scrollWidth > element[0].clientWidth;
-        };
-
-        /**
-         * @function to add event listeners for sort window type parameters
-         */
-        FormUtils.prototype.addEventListenerForSortWindow = function (selectedType) {
-            var self = this;
-            $('.defineFunctionParameters').on('change', '.parameter-checkbox', function () {
-                //check for sort type's parameter (order & attribute params)
-                if (selectedType === Constants.SORT) {
-                    self.showHideOrderForSort();
-                }
-            });
         };
 
         /**
@@ -3367,6 +3703,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to add event listeners for the attribute selection(projection) division
          */
         FormUtils.prototype.addEventListenersForSelectionDiv = function () {
+            var self = this;
             $('.define-select').on('change', '.attribute-selection-type', function () {
                 $('.attribute-selection-type').next('.error-message').hide();
                 if ($(this).val() === Constants.TYPE_USER_DEFINED) {
@@ -3374,10 +3711,12 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 } else {
                     $('.define-user-defined-attributes').hide();
                 }
+                self.updatePerfectScroller();
             });
 
             $('.define-select').on('click', '.btn-del-option', function () {
                 $(this).closest('li').remove();
+                self.updatePerfectScroller();
             });
         };
 
@@ -3393,6 +3732,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 } else {
                     $('.order-by-content').hide();
                 }
+                self.updatePerfectScroller();
             });
 
             $('.define-order-by-attributes').on('change', '.order-by-selection', function () {
@@ -3404,12 +3744,14 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 $(this).closest('li').remove();
                 self.preventMultipleSelection(Constants.ORDER_BY);
                 self.checkForAttributeLength(possibleAttributes.length, Constants.ORDER_BY);
+                self.updatePerfectScroller();
             });
 
             $('.btn-add-order-by-attribute').on('click', function () {
                 self.appendOrderBy(possibleAttributes);
                 self.preventMultipleSelection(Constants.ORDER_BY);
                 self.checkForAttributeLength(possibleAttributes.length, Constants.ORDER_BY);
+                self.updatePerfectScroller();
             });
         };
 
@@ -3417,7 +3759,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to add event listeners for stream handler section
          * @param {Object} streamHandlerList list of stream handlers
          */
-        FormUtils.prototype.addEventListenersForStreamHandlersDiv = function (streamHandlerList) {
+        FormUtils.prototype.addEventListenersForStreamHandlersDiv = function (streamHandlerList, attributes) {
             var self = this;
 
             //on change of stream handler checkbox
@@ -3430,66 +3772,59 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     $(sourceDiv).find('.define-stream-handler-section').hide();
                     $(sourceDiv).find('.define-stream-handler-buttons').hide();
                 }
+                self.updatePerfectScroller();
             });
 
             //on change of window type
-            var predefinedWindowFunctions = _.orderBy(JSON.parse(JSON.stringify
-            (self.configurationData.rawExtensions["windowFunctionNames"]), ['name'], ['asc']));
-            $('.define-stream-handler').on('change', '#window-type', function () {
-                var sourceDiv = self.getSourceDiv($(this))
-                if ($(sourceDiv).hasClass('define-left-source')) {
-                    var source = Constants.LEFT
-                } else {
-                    var source = Constants.RIGHT
-                }
-                var windowType;
-                var savedParameterValues;
-                var selectedType = this.value.toLowerCase();
-                var streamHandlerWindow = self.getStreamHandler(streamHandlerList, Constants.WINDOW, selectedType);
-                if (streamHandlerWindow) {
-                    windowType = streamHandlerWindow.value.function.toLowerCase();
-                    savedParameterValues = streamHandlerWindow.value.parameters;
-                }
-                var functionParameters = self.getSelectedTypeParameters(selectedType, predefinedWindowFunctions);
-                var parameterDiv = $(this).closest('.defineFunctionName').parents('.define-stream-handler-type-content');
-                if (savedParameterValues && selectedType == windowType) {
-                    self.callToMapParameters(selectedType, functionParameters, savedParameterValues, parameterDiv)
-                } else {
-                    var functionParametersWithValues = self.createObjectWithValues(functionParameters);
-                    self.renderParameters(functionParametersWithValues, Constants.WINDOW, parameterDiv);
-                }
-                if (selectedType === Constants.SORT) {
-                    self.showHideOrderForSort();
-                    self.addEventListenerForSortWindow(selectedType)
-                }
-            });
+            $(".define-stream-handler").on("autocompleteselect",
+                '.define-window-stream-handler .custom-combobox-input', function (event, ui) {
+                    var savedParameterValues = [];
+                    var selectedType = ui.item.value.toLowerCase();
+                    var streamHandlerWindow = self.getStreamHandler(streamHandlerList, Constants.WINDOW,
+                        self.getFunctionNameWithoutParameterOverload(selectedType));
+                    if (streamHandlerWindow) {
+                        savedParameterValues = streamHandlerWindow.value.parameters;
+                    }
+                    var streamHandler = {
+                        type: Constants.WINDOW,
+                        value: {
+                            function: selectedType,
+                            parameters: savedParameterValues
+                        }
+                    };
+                    var parameterDiv = $(this).closest('.defineFunctionName').parents('.define-stream-handler-type-content');
+                    self.mapParameterValues(streamHandler, parameterDiv, true);
+                    self.addAutoCompleteForStreamWindowFunctionAttributes(attributes);
+                });
 
             //on change of stream-function type
-            var predefinedStreamFunctions = _.orderBy(JSON.parse(JSON.stringify
-            (self.configurationData.rawExtensions["streamFunctions"]), ['name'], ['asc']));
-            $(".define-stream-handler").on("autocompleteselect", '.custom-combobox-input', function (event, ui) {
-                var selectedType = ui.item.value.toLowerCase();
-                var functionType;
-                var savedParameterValues;
-                var streamHandlerFunction = self.getStreamHandler(streamHandlerList, Constants.FUNCTION, selectedType);
-                if (streamHandlerFunction) {
-                    functionType = streamHandlerFunction.value.function.toLowerCase();
-                    savedParameterValues = streamHandlerFunction.value.parameters;
-                }
-                var functionParameters = self.getSelectedTypeParameters(selectedType, predefinedStreamFunctions);
-                var parameterDiv = $(this).closest('.defineFunctionName').parents('.define-stream-handler-type-content');
-                if (savedParameterValues && selectedType == functionType) {
-                    self.callToMapParameters(selectedType, functionParameters, savedParameterValues, parameterDiv)
-                } else {
-                    functionParametersWithValues = self.createObjectWithValues(functionParameters);
-                }
-                self.renderParameters(functionParametersWithValues, Constants.STREAM_FUNCTION, parameterDiv);
-            });
+            $(".define-stream-handler").on("autocompleteselect",
+                '.define-function-stream-handler .custom-combobox-input', function (event, ui) {
+                    var selectedType = ui.item.value.toLowerCase();
+                    var savedParameterValues = [];
+                    var streamHandlerFunction = self.getStreamHandler(streamHandlerList, Constants.FUNCTION,
+                        self.getFunctionNameWithoutParameterOverload(selectedType));
+                    if (streamHandlerFunction) {
+                        savedParameterValues = streamHandlerFunction.value.parameters;
+                    }
+                    var streamHandler = {
+                        type: Constants.STREAM_FUNCTION,
+                        value: {
+                            function: selectedType,
+                            parameters: savedParameterValues
+                        }
+                    };
+                    var parameterDiv = $(this).closest('.defineFunctionName').parents('.define-stream-handler-type-content');
+                    self.mapParameterValues(streamHandler, parameterDiv, true);
+                    self.addAutoCompleteForStreamWindowFunctionAttributes(attributes);
+                });
 
             //to add window
             $('.define-stream-handler').on('click', ".btn-add-window", function () {
                 var sourceDiv = self.getSourceDiv($(this));
                 self.addNewStreamHandler(sourceDiv, Constants.WINDOW);
+                self.showDropDown();
+                self.addAutoCompleteForStreamWindowFunctionAttributes(attributes);
             });
 
             //to add stream-function
@@ -3497,6 +3832,14 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 var sourceDiv = self.getSourceDiv($(this));
                 self.addNewStreamHandler(sourceDiv, Constants.FUNCTION);
                 self.showDropDown();
+                self.addAutoCompleteForStreamWindowFunctionAttributes(attributes);
+            });
+
+            //to add filter
+            $('.define-stream-handler').on('click', '.btn-add-filter', function () {
+                var sourceDiv = self.getSourceDiv($(this));
+                self.addNewStreamHandler(sourceDiv, Constants.FILTER);
+                self.addAutoCompleteForFilterConditions(attributes);
             });
 
             //on change of stream-handler type
@@ -3504,23 +3847,28 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             var previousContent;
             $('.define-stream-handler').on('focus', '.stream-handler-selection', function () {
                 previousValue = this.value;
-                previousContent = $(this).closest('.define-stream-handler-type').next().
-                find('.define-stream-handler-type-content').contents();
+                previousContent = $(this).closest('.define-stream-handler-type').
+                parents('.define-stream-handler-content').find('.define-stream-handler-type-content').contents();
 
             }).on('change', '.stream-handler-selection', function () {
                 var currentValue = this.value; // New Value
-                var currentContentDiv = $(this).closest('.define-stream-handler-type').next().
-                find('.define-stream-handler-type-content');
+                var currentContentDiv = $(this).closest('.define-stream-handler-type').
+                parents('.define-stream-handler-content').find('.define-stream-handler-type-content');
                 if (currentValue == previousValue) {
                     currentContentDiv.html(previousContent)
                 } else {
                     var sourceDiv = self.getSourceDiv($(this));
-                    var streamHandlerContent = $(this).closest('.define-stream-handler-type').next().
-                    find('.define-stream-handler-type-content');
+                    var streamHandlerContent = $(this).closest('.define-stream-handler-type').
+                    parents('.define-stream-handler-content').find('.define-stream-handler-type-content');
+                    streamHandlerContent.removeClass();
+                    streamHandlerContent.addClass('define-stream-handler-type-content');
+                    streamHandlerContent.addClass('define-' + currentValue + '-stream-handler');
                     self.renderStreamHandlerContentDiv(currentValue, streamHandlerContent)
-                    self.mapStreamHandlerContent(streamHandlerContent, self.createEmptyStreamHandler(currentValue));
+                    self.mapStreamHandlerContent(streamHandlerContent, self.createEmptyStreamHandler(currentValue))
                 }
                 self.preventMultipleSelectionOfWindowStreamHandler(sourceDiv);
+                self.addAutoCompleteForStreamWindowFunctionAttributes(attributes);
+                self.addAutoCompleteForFilterConditions(attributes);
             });
 
             //To delete stream-handler
@@ -3531,6 +3879,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 self.changeAttributeNavigation($(sourceDiv).find('.stream-handler-list'));
                 self.removeNavigationForWindow(sourceDiv)
                 self.showHideStreamHandlerWindowButton(sourceDiv)
+                self.updatePerfectScroller();
             });
 
             //To reorder up the stream-handler
@@ -3589,10 +3938,14 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          */
         FormUtils.prototype.addNewStreamHandler = function (sourceDiv, type) {
             var self = this;
-            var streamHandlerTypes = self.configurationData.application.config.stream_handler_types;
+            if ($(sourceDiv).parents('.pattern-sequence-query-form-container').length !== 0 ) {
+                var streamHandlerTypes = self.configurationData.application.config.stream_handler_types_without_window;
+            } else {
+                var streamHandlerTypes = self.configurationData.application.config.stream_handler_types;
+            }
             var id = self.getIdOfDiv(sourceDiv);
             var streamHandlerList = $(sourceDiv).find('.stream-handler-list');
-            var streamHandlerListLength = $(streamHandlerList).find('li').length
+            var streamHandlerListLength = $(streamHandlerList).find('.define-stream-handler-content').length
             var appendedIndex;
             var handlerList = '<li class="define-stream-handler-content"> <div> ' +
                 '<div class="collapse-div" href="#' + streamHandlerListLength + '-' + id + '-stream-handler-content" ' +
@@ -3624,14 +3977,13 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             self.removeNavigationForWindow(sourceDiv)
             self.showHideStreamHandlerWindowButton(sourceDiv)
             streamHandlerType[0].scrollIntoView();
+            self.updatePerfectScroller();
         };
 
         /**
          * @function to add event listeners for condition div
          */
-        FormUtils.prototype.addEventListenersForConditionDiv = function (inputStreamNames) {
-            var self = this;
-
+        FormUtils.prototype.addEventListenersForConditionDiv = function () {
             $('.define-conditions').on('input', '.condition-id', function () {
                 var conditionIndex = $(this).closest('.condition-content').index();
                 $('.define-conditions .condition-navigation:eq(' + conditionIndex + ') a:eq(0)').html($(this).val());
@@ -3642,15 +3994,15 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to remove the up and down navigation for swindow stream handler
          */
         FormUtils.prototype.removeNavigationForWindow = function (sourceDiv) {
-            var streamHandlerListLength = $(sourceDiv).find('.stream-handler-list li').length
+            var streamHandlerListLength = $(sourceDiv).find('.stream-handler-list .define-stream-handler-content').length
             var lastIndex = streamHandlerListLength - 1;
-            var lastList = $(sourceDiv).find(' .stream-handler-list li:eq(' + lastIndex + ')');
+            var lastList = $(sourceDiv).find(' .stream-handler-list .define-stream-handler-content:eq(' + lastIndex + ')');
             if (lastList.find('.define-stream-handler-type-content').hasClass('define-window-stream-handler')) {
                 lastList.find('.attr-nav a:eq(0)').remove();
                 if (streamHandlerListLength == 2) {
-                    lastList.prev('li').find('.attr-nav a:eq(0)').remove();
+                    lastList.prev('.define-stream-handler-content').find('.attr-nav a:eq(0)').remove();
                 } else {
-                    lastList.prev('li').find('.attr-nav a:eq(1)').remove();
+                    lastList.prev('.define-stream-handler-content').find('.attr-nav a:eq(1)').remove();
                 }
             }
         };
@@ -3705,7 +4057,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 streamHandlerObject = {
                     type: Constants.FUNCTION,
                     value: {
-                        function: "approximate:count", //as default
+                        function: "rdbms:query", //as default
                         parameters: []
                     }
                 }
@@ -3722,12 +4074,14 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             $("#define-attribute").on('click', '#btn-add-attribute', function () {
                 $("#attribute-div").append(self.addAttribute());
                 self.changeAttributeNavigation('#attribute-div');
+                self.updatePerfectScroller();
             });
 
             //To delete attribute
             $("#define-attribute").on('click', '#attribute-div .btn-del-attr', function () {
                 $(this).closest('li').remove();
                 self.changeAttributeNavigation('#attribute-div');
+                self.updatePerfectScroller();
             });
 
             //To reorder up the attribute
@@ -3780,6 +4134,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     optionParent.find(".option-value").removeClass("required-input-field");
                     optionParent.find(".error-message").text("");
                 }
+                self.updatePerfectScroller();
             });
 
             //To add customized option
@@ -3793,12 +4148,14 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     '<label class = "error-message"></label></li>';
                 $('#customized-' + id + '-options .cust-options').append(custOptDiv);
                 self.changeCustomizedOptDiv(id);
+                self.updatePerfectScroller();
             });
 
             //To delete customized option
             $('#' + id + '-options-div').on('click', '.btn-del-option', function () {
                 $(this).closest('li').remove();
                 self.changeCustomizedOptDiv(id);
+                self.updatePerfectScroller();
             });
         };
 
@@ -3806,7 +4163,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to add event listeners for the primary index annotation div
          */
         FormUtils.prototype.addEventListenerForPrimaryIndexAnnotationDiv = function () {
-
+            var self = this;
             //To add annotation value
             $('#primary-index-annotations').on('click', '.btn-add-annot-value', function () {
                 $(this).parents(".annotation").find("ul").append
@@ -3814,11 +4171,13 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     '<input type = "text" value = "" class = "annotation-value"/> ' +
                     '<a class = "btn-del-annot-value"> <i class = "fw fw-delete"> </i> </a> </div> ' +
                     '<label class="error-message"></label> </li>');
+                self.updatePerfectScroller();
             });
 
             //To delete annotation value
             $('#primary-index-annotations').on('click', '.btn-del-annot-value', function () {
                 $(this).closest('li').remove();
+                self.updatePerfectScroller();
             });
 
             // To show the values of the primaryKey and index annotations on change of the checkbox
@@ -3831,6 +4190,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     parent.find('.error-message').text("");
                     parent.find('.annotation-value').removeClass('required-input-field')
                 }
+                self.updatePerfectScroller();
             });
         };
 
@@ -3838,6 +4198,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to add event listeners for the predefined annotations
          */
         FormUtils.prototype.addEventListenersForPredefinedAnnotations = function () {
+            var self = this;
             $('.define-predefined-annotations').on('change', '.annotation-checkbox', function () {
                 var parent = $(this).closest(".predefined-annotation");
                 if ($(this).is(':checked')) {
@@ -3847,6 +4208,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                     parent.find('.error-message').text("");
                     parent.find('.option-value').removeClass('required-input-field')
                 }
+                self.updatePerfectScroller();
             });
         };
 
@@ -3854,8 +4216,7 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
          * @function to change the heading and the button text of the customized options div
          */
         FormUtils.prototype.changeCustomizedOptDiv = function (id) {
-            var customizedOptionList = $('#customized-' + id + '-options').
-            find('.cust-options li');
+            var customizedOptionList = $('#customized-' + id + '-options').find('.cust-options .option');
             var parent = $('#customized-' + id + '-options');
             if (customizedOptionList.length > 0) {
                 parent.find('h4').show();
@@ -3925,17 +4286,6 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
         };
 
         /**
-         * @function to show and hide the order parameter of sort type
-         */
-        FormUtils.prototype.showHideOrderForSort = function () {
-            if ($('#window-parameters #attribute-parameter').find('.parameter-checkbox').is(":checked")) {
-                $('#window-parameters #order-parameter').show();
-            } else {
-                $('#window-parameters #order-parameter').hide();
-            }
-        };
-
-        /**
          * @function to show and hide the window button for stream handlers
          */
         FormUtils.prototype.showHideStreamHandlerWindowButton = function (sourceDiv) {
@@ -3982,6 +4332,27 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
         };
 
         /**
+         * @function to initialize the perfect scroller
+         * @param formConsole
+         */
+        FormUtils.prototype.initPerfectScroller = function (formConsoleId) {
+            this.designViewPerfectScroller = (function () {
+                if (!$('#' + formConsoleId + ' .design-view-form-content').hasClass('ps')) {
+                    return new PerfectScrollbar('#' + formConsoleId + ' .design-view-form-content');
+                }
+            })();
+        };
+
+        /**
+         * @function to update the scroller when the form resizes
+         */
+        FormUtils.prototype.updatePerfectScroller = function () {
+            if (this.designViewPerfectScroller) {
+                this.designViewPerfectScroller.update();
+            }
+        };
+
+        /**
          * @function to add the error class
          * @param {Object} id object where the error needs to be added
          */
@@ -4008,31 +4379,6 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             return text[0].toUpperCase() + text.slice(1);
         };
 
-        /**
-         * @function to find matches and drops down as user types in
-         */
-        FormUtils.prototype.substringMatcher = function (text) {
-            return function findMatches(q, cb) {
-                var matches, substringRegex;
-
-                // an array that will be populated with substring matches
-                matches = [];
-
-                // regex used to determine if a string contains the substring `q`
-                substringRegex = new RegExp(q, 'i');
-
-                // iterate through the pool of strings and for any string that
-                // contains the substring `q`, add it to the `matches` array
-                $.each(text, function (i, str) {
-                    if (substringRegex.test(str)) {
-                        matches.push(str);
-                    }
-                });
-
-                cb(matches);
-            };
-        };
-
         //split the given val for space
         FormUtils.prototype.splitForAutocomplete = function (val) {
             return val.split(/\s/g);
@@ -4044,41 +4390,82 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
             return self.splitForAutocomplete(term).pop();
         };
 
+        //to add labels for autocomplete options
+        FormUtils.prototype.addLabelsForAutocompleteDropDowns = function (dropDownOptions, labelName) {
+            var optionsWithLabels = [];
+            _.forEach(dropDownOptions, function (option) {
+                optionsWithLabels.push({label: option, helper: labelName});
+            });
+            return optionsWithLabels;
+        };
+
         //create autocomplete for forms
         FormUtils.prototype.createAutocomplete = function (element, possibleOptions) {
             var self = this;
-            $(element)
-            // don't navigate away from the field on tab when selecting an item
-                .on("keydown", function (event) {
-                    if (event.keyCode === $.ui.keyCode.TAB &&
-                        $(this).autocomplete("instance").menu.active) {
-                        event.preventDefault();
-                    }
-                })
-                .autocomplete({
-                    minLength: 0,
-                    source: function (request, response) {
-                        // delegate back to autocomplete, but extract the last term
-                        response($.ui.autocomplete.filter(
-                            possibleOptions, self.extractLast(request.term)));
-                    },
-                    focus: function () {
-                        // prevent value inserted on focus
-                        return false;
-                    },
-                    select: function (event, ui) {
-                        var terms = self.splitForAutocomplete(this.value);
-                        // remove the current input
-                        terms.pop();
-                        // add the selected item
-                        terms.push(ui.item.value);
-                        // add placeholder to get the comma-and-space at the end
-                        terms.push("");
-                        this.value = terms.join(" ");
-                        return false;
-                    }
+            $(element).each(function () {
+                $(this)
+                // don't navigate away from the field on tab when selecting an item
+                    .on("keydown", function (event) {
+                        if (event.keyCode === $.ui.keyCode.TAB &&
+                            $(this).autocomplete("instance").menu.active) {
+                            event.preventDefault();
+                        }
+                    })
+                    .on("click", function () {
+                        if ($(this).val().trim() === "") {
+                            $(this).autocomplete('search', '')
+                        }
+                    })
+                    .autocomplete({
+                        minLength: 0,
+                        classes: {
+                            "ui-autocomplete": "design-view-form-auto-complete",
+                        },
+                        source: function (request, response) {
+                            // delegate back to autocomplete, but extract the last term\
+                            var matcher = new RegExp($.ui.autocomplete.escapeRegex(request.term), "i");
+                            response($.grep(possibleOptions, function (item) {
+                                return matcher.test(item.label);
+                            }), self.extractLast(request.term));
 
-                });
+                            response($.ui.autocomplete.filter(
+                                possibleOptions, self.extractLast(request.term)));
+                        },
+                        focus: function () {
+                            // prevent value inserted on focus
+                            return false;
+                        },
+                        select: function (event, ui) {
+                            var terms = self.splitForAutocomplete(this.value);
+                            // remove the current input
+                            terms.pop();
+                            // add the selected item
+                            terms.push(ui.item.value);
+                            // add placeholder to get the comma-and-space at the end
+                            terms.push("");
+                            this.value = terms.join(" ");
+                            return false;
+                        },
+                        open: function (event) {
+                            var currentAutocomplete = $(event.target).parent().find('.ui-autocomplete');
+                            currentAutocomplete.css('height', 'auto');
+                            var $input = $(event.target),
+                                inputTop = $input.offset().top,
+                                inputHeight = $input.height(),
+                                autocompleteHeight = currentAutocomplete.height(),
+                                windowHeight = $(window).height();
+
+                            if ((inputHeight + inputTop + autocompleteHeight) > windowHeight) {
+                                currentAutocomplete.css('height', (windowHeight - inputHeight - inputTop - 15) + 'px');
+                            }
+                        },
+                        appendTo: $(this).parent()
+                    }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                    return $("<li class='autocomplete-option'>")
+                        .append("<a> <span class='option-label'>" + item.label + "</span> <span class='option-helperText'> " + item.helper + "</span> </a>")
+                        .appendTo(ul)
+                };
+            })
         };
 
         /**
@@ -4142,7 +4529,8 @@ define(['require', 'lodash', 'appData', 'log', 'constants', 'handlebar', 'annota
                 case Constants.WINDOW_FILTER_PROJECTION_QUERY:
                     appData.addWindowFilterProjectionQuery(element);
                     break;
-            };
+            }
+            ;
 
             var self = this;
             var result = '';
