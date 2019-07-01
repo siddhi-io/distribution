@@ -31,8 +31,8 @@
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
         <module>samples/sample-clients</module>
-        <module>tooling</module>
         <module>runner</module>
+        <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
         <module>siddhi-test-framework</module>
