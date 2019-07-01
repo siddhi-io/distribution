@@ -36,36 +36,12 @@ test ! -d ${RUNTIME_SERVER_HOME} && echo "Siddhi Runner Home does not exist" && 
 echo "Waiting for all volumes to be mounted..."
 sleep 5
 
-#verification_count=0
-#
-#verifyMountBeforeStart()
-#{
-#  if [ ${verification_count} -eq 5 ]
-#  then
-#    echo "Mount verification timed out"
-#    return
-#  fi
-#
-#  # increment the number of times the verification had occurred
-#  verification_count=$((verification_count+1))
-#
-#  if [ ! -e $1 ]
-#  then
-#    echo "Directory $1 does not exist"
-#    echo "Waiting for the volume to be mounted..."
-#    sleep 5
-#
-#    echo "Retrying..."
-#    verifyMountBeforeStart $1
-#  else
-#    echo "Directory $1 exists"
-#  fi
-#}
-#verifyMountBeforeStart ${extend_lib_volume}
-
 # copy any configuration changes mounted to config_volume
-test -d ${extend_lib_volume}/ && cp -RL ${extend_lib_volume}/* ${RUNTIME_SERVER_HOME}/lib
-
+if [ "$(ls -A ${extend_lib_volume})" ]
+    then cp -RL ${extend_lib_volume}/* ${RUNTIME_SERVER_HOME}/lib
+else
+    echo "No extended jars to be mounted to ${RUNTIME_SERVER_HOME}/lib"
+fi
 exit_func() {
         exit 1
 }

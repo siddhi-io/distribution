@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
+import static org.assertj.core.api.StrictAssertions.tuple;
 
 public class KafkaContainerTest {
 
@@ -68,19 +68,17 @@ public class KafkaContainerTest {
 
     @Test
     public void testExternalZookeeperWithExternalNetwork() throws Exception {
-        try (
-                Network network = Network.newNetwork();
-                KafkaContainer kafka = new KafkaContainer()
-                        .withNetwork(network)
-                        .withExternalZookeeper("zookeeper:2181");
-                GenericContainer zookeeper = new GenericContainer("confluentinc/cp-zookeeper:4.0.0")
-                        .withNetwork(network)
-                        .withNetworkAliases("zookeeper")
-                        .withEnv("ZOOKEEPER_CLIENT_PORT", "2181");
-        ) {
-            Stream.of(kafka, zookeeper).parallel().forEach(GenericContainer::start);
-            testKafkaFunctionality(kafka.getBootstrapServers());
-        }
+        Network network = Network.newNetwork();
+        GenericContainer zookeeper = new GenericContainer("confluentinc/cp-zookeeper:4.0.0")
+                .withNetwork(network)
+                .withNetworkAliases("zookeeper")
+                .withEnv("ZOOKEEPER_CLIENT_PORT", "2181");
+        zookeeper.start();
+        KafkaContainer kafka = new KafkaContainer()
+                .withNetwork(network)
+                .withExternalZookeeper("zookeeper:2181");
+        kafka.start();
+        testKafkaFunctionality(kafka.getBootstrapServers());
     }
 
     private void testKafkaFunctionality(String bootstrapServers) throws Exception {

@@ -27,6 +27,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.Base64;
 
 import static java.lang.System.currentTimeMillis;
 
@@ -43,37 +44,37 @@ public class HTTPClient {
 
     public HTTPClient(URI baseURI, String path, Boolean auth, Boolean keepAlive, String methodType,
                       String contentType, String userName, String password) throws IOException {
-            URL url = baseURI.resolve(path).toURL();
-            boundary = "---------------------------" + currentTimeMillis();
 
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("Accept-Charset", CHARSET);
-            connection.setRequestMethod(methodType);
-            setHeader("HTTP_METHOD", methodType);
-            if (keepAlive) {
-                connection.setRequestProperty("Connection", "Keep-Alive");
+        URL url = baseURI.resolve(path).toURL();
+        boundary = "---------------------------" + currentTimeMillis();
+        connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("Accept-Charset", CHARSET);
+        connection.setRequestMethod(methodType);
+        setHeader("HTTP_METHOD", methodType);
+        if (keepAlive) {
+            connection.setRequestProperty("Connection", "Keep-Alive");
+        }
+        if (contentType != null) {
+            if (contentType.equals("multipart/form-data")) {
+                setHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
+            } else {
+                setHeader("Content-Type", contentType);
             }
-            if (contentType != null) {
-                if (contentType.equals("multipart/form-data")) {
-                    setHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
-                } else {
-                    setHeader("Content-Type", contentType);
-                }
-            }
-            connection.setUseCaches(false);
-            connection.setDoInput(true);
-            if (auth) {
-                connection.setRequestProperty("Authorization",
-                        "Basic " + java.util.Base64.getEncoder().
-                                encodeToString((userName + ":" + password).getBytes()));
-            }
-            if (methodType.equals(HttpMethod.POST.name()) || methodType.equals(HttpMethod.PUT.name())
-                    || methodType.equals(HttpMethod.DELETE.name())) {
-                connection.setDoOutput(true);
-                outputStream = connection.getOutputStream();
-                writer = new PrintWriter(new OutputStreamWriter(outputStream, CHARSET),
-                        true);
-            }
+        }
+        connection.setUseCaches(false);
+        connection.setDoInput(true);
+        if (auth) {
+            connection.setRequestProperty("Authorization",
+                    "Basic " + Base64.getEncoder().
+                            encodeToString((userName + ":" + password).getBytes(CHARSET)));
+        }
+        if (methodType.equals(HttpMethod.POST.name()) || methodType.equals(HttpMethod.PUT.name())
+                || methodType.equals(HttpMethod.DELETE.name())) {
+            connection.setDoOutput(true);
+            outputStream = connection.getOutputStream();
+            writer = new PrintWriter(new OutputStreamWriter(outputStream, CHARSET),
+                    true);
+        }
     }
 
     public HttpURLConnection getConnection() {
@@ -113,7 +114,7 @@ public class HTTPClient {
         StringBuilder sb = new StringBuilder("");
         String line;
         try (BufferedReader in = new BufferedReader(new InputStreamReader(
-                connection.getInputStream()))) {
+                connection.getInputStream(), CHARSET))) {
             while ((line = in.readLine()) != null) {
                 sb.append(line + "\n");
             }
@@ -126,7 +127,7 @@ public class HTTPClient {
         String line;
         InputStream errorStream = connection.getErrorStream();
         if (errorStream != null) {
-            try (BufferedReader in = new BufferedReader(new InputStreamReader(errorStream))) {
+            try (BufferedReader in = new BufferedReader(new InputStreamReader(errorStream, CHARSET))) {
                 while ((line = in.readLine()) != null) {
                     sb.append(line + "\n");
                 }
@@ -141,6 +142,9 @@ public class HTTPClient {
         }
     }
 
+    /**
+     * HTTPResponse Message Bean class
+     */
     public static class HTTPResponseMessage {
         private int responseCode;
         private String contentType;
@@ -206,5 +210,4 @@ public class HTTPClient {
             this.errorContent = errorContent;
         }
     }
-
 }

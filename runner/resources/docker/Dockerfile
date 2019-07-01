@@ -64,6 +64,8 @@ ARG LIB=${RUNTIME_SERVER_HOME}/lib
 # copy entrypoint bash script to user home
 COPY --chown=siddhi_user:siddhi_io init.sh ${WORKING_DIRECTORY}/
 
+RUN mkdir -p ${WORKING_DIRECTORY}/extend_lib_volume && chown -R siddhi_user:siddhi_io ${WORKING_DIRECTORY}/extend_lib_volume
+
 # expose ports
 EXPOSE 9090 9443 9712 9612 7711 7611 7070 7443
 

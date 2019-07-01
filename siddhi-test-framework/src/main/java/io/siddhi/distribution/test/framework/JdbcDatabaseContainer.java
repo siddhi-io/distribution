@@ -11,6 +11,7 @@ import org.testcontainers.containers.GenericContainer;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -117,13 +118,15 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
                 throw new ContainerLaunchException("Container failed to start");
             }
             try (Connection connection = createConnection("")) {
-                boolean success = connection.createStatement().execute(JdbcDatabaseContainer.this.getTestQueryString());
-
-                if (success) {
-                    logger().info("Obtained a connection to container ({})", JdbcDatabaseContainer.this.getJdbcUrl());
-                    return null;
-                } else {
-                    throw new SQLException("Failed to execute test query:" + getTestQueryString());
+                try (Statement statement = connection.createStatement()) {
+                    boolean success = statement.execute(JdbcDatabaseContainer.this.getTestQueryString());
+                    if (success) {
+                        logger().info("Obtained a connection to container ({})",
+                                JdbcDatabaseContainer.this.getJdbcUrl());
+                        return null;
+                    } else {
+                        throw new SQLException("Failed to execute test query:" + getTestQueryString());
+                    }
                 }
             }
         });

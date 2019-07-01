@@ -1,11 +1,11 @@
 @App:name('Temp-Alert-App')
-@App:description('Energy consumption and anomaly detection')
+@App:description('Temperature monitoring and anomaly detection')
 
 @sink(type = 'log')
 @source(type='nats', cluster.id='${CLUSTER_ID}', destination = '${INPUT_DESTINATION}', bootstrap.servers = '${NATS_URL}' ,@map(type='json'))
 define stream DeviceTemperatureStream (type string, deviceID string, temp double, roomID string);
 
-@Store(type="rdbms", datasource='EnergyDB')
+@Store(type="rdbms", datasource='TemperatureDB')
 define table InternalDevicesTempTable(currentTime string, deviceID string, temp double);
 
 @sink(type = 'log')

@@ -17,14 +17,19 @@
  */
 package io.siddhi.distribution.test.framework;
 
+import io.siddhi.distribution.test.framework.util.BundleUtil;
 import io.siddhi.distribution.test.framework.util.HTTPClient;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.ContainerLaunchException;
 import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.utility.MountableFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +37,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
+import static io.siddhi.distribution.test.framework.util.BundleUtil.listFiles;
 import static org.rnorth.ducttape.unreliables.Unreliables.retryUntilSuccess;
 
 /**
@@ -68,7 +74,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         super(IMAGE + ":" + SIDDHI_RUNNER_VERSION);
     }
 
-    public SiddhiRunnerContainer (String dockerImageName) {
+    public SiddhiRunnerContainer(String dockerImageName) {
         super(dockerImageName);
     }
 
@@ -82,6 +88,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
 
     /**
      * Exposes the ports to accept traffic from the Siddhi Runner container
+     *
      * @param portsToExposeForApps Array of ports to be exposed
      * @return self
      */
@@ -96,6 +103,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
 
     /**
      * Overrides the default init script of Siddhi Runner container as entry point
+     *
      * @param initScriptPath Absolute local path of the init script
      * @return self
      */
@@ -107,7 +115,8 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     /**
      * Merges the provided configurations with the default Siddhi runner configuration.
      * It supports configuring state persistence, databases connections and secure vault.
-     * @param confPath  Absolute path of the config yaml to be merged
+     *
+     * @param confPath Absolute path of the config yaml to be merged
      * @return self
      */
     public SiddhiRunnerContainer withConfig(String confPath) {
@@ -118,8 +127,9 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
 
     /**
      * Deploys the Siddhi apps within the provided deployment directory in the container
+     *
      * @param deploymentDirectory Absolute path to the Siddhi app deployment directory
-     * @return
+     * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
         withFileSystemBind(deploymentDirectory, DEPLOYMENT_DIRECTORY, BindMode.READ_ONLY);
@@ -128,12 +138,35 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     }
 
     /**
-     * Includes the JARs within the provided directory in the Siddhi Runner's classpath
+     * Mounts the JARs within the provided directory in the Siddhi Runner's classpath
+     *
      * @param jarsDir Absolute path of the extra JARs directory
      * @return self
      */
     public SiddhiRunnerContainer withJars(String jarsDir) {
-        withFileSystemBind(jarsDir, LIB_DIRECTORY, BindMode.READ_ONLY);
+        String tempDirName = "thirdPartyJars";
+        int mountMode = 444;
+        try {
+            Path thirdPartyJarsPath = Files.createTempDirectory(tempDirName);
+            BundleUtil.convertFromJarToBundle(jarsDir, thirdPartyJarsPath.toString());
+            File thirdPartyJarsDir = new File(thirdPartyJarsPath.toString());
+            if (thirdPartyJarsDir.exists()) {
+                try {
+                    List<Path> directoryContent  = listFiles(thirdPartyJarsDir.toPath());
+                    for (Path aDirectoryItem : directoryContent) {
+                        if (aDirectoryItem.toString().endsWith(".jar")) {
+                            MountableFile mountableFile = MountableFile.forHostPath(aDirectoryItem.toAbsolutePath(),
+                                    mountMode);
+                            withCopyFileToContainer(mountableFile, LIB_DIRECTORY);
+                        }
+                    }
+                } catch (IOException e) {
+                    logger().error("Exception caught while mounting JARs to Siddhi Runner container.", e);
+                }
+            }
+        } catch (IOException e) {
+            logger().error("Failed to create temporary directory with name:" + tempDirName, e);
+        }
         return this;
     }
 
@@ -166,7 +199,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         });
     }
 
-    private HTTPClient.HTTPResponseMessage callHealthAPI(){
+    private HTTPClient.HTTPResponseMessage callHealthAPI() {
         try {
             if (baseURI == null) {
                 baseURI = URI.create(String.format("http://%s:%d", "localhost", this.getMappedPort(DEFAULT_HTTP_PORT)));
@@ -186,9 +219,15 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         SiddhiRunnerContainer that = (SiddhiRunnerContainer) o;
         return Objects.equals(initCommand, that.initCommand) &&
                 Objects.equals(initScriptPath, that.initScriptPath) &&

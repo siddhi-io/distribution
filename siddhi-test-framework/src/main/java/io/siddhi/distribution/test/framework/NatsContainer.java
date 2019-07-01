@@ -31,9 +31,8 @@ import static org.rnorth.ducttape.unreliables.Unreliables.retryUntilSuccess;
 
 /**
  * NATS Streaming docker container
- *
  */
-public class    NatsContainer extends GenericContainer<NatsContainer> {
+public class NatsContainer extends GenericContainer<NatsContainer> {
     private static final String IMAGE_NAME = "nats-streaming";
     private static final String DEFAULT_NATS_VERSION = "0.11.2";
     private static final String DEFAULT_CLUSTER_ID = "test-cluster";
@@ -49,7 +48,7 @@ public class    NatsContainer extends GenericContainer<NatsContainer> {
         withExposedPorts(DEFAULT_SERVICE_MONITOR_PORT);
     }
 
-    public NatsContainer (String dockerImageName) {
+    public NatsContainer(String dockerImageName) {
         super(dockerImageName);
         withExposedPorts(DEFAULT_NATS_PORT);
         withExposedPorts(DEFAULT_SERVICE_MONITOR_PORT);
@@ -92,10 +91,11 @@ public class    NatsContainer extends GenericContainer<NatsContainer> {
 
     /**
      * Sets the ClusterID of the NATS Streaming server
+     *
      * @param clusterId Cluster ID
      * @return self
      */
-    public NatsContainer withClusterId (String clusterId) {
+    public NatsContainer withClusterId(String clusterId) {
         this.clusterID = clusterId;
         withCommand(CLUSTER_ID_SYSTEM_PARAMETER, clusterId);
         return this;
@@ -107,7 +107,8 @@ public class    NatsContainer extends GenericContainer<NatsContainer> {
 
     /**
      * Sets additional NATS Streaming server System Parameters
-     * @param key System parameter key
+     *
+     * @param key   System parameter key
      * @param value System parameter key
      * @return self
      */
@@ -123,9 +124,15 @@ public class    NatsContainer extends GenericContainer<NatsContainer> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         NatsContainer that = (NatsContainer) o;
         return Objects.equals(clusterID, that.clusterID) &&
                 Objects.equals(startupTimeoutSeconds, that.startupTimeoutSeconds);

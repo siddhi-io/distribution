@@ -201,10 +201,11 @@
             <artifactId>siddhi-io-nats</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.wso2.carbon</groupId>
+            <artifactId>org.wso2.carbon.tools.core</artifactId>
+        </dependency>
     </dependencies>
-    <properties>
-        <surefireArgLine />
-    </properties>
     <build>
         <resources>
             <resource>
@@ -212,5 +213,44 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-jars</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <!--Jars to be included for ExtendingLib Test-->
+                                <artifactItem>
+                                    <groupId>mysql</groupId>
+                                    <artifactId>mysql-connector-java</artifactId>
+                                    <version>${mysql.connector.version}</version>
+                                    <outputDirectory>${project.build.directory}/ExtendingLibTestResource/jars</outputDirectory>
+                                </artifactItem>
+                                <!--Jars to be included for TemperatureAlertAppTest-->
+                                <artifactItem>
+                                    <groupId>com.google.protobuf</groupId>
+                                    <artifactId>protobuf-java</artifactId>
+                                    <version>3.6.1</version>
+                                    <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>mysql</groupId>
+                                    <artifactId>mysql-connector-java</artifactId>
+                                    <version>${mysql.connector.version}</version>
+                                    <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 </project>

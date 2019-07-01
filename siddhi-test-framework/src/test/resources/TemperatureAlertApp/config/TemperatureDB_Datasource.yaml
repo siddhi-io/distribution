@@ -1,6 +1,6 @@
 wso2.datasources:
   dataSources:
-  - name: EnergyDB
+  - name: TemperatureDB
     description: The datasource used for testing
     definition:
       type: RDBMS

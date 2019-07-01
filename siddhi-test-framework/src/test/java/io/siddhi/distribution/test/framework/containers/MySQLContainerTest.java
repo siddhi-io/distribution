@@ -30,12 +30,13 @@ import org.testcontainers.containers.output.Slf4jLogConsumer;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.Assert.fail;
 import static org.junit.Assume.assumeFalse;
 import static org.rnorth.visibleassertions.VisibleAssertions.assertEquals;
 import static org.rnorth.visibleassertions.VisibleAssertions.assertTrue;
+import static org.testng.Assert.fail;
 
 public class MySQLContainerTest {
+
     private static final Logger logger = LoggerFactory.getLogger(MySQLContainerTest.class);
 
     @Test
@@ -44,7 +45,7 @@ public class MySQLContainerTest {
                 .withLogConsumer(new Slf4jLogConsumer(logger));
         mysql.start();
         try {
-            ResultSet resultSet = DatabaseClient.executeQuery(mysql,"SELECT 1");
+            ResultSet resultSet = DatabaseClient.executeQuery(mysql, "SELECT 1");
             int resultSetInt = resultSet.getInt(1);
             assertEquals("A basic SELECT query succeeds", 1, resultSetInt);
         } finally {
@@ -58,7 +59,7 @@ public class MySQLContainerTest {
                 .withLogConsumer(new Slf4jLogConsumer(logger));
         mysqlOldVersion.start();
         try {
-            ResultSet resultSet = DatabaseClient.executeQuery(mysqlOldVersion,"SELECT VERSION()");
+            ResultSet resultSet = DatabaseClient.executeQuery(mysqlOldVersion, "SELECT VERSION()");
             String resultSetString = resultSet.getString(1);
             assertTrue("The database version can be set using a container rule parameter",
                     resultSetString.startsWith("5.5"));
@@ -69,7 +70,7 @@ public class MySQLContainerTest {
 
     @Test
     public void testMySQLWithCustomIniFile() throws SQLException, ConnectionUnavailableException {
-    	assumeFalse(SystemUtils.IS_OS_WINDOWS);
+        assumeFalse(SystemUtils.IS_OS_WINDOWS);
         MySQLContainer mysqlCustomConfig = new MySQLContainer("mysql:5.6");
         mysqlCustomConfig.start();
         try {

@@ -1,5 +1,6 @@
 package io.siddhi.distribution.test.framework.util;
 
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import io.siddhi.core.exception.ConnectionUnavailableException;
 import io.siddhi.distribution.test.framework.JdbcDatabaseContainer;
 
@@ -11,6 +12,9 @@ import javax.sql.rowset.CachedRowSet;
 import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
+/**
+ * Database client util to connect and query from the container instance
+ */
 public class DatabaseClient {
 
     /**
@@ -20,6 +24,8 @@ public class DatabaseClient {
      * @param query the query to be executed.
      * @throws SQLException if the query execution fails.
      */
+    //Returned resultSet needs to be cleared after usage
+    @SuppressWarnings("OBL_UNSATISFIED_OBLIGATION_EXCEPTION_EDGE")
     public static ResultSet executeQuery(JdbcDatabaseContainer container, String query)
             throws ConnectionUnavailableException, SQLException {
         ResultSet resultSet = null;

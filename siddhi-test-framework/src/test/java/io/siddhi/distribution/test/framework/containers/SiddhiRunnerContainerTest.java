@@ -31,7 +31,10 @@ import org.testcontainers.containers.output.WaitingConsumer;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
@@ -81,13 +84,12 @@ public class SiddhiRunnerContainerTest {
         }
     }
 
-
     @Test
-    public void testAddingAdditionalJars() throws SQLException, ConnectionUnavailableException {
+    public void testAddingAdditionalJars() throws SQLException, ConnectionUnavailableException, MalformedURLException {
         //Siddhi Runner needs MySQL client jar to communicate with the database.
         // Test fails if the added client jar is not accessible from the Siddhi Runner
         URL siddhiAppUrl = Resources.getResource("ExtendingLibTestResource/app");
-        URL extraJarsUrl = Resources.getResource("ExtendingLibTestResource/jars");
+        Path extraJarsPath = Paths.get("target", "ExtendingLibTestResource/jars");
         Network network = Network.newNetwork();
 
         MySQLContainer mySQLContainer = new MySQLContainer()
@@ -98,7 +100,7 @@ public class SiddhiRunnerContainerTest {
 
         SiddhiRunnerContainer siddhiContainer = new SiddhiRunnerContainer()
                 .withSiddhiApps(siddhiAppUrl.getPath())
-                .withJars(extraJarsUrl.getPath())
+                .withJars(extraJarsPath.toString())
                 .withLogConsumer(new Slf4jLogConsumer(log))
                 .withNetwork(network)
                 .withEnv("DATABASE_URL", mySQLContainer.getNetworkedJdbcUrl())
@@ -109,7 +111,7 @@ public class SiddhiRunnerContainerTest {
 
         ResultSet resultSet = null;
         try {
-            resultSet = DatabaseClient.executeQuery(mySQLContainer,"SELECT * FROM CUSTOMER_INFO_TABLE");
+            resultSet = DatabaseClient.executeQuery(mySQLContainer, "SELECT * FROM CUSTOMER_INFO_TABLE");
             String secondColumnValue = resultSet.getString(2);
             Assert.assertTrue(secondColumnValue.equals("dummyCustomer"));
         } finally {
@@ -144,5 +146,4 @@ public class SiddhiRunnerContainerTest {
             siddhiRunnerContainer.stop();
         }
     }
-
 }

@@ -1408,6 +1408,14 @@
                 <artifactId>siddhi-map-avro</artifactId>
                 <version>${siddhi.map.avro.version}</version>
             </dependency>
+
+            <!--siddhi-test-framework dependency jars-->
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.tools.core</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

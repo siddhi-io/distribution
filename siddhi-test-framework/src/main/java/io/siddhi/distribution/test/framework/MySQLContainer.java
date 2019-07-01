@@ -21,17 +21,17 @@ import org.testcontainers.containers.ContainerLaunchException;
 import org.testcontainers.containers.Network;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * MySQL docker container
- *
  */
 public class MySQLContainer extends JdbcDatabaseContainer {
-
     private static final String IMAGE = "mysql";
     private static final String DEFAULT_TAG = "5.7.22";
     private static final Integer MYSQL_PORT = 3306;
+    private String imageName = IMAGE + ":" + DEFAULT_TAG;
     private String databaseName = "siddhi-distribution-testdb";
     private String username = "test";
     private String password = "test";
@@ -44,6 +44,7 @@ public class MySQLContainer extends JdbcDatabaseContainer {
 
     public MySQLContainer(String dockerImageName) {
         super(dockerImageName);
+        imageName = dockerImageName;
     }
 
     @Override
@@ -74,12 +75,14 @@ public class MySQLContainer extends JdbcDatabaseContainer {
 
     @Override
     public String getJdbcUrl() {
-        return "jdbc:mysql://" + getContainerIpAddress() + ":" + getMappedPort(MYSQL_PORT) + "/" + databaseName;
+        return "jdbc:mysql://" + getContainerIpAddress() + ":" + getMappedPort(MYSQL_PORT) + "/" + databaseName
+                + "?useSSL=false";
     }
 
     public String getNetworkedJdbcUrl() {
         if (isNetworkingEnabled) {
-            return "jdbc:mysql://" + getNetworkAliases().get(0).toString() + ":" + MYSQL_PORT + "/" + databaseName;
+            return "jdbc:mysql://" + getNetworkAliases().get(0).toString() + ":" + MYSQL_PORT + "/" + databaseName
+                    + "?useSSL=false";
         }
         return getJdbcUrl();
     }
@@ -145,5 +148,26 @@ public class MySQLContainer extends JdbcDatabaseContainer {
     public MySQLContainer withPassword(final String password) {
         this.password = password;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        MySQLContainer that = (MySQLContainer) o;
+        return Objects.equals(imageName, that.imageName) && Objects.equals(databaseName, that.databaseName) &&
+                Objects.equals(username, that.username) && Objects.equals(password, that.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), imageName, databaseName, username, password);
     }
 }

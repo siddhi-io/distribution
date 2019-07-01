@@ -68,6 +68,13 @@ public class NatsClient {
         this.natsUrl = natsUrl;
     }
 
+    public NatsClient(String cluserId, String natsUrl, ResultHolder resultHolder) {
+        this.cluserId = cluserId;
+        this.clientId = createClientId();
+        this.natsUrl = natsUrl;
+        this.resultHolder = resultHolder;
+    }
+
     public void connect() throws IOException, InterruptedException {
         streamingConnectionFactory = new StreamingConnectionFactory(this.cluserId, this.clientId);
         streamingConnectionFactory.setNatsUrl(this.natsUrl);
@@ -175,7 +182,7 @@ public class NatsClient {
 
         /**
          *  Wait for the event count or the specified waiting time and return the results list
-         * @return
+         * @return results list
          */
         public List waitAndGetResults() {
             try {

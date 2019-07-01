@@ -28,7 +28,6 @@ import java.util.stream.Stream;
 
 /**
  * This container wraps Kafka and Zookeeper
- *
  */
 public class KafkaContainer extends GenericContainer<KafkaContainer> {
     private static final String DEFAULT_KAFKA_VERSION = "4.0.0";
@@ -37,14 +36,13 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
     private String externalZookeeperConnect = null;
     private SocatContainer proxy;
 
-   public KafkaContainer() {
+    public KafkaContainer() {
         this(DEFAULT_KAFKA_VERSION);
     }
 
     public KafkaContainer(String confluentPlatformVersion) {
         super(TestcontainersConfiguration.getInstance().getKafkaImage() + ":"
                 + confluentPlatformVersion);
-
         withNetwork(Network.newNetwork());
         withNetworkAliases("kafka-" + Base58.randomString(6));
         withExposedPorts(KAFKA_PORT);
@@ -55,7 +53,6 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
         withEnv("KAFKA_LISTENERS", "PLAINTEXT://0.0.0.0:" + KAFKA_PORT + ",BROKER://0.0.0.0:9092");
         withEnv("KAFKA_LISTENER_SECURITY_PROTOCOL_MAP", "BROKER:PLAINTEXT,PLAINTEXT:PLAINTEXT");
         withEnv("KAFKA_INTER_BROKER_LISTENER_NAME", "BROKER");
-
         withEnv("KAFKA_BROKER_ID", "1");
         withEnv("KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR", "1");
         withEnv("KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS", "1");
@@ -88,13 +85,13 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
             addExposedPort(ZOOKEEPER_PORT);
             withEnv("KAFKA_ZOOKEEPER_CONNECT", "localhost:2181");
             withCommand(
-                "sh",
-                "-c",
-                // Use command to create the file to avoid file mounting
-                "printf 'clientPort=2181\ndataDir=/var/lib/zookeeper/data\ndataLogDir=/var/lib/zookeeper/log' " +
-                        "> /zookeeper.properties" +
-                    " && zookeeper-server-start /zookeeper.properties" +
-                    " & /etc/confluent/docker/run"
+                    "sh",
+                    "-c",
+                    // Use command to create the file to avoid file mounting
+                    "printf 'clientPort=2181\ndataDir=/var/lib/zookeeper/data\ndataLogDir=/var/lib/zookeeper/log' " +
+                            "> /zookeeper.properties" +
+                            " && zookeeper-server-start /zookeeper.properties" +
+                            " & /etc/confluent/docker/run"
             );
         }
         super.doStart();
@@ -111,9 +108,15 @@ public class KafkaContainer extends GenericContainer<KafkaContainer> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
         KafkaContainer that = (KafkaContainer) o;
         return Objects.equals(externalZookeeperConnect, that.externalZookeeperConnect) &&
                 Objects.equals(proxy, that.proxy);
