@@ -1482,7 +1482,7 @@
         <!-- Test Dependencies-->
         <h2.connector.version>1.4.199</h2.connector.version>
         <postgresql.version>42.1.4</postgresql.version>
-        <mssql-jdbc.version>6.2.1.jre8</mssql-jdbc.version>
+        <mssql-jdbc.version>7.3.1.jre12-preview</mssql-jdbc.version>
         <io.fabric8.version>0.28.0</io.fabric8.version>
         <maven.failsafe.plugin.version>2.22.1</maven.failsafe.plugin.version>
         <awaitility.version>3.1.6</awaitility.version>
