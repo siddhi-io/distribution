@@ -51,7 +51,7 @@ public class KafkaContainerTest {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = {"testUsage"})
     public void testExternalZookeeperWithKafkaNetwork() throws Exception {
         try (
                 KafkaContainer kafka = new KafkaContainer()
@@ -66,20 +66,32 @@ public class KafkaContainerTest {
         }
     }
 
-    @Test
+    @Test(dependsOnMethods = {"testExternalZookeeperWithKafkaNetwork"})
     public void testExternalZookeeperWithExternalNetwork() throws Exception {
         Network network = Network.newNetwork();
-        GenericContainer zookeeper = new GenericContainer("confluentinc/cp-zookeeper:4.0.0")
-                .withNetwork(network)
-                .withNetworkAliases("zookeeper")
-                .withEnv("ZOOKEEPER_CLIENT_PORT", "2181");
-        zookeeper.start();
-        Thread.sleep(5000);
-        KafkaContainer kafka = new KafkaContainer()
-                .withNetwork(network)
-                .withExternalZookeeper("zookeeper:2181");
-        kafka.start();
-        testKafkaFunctionality(kafka.getBootstrapServers());
+        GenericContainer zookeeper = null;
+        KafkaContainer kafka = null;
+        try {
+            zookeeper = new GenericContainer("confluentinc/cp-zookeeper:4.0.0")
+                    .withNetwork(network)
+                    .withNetworkAliases("zookeeper")
+                    .withEnv("ZOOKEEPER_CLIENT_PORT", "2181");
+            zookeeper.start();
+            Thread.sleep(5000);
+            kafka = new KafkaContainer()
+                    .withNetwork(network)
+                    .withExternalZookeeper("zookeeper:2181");
+            kafka.start();
+            testKafkaFunctionality(kafka.getBootstrapServers());
+        } finally {
+            network.close();
+            if (zookeeper != null) {
+                zookeeper.stop();
+            }
+            if (kafka != null) {
+                kafka.stop();
+            }
+        }
     }
 
     private void testKafkaFunctionality(String bootstrapServers) throws Exception {
