@@ -17,6 +17,8 @@ skip_tags: true
 clone_depth: 1
 image:
 - Visual Studio 2017
+services:
+- docker
 environment:
   MAVEN_VERSION: 3.5.0
   APPVEYOR: true
