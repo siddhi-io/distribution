@@ -30,12 +30,12 @@
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
-        <module>samples/sample-clients</module>
+<!--         <module>samples/sample-clients</module> -->
         <module>runner</module>
-        <module>tooling</module>
+<!--         <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
-        <module>siddhi-test-framework</module>
+        <module>siddhi-test-framework</module> -->
     </modules>
 
     <build>
