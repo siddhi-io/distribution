@@ -31,6 +31,9 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * Nats Container test class.
+ */
 public class NatsContainerTest {
     private static final Logger log = LoggerFactory.getLogger(NatsContainerTest.class);
 

@@ -27,7 +27,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
- * This container wraps Kafka and Zookeeper
+ * This container wraps Kafka and Zookeeper.
  */
 public class KafkaContainer extends GenericContainer<KafkaContainer> {
     private static final String DEFAULT_KAFKA_VERSION = "4.0.0";

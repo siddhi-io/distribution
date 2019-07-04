@@ -40,6 +40,9 @@ import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+/**
+ * Siddhi Runner test class.
+ */
 public class SiddhiRunnerContainerTest {
 
     private static final Logger log = LoggerFactory.getLogger(SiddhiRunnerContainerTest.class);

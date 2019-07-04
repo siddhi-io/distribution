@@ -173,7 +173,7 @@ public class NatsClient {
         }
 
         /**
-         * Returns the results list immediately
+         * Returns the results list immediately.
          * @return List of Strings
          */
         public List getResultList() {
@@ -181,7 +181,7 @@ public class NatsClient {
         }
 
         /**
-         *  Wait for the event count or the specified waiting time and return the results list
+         *  Wait for the event count or the specified waiting time and return the results list.
          * @return results list
          */
         public List waitAndGetResults() {

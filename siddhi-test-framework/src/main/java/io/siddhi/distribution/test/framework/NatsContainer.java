@@ -30,7 +30,7 @@ import java.util.stream.Stream;
 import static org.rnorth.ducttape.unreliables.Unreliables.retryUntilSuccess;
 
 /**
- * NATS Streaming docker container
+ * NATS Streaming docker container.
  */
 public class NatsContainer extends GenericContainer<NatsContainer> {
     private static final String IMAGE_NAME = "nats-streaming";
@@ -90,7 +90,7 @@ public class NatsContainer extends GenericContainer<NatsContainer> {
     }
 
     /**
-     * Sets the ClusterID of the NATS Streaming server
+     * Sets the ClusterID of the NATS Streaming server.
      *
      * @param clusterId Cluster ID
      * @return self
@@ -106,7 +106,7 @@ public class NatsContainer extends GenericContainer<NatsContainer> {
     }
 
     /**
-     * Sets additional NATS Streaming server System Parameters
+     * Sets additional NATS Streaming server System Parameters.
      *
      * @param key   System parameter key
      * @param value System parameter key

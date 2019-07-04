@@ -41,7 +41,7 @@ import static io.siddhi.distribution.test.framework.util.BundleUtil.listFiles;
 import static org.rnorth.ducttape.unreliables.Unreliables.retryUntilSuccess;
 
 /**
- * Siddhi Runner docker container class
+ * Siddhi Runner docker container class.
  */
 public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContainer> {
     private static final String IMAGE = "siddhi-runner";
@@ -87,7 +87,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     }
 
     /**
-     * Exposes the ports to accept traffic from the Siddhi Runner container
+     * Exposes the ports to accept traffic from the Siddhi Runner container.
      *
      * @param portsToExposeForApps Array of ports to be exposed
      * @return self
@@ -102,7 +102,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     }
 
     /**
-     * Overrides the default init script of Siddhi Runner container as entry point
+     * Overrides the default init script of Siddhi Runner container as entry point.
      *
      * @param initScriptPath Absolute local path of the init script
      * @return self
@@ -126,7 +126,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     }
 
     /**
-     * Deploys the Siddhi apps within the provided deployment directory in the container
+     * Deploys the Siddhi apps within the provided deployment directory in the container.
      *
      * @param deploymentDirectory Absolute path to the Siddhi app deployment directory
      * @return self
@@ -138,7 +138,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     }
 
     /**
-     * Mounts the JARs within the provided directory in the Siddhi Runner's classpath
+     * Mounts the JARs within the provided directory in the Siddhi Runner's classpath.
      *
      * @param jarsDir Absolute path of the extra JARs directory
      * @return self

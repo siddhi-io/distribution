@@ -25,7 +25,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * MySQL docker container
+ * MySQL docker container.
  */
 public class MySQLContainer extends JdbcDatabaseContainer {
     private static final String IMAGE = "mysql";

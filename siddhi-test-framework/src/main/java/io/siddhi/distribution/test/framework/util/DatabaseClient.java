@@ -13,12 +13,12 @@ import javax.sql.rowset.RowSetFactory;
 import javax.sql.rowset.RowSetProvider;
 
 /**
- * Database client util to connect and query from the container instance
+ * Database client util to connect and query from the container instance.
  */
 public class DatabaseClient {
 
     /**
-     * Method for executing query on the provided JDBC database container
+     * Method for executing query on the provided JDBC database container.
      *
      * @param container JDBC Database Container instance
      * @param query the query to be executed.

@@ -32,7 +32,7 @@ import java.util.Base64;
 import static java.lang.System.currentTimeMillis;
 
 /**
- * HTTP Request Sender Util
+ * HTTP Request Sender Util.
  */
 public class HTTPClient {
     private static final String LINE_FEED = "\r\n";
@@ -143,7 +143,7 @@ public class HTTPClient {
     }
 
     /**
-     * HTTPResponse Message Bean class
+     * HTTPResponse Message Bean class.
      */
     public static class HTTPResponseMessage {
         private int responseCode;

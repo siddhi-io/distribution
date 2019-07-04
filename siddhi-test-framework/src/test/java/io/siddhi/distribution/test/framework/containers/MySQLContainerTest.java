@@ -35,6 +35,9 @@ import static org.rnorth.visibleassertions.VisibleAssertions.assertEquals;
 import static org.rnorth.visibleassertions.VisibleAssertions.assertTrue;
 import static org.testng.Assert.fail;
 
+/**
+ * MySQL Database Container test class.
+ */
 public class MySQLContainerTest {
 
     private static final Logger logger = LoggerFactory.getLogger(MySQLContainerTest.class);

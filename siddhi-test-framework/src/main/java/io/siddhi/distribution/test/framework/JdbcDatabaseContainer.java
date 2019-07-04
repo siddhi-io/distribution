@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 import javax.sql.DataSource;
 
 /**
- * Base class for containers that expose a JDBC connection
+ * Base class for containers that expose a JDBC connection.
  *
  */
 public abstract class JdbcDatabaseContainer extends GenericContainer {
@@ -133,7 +133,7 @@ public abstract class JdbcDatabaseContainer extends GenericContainer {
     }
 
     /**
-     * Obtain an instance of the correct JDBC driver for this particular database container type
+     * Obtain an instance of the correct JDBC driver for this particular database container type.
      *
      * @return a JDBC Driver
      */
