@@ -1681,7 +1681,7 @@
         <org.fusesource.hawtbuf.version>1.11</org.fusesource.hawtbuf.version>
 
         <!-- nats test dependencies -->
-        <io.nats.version>2.1.3</io.nats.version>
+        <io.nats.version>2.1.6</io.nats.version>
         <org.testcontainers.version>1.11.3</org.testcontainers.version>
     </properties>
 </project>
