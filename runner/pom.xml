@@ -900,35 +900,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>docker-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <configuration>
-                    <imageName>${distribution.name}:test</imageName>
-                    <dockerDirectory>${project.basedir}/resources/docker</dockerDirectory>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${distribution.name}-${project.version}.zip</include>
-                        </resource>
-                    </resources>
-                    <buildArgs>
-                        <RUNTIME_SERVER_PACK>${distribution.name}-${project.version}</RUNTIME_SERVER_PACK>
-                    </buildArgs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
         <resources>
             <resource>
@@ -940,6 +911,48 @@
             </resource>
         </resources>
     </build>
+    <profiles>
+    <profile>
+        <id>docker-image-creation</id>
+        <activation>
+            <property>
+                <name>!no-docker</name>
+            </property>
+        </activation>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <imageName>${distribution.name}:test</imageName>
+                        <dockerDirectory>${project.basedir}/resources/docker</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${distribution.name}-${project.version}.zip</include>
+                            </resource>
+                        </resources>
+                        <buildArgs>
+                            <RUNTIME_SERVER_PACK>${distribution.name}-${project.version}</RUNTIME_SERVER_PACK>
+                        </buildArgs>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+    </profiles>
     <properties>
         <distribution.name>siddhi-runner</distribution.name>
     </properties>

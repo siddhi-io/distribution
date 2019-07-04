@@ -106,51 +106,90 @@
             <artifactId>org.wso2.carbon.tools.core</artifactId>
         </dependency>
     </dependencies>
-    <build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-jars</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>copy</goal>
-                        </goals>
+
+    <profiles>
+        <profile>
+            <id>with-docker-based-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-jars</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>copy</goal>
+                                </goals>
+                                <configuration>
+                                    <artifactItems>
+                                        <!--Jars to be included for ExtendingLib Test-->
+                                        <artifactItem>
+                                            <groupId>mysql</groupId>
+                                            <artifactId>mysql-connector-java</artifactId>
+                                            <version>${mysql.connector.version}</version>
+                                            <outputDirectory>${project.build.directory}/ExtendingLibTestResource/jars</outputDirectory>
+                                        </artifactItem>
+                                        <!--Jars to be included for TemperatureAlertAppTest-->
+                                        <artifactItem>
+                                            <groupId>com.google.protobuf</groupId>
+                                            <artifactId>protobuf-java</artifactId>
+                                            <version>3.6.1</version>
+                                            <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
+                                        </artifactItem>
+                                        <artifactItem>
+                                            <groupId>mysql</groupId>
+                                            <artifactId>mysql-connector-java</artifactId>
+                                            <version>${mysql.connector.version}</version>
+                                            <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
+                                        </artifactItem>
+                                    </artifactItems>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+        <id>without-docker-based-tests</id>
+            <activation>
+                <property>
+                    <name>no-docker</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.22.1</version>
                         <configuration>
-                            <artifactItems>
-                                <!--Jars to be included for ExtendingLib Test-->
-                                <artifactItem>
-                                    <groupId>mysql</groupId>
-                                    <artifactId>mysql-connector-java</artifactId>
-                                    <version>${mysql.connector.version}</version>
-                                    <outputDirectory>${project.build.directory}/ExtendingLibTestResource/jars</outputDirectory>
-                                </artifactItem>
-                                <!--Jars to be included for TemperatureAlertAppTest-->
-                                <artifactItem>
-                                    <groupId>com.google.protobuf</groupId>
-                                    <artifactId>protobuf-java</artifactId>
-                                    <version>3.6.1</version>
-                                    <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>mysql</groupId>
-                                    <artifactId>mysql-connector-java</artifactId>
-                                    <version>${mysql.connector.version}</version>
-                                    <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
+                            <systemPropertyVariables>
+                                <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
+                            </systemPropertyVariables>
+                            <suiteXmlFiles>
+                                <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                            </suiteXmlFiles>
+                            <environmentVariables>
+                                <JAVA_OPTS>${jcoverage.command}</JAVA_OPTS>
+                            </environmentVariables>
+                            <skipTests>true</skipTests>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+                    </plugin>
+                </plugins>
+            </build>
+
+        </profile>
+    </profiles>
 </project>
