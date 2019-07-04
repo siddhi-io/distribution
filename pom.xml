@@ -1646,7 +1646,7 @@
         <siddhi.map.wso2event.version>5.0.0</siddhi.map.wso2event.version>
         <siddhi.map.binary.version>2.0.0</siddhi.map.binary.version>
         <siddhi.map.text.version>2.0.0</siddhi.map.text.version>
-        <siddhi.map.xml.version>5.0.0</siddhi.map.xml.version>
+        <siddhi.map.xml.version>5.0.1</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>2.0.0</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>2.0.0</siddhi.map.csv.version>
 
