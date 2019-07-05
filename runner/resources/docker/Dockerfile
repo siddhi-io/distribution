@@ -48,7 +48,8 @@ RUN  addgroup -g ${USER_GROUP_ID} ${USER_GROUP}; \
 ## install the Siddhi Distribution to user's home directory
 
 # use the Siddhi Runner Distribution available locally
-COPY --chown=siddhi_user:siddhi_io ${RUNTIME_SERVER_PACK}.zip/ ${RUNTIME_SERVER_HOME}/
+COPY ${RUNTIME_SERVER_PACK}.zip/ ${RUNTIME_SERVER_HOME}/
+RUN chown -R siddhi_user:siddhi_io ${RUNTIME_SERVER_HOME}/
 
 # set the user and work directory
 USER ${USER_ID}
