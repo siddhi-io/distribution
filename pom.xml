@@ -15,8 +15,7 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
         <groupId>org.wso2</groupId>
@@ -27,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.siddhi.distribution</groupId>
     <artifactId>io.siddhi.distribution.parent</artifactId>
-    <version>0.1.1-SNAPSHOT</version>
+    <version>5.1.0-m1</version>
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
@@ -255,7 +254,7 @@
         <url>https://github.com/siddhi-io/distribution.git</url>
         <developerConnection>scm:git:https://github.com/siddhi-io/distribution.git</developerConnection>
         <connection>scm:git:https://github.com/siddhi-io/distribution.git</connection>
-        <tag>HEAD</tag>
+        <tag>v5.1.0-m1</tag>
     </scm>
 
     <dependencyManagement>
@@ -1154,7 +1153,7 @@
     </dependencyManagement>
 
     <properties>
-        <io.siddhi.distribution.version>0.1.1-SNAPSHOT</io.siddhi.distribution.version>
+        <io.siddhi.distribution.version>5.1.0-m1</io.siddhi.distribution.version>
         <siddhi.version>5.1.0</siddhi.version>
         <siddhi.bundle.version>5.1.0</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
