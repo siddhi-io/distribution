@@ -112,7 +112,9 @@
         <profile>
             <id>with-docker-based-tests</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>with-docker</name>
+                </property>
             </activation>
             <build>
                 <resources>
@@ -168,9 +170,7 @@
         <profile>
             <id>without-docker-based-tests</id>
             <activation>
-                <property>
-                    <name>no-docker</name>
-                </property>
+                <activeByDefault>true</activeByDefault>
             </activation>
             <build>
                 <plugins>

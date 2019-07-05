@@ -888,7 +888,7 @@
             <id>docker-image-creation</id>
             <activation>
                 <property>
-                    <name>!no-docker</name>
+                    <name>with-docker</name>
                 </property>
             </activation>
             <build>
