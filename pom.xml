@@ -1316,7 +1316,7 @@
         <carbon.p2.plugin.version>1.5.4</carbon.p2.plugin.version>
         <carbon.feature.plugin.version>3.1.4</carbon.feature.plugin.version>
         <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
-        <com.spotify.docker.plugin.version>1.0.0</com.spotify.docker.plugin.version>
+        <com.spotify.docker.plugin.version>1.2.0</com.spotify.docker.plugin.version>
         <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
         <swagger.codegen.maven.plugin.version>2.4.6</swagger.codegen.maven.plugin.version>
