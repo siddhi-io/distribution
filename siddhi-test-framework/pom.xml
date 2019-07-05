@@ -15,7 +15,8 @@
   ~ limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
         <groupId>io.siddhi.distribution</groupId>
@@ -28,7 +29,7 @@
     <artifactId>io-siddhi-distribution-test-framework</artifactId>
     <name>Siddhi Distributions - Test Framework</name>
     <description>Siddhi Test Framework</description>
-    <url>http://wso2.com</url>
+    <url>https://siddhi.io</url>
 
     <dependencies>
         <dependency>
@@ -71,8 +72,8 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-io</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.kafka</groupId>
@@ -138,20 +139,23 @@
                                             <groupId>mysql</groupId>
                                             <artifactId>mysql-connector-java</artifactId>
                                             <version>${mysql.connector.version}</version>
-                                            <outputDirectory>${project.build.directory}/ExtendingLibTestResource/jars</outputDirectory>
+                                            <outputDirectory>${project.build.directory}/ExtendingLibTestResource/jars
+                                            </outputDirectory>
                                         </artifactItem>
                                         <!--Jars to be included for TemperatureAlertAppTest-->
                                         <artifactItem>
                                             <groupId>com.google.protobuf</groupId>
                                             <artifactId>protobuf-java</artifactId>
                                             <version>3.6.1</version>
-                                            <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
+                                            <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars
+                                            </outputDirectory>
                                         </artifactItem>
                                         <artifactItem>
                                             <groupId>mysql</groupId>
                                             <artifactId>mysql-connector-java</artifactId>
                                             <version>${mysql.connector.version}</version>
-                                            <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars</outputDirectory>
+                                            <outputDirectory>${project.build.directory}/TemperatureAlertApp/jars
+                                            </outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>
@@ -162,7 +166,7 @@
             </build>
         </profile>
         <profile>
-        <id>without-docker-based-tests</id>
+            <id>without-docker-based-tests</id>
             <activation>
                 <property>
                     <name>no-docker</name>
@@ -173,7 +177,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
+                        <version>${maven.surefire.plugin.version}</version>
                         <configuration>
                             <systemPropertyVariables>
                                 <jacoco-agent.destfile>${project.build.directory}/jacoco.exec</jacoco-agent.destfile>
