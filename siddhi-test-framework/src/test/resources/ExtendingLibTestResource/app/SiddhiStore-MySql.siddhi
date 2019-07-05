@@ -1,0 +1,13 @@
+@App:name("SiddhiStore-MySql")
+
+@App:description('Join streaming data with data stored in an RDBMS table')
+
+define trigger atStartup at 'start';
+
+@Store(type="rdbms", jdbc.url="${DATABASE_URL}", username="${USERNAME}", password="${PASSWORD}" , jdbc.driver.name="${JDBC_DRIVER_NAME}")
+define table CUSTOMER_INFO_TABLE (customer_id int, customer_name string, city string);
+
+from atStartup
+select 000 as customer_id, 'dummyCustomer' as customer_name, 'dummyCity' as city
+insert into CUSTOMER_INFO_TABLE;
+

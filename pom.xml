@@ -31,10 +31,11 @@
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
         <module>samples/sample-clients</module>
-        <module>tooling</module>
         <module>runner</module>
+        <module>tooling</module>
         <module>osgi-tests</module>
         <module>coverage-reports</module>
+        <module>siddhi-test-framework</module>
     </modules>
 
     <build>
@@ -389,7 +390,6 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -1097,6 +1097,18 @@
                 <version>${carbon.kernel.version}</version>
                 <type>zip</type>
             </dependency>
+            <!--Health Check API -->
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.health.check.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.health.check.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
 
             <!-- OSGI Test dependencies -->
             <dependency>
@@ -1314,7 +1326,6 @@
                 <groupId>io.nats</groupId>
                 <artifactId>java-nats-streaming</artifactId>
                 <version>${io.nats.version}</version>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.wso2.extension.siddhi.io.nats</groupId>
@@ -1326,7 +1337,6 @@
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers</artifactId>
                 <version>${org.testcontainers.version}</version>
-                <scope>test</scope>
             </dependency>
 
             <!-- MSF4J related -->
@@ -1403,6 +1413,21 @@
                 <artifactId>siddhi-map-avro</artifactId>
                 <version>${siddhi.map.avro.version}</version>
             </dependency>
+
+            <!--siddhi-test-framework dependency jars-->
+            <dependency>
+                <groupId>org.wso2.carbon</groupId>
+                <artifactId>org.wso2.carbon.tools.core</artifactId>
+                <version>${carbon.kernel.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -1683,5 +1708,6 @@
         <!-- nats test dependencies -->
         <io.nats.version>2.1.6</io.nats.version>
         <org.testcontainers.version>1.11.3</org.testcontainers.version>
+        <assertj.version>3.9.1</assertj.version>
     </properties>
 </project>

@@ -39,6 +39,7 @@
         <module>components/io.siddhi.distribution.metrics.core</module>
         <module>components/io.siddhi.distribution.store.api.rest</module>
         <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
+        <module>components/io.siddhi.distribution.health.check.core</module>
 
         <module>features/io.siddhi.distribution.core.feature</module>
         <module>features/io.siddhi.distribution.common.feature</module>
@@ -46,6 +47,8 @@
         <module>features/io.siddhi.distribution.metrics.core.feature</module>
         <module>features/io.siddhi.distribution.store.api.rest.feature</module>
         <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
+        <module>features/io.siddhi.distribution.health.check.core.feature</module>
+
 
     </modules>
 
@@ -221,6 +224,11 @@
         <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>
             <artifactId>org.wso2.carbon.analytics.permissions.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.health.check.core.feature</artifactId>
             <type>zip</type>
         </dependency>
     </dependencies>
@@ -646,6 +654,11 @@
                                     <id>org.wso2.carbon.databridge.commons.feature</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+                                <!-- Heath Check API -->
+                                <feature>
+                                    <id>io.siddhi.distribution.health.check.core.feature</id>
+                                    <version>${io.siddhi.distribution.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -808,6 +821,11 @@
                                     <id>org.wso2.carbon.analytics.permissions.feature.group</id>
                                     <version>${carbon.analytics-common.version}</version>
                                 </feature>
+                                <!-- Heath Check API -->
+                                <feature>
+                                    <id>io.siddhi.distribution.health.check.core.feature.group</id>
+                                    <version>${io.siddhi.distribution.version}</version>
+                                </feature>
                             </features>
                         </configuration>
                     </execution>
@@ -876,13 +894,12 @@
                             <descriptors>
                                 <descriptor>${basedir}/assembly/bin.xml</descriptor>
                             </descriptors>
-                            <finalName>siddhi-runner-${project.version}</finalName>
+                            <finalName>${distribution.name}-${project.version}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
-
         </plugins>
         <resources>
             <resource>
@@ -894,4 +911,49 @@
             </resource>
         </resources>
     </build>
+    <profiles>
+    <profile>
+        <id>docker-image-creation</id>
+        <activation>
+            <property>
+                <name>!no-docker</name>
+            </property>
+        </activation>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <imageName>${distribution.name}:test</imageName>
+                        <dockerDirectory>${project.basedir}/resources/docker</dockerDirectory>
+                        <resources>
+                            <resource>
+                                <targetPath>/</targetPath>
+                                <directory>${project.build.directory}</directory>
+                                <include>${distribution.name}-${project.version}.zip</include>
+                            </resource>
+                        </resources>
+                        <buildArgs>
+                            <RUNTIME_SERVER_PACK>${distribution.name}-${project.version}</RUNTIME_SERVER_PACK>
+                        </buildArgs>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>default</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+    </profiles>
+    <properties>
+        <distribution.name>siddhi-runner</distribution.name>
+    </properties>
 </project>

@@ -1,0 +1,38 @@
+@App:name('Temp-Alert-App')
+@App:description('Temperature monitoring and anomaly detection')
+
+@sink(type = 'log')
+@source(type='nats', cluster.id='${CLUSTER_ID}', destination = '${INPUT_DESTINATION}', bootstrap.servers = '${NATS_URL}' ,@map(type='json'))
+define stream DeviceTemperatureStream (type string, deviceID string, temp double, roomID string);
+
+@Store(type="rdbms", datasource='TemperatureDB')
+define table InternalDevicesTempTable(currentTime string, deviceID string, temp double);
+
+@sink(type = 'log')
+@sink(type='nats', cluster.id='${CLUSTER_ID}', destination = '${OUTPUT_DESTINATION}', bootstrap.servers = '${NATS_URL}' ,@map(type='json'))
+define stream AlertStream (deviceID string, peakTemp double, authorityContactEmail string);
+
+@info(name = 'monitered-filter')
+from DeviceTemperatureStream[type == 'monitored']
+select deviceID, temp, roomID
+insert current events into MonitoredDevicesTempStream;
+
+@info(name = 'internal-filter')
+from DeviceTemperatureStream[type == 'internal']
+select UUID() as currentTime, deviceID, temp
+insert current events into InternalDevicesTempTable;
+
+@info(name = 'temperature-increase-pattern')
+partition with (deviceID of MonitoredDevicesTempStream)
+begin
+
+@info(name = 'temperature-increase-detector')
+from every e1=MonitoredDevicesTempStream, e2=MonitoredDevicesTempStream[e1.temp <= temp], e3=MonitoredDevicesTempStream[e2[last].temp > temp]
+select e1.deviceID, e1.temp as initialTemp, e2[last].temp as peakTemp
+insert into PeakTempStream;
+end;
+
+@info(name = 'temperature-range-filter')
+from PeakTempStream[peakTemp > 75]
+select deviceID, peakTemp, 'no-reply@powermanagement.com' as authorityContactEmail
+insert current events into AlertStream;
