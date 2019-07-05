@@ -24,6 +24,8 @@ import io.siddhi.core.exception.ConnectionUnavailableException;
 import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.distribution.test.framework.util.DatabaseClient;
 import io.siddhi.distribution.test.framework.util.NatsClient;
+import io.siddhi.extension.io.nats.sink.NATSSink;
+import io.siddhi.extension.map.json.sinkmapper.JsonSinkMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.Network;
@@ -34,8 +36,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.extension.siddhi.io.nats.sink.NATSSink;
-import org.wso2.extension.siddhi.map.json.sinkmapper.JsonSinkMapper;
 
 import java.io.IOException;
 import java.net.URL;
