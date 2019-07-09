@@ -202,7 +202,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private HTTPClient.HTTPResponseMessage callHealthAPI() {
         try {
             if (baseURI == null) {
-                baseURI = URI.create(String.format("http://%s:%d", "localhost", this.getMappedPort(DEFAULT_HTTP_PORT)));
+                baseURI = URI.create(String.format("http://%s:%d", "0.0.0.0", this.getMappedPort(DEFAULT_HTTP_PORT)));
             }
             HTTPClient healthRequest = new HTTPClient(baseURI, HEALTH_ENDPOINT_CONTEXT, false,
                     false, "GET", null, DEFAULT_USER_NAME, DEFAULT_PASSWORD);

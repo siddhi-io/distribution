@@ -15,8 +15,6 @@
  */
 package io.siddhi.distribution.test.framework.util;
 
-import io.netty.handler.codec.http.HttpMethod;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -68,8 +66,8 @@ public class HTTPClient {
                     "Basic " + Base64.getEncoder().
                             encodeToString((userName + ":" + password).getBytes(CHARSET)));
         }
-        if (methodType.equals(HttpMethod.POST.name()) || methodType.equals(HttpMethod.PUT.name())
-                || methodType.equals(HttpMethod.DELETE.name())) {
+        if (methodType.equalsIgnoreCase("POST") || methodType.equalsIgnoreCase("PUT")
+                || methodType.equalsIgnoreCase("DELETE")) {
             connection.setDoOutput(true);
             outputStream = connection.getOutputStream();
             writer = new PrintWriter(new OutputStreamWriter(outputStream, CHARSET),
