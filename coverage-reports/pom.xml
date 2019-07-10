@@ -35,39 +35,47 @@
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.core</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.common</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.event.simulator.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.editor.core</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.metrics.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.store.api.rest</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.msf4j.interceptor.common</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.editor.core</artifactId>
+            <version>${io.siddhi.distribution.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io-siddhi-distribution-osgi-tests</artifactId>
-            <version>${project.version}</version>
+            <version>${io.siddhi.distribution.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
