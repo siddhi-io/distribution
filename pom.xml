@@ -259,8 +259,30 @@
 
     <dependencyManagement>
         <dependencies>
-
-            <!-- Siddhi distribution related-->
+            <!--Siddhi Distribution components-->
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.msf4j.interceptor.common</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+            </dependency>
+            <!--Event simulator-->
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.event.simulator.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+            </dependency>
+            <!--Health Check API -->
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.health.check.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+            </dependency>
+            <!-- Siddhi Metrics related -->
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.metrics.core</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+            </dependency>
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
                 <artifactId>io.siddhi.distribution.core</artifactId>
@@ -276,14 +298,49 @@
                 <artifactId>io.siddhi.distribution.store.api.rest</artifactId>
                 <version>${io.siddhi.distribution.version}</version>
             </dependency>
-
-            <!-- Siddhi Editor related -->
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.editor.core</artifactId>
+                <artifactId>io.siddhi.distribution.msf4j.interceptor.common.feature</artifactId>
                 <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
             </dependency>
-
+            <!-- Siddhi feature dependencies -->
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.metrics.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.store.api.rest.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.common.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.event.simulator.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.distribution.health.check.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
 
             <!--siddhi dependencies-->
             <dependency>
@@ -352,11 +409,6 @@
                 <groupId>org.wso2.msf4j</groupId>
                 <artifactId>msf4j-core</artifactId>
                 <version>${msf4j.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.msf4j.interceptor.common</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -428,20 +480,6 @@
                 <artifactId>generex</artifactId>
                 <version>${generex.wso2v1.version}</version>
             </dependency>
-
-            <!--Event simulator-->
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.event.simulator.core</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-            </dependency>
-
-            <!--Editor log appender -->
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-            </dependency>
             <dependency>
                 <groupId>findbugs</groupId>
                 <artifactId>findbugs</artifactId>
@@ -452,14 +490,6 @@
                 <artifactId>log4j</artifactId>
                 <version>${log4j.wso2.version}</version>
             </dependency>
-
-            <!--Health Check API -->
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.health.check.core</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-            </dependency>
-
             <!-- Swagger Documentation dependencies -->
             <dependency>
                 <groupId>org.wso2.orbit.io.swagger</groupId>
@@ -475,25 +505,6 @@
                 <groupId>javax.websocket</groupId>
                 <artifactId>javax.websocket-api</artifactId>
                 <version>${javax.websocket.api.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- Distributed manager dependencies -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-text</artifactId>
-                <version>${apache.commons.text.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.101tec</groupId>
-                <artifactId>zkclient</artifactId>
-                <version>${zkclient.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>log4j</groupId>
-                        <artifactId>log4j</artifactId>
-                    </exclusion>
-                </exclusions>
                 <scope>provided</scope>
             </dependency>
 
@@ -646,12 +657,6 @@
                 <version>${commons.io.version}</version>
             </dependency>
 
-            <!-- Siddhi Metrics related -->
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.metrics.core</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>org.apache.felix.scr.annotations</artifactId>
@@ -797,12 +802,7 @@
                 <version>${carbon.analytics-common.version}</version>
                 <type>zip</type>
             </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.msf4j.interceptor.common.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-            </dependency>
+
             <dependency>
                 <groupId>org.wso2.carbon.analytics-common</groupId>
                 <artifactId>org.wso2.carbon.analytics.permissions.feature</artifactId>
@@ -810,53 +810,10 @@
                 <type>zip</type>
             </dependency>
 
-            <!-- Siddhi feature dependencies -->
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.metrics.core.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-            </dependency>
             <dependency>
                 <groupId>io.siddhi</groupId>
                 <artifactId>io.siddhi.feature</artifactId>
                 <version>${siddhi.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.core.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.store.api.rest.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.editor.core.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.common.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.event.simulator.core.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.health.check.core.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
 
@@ -1065,13 +1022,6 @@
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${org.apache.commons.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.siddhi.distribution</groupId>
-                <artifactId>io.siddhi.distribution.distribution</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
-                <type>zip</type>
-                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon</groupId>
