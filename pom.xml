@@ -1155,7 +1155,7 @@
         <commons-lang3.version>3.9</commons-lang3.version>
         <kafka-2.11.version>0.10.0.0</kafka-2.11.version>
         <httpclient.version>4.3.6.wso2v2</httpclient.version>
-        <pax.logging.log4j2.version>1.10.2</pax.logging.log4j2.version>
+        <pax.logging.log4j2.version>1.10.3</pax.logging.log4j2.version>
         <log4j.wso2.version>1.2.17.wso2v1</log4j.wso2.version>
         <pax.exam.container.native.version>4.13.1</pax.exam.container.native.version>
         <pax.url.aether.version>2.6.1</pax.url.aether.version>
