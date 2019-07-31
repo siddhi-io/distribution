@@ -20,8 +20,6 @@ wso2.carbon:
   id: siddhi-runner
     # server name
   name: Siddhi Runner Distribution
-    # server type
-#  type: wso2-sp
     # ports used by this server
   ports:
       # port offset
@@ -57,20 +55,6 @@ wso2.transport.http:
     -
       id: "http-sender"
 
-  # Deployment configuration parameters
-wso2.artifact.deployment:
-    # Scheduler update interval
-  updateInterval: 5
-
-  # Periodic Persistence Configuration
-state.persistence:
-  enabled: false
-  intervalInMin: 1
-  revisionsToKeep: 2
-  persistenceStore: io.siddhi.distribution.core.persistence.FileSystemPersistenceStore
-  config:
-    location: siddhi-app-persistence
-
   # Datasource Configurations
 wso2.datasources:
   dataSources:
@@ -91,21 +75,3 @@ wso2.datasources:
           connectionTestQuery: SELECT 1
           validationTimeout: 30000
           isAutoCommit: false
-
-# Authentication configuration
-auth.configs:
-  type: 'local'        # Type of the IdP client used
-  userManager:
-    adminRole: admin   # Admin role which is granted all permissions
-    userStore:         # User store
-      users:
-       -
-         user:
-           username: admin
-           password: YWRtaW4=
-           roles: 1
-      roles:
-       -
-         role:
-           id: 1
-           displayName: admin
