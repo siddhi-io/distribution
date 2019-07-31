@@ -1127,7 +1127,7 @@
         <carbon.kernel.pax.version>5.2.8</carbon.kernel.pax.version>
         <org.wso2.transport.http.netty.version>6.0.295</org.wso2.transport.http.netty.version>
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
-        <carbon.deployment.version>5.2.1</carbon.deployment.version>
+        <carbon.deployment.version>5.2.2</carbon.deployment.version>
         <carbon.datasources.version>1.1.4</carbon.datasources.version>
         <carbon.metrics.version>2.3.10</carbon.metrics.version>
         <carbon.jndi.version>1.0.6</carbon.jndi.version>
