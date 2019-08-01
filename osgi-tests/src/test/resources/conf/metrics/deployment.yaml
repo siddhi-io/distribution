@@ -185,11 +185,6 @@ wso2.metrics.jdbc:
         # This is the period for polling metrics from the metric registry and updating the database with the values
         pollingPeriod: 30
 
-# Deployment configuration parameters
-wso2.artifact.deployment:
-    # Scheduler update interval
-  updateInterval: 5
-
   # Periodic Persistence Configuration
 state.persistence:
   enabled: false

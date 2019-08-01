@@ -54,11 +54,6 @@ wso2.transport.http:
     -
       id: "http-sender"
 
-  # Deployment configuration parameters
-wso2.artifact.deployment:
-    # Scheduler update interval
-  updateInterval: 5
-
   # Persistence Configuration
 state.persistence:
   enabled: false
