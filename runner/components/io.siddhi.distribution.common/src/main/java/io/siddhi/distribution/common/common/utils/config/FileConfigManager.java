@@ -36,7 +36,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.siddhi.distribution.common.common.utils.SPConstants.DATA_PARTITIONING_NAMESPACE;
+import static io.siddhi.distribution.common.common.utils.SPConstants.SIDDHI_PROPERTIES_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.EXTENSIONS_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.REFS_NAMESPACE;
 
@@ -139,16 +139,16 @@ public class FileConfigManager implements ConfigManager {
         String property = null;
         if (configProvider != null) {
             try {
-                Object dataPartitioningConf = configProvider.getConfigurationObject(DATA_PARTITIONING_NAMESPACE);
-                LinkedHashMap dataPartitioningMap;
-                if (dataPartitioningConf == null || dataPartitioningConf instanceof Map) {
-                    dataPartitioningMap = ((LinkedHashMap) dataPartitioningConf);
-                    if (dataPartitioningMap != null && dataPartitioningMap.size() > 0) {
+                Object siddhiPropertiesConf = configProvider.getConfigurationObject(SIDDHI_PROPERTIES_NAMESPACE);
+                LinkedHashMap propertiesMap;
+                if (siddhiPropertiesConf == null || siddhiPropertiesConf instanceof Map) {
+                    propertiesMap = ((LinkedHashMap) siddhiPropertiesConf);
+                    if (propertiesMap != null && propertiesMap.size() > 0) {
                         if (LOGGER.isDebugEnabled()) {
                             LOGGER.debug("Matching property for name: '" + name + "' is looked for under name space '" +
-                                    DATA_PARTITIONING_NAMESPACE + "'.");
+                                    SIDDHI_PROPERTIES_NAMESPACE + "'.");
                         }
-                        property = dataPartitioningMap.get(name).toString();
+                        property = propertiesMap.get(name).toString();
                     } else {
                         RootConfiguration rootConfiguration =
                                 configProvider.getConfigurationObject(RootConfiguration.class);

@@ -25,7 +25,7 @@ public class SPConstants {
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String COOKIE_HEADER = "Cookie";
 
-    public static final String DATA_PARTITIONING_NAMESPACE = "dataPartition";
+    public static final String SIDDHI_PROPERTIES_NAMESPACE = "properties";
     public static final String EXTENSIONS_NAMESPACE = "extensions";
     public static final String REFS_NAMESPACE = "refs";
 
