@@ -36,9 +36,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static io.siddhi.distribution.common.common.utils.SPConstants.SIDDHI_PROPERTIES_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.EXTENSIONS_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.REFS_NAMESPACE;
+import static io.siddhi.distribution.common.common.utils.SPConstants.SIDDHI_PROPERTIES_NAMESPACE;
 
 /**
  * Siddhi File Configuration Manager.
