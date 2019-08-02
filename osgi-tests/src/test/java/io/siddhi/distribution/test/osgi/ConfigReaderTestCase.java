@@ -49,7 +49,7 @@ public class ConfigReaderTestCase {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConfigReaderTestCase.class);
     private static final String DEFAULT_USER_NAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";
-    private static final String CARBON_YAML_FILENAME = "deployment.yaml";
+    static final String CARBON_YAML_FILENAME = "deployment.yaml";
 
     @Inject
     private CarbonServerInfo carbonServerInfo;
@@ -68,7 +68,7 @@ public class ConfigReaderTestCase {
     /**
      * Replace the existing deployment.yaml file with populated deployment.yaml file.
      */
-    private Option copyCarbonYAMLOption() {
+    public Option copyCarbonYAMLOption() {
         Path carbonYmlFilePath;
         String basedir = System.getProperty("basedir");
         if (basedir == null) {
