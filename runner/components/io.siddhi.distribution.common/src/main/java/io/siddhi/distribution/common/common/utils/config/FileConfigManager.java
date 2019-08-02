@@ -25,9 +25,20 @@ import org.slf4j.LoggerFactory;
 import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.kernel.config.model.CarbonConfiguration;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
+import org.yaml.snakeyaml.nodes.Tag;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+
+import static io.siddhi.distribution.common.common.utils.SPConstants.DATA_PARTITIONING_NAMESPACE;
+import static io.siddhi.distribution.common.common.utils.SPConstants.EXTENSIONS_NAMESPACE;
+import static io.siddhi.distribution.common.common.utils.SPConstants.REFS_NAMESPACE;
 
 /**
  * Siddhi File Configuration Manager.
@@ -45,25 +56,41 @@ public class FileConfigManager implements ConfigManager {
     public ConfigReader generateConfigReader(String namespace, String name) {
         if (configProvider != null) {
             try {
-                RootConfiguration rootConfiguration = configProvider.getConfigurationObject(RootConfiguration.class);
-                if (null != rootConfiguration && null != rootConfiguration.getExtensions()) {
-                    for (Extension extension : rootConfiguration.getExtensions()) {
-                        ExtensionChildConfiguration childConfiguration = extension.getExtension();
-                        if (null != childConfiguration && null != childConfiguration.getName() && childConfiguration
-                                .getName().equals(name) && null != childConfiguration.getNamespace() &&
-                                childConfiguration.getNamespace().equals(namespace)
-                                && null != childConfiguration.getProperties()) {
-                            return new FileConfigReader(childConfiguration.getProperties());
+
+                Object extensions = configProvider.getConfigurationObject(EXTENSIONS_NAMESPACE);
+
+                if (extensions == null || extensions instanceof List) {
+                    List extensionsListTemp = ((List) extensions);
+                    ExtensionsRootConfiguration extensionsRootConfig = getExtensionRootConfig(extensionsListTemp);
+
+                    if (extensionsRootConfig.getExtensions().size() > 0) {
+                        ConfigReader childConfiguration = getConfigReader(extensionsRootConfig.getExtensions(),
+                                namespace, name, EXTENSIONS_NAMESPACE);
+                        if (childConfiguration != null) {
+                            return childConfiguration;
+                        }
+                    } else {
+                        RootConfiguration rootConfiguration = configProvider.
+                                getConfigurationObject(RootConfiguration.class);
+                        if (rootConfiguration.getExtensions().size() > 0) {
+                            ConfigReader childConfiguration = getConfigReader(
+                                    rootConfiguration.getExtensions(), namespace, name, "siddhi.extensions");
+                            if (childConfiguration != null) {
+                                return childConfiguration;
+                            }
                         }
                     }
+                } else {
+                    throw new ConfigurationException("The first level under 'extensions' namespace should " +
+                            "be a list of type 'extension'");
                 }
-            } catch (ConfigurationException e) {
-                LOGGER.error("Could not initiate the siddhi configuration object, " + e.getMessage(), e);
+            } catch (Exception e) {
+                LOGGER.error("Could not initiate the extensions configuration object, " + e.getMessage(), e);
             }
         }
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("Could not find a matching configuration for name: " +
-                    name + "and namespace: " + namespace + "!");
+            LOGGER.debug("Could not find a matching configuration for name: " + name + "and namespace: " +
+                    namespace + "!");
         }
         return new FileConfigReader(new HashMap<>());
     }
@@ -72,23 +99,36 @@ public class FileConfigManager implements ConfigManager {
     public Map<String, String> extractSystemConfigs(String name) {
         if (configProvider != null) {
             try {
-                RootConfiguration rootConfiguration = configProvider.getConfigurationObject(RootConfiguration.class);
-                if (null != rootConfiguration && null != rootConfiguration.getRefs()) {
-                    for (Reference ref : rootConfiguration.getRefs()) {
-                        ReferenceChildConfiguration childConfiguration = ref.getReference();
-                        if (null != childConfiguration && null != childConfiguration.getName()
-                                && childConfiguration.getName().equals(name)) {
-                            Map<String, String> referenceConfigs = new HashMap<>();
-                            referenceConfigs.put(SiddhiConstants.ANNOTATION_ELEMENT_TYPE, childConfiguration.getType());
-                            if (childConfiguration.getProperties() != null) {
-                                referenceConfigs.putAll(childConfiguration.getProperties());
-                            }
+
+                Object references = configProvider.getConfigurationObject(REFS_NAMESPACE);
+                if (references == null || references instanceof List) {
+                    List referencesListTemp = ((List) references);
+                    RefsRootConfiguration refsRootConf = getReferencesRootConfig(referencesListTemp);
+
+                    if (refsRootConf.getRefs().size() > 0) {
+                        Map<String, String> referenceConfigs = getReference(refsRootConf.getRefs(), name,
+                                REFS_NAMESPACE);
+                        if (referenceConfigs != null) {
                             return referenceConfigs;
                         }
+                    } else {
+                        RootConfiguration rootConfiguration = configProvider
+                                .getConfigurationObject(RootConfiguration.class);
+                        if (rootConfiguration.getRefs().size() > 0) {
+                            Map<String, String> referenceConfigs = getReference(rootConfiguration.getRefs(),
+                                    name, "siddhi.refs");
+                            if (referenceConfigs != null) {
+                                return referenceConfigs;
+                            }
+                        }
                     }
+                } else {
+                    throw new ConfigurationException("The first level under 'refs' namespace should " +
+                            "be a list of type 'ref'");
                 }
-            } catch (ConfigurationException e) {
-                LOGGER.error("Could not initiate the siddhi configuration object, " + e.getMessage(), e);
+
+            } catch (Exception e) {
+                LOGGER.error("Could not initiate the refs configuration object, " + e.getMessage(), e);
             }
         }
         return new HashMap<>();
@@ -99,10 +139,28 @@ public class FileConfigManager implements ConfigManager {
         String property = null;
         if (configProvider != null) {
             try {
-                RootConfiguration rootConfiguration =
-                        configProvider.getConfigurationObject(RootConfiguration.class);
-                if (null != rootConfiguration && null != rootConfiguration.getProperties()) {
-                    property = rootConfiguration.getProperties().get(name);
+                Object dataPartitioningConf = configProvider.getConfigurationObject(DATA_PARTITIONING_NAMESPACE);
+                LinkedHashMap dataPartitioningMap;
+                if (dataPartitioningConf == null || dataPartitioningConf instanceof Map) {
+                    dataPartitioningMap = ((LinkedHashMap) dataPartitioningConf);
+                    if (dataPartitioningMap != null && dataPartitioningMap.size() > 0) {
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Matching property for name: '" + name + "' is looked for under name space '" +
+                                    DATA_PARTITIONING_NAMESPACE + "'.");
+                        }
+                        property = dataPartitioningMap.get(name).toString();
+                    } else {
+                        RootConfiguration rootConfiguration =
+                                configProvider.getConfigurationObject(RootConfiguration.class);
+                        if (LOGGER.isDebugEnabled()) {
+                            LOGGER.debug("Matching property for name: '" + name + "' is looked for under name space " +
+                                    "'siddhi.properties'.");
+                        }
+                        property = rootConfiguration.getProperties().get(name);
+                    }
+                } else {
+                    throw new ConfigurationException("The first level under 'dataPartitioning' namespace should " +
+                            "be a map of type <sting, string>");
                 }
             } catch (ConfigurationException e) {
                 LOGGER.error("Could not initiate the siddhi configuration object, " + e.getMessage(), e);
@@ -136,5 +194,66 @@ public class FileConfigManager implements ConfigManager {
             LOGGER.debug("Could not find a matching configuration for property name: " + name + "");
         }
         return property;
+    }
+
+    private static ConfigReader getConfigReader(List<Extension> extensions, String namespace,
+                                                String name, String configNamespace) {
+        for (Extension extension : extensions) {
+            ExtensionChildConfiguration childConfiguration = extension.getExtension();
+            if (childConfiguration.getNamespace().equals(namespace) &&
+                    childConfiguration.getName().equals(name) &&
+                    childConfiguration.getProperties() != null) {
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Matching configuration for name: '" + name + "' and namespace: '" + namespace +
+                            "' is found under name space '" + configNamespace + "'.");
+                }
+                return new FileConfigReader(childConfiguration.getProperties());
+            }
+        }
+        return null;
+    }
+
+    private ExtensionsRootConfiguration getExtensionRootConfig(List<HashMap> extensionsList) {
+        if (extensionsList == null) {
+            return new ExtensionsRootConfiguration();
+        }
+        Yaml yamlTemp = new Yaml();
+        String finalYaml = "extensions:\n" + yamlTemp.dumpAs(extensionsList, Tag.SEQ, DumperOptions.FlowStyle.BLOCK);
+        Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
+                ExtensionsRootConfiguration.class, ExtensionsRootConfiguration.class.getClassLoader()));
+        yaml.setBeanAccess(BeanAccess.FIELD);
+        return yaml.loadAs(finalYaml, ExtensionsRootConfiguration.class);
+    }
+
+    private static Map<String, String> getReference(List<Reference> references,
+                                                    String name, String configNamespace) {
+        for (Reference reference : references) {
+            ReferenceChildConfiguration childConf = reference.getReference();
+            if (childConf.getName().equals(name)) {
+                Map<String, String> referenceConfigs = new HashMap<>();
+                referenceConfigs.put(SiddhiConstants.ANNOTATION_ELEMENT_TYPE, childConf.getType());
+                if (childConf.getProperties() != null) {
+                    referenceConfigs.putAll(childConf.getProperties());
+                }
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("Matching reference for name: '" + name + "' is found under name space '" +
+                            configNamespace + "'.");
+                }
+                return referenceConfigs;
+            }
+        }
+        return null;
+    }
+
+    private RefsRootConfiguration getReferencesRootConfig(List<HashMap> referencesList) {
+        if (referencesList == null) {
+            return new RefsRootConfiguration();
+        }
+        Yaml yamlTemp = new Yaml();
+        String finalYaml = "refs:\n" + yamlTemp.dumpAs(referencesList, Tag.SEQ, DumperOptions.FlowStyle.BLOCK);
+        Yaml yaml = new Yaml(new CustomClassLoaderConstructor(
+                RefsRootConfiguration.class, RefsRootConfiguration.class.getClassLoader()));
+        yaml.setBeanAccess(BeanAccess.FIELD);
+        return yaml.loadAs(finalYaml, RefsRootConfiguration.class);
     }
 }
