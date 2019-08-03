@@ -866,6 +866,7 @@
                             </descriptors>
                             <finalName>${distribution.name}-${project.version}</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
+                            <archiveBaseDirectory>${project.build.directory}</archiveBaseDirectory>
                         </configuration>
                     </execution>
                 </executions>
