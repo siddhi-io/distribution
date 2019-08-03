@@ -25,6 +25,7 @@ public class PersistenceConstants {
 
     public static final String PLACEHOLDER_TABLE_NAME = "{{TABLE_NAME}}";
     public static final String STATE_PERSISTENCE_NS = "state.persistence";
+    public static final String STREAMLINED_STATE_PERSISTENCE_NS = "statePersistence";
     public static final String STATE_PERSISTENCE_REVISIONS_TO_KEEP = "revisionsToKeep";
     public static final String STATE_PERSISTENCE_CONFIGS = "config";
     public static final String DEFAULT_FILE_PERSISTENCE_FOLDER = "siddhi-app-persistence";

@@ -110,18 +110,6 @@ public class FileConfigManager implements ConfigManager {
 
             if (property == null && "shardId".equalsIgnoreCase(name)) {
                 try {
-                    ClusterConfig clusterConfig =
-                            configProvider.getConfigurationObject(ClusterConfig.class);
-                    if (clusterConfig != null) {
-                        if (clusterConfig.getGroupId() != null && clusterConfig.isEnabled()) {
-                            return clusterConfig.getGroupId();
-                        }
-                    }
-                } catch (ConfigurationException e) {
-                    LOGGER.error("Could not initiate the cluster.config configuration object, " + e.getMessage(), e);
-                }
-
-                try {
                     CarbonConfiguration carbonConfiguration =
                             configProvider.getConfigurationObject(CarbonConfiguration.class);
                     if (carbonConfiguration != null && carbonConfiguration.getId() != null) {
