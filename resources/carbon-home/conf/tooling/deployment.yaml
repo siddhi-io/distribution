@@ -55,18 +55,8 @@ wso2.transport.http:
     -
       id: "http-sender"
 
-  # Periodic Persistence Configuration
-state.persistence:
-  enabled: false
-  intervalInMin: 1
-  revisionsToKeep: 2
-  persistenceStore: io.siddhi.distribution.core.persistence.FileSystemPersistenceStore
-  config:
-    location: siddhi-app-persistence
-
   # Datasource Configurations
-wso2.datasources:
-  dataSources:
+dataSources:
   - name: WSO2_CARBON_DB
     description: The datasource used for registry and user manager
     definition:
@@ -83,6 +73,6 @@ wso2.datasources:
         isAutoCommit: false
 
     #Authentication Configurations: Authentication is disabled in editor profile
-auth.configs:
+authentication:
   restAPIAuthConfigs:
     authEnable: false
