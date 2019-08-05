@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -9,7 +9,7 @@
  *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing,
- * software distributed under thhe License is distributed on an
+ * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
  * KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations
@@ -45,7 +45,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
-public class ConfigReaderTestCase {
+public class ConfigReaderTestCase2 {
     private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConfigReaderTestCase.class);
     private static final String DEFAULT_USER_NAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";
@@ -75,7 +75,7 @@ public class ConfigReaderTestCase {
             basedir = Paths.get(".").toString();
         }
         carbonYmlFilePath = Paths.get(basedir, "src", "test", "resources",
-                "conf", "configuration", CARBON_YAML_FILENAME);
+                "conf", "configurationnew", CARBON_YAML_FILENAME);
         return copyFile(carbonYmlFilePath, Paths.get("conf", "runner", CARBON_YAML_FILENAME));
     }
 
@@ -86,7 +86,7 @@ public class ConfigReaderTestCase {
         String path = "/siddhi-apps";
         String contentType = "text/plain";
         String method = "POST";
-        String body = "@App:name('SiddhiApp1')\n" +
+        String body = "@App:name('SiddhiApp11')\n" +
                 "@Store(ref='store4')" +
                 "define table FooTable (symbol string, price float, volume long);";
 
@@ -103,7 +103,7 @@ public class ConfigReaderTestCase {
         String path = "/siddhi-apps";
         String contentType = "text/plain";
         String method = "POST";
-        String body = "@App:name('SiddhiApp3')\n" +
+        String body = "@App:name('SiddhiApp13')\n" +
                 "@Store(ref='store1')" +
                 "define table FooTable (symbol string, price float, volume long);";
 
@@ -120,7 +120,7 @@ public class ConfigReaderTestCase {
         String path = "/siddhi-apps";
         String contentType = "text/plain";
         String method = "POST";
-        String body = "@App:name('SiddhiApp4')\n" +
+        String body = "@App:name('SiddhiApp14')\n" +
                 "@Store(ref='store3')" +
                 "define table FooTable (symbol string, price float, volume long);";
 
@@ -137,7 +137,7 @@ public class ConfigReaderTestCase {
         String path = "/siddhi-apps";
         String contentType = "text/plain";
         String method = "POST";
-        String body = "@App:name('SiddhiApp5')\n" +
+        String body = "@App:name('SiddhiApp15')\n" +
                 "@Store(ref='store8')" +
                 "define table FooTable (symbol string, price float, volume long);";
 
@@ -154,7 +154,7 @@ public class ConfigReaderTestCase {
         String path = "/siddhi-apps";
         String contentType = "text/plain";
         String method = "POST";
-        String body = "@App:name('SiddhiApp6')\n" +
+        String body = "@App:name('SiddhiApp16')\n" +
                 "@Store(ref='store2')" +
                 "define table FooTable (symbol string, price float, volume long);";
 
@@ -171,5 +171,4 @@ public class ConfigReaderTestCase {
         testUtil.addBodyContent(body);
         return testUtil.getResponse();
     }
-
 }

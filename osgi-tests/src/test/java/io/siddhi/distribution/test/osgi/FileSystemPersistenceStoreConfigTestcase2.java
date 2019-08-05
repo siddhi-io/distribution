@@ -35,7 +35,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @Listeners(PaxExam.class)
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
-public class FileSystemPersistenceStoreNewConfigTestcase extends FileSystemPersistenceStoreConfigTestcase {
+public class FileSystemPersistenceStoreConfigTestcase2 extends FileSystemPersistenceStoreConfigTestcase {
 
     /**
      * Replace the existing deployment.yaml file with populated deployment.yaml file.

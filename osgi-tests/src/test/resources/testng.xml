@@ -18,7 +18,7 @@ limitations under the License.
     <test name="siddhi-distribution-tests" preserve-order="true" parallel="false" thread-count="1">
         <classes>
             <class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreNewConfigTestcase"/>
+            <class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase2"/>
             <class name="io.siddhi.distribution.test.osgi.SiddhiAsAPITestcase"/>
             <class name="io.siddhi.distribution.test.osgi.SiddhiMetricsTestcase"/>
             <class name="io.siddhi.distribution.test.osgi.DBPersistenceStoreTestcase"/>
@@ -29,6 +29,7 @@ limitations under the License.
             <!--<class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase"/>-->
 
             <class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase"/>
+            <class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase2"/>
             <class name="io.siddhi.distribution.test.osgi.SiddhiStoreAPITestcase"/>
             <class name="io.siddhi.distribution.test.osgi.SimulatorAPITestcase"/>
             <class name="io.siddhi.distribution.test.osgi.SiddhiToolingTestCase"/>
