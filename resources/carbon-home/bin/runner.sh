@@ -55,9 +55,8 @@ PRGDIR=`dirname "$PRG"`
 
 [ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$PRGDIR/../wso2/runner" ; pwd`
 
-echo "Installing jars..."
+#installing jars
 java -cp "../bin/tools/*" -Dwso2.carbon.tool="install-jars" org.wso2.carbon.tools.CarbonToolExecutor "$CARBON_HOME"
-echo "Installing jars completed."
 
 ###########################################################################
 NAME=start-runner
