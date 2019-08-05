@@ -29,6 +29,7 @@ limitations under the License.
             <!--<class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase"/>-->
 
             <class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase"/>
+            <class name="io.siddhi.distribution.test.osgi.NewConfigReaderTestCase"/>
             <class name="io.siddhi.distribution.test.osgi.SiddhiStoreAPITestcase"/>
             <class name="io.siddhi.distribution.test.osgi.SimulatorAPITestcase"/>
             <class name="io.siddhi.distribution.test.osgi.SiddhiToolingTestCase"/>
