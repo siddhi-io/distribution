@@ -32,12 +32,10 @@ public class DeployableSiddhiQueryGroup {
     private int parallelism;
     private  boolean isUserGivenSource;
 
-    public DeployableSiddhiQueryGroup(String groupName, boolean receiverQueryGroup, /*boolean isUserGivenSource,*/
-                                      int parallelism) {
+    public DeployableSiddhiQueryGroup(String groupName, boolean receiverQueryGroup, int parallelism) {
         this.groupName = groupName;
         siddhiQueries = new ArrayList();
         isReceiverQueryGroup = receiverQueryGroup;
-//        this.isUserGivenSource = isUserGivenSource;
         this.parallelism = parallelism;
     }
 

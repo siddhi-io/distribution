@@ -669,20 +669,4 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
             }
         }
     }
-
-//    public boolean isAppStateful() {
-//        return siddhiTopologyDataHolder.isStatefulApp();
-//    }
-
-//    public boolean isUsergiveSource() {
-//        Map<String, StreamDefinition> stringStreamDefinitionMap = siddhiApp.getStreamDefinitionMap();
-//        for (StreamDefinition streamDef : stringStreamDefinitionMap.values()) {
-//            for (Annotation annotation : streamDef.getAnnotations()) {
-//                if (annotation.getName().equalsIgnoreCase("source")) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
 }
