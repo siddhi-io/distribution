@@ -28,16 +28,19 @@ wso2.carbon:
 transports:
   http:
     listenerConfigurations:
-      - id: "default"
+      -
+        id: "default"
         host: "0.0.0.0"
         port: 9390
-      - id: "msf4j-https"
+      -
+        id: "msf4j-https"
         host: "0.0.0.0"
         port: 9743
         scheme: https
         keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
         keyStorePassword: wso2carbon
         certPass: wso2carbon
+
     transportProperties:
       -
         name: "server.bootstrap.socket.timeout"
