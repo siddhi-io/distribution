@@ -20,7 +20,7 @@ package io.siddhi.parser.service.model;
 import java.util.List;
 
 /**
- * Represents a deployable partial Siddhi App
+ * Represents a deployable partial Siddhi App.
  */
 public class DeployableSiddhiApp {
     private boolean persistenceEnabled = false;

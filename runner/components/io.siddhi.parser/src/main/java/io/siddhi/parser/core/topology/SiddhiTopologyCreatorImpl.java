@@ -151,7 +151,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
     }
 
     /**
-     * Clean input and output streams of the group by removing streams that are only used within that group
+     * Clean input and output streams of the group by removing streams that are only used within that group.
      *
      * @param siddhiQueryGroups Collection of Siddhi Query Groups
      */

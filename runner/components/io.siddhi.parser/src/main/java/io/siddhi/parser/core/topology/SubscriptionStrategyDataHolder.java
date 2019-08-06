@@ -21,7 +21,7 @@ package io.siddhi.parser.core.topology;
 import io.siddhi.parser.core.util.TransportStrategy;
 
 /**
- * Holder for Subscription Strategy information
+ * Holder for Subscription Strategy information.
  */
 public class SubscriptionStrategyDataHolder {
     private TransportStrategy strategy;

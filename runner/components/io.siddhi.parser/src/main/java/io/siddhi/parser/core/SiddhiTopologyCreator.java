@@ -27,7 +27,7 @@ import io.siddhi.parser.core.topology.SiddhiTopology;
  */
 public interface SiddhiTopologyCreator {
     /**
-     * consume a Siddhi App and produce a {@link SiddhiTopology} based on distributed annotations
+     * consume a Siddhi App and produce a {@link SiddhiTopology} based on distributed annotations.
      *
      * @param userDefinedSiddhiApp Siddhi app deployed by the user
      * @return {@link SiddhiTopology} representing the given siddhi app

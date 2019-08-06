@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Source Deployment Configuration
+ * Source Deployment Configuration Model.
  */
 public class SourceDeploymentConfig {
     private String serviceProtocol;

@@ -64,7 +64,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 /**
- * Siddhi Parser Service used by the Siddhi Kubernetes Operator to parse the Siddhi Apps
+ * Siddhi Parser Service used by the Siddhi Kubernetes Operator to parse the Siddhi Apps.
  */
 @Component(
         name = "siddhi-parser-service",

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Siddhi Parser Request Object
+ * Siddhi Parser Request Model.
  */
 public class SiddhiParserRequest {
 

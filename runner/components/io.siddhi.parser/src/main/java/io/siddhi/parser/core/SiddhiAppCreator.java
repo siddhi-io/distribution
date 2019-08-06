@@ -31,7 +31,7 @@ import java.util.List;
  */
 public interface SiddhiAppCreator {
     /**
-     * Create valid concrete Siddhi Apps for each Query Group in the given {@link SiddhiTopology}
+     * Create valid concrete Siddhi Apps for each Query Group in the given {@link SiddhiTopology}.
      *
      * @param topology Input topology to create Siddhi Apps
      * @return List of {@link DeployableSiddhiQueryGroup}s. Length of the list should be equal to no. of groups user

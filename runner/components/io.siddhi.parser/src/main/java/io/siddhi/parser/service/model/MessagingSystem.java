@@ -20,7 +20,7 @@ package io.siddhi.parser.service.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Messaging System root namespcae
+ * Messaging System root namespace.
  */
 public class MessagingSystem {
 

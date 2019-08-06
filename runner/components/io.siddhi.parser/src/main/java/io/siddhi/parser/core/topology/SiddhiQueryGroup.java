@@ -25,7 +25,7 @@ import java.util.Map;
 import static io.siddhi.parser.core.appcreator.NatsSiddhiAppCreator.APP_NAME;
 
 /**
- * Data Holder to hold required details of Query Groups in {@link SiddhiTopology}
+ * Data Holder to hold required details of Query Groups in {@link SiddhiTopology}.
  */
 public class SiddhiQueryGroup {
     private String name;
