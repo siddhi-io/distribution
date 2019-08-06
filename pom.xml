@@ -1106,7 +1106,7 @@
         <siddhi.version>5.1.0</siddhi.version>
         <siddhi.bundle.version>5.1.0</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
-        <carbon.analytics-common.version>6.1.28</carbon.analytics-common.version>
+        <carbon.analytics-common.version>6.1.30</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.1.0, 6.2.0)</carbon.analytics-common.version.range>
         <io.siddhi.distribution.version.range>[5.0.0, 6.0.0)</io.siddhi.distribution.version.range>
 
@@ -1187,7 +1187,7 @@
         <javax.servlet.version>3.1.0</javax.servlet.version>
 
         <!--MSF4J related-->
-        <msf4j.version>2.7.3</msf4j.version>
+        <msf4j.version>2.7.4-SNAPSHOT</msf4j.version>
         <com.fasterxml.jackson.core.version>2.9.9</com.fasterxml.jackson.core.version>
         <io.swagger.version>1.5.22</io.swagger.version>
         <javax.ws.rs-api.version>2.0</javax.ws.rs-api.version>
