@@ -29,13 +29,15 @@ public class SiddhiTopology {
     private List<SiddhiQueryGroup> queryGroupList;
     private boolean transportChannelCreationEnabled;
     private boolean isStatefulApp;
+    private boolean userGiveSourceStateful;
 
-    public SiddhiTopology(String name, List<SiddhiQueryGroup> queryGroupList,
-                          boolean transportChannelCreationEnabled, boolean isStatefulApp) {
+    public SiddhiTopology(String name, List<SiddhiQueryGroup> queryGroupList, boolean transportChannelCreationEnabled,
+                          boolean isStatefulApp, boolean userGiveSourceStateful) {
         this.name = name;
         this.queryGroupList = queryGroupList;
         this.transportChannelCreationEnabled = transportChannelCreationEnabled;
         this.isStatefulApp = isStatefulApp;
+        this.userGiveSourceStateful = userGiveSourceStateful;
     }
 
     public String getName() {
@@ -56,5 +58,9 @@ public class SiddhiTopology {
 
     public boolean isStatefulApp() {
         return isStatefulApp;
+    }
+
+    public boolean isUserGiveSourceStateful() {
+        return userGiveSourceStateful;
     }
 }

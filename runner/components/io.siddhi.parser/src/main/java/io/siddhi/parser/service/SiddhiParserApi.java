@@ -118,7 +118,7 @@ public class SiddhiParserApi {
                         if (deployableSiddhiQueryGroup.isReceiverQueryGroup()) {
                             for (SiddhiQuery siddhiQuery : deployableSiddhiQueryGroup.getSiddhiQueries()) {
                                 deployableSiddhiApps.add(new DeployableSiddhiApp(siddhiQuery.getApp(),
-                                        sourceDeploymentConfigs));
+                                        sourceDeploymentConfigs, topology.isUserGiveSourceStateful()));
                             }
                         } else {
                             for (SiddhiQuery siddhiQuery : deployableSiddhiQueryGroup.getSiddhiQueries()) {

@@ -66,13 +66,14 @@ import java.util.UUID;
 public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
 
     private static final Logger log = Logger.getLogger(SiddhiTopologyCreatorImpl.class);
+    private static final String DEFAULT_MESSAGING_SYSTEM = "nats";
     private SiddhiTopologyDataHolder siddhiTopologyDataHolder;
     private SiddhiApp siddhiApp;
     private String siddhiAppName;
     private SiddhiAppRuntime siddhiAppRuntime;
     private String userDefinedSiddhiApp;
     private boolean transportChannelCreationEnabled = true;
-    private static final String DEFAULT_MESSAGING_SYSTEM = "nats";
+    private boolean isUserGiveSourceStateful = false;
 
     @Override
     public SiddhiTopology createTopology(String userDefinedSiddhiApp) {
@@ -107,13 +108,16 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         }
         return new SiddhiTopology(siddhiTopologyDataHolder.getSiddhiAppName(), new ArrayList<>
                 (siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values()),
-                transportChannelCreationEnabled, isStatefulApp());
+                transportChannelCreationEnabled, isStatefulApp(), isUserGiveSourceStateful);
     }
 
     private boolean isStatefulApp() {
         for (List<Source> sourceList : siddhiAppRuntime.getSources()) {
             for (Source source : sourceList) {
                 if (source.isStateful()) {
+                    if (source.getType().equalsIgnoreCase(DEFAULT_MESSAGING_SYSTEM)) {
+                        isUserGiveSourceStateful = true;
+                    }
                     return true;
                 }
             }

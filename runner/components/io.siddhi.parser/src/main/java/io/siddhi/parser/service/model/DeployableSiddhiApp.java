@@ -36,9 +36,10 @@ public class DeployableSiddhiApp {
         this.siddhiApp = siddhiApp;
     }
 
-    public DeployableSiddhiApp(String siddhiApp, List<SourceDeploymentConfig> sourceList) {
+    public DeployableSiddhiApp(String siddhiApp, List<SourceDeploymentConfig> sourceList, boolean persistenceEnabled) {
         this.siddhiApp = siddhiApp;
         this.sourceDeploymentConfigs = sourceList;
+        this.persistenceEnabled = persistenceEnabled;
     }
 
     public DeployableSiddhiApp(String siddhiApp, boolean persistenceEnabled) {

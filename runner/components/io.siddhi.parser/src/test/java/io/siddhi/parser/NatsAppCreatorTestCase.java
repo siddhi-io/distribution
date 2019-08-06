@@ -74,8 +74,8 @@ public class NatsAppCreatorTestCase {
         String siddhiApp = "@App:name('Energy-Alert-App')\n"
                 + "@App:description('Energy consumption and anomaly detection')\n"
                 + "@source(type = 'http', topic = 'device-power', @map(type = 'json'))\n"
-                + "@source(type='nats',cluster.id='test-cluster',destination = 'Energy-Alert-App_DevicePowerStream', " +
-                "bootstrap.servers='nats://localhost:422232800',@map(type='json')) \n"
+                + "@source(type='nats',cluster.id='test-cluster',destination = 'dummy-destination', " +
+                "bootstrap.servers='nats://localhost:8080',@map(type='json')) \n"
                 + "define stream DevicePowerStream (type string, deviceID string, power int,"
                 + " roomID string);\n"
                 + "@sink(type = 'log')\n"
