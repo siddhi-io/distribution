@@ -51,7 +51,6 @@ public class NatsAppCreatorTestCase {
 
     @BeforeClass
     private void initializeDockerContainer() throws InterruptedException {
-
         SiddhiManager siddhiManager = new SiddhiManager();
         siddhiManager.setExtension("http-source", HttpSource.class);
         siddhiManager.setExtension("map-json", JsonSourceMapper.class);

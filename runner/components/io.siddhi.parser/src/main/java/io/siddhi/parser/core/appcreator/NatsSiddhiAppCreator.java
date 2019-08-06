@@ -85,7 +85,7 @@ public class NatsSiddhiAppCreator extends AbstractSiddhiAppCreator {
         List<SiddhiQuery> queryList = generateQueryList(queryTemplate, groupName, queryGroup
                 .getParallelism());
         if (messagingSystem != null && messagingSystem.getConfig() != null) {
-            natsServerUrl = messagingSystem.getConfig().getBootstrapServers()[0];
+            natsServerUrl = messagingSystem.getConfig().getBootstrapServerURLs();
             clusterId = messagingSystem.getConfig().getClusterId();
         }
         processInputStreams(siddhiAppName, groupName, queryList, queryGroup.getInputStreams().values());

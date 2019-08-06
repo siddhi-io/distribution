@@ -55,7 +55,7 @@ PRGDIR=`dirname "$PRG"`
 
 [ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$PRGDIR/../wso2/tooling" ; pwd`
 
-#installing jars
+# Installing jars
 java -cp "../bin/tools/*" -Dwso2.carbon.tool="install-jars" org.wso2.carbon.tools.CarbonToolExecutor "$CARBON_HOME"
 
 ###########################################################################

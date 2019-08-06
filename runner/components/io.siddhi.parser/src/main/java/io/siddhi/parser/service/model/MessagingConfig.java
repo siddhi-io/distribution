@@ -19,6 +19,8 @@ package io.siddhi.parser.service.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Arrays;
+
 /**
  * Messaging System Configuration.
  */
@@ -38,17 +40,22 @@ public class MessagingConfig {
         this.clusterId = clusterId;
     }
 
-    public String[] getBootstrapServers() {
-        return bootstrapServers;
-    }
-
-    public void setBootstrapServers(String[] bootstrapServers) {
-        this.bootstrapServers = bootstrapServers;
+    public String getBootstrapServerURLs() {
+        if (bootstrapServers != null && bootstrapServers.length > 0) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String urls : bootstrapServers) {
+                stringBuilder.append(urls.replace("'", "\\'")).append(",");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            return stringBuilder.toString();
+        } else {
+            return "";
+        }
     }
 
     public MessagingConfig(String clusterId, String[] bootstrapServers) {
         this.clusterId = clusterId;
-        this.bootstrapServers = bootstrapServers;
+        this.bootstrapServers = Arrays.copyOf(bootstrapServers, bootstrapServers.length);
     }
 
     public boolean isEmpty() {
