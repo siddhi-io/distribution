@@ -85,7 +85,6 @@ public class SiddhiParserApi {
     public SiddhiParserApi() {
         SiddhiManager siddhiManager = new SiddhiManager();
         FileConfigManager fileConfigManager = new FileConfigManager(SiddhiParserDataHolder.getConfigProvider());
-        fileConfigManager.init();
         siddhiManager.setConfigManager(fileConfigManager);
         SiddhiParserDataHolder.setSiddhiManager(siddhiManager);
     }

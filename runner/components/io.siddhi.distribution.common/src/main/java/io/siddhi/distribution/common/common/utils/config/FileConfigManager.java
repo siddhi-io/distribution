@@ -42,20 +42,12 @@ public class FileConfigManager implements ConfigManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileConfigManager.class);
 
     private ConfigProvider configProvider;
-    private List<Extension> extensions = new ArrayList<>();
-    private List<Reference> references = new ArrayList<>();
-    private Map<String, String> properties = new HashMap<>();
+    private List<Extension> extensions;
+    private List<Reference> references;
+    private Map<String, String> properties;
 
     public FileConfigManager(ConfigProvider configProvider) {
         this.configProvider = configProvider;
-    }
-
-    public void init() {
-        if (configProvider != null) {
-            initialiseExtensions();
-            initialiseReferences();
-            initaliseProperties();
-        }
     }
 
     private void initaliseProperties() {
@@ -86,6 +78,7 @@ public class FileConfigManager implements ConfigManager {
             }
         } catch (ConfigurationException e) {
             LOGGER.error("Could not initiate the siddhi configuration object, " + e.getMessage(), e);
+            properties = new HashMap<>();
         }
     }
 
@@ -106,6 +99,7 @@ public class FileConfigManager implements ConfigManager {
             }
         } catch (Exception e) {
             LOGGER.error("Could not initiate the refs configuration object, " + e.getMessage(), e);
+            references = new ArrayList<>();
         }
     }
 
@@ -127,11 +121,15 @@ public class FileConfigManager implements ConfigManager {
             }
         } catch (Exception e) {
             LOGGER.error("Could not initiate the extensions configuration object, " + e.getMessage(), e);
+            extensions = new ArrayList<>();
         }
     }
 
     @Override
     public ConfigReader generateConfigReader(String namespace, String name) {
+        if (configProvider != null && extensions == null) {
+            initialiseExtensions();
+        }
         for (Extension extension : this.extensions) {
             ExtensionChildConfiguration childConfiguration = extension.getExtension();
             if (childConfiguration.getNamespace().equals(namespace) &&
@@ -149,6 +147,9 @@ public class FileConfigManager implements ConfigManager {
 
     @Override
     public Map<String, String> extractSystemConfigs(String name) {
+        if (configProvider != null && references == null) {
+            initialiseReferences();
+        }
         for (Reference reference : references) {
             ReferenceChildConfiguration childConf = reference.getReference();
             if (childConf.getName().equals(name)) {
@@ -168,6 +169,9 @@ public class FileConfigManager implements ConfigManager {
 
     @Override
     public String extractProperty(String name) {
+        if (configProvider != null && properties == null) {
+            initaliseProperties();
+        }
         String property = this.properties.get(name);
         if (property == null && "shardId".equalsIgnoreCase(name)) {
             try {

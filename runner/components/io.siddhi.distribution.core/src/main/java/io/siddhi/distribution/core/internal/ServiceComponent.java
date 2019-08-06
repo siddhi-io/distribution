@@ -93,7 +93,6 @@ public class ServiceComponent {
         StreamProcessorDataHolder.setStreamProcessorService(new StreamProcessorService());
         SiddhiManager siddhiManager = new SiddhiManager();
         FileConfigManager fileConfigManager = new FileConfigManager(configProvider);
-        fileConfigManager.init();
         siddhiManager.setConfigManager(fileConfigManager);
 
         PersistenceConfigurations persistenceConfigurations;
