@@ -1187,7 +1187,7 @@
         <javax.servlet.version>3.1.0</javax.servlet.version>
 
         <!--MSF4J related-->
-        <msf4j.version>2.7.4-SNAPSHOT</msf4j.version>
+        <msf4j.version>2.7.3</msf4j.version>
         <com.fasterxml.jackson.core.version>2.9.9</com.fasterxml.jackson.core.version>
         <io.swagger.version>1.5.22</io.swagger.version>
         <javax.ws.rs-api.version>2.0</javax.ws.rs-api.version>
