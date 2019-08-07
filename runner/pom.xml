@@ -809,6 +809,8 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
+                                <delete file="target/wso2carbon-kernel-${carbon.kernel.version}/wso2/lib/plugins/slf4j.api_1.7.26.jar"/>
+                                <delete file="target/wso2carbon-kernel-${carbon.kernel.version}/wso2/lib/plugins/slf4j.log4j12_1.7.26.jar"/>
                                 <replace dir="target/wso2carbon-kernel-${carbon.kernel.version}/wso2" token="false" value="true">
                                     <include name="**/bundles.info" />
                                 </replace>
@@ -842,7 +844,6 @@
                             <goal>run</goal>
                         </goals>
                     </execution>
-
                 </executions>
             </plugin>
 
