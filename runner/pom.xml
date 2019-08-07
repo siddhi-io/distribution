@@ -594,7 +594,7 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.parser.service.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.common.feature</id>
@@ -772,7 +772,7 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.parser.service.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.common.feature.group</id>
