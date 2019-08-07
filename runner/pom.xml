@@ -570,7 +570,7 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.metrics.core.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
 
                                 <!-- MSF4J Features -->
@@ -590,7 +590,7 @@
                                 <!-- Stream Processor Features -->
                                 <feature>
                                     <id>io.siddhi.distribution.core.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.parser.service.feature</id>
@@ -598,11 +598,11 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.common.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.event.simulator.core.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.feature</id>
@@ -610,17 +610,17 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.msf4j.interceptor.common.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.store.api.rest.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
 
                                 <!-- Authentication feature -->
                                 <feature>
                                     <id>io.siddhi.distribution.common.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.analytics.idp.client.feature</id>
@@ -653,7 +653,7 @@
                                 <!-- Heath Check API -->
                                 <feature>
                                     <id>io.siddhi.distribution.health.check.core.feature</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                             </features>
                         </configuration>
@@ -759,7 +759,7 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.metrics.core.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <!-- MSF4J Features -->
                                 <feature>
@@ -768,7 +768,7 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.core.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.parser.service.feature.group</id>
@@ -776,11 +776,11 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.common.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.event.simulator.core.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.feature.group</id>
@@ -788,13 +788,13 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.store.api.rest.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
 
                                 <!-- Authentication feature -->
                                 <feature>
                                     <id>io.siddhi.distribution.msf4j.interceptor.common.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                                 <feature>
                                     <id>org.wso2.carbon.analytics.idp.client.feature.group</id>
@@ -824,7 +824,7 @@
                                 <!-- Heath Check API -->
                                 <feature>
                                     <id>io.siddhi.distribution.health.check.core.feature.group</id>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </feature>
                             </features>
                         </configuration>
