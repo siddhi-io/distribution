@@ -300,6 +300,11 @@
             </dependency>
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.parser</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
                 <artifactId>io.siddhi.distribution.msf4j.interceptor.common.feature</artifactId>
                 <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
@@ -314,6 +319,12 @@
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
                 <artifactId>io.siddhi.distribution.core.feature</artifactId>
+                <version>${io.siddhi.distribution.version}</version>
+                <type>zip</type>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.distribution</groupId>
+                <artifactId>io.siddhi.parser.service.feature</artifactId>
                 <version>${io.siddhi.distribution.version}</version>
                 <type>zip</type>
             </dependency>
@@ -1123,8 +1134,8 @@
 
         <!-- WSO2 Dependencies -->
         <wso2.slf4j.version>1.5.10.wso2v1</wso2.slf4j.version>
-        <carbon.kernel.version>5.2.8</carbon.kernel.version>
-        <carbon.kernel.pax.version>5.2.8</carbon.kernel.pax.version>
+        <carbon.kernel.version>5.2.10</carbon.kernel.version>
+        <carbon.kernel.pax.version>5.2.10</carbon.kernel.pax.version>
         <org.wso2.transport.http.netty.version>6.0.295</org.wso2.transport.http.netty.version>
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
         <carbon.deployment.version>5.2.2</carbon.deployment.version>

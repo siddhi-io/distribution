@@ -40,6 +40,7 @@
         <module>components/io.siddhi.distribution.store.api.rest</module>
         <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
         <module>components/io.siddhi.distribution.health.check.core</module>
+        <module>components/io.siddhi.parser</module>
 
         <module>features/io.siddhi.distribution.core.feature</module>
         <module>features/io.siddhi.distribution.common.feature</module>
@@ -48,6 +49,7 @@
         <module>features/io.siddhi.distribution.store.api.rest.feature</module>
         <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
         <module>features/io.siddhi.distribution.health.check.core.feature</module>
+        <module>features/io.siddhi.parser.service.feature</module>
     </modules>
 
     <dependencies>
@@ -170,6 +172,11 @@
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.parser.service.feature</artifactId>
+            <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.common.feature</artifactId>
             <type>zip</type>
         </dependency>
@@ -228,6 +235,21 @@
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.health.check.core.feature</artifactId>
             <type>zip</type>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.nats</groupId>
+            <artifactId>java-nats-streaming</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.nats</groupId>
+            <artifactId>java-nats-streaming</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -571,6 +593,10 @@
                                     <version>${io.siddhi.distribution.version}</version>
                                 </feature>
                                 <feature>
+                                    <id>io.siddhi.parser.service.feature</id>
+                                    <version>${io.siddhi.distribution.version}</version>
+                                </feature>
+                                <feature>
                                     <id>io.siddhi.distribution.common.feature</id>
                                     <version>${io.siddhi.distribution.version}</version>
                                 </feature>
@@ -745,6 +771,10 @@
                                     <version>${io.siddhi.distribution.version}</version>
                                 </feature>
                                 <feature>
+                                    <id>io.siddhi.parser.service.feature.group</id>
+                                    <version>${io.siddhi.distribution.version}</version>
+                                </feature>
+                                <feature>
                                     <id>io.siddhi.distribution.common.feature.group</id>
                                     <version>${io.siddhi.distribution.version}</version>
                                 </feature>
@@ -871,6 +901,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
