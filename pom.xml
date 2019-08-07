@@ -1103,8 +1103,8 @@
 
     <properties>
         <io.siddhi.distribution.version>5.1.0-SNAPSHOT</io.siddhi.distribution.version>
-        <siddhi.version>5.1.0</siddhi.version>
-        <siddhi.bundle.version>5.1.0</siddhi.bundle.version>
+        <siddhi.version>5.1.2</siddhi.version>
+        <siddhi.bundle.version>5.1.2</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.1.30</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.1.0, 6.2.0)</carbon.analytics-common.version.range>
@@ -1139,7 +1139,7 @@
         <carbon.securevault.version>5.0.15</carbon.securevault.version>
 
         <!-- External Dependencies -->
-        <slf4j.version>1.7.26</slf4j.version>
+        <slf4j.version>1.7.12</slf4j.version>
         <testng.version>6.14.3</testng.version>
         <antlr4.runtime.version>4.6.wso2v1</antlr4.runtime.version>
         <zkclient.version>0.11</zkclient.version>
@@ -1218,21 +1218,21 @@
         <!--Siddhi Extension Versions-->
         <siddhi.execution.string.version>5.0.4</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.3</siddhi.execution.math.version>
-        <siddhi.execution.regex.version>5.0.4</siddhi.execution.regex.version>
+        <siddhi.execution.regex.version>5.0.5</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.3</siddhi.execution.time.version>
         <siddhi.execution.json.version>2.0.2</siddhi.execution.json.version>
-        <siddhi.execution.map.version>5.0.3</siddhi.execution.map.version>
+        <siddhi.execution.map.version>5.0.4</siddhi.execution.map.version>
         <siddhi.execution.unitconversion.version>2.0.2</siddhi.execution.unitconversion.version>
         <siddhi.execution.reorder.version>5.0.3</siddhi.execution.reorder.version>
         <siddhi.execution.unique.version>5.0.2</siddhi.execution.unique.version>
 
-        <siddhi.io.kafka.version>5.0.2</siddhi.io.kafka.version>
-        <siddhi.io.http.version>2.0.8</siddhi.io.http.version>
+        <siddhi.io.kafka.version>5.0.3</siddhi.io.kafka.version>
+        <siddhi.io.http.version>2.1.0</siddhi.io.http.version>
         <siddhi.io.file.version>2.0.1</siddhi.io.file.version>
         <siddhi.io.tcp.version>3.0.2</siddhi.io.tcp.version>
-        <siddhi.io.email.version>2.0.2</siddhi.io.email.version>
+        <siddhi.io.email.version>2.0.3</siddhi.io.email.version>
         <siddhi.io.jms.version>2.0.2</siddhi.io.jms.version>
-        <siddhi.io.cdc.version>2.0.2</siddhi.io.cdc.version>
+        <siddhi.io.cdc.version>2.0.3</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>2.0.1</siddhi.io.prometheus.version>
         <siddhi.io.nats.version>2.0.4</siddhi.io.nats.version>
 
@@ -1252,7 +1252,7 @@
         <!-- Removed due to size constraint -->
         <!--<siddhi.execution.streamingml.version>2.0.2</siddhi.execution.streamingml.version>-->
         <!--<siddhi.execution.tensorflow.version>2.0.1</siddhi.execution.tensorflow.version>-->
-        <!--<siddhi.store.elasticsearch.version>3.0.0</siddhi.store.elasticsearch.version>-->
+        <!--<siddhi.store.elasticsearch.version>3.1.0</siddhi.store.elasticsearch.version>-->
         <!--<siddhi.io.googlepubsub.version>2.0.1</siddhi.io.googlepubsub.version>-->
 
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
