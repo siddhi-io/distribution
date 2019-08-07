@@ -301,7 +301,7 @@
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
                 <artifactId>io.siddhi.parser</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
@@ -325,7 +325,7 @@
             <dependency>
                 <groupId>io.siddhi.distribution</groupId>
                 <artifactId>io.siddhi.parser.service.feature</artifactId>
-                <version>${io.siddhi.distribution.version}</version>
+                <version>${project.version}</version>
                 <type>zip</type>
             </dependency>
             <dependency>
