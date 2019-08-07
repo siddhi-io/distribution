@@ -67,7 +67,7 @@
                             <bundles>
                                 <bundle>
                                     <symbolicName>io.siddhi.distribution.msf4j.interceptor.common</symbolicName>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </bundle>
                             </bundles>
                         </configuration>

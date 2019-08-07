@@ -319,7 +319,7 @@
                                 </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -496,7 +496,7 @@
                                 </io.siddhi.distribution>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -671,7 +671,7 @@
                                 </io.siddhi.distribution>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -842,7 +842,7 @@
                                 </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -1060,7 +1060,7 @@
                                 </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <suiteXmlFiles>

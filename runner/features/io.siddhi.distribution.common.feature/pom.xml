@@ -87,7 +87,7 @@
                             <bundles>
                                 <bundle>
                                     <symbolicName>io.siddhi.distribution.common</symbolicName>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </bundle>
                                 <bundle>
                                     <symbolicName>siddhi-core</symbolicName>
