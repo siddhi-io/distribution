@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>5.1.0-SNAPSHOT</version>
+        <version>5.1.0-m2</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -839,8 +839,8 @@
                         <phase>package</phase>
                         <configuration>
                             <tasks>
-                                <delete file="target/wso2carbon-kernel-${carbon.kernel.version}/wso2/lib/plugins/slf4j.api_1.7.26.jar"/>
-                                <delete file="target/wso2carbon-kernel-${carbon.kernel.version}/wso2/lib/plugins/slf4j.log4j12_1.7.26.jar"/>
+                                <delete file="target/wso2carbon-kernel-${carbon.kernel.version}/wso2/lib/plugins/slf4j.api_1.7.26.jar" />
+                                <delete file="target/wso2carbon-kernel-${carbon.kernel.version}/wso2/lib/plugins/slf4j.log4j12_1.7.26.jar" />
                                 <replace dir="target/wso2carbon-kernel-${carbon.kernel.version}/wso2" token="false" value="true">
                                     <include name="**/bundles.info" />
                                 </replace>
