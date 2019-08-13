@@ -45,6 +45,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.config.provider.ConfigProvider;
+import org.wso2.carbon.kernel.config.model.CarbonConfiguration;
 import org.wso2.msf4j.MicroservicesRunner;
 import org.wso2.msf4j.config.TransportsFileConfiguration;
 
@@ -259,6 +260,10 @@ public class SiddhiParserApi {
         try {
             transportsFileConfiguration = configProvider.getConfigurationObject(TRANSPORT_ROOT_CONFIG_ELEMENT,
                     TransportsFileConfiguration.class);
+            CarbonConfiguration carbonConfig = configProvider.getConfigurationObject(CarbonConfiguration.class);
+            transportsFileConfiguration.getListenerConfigurations().forEach(
+                    listenerConfiguration -> listenerConfiguration.setPort(
+                            listenerConfiguration.getPort() + carbonConfig.getPortsConfig().getOffset()));
         } catch (ConfigurationException e) {
             log.error("Error while loading TransportsConfiguration for " + TRANSPORT_ROOT_CONFIG_ELEMENT, e);
         }
