@@ -474,6 +474,12 @@
                                     <version>${siddhi.store.mongodb.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>io.siddhi.extension.store.redis</groupId>
+                                    <artifactId>siddhi-store-redis</artifactId>
+                                    <version>${siddhi.store.redis.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>io.siddhi.extension.store.elasticsearch</groupId>-->
                                     <!--<artifactId>siddhi-store-elasticsearch</artifactId>-->
