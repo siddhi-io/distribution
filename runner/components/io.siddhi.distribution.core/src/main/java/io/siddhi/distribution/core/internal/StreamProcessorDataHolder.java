@@ -24,7 +24,6 @@ import io.siddhi.core.stream.output.sink.SinkHandlerManager;
 import io.siddhi.core.table.record.RecordTableHandlerManager;
 import io.siddhi.distribution.core.NodeInfo;
 import io.siddhi.distribution.core.distribution.DistributionService;
-import io.siddhi.distribution.core.internal.beans.DeploymentConfig;
 import org.osgi.framework.BundleContext;
 import org.wso2.carbon.analytics.permissions.PermissionProvider;
 import org.wso2.carbon.config.provider.ConfigProvider;
@@ -47,7 +46,6 @@ public class StreamProcessorDataHolder {
     private static boolean isPersistenceEnabled;
     private static SinkHandlerManager sinkHandlerManager;
     private static SourceHandlerManager sourceHandlerManager;
-    private static DeploymentConfig deploymentConfig;
     private static NodeInfo nodeInfo;
     private static DistributionService distributionService;
     private static RecordTableHandlerManager recordTableHandlerManager;
@@ -119,14 +117,6 @@ public class StreamProcessorDataHolder {
 
     public static void setSourceHandlerManager(SourceHandlerManager sourceHandlerManager) {
         StreamProcessorDataHolder.sourceHandlerManager = sourceHandlerManager;
-    }
-
-    public static DeploymentConfig getDeploymentConfig() {
-        return StreamProcessorDataHolder.deploymentConfig;
-    }
-
-    public static void setDeploymentConfig(DeploymentConfig deploymentConfig) {
-        StreamProcessorDataHolder.deploymentConfig = deploymentConfig;
     }
 
     public static NodeInfo getNodeInfo() {

@@ -31,7 +31,6 @@ import io.siddhi.distribution.core.internal.util.SiddhiAppProcessorConstants;
 import io.siddhi.distribution.core.persistence.PersistenceManager;
 import io.siddhi.distribution.core.persistence.beans.PersistenceConfigurations;
 import io.siddhi.distribution.core.persistence.exception.PersistenceStoreConfigurationException;
-import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
 import io.siddhi.distribution.metrics.core.SiddhiMetricsFactory;
 import io.siddhi.distribution.metrics.core.internal.service.MetricsServiceComponent;
 import org.osgi.framework.BundleContext;
@@ -57,6 +56,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+
+import static io.siddhi.distribution.core.persistence.util.PersistenceConstants.STATE_PERSISTENCE_NS;
+import static io.siddhi.distribution.core.persistence.util.PersistenceConstants.STREAMLINED_STATE_PERSISTENCE_NS;
 
 /**
  * Service component to consume CarbonRuntime instance which has been registered as an OSGi service
@@ -91,9 +93,19 @@ public class ServiceComponent {
         StreamProcessorDataHolder.setStreamProcessorService(new StreamProcessorService());
         SiddhiManager siddhiManager = new SiddhiManager();
         FileConfigManager fileConfigManager = new FileConfigManager(configProvider);
+        fileConfigManager.init();
         siddhiManager.setConfigManager(fileConfigManager);
-        PersistenceConfigurations persistenceConfigurations = configProvider.getConfigurationObject
-                (PersistenceConfigurations.class);
+
+        PersistenceConfigurations persistenceConfigurations;
+        Map persistenceConfigurationMap = (Map) configProvider.getConfigurationObject(STREAMLINED_STATE_PERSISTENCE_NS);
+        if (persistenceConfigurationMap != null) {
+            persistenceConfigurations = configProvider.getConfigurationObject(STREAMLINED_STATE_PERSISTENCE_NS,
+                    PersistenceConfigurations.class);
+        } else {
+            persistenceConfigurationMap = (Map) configProvider.getConfigurationObject(STATE_PERSISTENCE_NS);
+            persistenceConfigurations = configProvider.getConfigurationObject
+                    (PersistenceConfigurations.class);
+        }
 
         if (persistenceConfigurations != null && persistenceConfigurations.isEnabled()) {
             String persistenceStoreClassName = persistenceConfigurations.getPersistenceStore();
@@ -101,15 +113,13 @@ public class ServiceComponent {
                 if (Class.forName(persistenceStoreClassName).newInstance() instanceof PersistenceStore) {
                     PersistenceStore persistenceStore =
                             (PersistenceStore) Class.forName(persistenceStoreClassName).newInstance();
-                    persistenceStore.setProperties((Map) configProvider.getConfigurationObject(PersistenceConstants.
-                            STATE_PERSISTENCE_NS));
+                    persistenceStore.setProperties(persistenceConfigurationMap);
                     siddhiManager.setPersistenceStore(persistenceStore);
                 } else if (Class.forName(persistenceStoreClassName).newInstance()
                         instanceof IncrementalPersistenceStore) {
                     IncrementalPersistenceStore incrementalPersistenceStore =
                             (IncrementalPersistenceStore) Class.forName(persistenceStoreClassName).newInstance();
-                    incrementalPersistenceStore.setProperties(
-                            (Map) configProvider.getConfigurationObject(PersistenceConstants.STATE_PERSISTENCE_NS));
+                    incrementalPersistenceStore.setProperties(persistenceConfigurationMap);
                     siddhiManager.setIncrementalPersistenceStore(incrementalPersistenceStore);
                 } else {
                     throw new PersistenceStoreConfigurationException("Persistence Store class with name "

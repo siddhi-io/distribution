@@ -96,7 +96,7 @@ public class ConfigReaderTestCase {
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 201);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testConfigReaderFunctionalityTest1")
     public void testConfigReaderFunctionalityTest2() throws Exception {
 
         URI baseURI = URI.create(String.format("http://%s:%d", "localhost", 9090));
@@ -113,7 +113,7 @@ public class ConfigReaderTestCase {
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 201);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testConfigReaderFunctionalityTest2")
     public void testConfigReaderFunctionalityTest3() throws Exception {
 
         URI baseURI = URI.create(String.format("http://%s:%d", "localhost", 9090));
@@ -130,7 +130,7 @@ public class ConfigReaderTestCase {
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 400);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testConfigReaderFunctionalityTest3")
     public void testConfigReaderFunctionalityTest4() throws Exception {
 
         URI baseURI = URI.create(String.format("http://%s:%d", "localhost", 9090));
@@ -147,7 +147,7 @@ public class ConfigReaderTestCase {
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 400);
     }
 
-    @Test
+    @Test(dependsOnMethods = "testConfigReaderFunctionalityTest4")
     public void testConfigReaderFunctionalityTest5() throws Exception {
 
         URI baseURI = URI.create(String.format("http://%s:%d", "localhost", 9090));

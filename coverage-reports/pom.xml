@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>5.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -35,34 +35,42 @@
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.common</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.event.simulator.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.editor.core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.metrics.core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.store.api.rest</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.msf4j.interceptor.common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.distribution.editor.core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.siddhi.distribution</groupId>

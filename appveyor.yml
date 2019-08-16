@@ -17,6 +17,8 @@ skip_tags: true
 clone_depth: 1
 image:
 - Visual Studio 2017
+services:
+- docker
 environment:
   MAVEN_VERSION: 3.5.0
   APPVEYOR: true
@@ -43,7 +45,7 @@ install:
   - cmd: npm --version
 build_script:
   - SET MAVEN_OPTS="-Xms1024m"
-  - mvn clean install -B -V
+  - mvn clean install -Dno-docker -B -V
 cache:
   - C:\maven\ -> appveyor.yml
   - C:\Users\appveyor\.m2\ -> pom.xml

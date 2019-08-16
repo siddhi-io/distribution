@@ -19,7 +19,7 @@
 package io.siddhi.distribution.event.simulator.core.impl;
 
 import com.zaxxer.hikari.HikariDataSource;
-import com.zaxxer.hikari.pool.PoolInitializationException;
+import com.zaxxer.hikari.pool.HikariPool.PoolInitializationException;
 import io.siddhi.distribution.common.common.exception.ResponseMapper;
 import io.siddhi.distribution.event.simulator.core.api.DatabaseApiService;
 import io.siddhi.distribution.event.simulator.core.api.NotFoundException;

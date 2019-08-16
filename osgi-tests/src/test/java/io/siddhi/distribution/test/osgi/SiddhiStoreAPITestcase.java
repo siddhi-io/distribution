@@ -152,7 +152,7 @@ public class SiddhiStoreAPITestcase {
             eventStreamService.pushEvent(APP_NAME, "SmartHomeData", event);
         }
         testHttpResponse(body, events, expectedResponseCode, expectedResponse, HOSTNAME, HTTP_PORT,
-                Duration.TEN_SECONDS);
+                Duration.ONE_MINUTE);
     }
 
     private void testHttpResponse(String body, Event[] inputEvents, int expectedResponseCode, String expectedResponse,

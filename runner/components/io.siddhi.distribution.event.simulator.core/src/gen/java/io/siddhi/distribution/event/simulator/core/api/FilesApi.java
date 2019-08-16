@@ -25,7 +25,6 @@ import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorC
 import io.siddhi.distribution.event.simulator.core.model.InlineResponse2001;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorMap;
-import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import io.swagger.annotations.ApiParam;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -37,7 +36,6 @@ import org.wso2.msf4j.Microservice;
 import org.wso2.msf4j.Request;
 import org.wso2.msf4j.formparam.FileInfo;
 import org.wso2.msf4j.formparam.FormDataParam;
-import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
 
 import java.io.InputStream;
 import java.nio.file.Paths;
@@ -61,7 +59,6 @@ import javax.ws.rs.core.Response;
         immediate = true
 )
 @Path("/simulation/files")
-@RequestInterceptor(AuthenticationInterceptor.class)
 @io.swagger.annotations.Api(description = "the files API")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-07-20T09:30:14.336Z")

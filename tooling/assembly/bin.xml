@@ -25,7 +25,7 @@
 
     <fileSets>
         <fileSet>
-            <directory>target/wso2carbon-kernel-${carbon.kernel.version}</directory>
+            <directory>wso2carbon-kernel-${carbon.kernel.version}</directory>
             <outputDirectory>.</outputDirectory>
             <excludes>
                 <exclude>README.txt</exclude>
@@ -42,34 +42,27 @@
             </excludes>
         </fileSet>
         <fileSet>
-            <directory>../..</directory>
-            <outputDirectory>.</outputDirectory>
-            <includes>
-                <include>README.md</include>
-            </includes>
-        </fileSet>
-        <fileSet>
-            <directory>../resources/carbon-home/conf/tooling</directory>
+            <directory>../../resources/carbon-home/conf/tooling</directory>
             <outputDirectory>conf/tooling</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/conf/transports/tooling</directory>
+            <directory>../../resources/carbon-home/conf/transports/tooling</directory>
             <outputDirectory>wso2/tooling/conf/transports</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/conf/osgi</directory>
+            <directory>../../resources/carbon-home/conf/osgi</directory>
             <outputDirectory>conf/osgi</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/resources/security</directory>
+            <directory>../../resources/carbon-home/resources/security</directory>
             <outputDirectory>resources/security</outputDirectory>
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/bin</directory>
+            <directory>../../resources/carbon-home/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
                 <include>tooling.sh</include>
@@ -78,7 +71,7 @@
             <fileMode>755</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/bin</directory>
+            <directory>../../resources/carbon-home/bin</directory>
             <outputDirectory>bin</outputDirectory>
             <includes>
                 <include>**/*.txt</include>
@@ -86,7 +79,7 @@
             <fileMode>444</fileMode>
         </fileSet>
         <fileSet>
-            <directory>target/extensions</directory>
+            <directory>extensions</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>**/*.jar</include>
@@ -94,7 +87,7 @@
             <fileMode>664</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../resources/carbon-home/external-libs</directory>
+            <directory>../../resources/carbon-home/external-libs</directory>
             <outputDirectory>lib</outputDirectory>
             <includes>
                 <include>**/*.jar</include>
@@ -134,7 +127,7 @@
             <fileMode>644</fileMode>
         </fileSet>
         <fileSet>
-            <directory>../samples</directory>
+            <directory>../../samples</directory>
             <outputDirectory>samples</outputDirectory>
             <excludes>
                 <exclude>target/**</exclude>
@@ -191,8 +184,6 @@
             <filtered>true</filtered>
             <fileMode>644</fileMode>
         </file>
-        <!--TODO: Workaround for issue trustStore and keystore certificate system properties
-        fixed-->
         <file>
             <source>../resources/carbon-home/runtime/tooling/carbon.sh</source>
             <outputDirectory>wso2/tooling/bin/</outputDirectory>

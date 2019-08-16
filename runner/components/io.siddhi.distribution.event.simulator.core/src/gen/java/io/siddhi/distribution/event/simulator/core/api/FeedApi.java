@@ -22,7 +22,6 @@ package io.siddhi.distribution.event.simulator.core.api;
 import io.siddhi.distribution.event.simulator.core.exception.FileOperationsException;
 import io.siddhi.distribution.event.simulator.core.factories.FeedApiServiceFactory;
 import io.siddhi.distribution.event.simulator.core.model.InlineResponse200;
-import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import io.swagger.annotations.ApiParam;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.msf4j.Microservice;
 import org.wso2.msf4j.Request;
-import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -54,7 +52,6 @@ import javax.ws.rs.core.Response;
         immediate = true
 )
 @Path("/simulation/feed")
-@RequestInterceptor(AuthenticationInterceptor.class)
 @io.swagger.annotations.Api(description = "the feed API")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-07-20T09:30:14.336Z")

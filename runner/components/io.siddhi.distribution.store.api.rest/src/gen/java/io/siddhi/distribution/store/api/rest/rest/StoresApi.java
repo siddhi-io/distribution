@@ -20,6 +20,7 @@
 package io.siddhi.distribution.store.api.rest.rest;
 
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
+import io.siddhi.distribution.msf4j.interceptor.common.common.AuthenticationInterceptor;
 import io.siddhi.distribution.store.api.rest.rest.factories.StoresApiServiceFactory;
 import io.siddhi.distribution.store.api.rest.rest.model.ModelApiResponse;
 import io.siddhi.distribution.store.api.rest.rest.model.Query;
@@ -34,6 +35,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.msf4j.Microservice;
+import org.wso2.msf4j.interceptor.annotation.RequestInterceptor;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -50,6 +52,7 @@ import javax.ws.rs.core.Response;
         immediate = true
 )
 @Path("/stores")
+@RequestInterceptor(AuthenticationInterceptor.class)
 @io.swagger.annotations.Api(description = "The stores API")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-01T11:26:25.925Z")

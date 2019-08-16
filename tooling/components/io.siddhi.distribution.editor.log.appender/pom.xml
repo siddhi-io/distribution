@@ -23,14 +23,14 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>5.1.0-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
     <artifactId>io.siddhi.distribution.editor.log.appender</artifactId>
     <name>Siddhi Tooling - Editor Log Appender</name>
     <packaging>bundle</packaging>
-    <url>http://wso2.com</url>
+    <url>https://siddhi.io</url>
 
     <dependencies>
         <dependency>

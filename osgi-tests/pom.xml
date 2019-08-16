@@ -20,7 +20,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>5.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -28,16 +28,13 @@
     <artifactId>io-siddhi-distribution-osgi-tests</artifactId>
     <name>Siddhi Distributions - OSGi Tests</name>
     <description>OSGi Tests for Siddhi Distributions</description>
-    <url>http://wso2.com</url>
+    <url>https://siddhi.io</url>
 
     <dependencies>
         <dependency>
             <groupId>io.siddhi</groupId>
             <artifactId>siddhi-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.core</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.eclipse.osgi</groupId>
@@ -91,38 +88,32 @@
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.core</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.container</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
+            <scope>test</scope>
         </dependency>
         <!--Pax exam Container Carbon-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.runner</artifactId>
-            <type>zip</type>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.tooling</artifactId>
-            <type>zip</type>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -139,14 +130,8 @@
             <groupId>org.wso2.carbon</groupId>
             <artifactId>org.wso2.carbon.pax.exam.feature</artifactId>
             <type>zip</type>
+            <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.101tec</groupId>
-            <artifactId>zkclient</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Testing purposes -->
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-test</artifactId>
@@ -178,6 +163,19 @@
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka_2.11</artifactId>
         </dependency>
+        <!--Siddhi Distributions-->
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.runner</artifactId>
+            <type>zip</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.siddhi.distribution</groupId>
+            <artifactId>io.siddhi.tooling</artifactId>
+            <type>zip</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <profiles>
         <profile>
@@ -187,7 +185,7 @@
                     <plugin>
                         <groupId>org.ops4j.pax.exam</groupId>
                         <artifactId>maven-paxexam-plugin</artifactId>
-                        <version>1.2.4</version>
+                        <version>${maven.paxexam.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>generate-config</id>
@@ -237,7 +235,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
+                        <version>${maven.surefire.plugin.version}</version>
                         <configuration>
                             <skipTests>true</skipTests>
                         </configuration>
@@ -321,7 +319,7 @@
                                 </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -353,47 +351,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>post-integration-test</phase>
-                                <configuration>
-                                    <target xmlns:jacoco="antlib:org.jacoco.ant">
-                                        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-                                            <classpath path="${project.build.directory}" />
-                                        </taskdef>
-                                        <!-- OSGi Test coverage only enabled for org.wso2.carbon.stream.core module-->
-                                        <jacoco:report>
-                                            <executiondata>
-                                                <file file="${project.build.directory}/jacoco.exec" />
-                                            </executiondata>
-                                            <structure name="Stream processor core OSGi Tests">
-                                                <classfiles>
-                                                    <fileset dir="../io.siddhi.distribution.core/target/classes" />
-                                                </classfiles>
-                                                <sourcefiles encoding="UTF-8">
-                                                    <fileset dir="../io.siddhi.distribution.core/src" />
-                                                </sourcefiles>
-                                            </structure>
-                                            <html destdir="${project.build.directory}/coverage-reports" />
-                                        </jacoco:report>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.jacoco</groupId>
-                                <artifactId>org.jacoco.ant</artifactId>
-                                <version>${org.jacoco.ant.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -404,7 +361,7 @@
                     <plugin>
                         <groupId>org.ops4j.pax.exam</groupId>
                         <artifactId>maven-paxexam-plugin</artifactId>
-                        <version>1.2.4</version>
+                        <version>${maven.paxexam.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>generate-config</id>
@@ -454,7 +411,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
+                        <version>${maven.surefire.plugin.version}</version>
                         <configuration>
                             <skipTests>true</skipTests>
                         </configuration>
@@ -539,7 +496,7 @@
                                 </io.siddhi.distribution>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -571,47 +528,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>post-integration-test</phase>
-                                <configuration>
-                                    <target xmlns:jacoco="antlib:org.jacoco.ant">
-                                        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-                                            <classpath path="${project.build.directory}" />
-                                        </taskdef>
-                                        <!-- OSGi Test coverage only enabled for org.wso2.carbon.stream.core module-->
-                                        <jacoco:report>
-                                            <executiondata>
-                                                <file file="${project.build.directory}/jacoco.exec" />
-                                            </executiondata>
-                                            <structure name="Stream processor core OSGi Tests">
-                                                <classfiles>
-                                                    <fileset dir="../io.siddhi.distribution.core/target/classes" />
-                                                </classfiles>
-                                                <sourcefiles encoding="UTF-8">
-                                                    <fileset dir="../io.siddhi.distribution.core/src" />
-                                                </sourcefiles>
-                                            </structure>
-                                            <html destdir="${project.build.directory}/coverage-reports" />
-                                        </jacoco:report>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.jacoco</groupId>
-                                <artifactId>org.jacoco.ant</artifactId>
-                                <version>${org.jacoco.ant.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -622,7 +538,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
+                        <version>${maven.surefire.plugin.version}</version>
                         <configuration>
                             <skipTests>true</skipTests>
                         </configuration>
@@ -630,7 +546,7 @@
                     <plugin>
                         <groupId>org.ops4j.pax.exam</groupId>
                         <artifactId>maven-paxexam-plugin</artifactId>
-                        <version>1.2.4</version>
+                        <version>${maven.paxexam.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>generate-config</id>
@@ -755,7 +671,7 @@
                                 </io.siddhi.distribution>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -788,47 +704,6 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>post-integration-test</phase>
-                                <configuration>
-                                    <target xmlns:jacoco="antlib:org.jacoco.ant">
-                                        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-                                            <classpath path="${project.build.directory}" />
-                                        </taskdef>
-                                        <!-- OSGi Test coverage only enabled for org.wso2.carbon.stream.core module-->
-                                        <jacoco:report>
-                                            <executiondata>
-                                                <file file="${project.build.directory}/jacoco.exec" />
-                                            </executiondata>
-                                            <structure name="Stream processor core OSGi Tests">
-                                                <classfiles>
-                                                    <fileset dir="../io.siddhi.distribution.core/target/classes" />
-                                                </classfiles>
-                                                <sourcefiles encoding="UTF-8">
-                                                    <fileset dir="../io.siddhi.distribution.core/src" />
-                                                </sourcefiles>
-                                            </structure>
-                                            <html destdir="${project.build.directory}/coverage-reports" />
-                                        </jacoco:report>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.jacoco</groupId>
-                                <artifactId>org.jacoco.ant</artifactId>
-                                <version>${org.jacoco.ant.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -839,7 +714,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
+                        <version>${maven.surefire.plugin.version}</version>
                         <configuration>
                             <skipTests>true</skipTests>
                         </configuration>
@@ -847,7 +722,7 @@
                     <plugin>
                         <groupId>org.ops4j.pax.exam</groupId>
                         <artifactId>maven-paxexam-plugin</artifactId>
-                        <version>1.2.4</version>
+                        <version>${maven.paxexam.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>generate-config</id>
@@ -967,7 +842,7 @@
                                 </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <environmentVariables>
@@ -1000,47 +875,6 @@
                                 </configuration>
                             </execution>
                         </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>post-integration-test</phase>
-                                <configuration>
-                                    <target xmlns:jacoco="antlib:org.jacoco.ant">
-                                        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-                                            <classpath path="${project.build.directory}" />
-                                        </taskdef>
-                                        <!-- OSGi Test coverage only enabled for org.wso2.carbon.stream.core module-->
-                                        <jacoco:report>
-                                            <executiondata>
-                                                <file file="${project.build.directory}/jacoco.exec" />
-                                            </executiondata>
-                                            <structure name="Stream processor core OSGi Tests">
-                                                <classfiles>
-                                                    <fileset dir="../runner/io.siddhi.distribution.core/target/classes" />
-                                                </classfiles>
-                                                <sourcefiles encoding="UTF-8">
-                                                    <fileset dir="../runner/io.siddhi.distribution.core/src" />
-                                                </sourcefiles>
-                                            </structure>
-                                            <html destdir="${project.build.directory}/coverage-reports" />
-                                        </jacoco:report>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.jacoco</groupId>
-                                <artifactId>org.jacoco.ant</artifactId>
-                                <version>${org.jacoco.ant.version}</version>
-                            </dependency>
-                        </dependencies>
                     </plugin>
                 </plugins>
             </build>
@@ -1215,7 +1049,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>2.22.1</version>
+                        <version>${maven.surefire.plugin.version}</version>
                         <configuration>
                             <systemPropertyVariables>
                                 <org.ops4j.pax.url.mvn.localRepository>${settings.localRepository}
@@ -1226,7 +1060,7 @@
                                 </io.siddhi.distribution.runtime>
                                 <org.ops4j.pax.logging.DefaultServiceLog.level>DEBUG
                                 </org.ops4j.pax.logging.DefaultServiceLog.level>
-                                <io.siddhi.distribution.version>${io.siddhi.distribution.version}
+                                <io.siddhi.distribution.version>${project.version}
                                 </io.siddhi.distribution.version>
                             </systemPropertyVariables>
                             <suiteXmlFiles>
@@ -1256,54 +1090,9 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-antrun-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>post-integration-test</phase>
-                                <configuration>
-                                    <target xmlns:jacoco="antlib:org.jacoco.ant">
-                                        <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
-                                            <classpath path="${project.build.directory}" />
-                                        </taskdef>
-                                        <!-- OSGi Test coverage only enabled for org.wso2.carbon.stream.core module-->
-                                        <jacoco:report>
-                                            <executiondata>
-                                                <file file="${project.build.directory}/jacoco.exec" />
-                                            </executiondata>
-                                            <structure name="Stream processor core OSGi Tests">
-                                                <classfiles>
-                                                    <fileset dir="../runner/components/io.siddhi.distribution.core/target/classes" />
-                                                    <fileset dir="../runner/components/io.siddhi.distribution.store.api.rest/target/classes" />
-                                                    <fileset dir="../runner/components/io.siddhi.distribution.event.simulator.core/target/classes" />
-                                                </classfiles>
-                                                <sourcefiles encoding="UTF-8">
-                                                    <fileset dir="../runner/components/io.siddhi.distribution.core/src" />
-                                                    <fileset dir="../runner/components/io.siddhi.distribution.store.api.rest/src" />
-                                                    <fileset dir="../runner/components/io.siddhi.distribution.event.simulator.core/src" />
-                                                </sourcefiles>
-                                            </structure>
-                                            <html destdir="${project.build.directory}/coverage-reports" />
-                                        </jacoco:report>
-                                    </target>
-                                </configuration>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <dependencies>
-                            <dependency>
-                                <groupId>org.jacoco</groupId>
-                                <artifactId>org.jacoco.ant</artifactId>
-                                <version>${org.jacoco.ant.version}</version>
-                            </dependency>
-                        </dependencies>
-                    </plugin>
-                    <plugin>
                         <groupId>org.ops4j.pax.exam</groupId>
                         <artifactId>maven-paxexam-plugin</artifactId>
-                        <version>1.2.4</version>
+                        <version>${maven.paxexam.plugin.version}</version>
                         <executions>
                             <execution>
                                 <id>generate-config</id>

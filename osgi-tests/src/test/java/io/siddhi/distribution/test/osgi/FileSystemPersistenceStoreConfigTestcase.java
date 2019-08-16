@@ -52,7 +52,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 public class FileSystemPersistenceStoreConfigTestcase {
 
     private static final Logger log = Logger.getLogger(FileSystemPersistenceStoreConfigTestcase.class);
-    private static final String DEPLOYMENT_FILENAME = "deployment.yaml";
+    static final String DEPLOYMENT_FILENAME = "deployment.yaml";
     private static final String PERSISTENCE_FOLDER = "siddhi-app-persistence";
     private static final String SIDDHIAPP_NAME = "SiddhiAppPersistence";
 
@@ -62,7 +62,7 @@ public class FileSystemPersistenceStoreConfigTestcase {
     /**
      * Replace the existing deployment.yaml file with populated deployment.yaml file.
      */
-    private Option copyCarbonYAMLOption() {
+    public Option copyCarbonYAMLOption() {
         Path carbonYmlFilePath;
         String basedir = System.getProperty("basedir");
         if (basedir == null) {

@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>5.1.0-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
@@ -268,7 +268,7 @@
                                 </bundle>
                                 <bundle>
                                     <symbolicName>io.siddhi.distribution.core</symbolicName>
-                                    <version>${io.siddhi.distribution.version}</version>
+                                    <version>${project.version}</version>
                                 </bundle>
                                 <bundle>
                                     <symbolicName>org.wso2.carbon.database.query.manager</symbolicName>
@@ -305,7 +305,7 @@
                     <dependency>
                         <groupId>io.siddhi.distribution</groupId>
                         <artifactId>io.siddhi.distribution.core</artifactId>
-                        <version>${io.siddhi.distribution.version}</version>
+                        <version>${project.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>

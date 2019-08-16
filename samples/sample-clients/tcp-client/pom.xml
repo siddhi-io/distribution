@@ -20,7 +20,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>sample-clients</artifactId>
-        <version>0.1.1-SNAPSHOT</version>
+        <version>5.1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -43,12 +43,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.wso2.extension.siddhi.io.tcp</groupId>
+            <groupId>io.siddhi.extension.io.tcp</groupId>
             <artifactId>siddhi-io-tcp</artifactId>
             <version>${siddhi.io.tcp.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.wso2.extension.siddhi.map.binary</groupId>
+            <groupId>io.siddhi.extension.map.binary</groupId>
             <artifactId>siddhi-map-binary</artifactId>
             <version>${siddhi.map.binary.version}</version>
         </dependency>
