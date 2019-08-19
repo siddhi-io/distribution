@@ -37,21 +37,15 @@ transports:
         host: "0.0.0.0"
         port: 9443
         scheme: https
-        keyStoreFile: "${carbon.home}/resources/security/wso2carbon.jks"
-        keyStorePassword: wso2carbon
-        certPass: wso2carbon
+        sslConfig:
+          keyStore: "${carbon.home}/resources/security/wso2carbon.jks"
+          keyStorePass: wso2carbon
+          certPass: wso2carbon
 
     transportProperties:
       -
         name: "server.bootstrap.socket.timeout"
         value: 60
-      -
-        name: "client.bootstrap.socket.timeout"
-        value: 60
-      -
-        name: "latency.metrics.enabled"
-        value: true
-
 
   # Datasource Configurations
 dataSources:
