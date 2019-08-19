@@ -46,13 +46,6 @@ transports:
       -
         name: "server.bootstrap.socket.timeout"
         value: 60
-      -
-        name: "client.bootstrap.socket.timeout"
-        value: 60
-      -
-        name: "latency.metrics.enabled"
-        value: true
-
 
   # Datasource Configurations
 dataSources:
