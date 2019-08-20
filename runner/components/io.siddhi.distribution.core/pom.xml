@@ -156,6 +156,10 @@
             <artifactId>commons-lang3</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.yaml</groupId>
+            <artifactId>snakeyaml</artifactId>
+        </dependency>
         <!--analytics-common dependencies-->
         <dependency>
             <groupId>org.wso2.carbon.analytics-common</groupId>
