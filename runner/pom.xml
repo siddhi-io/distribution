@@ -864,7 +864,9 @@
                                 <delete dir="target/archive-tmp" />
                                 <delete dir="target/dependency-maven-plugin-markers" />
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart" />
-                                <delete dir="target/p2-repo" />
+                                <retry retrycount="3">
+                                    <delete dir="target/p2-repo" />
+                                </retry>
                                 <delete file="target/tmp" />
                                 <delete dir="target/wso2carbon-kernel-${carbon.kernel.version}" />
                                 <delete dir="target/antrun" />
@@ -918,7 +920,6 @@
             <plugin>
                 <groupId>io.siddhi</groupId>
                 <artifactId>siddhi-doc-gen</artifactId>
-                <version>${siddhi.version}</version>
                 <executions>
                     <execution>
                         <phase>verify</phase>
