@@ -38,6 +38,7 @@ import java.util.Map;
 
 import static io.siddhi.distribution.common.common.utils.SPConstants.EXTENSIONS_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.REFS_NAMESPACE;
+import static io.siddhi.distribution.common.common.utils.SPConstants.SIDDHI_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.SIDDHI_PROPERTIES_NAMESPACE;
 
 /**
@@ -79,7 +80,7 @@ public class FileConfigManager implements ConfigManager {
                     }
                 } else {
                     RootConfiguration rootConfiguration =
-                            configProvider.getConfigurationObject(RootConfiguration.class);
+                            configProvider.getConfigurationObject(SIDDHI_NAMESPACE, RootConfiguration.class);
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Matching siddhi property is looked for under name space " +
                                 "'siddhi.properties'.");
@@ -106,7 +107,7 @@ public class FileConfigManager implements ConfigManager {
                 }
             } else {
                 RootConfiguration rootConfiguration = configProvider
-                        .getConfigurationObject(RootConfiguration.class);
+                        .getConfigurationObject(SIDDHI_NAMESPACE, RootConfiguration.class);
                 this.references = rootConfiguration.getRefs();
                 LOGGER.debug("Matching references is loaded from under name space 'siddhi.extensions'.");
             }
@@ -126,7 +127,7 @@ public class FileConfigManager implements ConfigManager {
                         "'extensions'.");
             } else {
                 RootConfiguration rootConfiguration = configProvider.
-                        getConfigurationObject(RootConfiguration.class);
+                        getConfigurationObject(SIDDHI_NAMESPACE, RootConfiguration.class);
                 this.extensions = rootConfiguration.getExtensions();
                 LOGGER.debug("Matching extensions system configurations is loaded from under name space " +
                         "'siddhi.extensions'.");
