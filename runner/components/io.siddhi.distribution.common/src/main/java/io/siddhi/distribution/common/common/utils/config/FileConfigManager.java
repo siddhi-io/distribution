@@ -51,16 +51,17 @@ public class FileConfigManager implements ConfigManager {
     private List<Reference> references = new ArrayList<>();
     private Map<String, String> properties = new HashMap<>();
 
-    public void init() {
+    public FileConfigManager(ConfigProvider configProvider) {
+        this.configProvider = configProvider;
+        init();
+    }
+
+    private void init() {
         if (configProvider != null) {
             initialiseExtensions();
             initialiseReferences();
             initaliseProperties();
         }
-    }
-
-    public FileConfigManager(ConfigProvider configProvider) {
-        this.configProvider = configProvider;
     }
 
     private void initaliseProperties() {
