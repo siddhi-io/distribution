@@ -20,6 +20,11 @@ package io.siddhi.distribution.common.common.utils.config;
 import io.siddhi.core.util.SiddhiConstants;
 import io.siddhi.core.util.config.ConfigManager;
 import io.siddhi.core.util.config.ConfigReader;
+import io.siddhi.core.util.config.model.Extension;
+import io.siddhi.core.util.config.model.ExtensionChildConfiguration;
+import io.siddhi.core.util.config.model.Reference;
+import io.siddhi.core.util.config.model.ReferenceChildConfiguration;
+import io.siddhi.core.util.config.model.RootConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.config.ConfigurationException;
@@ -33,6 +38,7 @@ import java.util.Map;
 
 import static io.siddhi.distribution.common.common.utils.SPConstants.EXTENSIONS_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.REFS_NAMESPACE;
+import static io.siddhi.distribution.common.common.utils.SPConstants.SIDDHI_NAMESPACE;
 import static io.siddhi.distribution.common.common.utils.SPConstants.SIDDHI_PROPERTIES_NAMESPACE;
 
 /**
@@ -46,16 +52,17 @@ public class FileConfigManager implements ConfigManager {
     private List<Reference> references = new ArrayList<>();
     private Map<String, String> properties = new HashMap<>();
 
-    public void init() {
+    public FileConfigManager(ConfigProvider configProvider) {
+        this.configProvider = configProvider;
+        init();
+    }
+
+    private void init() {
         if (configProvider != null) {
             initialiseExtensions();
             initialiseReferences();
             initaliseProperties();
         }
-    }
-
-    public FileConfigManager(ConfigProvider configProvider) {
-        this.configProvider = configProvider;
     }
 
     private void initaliseProperties() {
@@ -73,7 +80,7 @@ public class FileConfigManager implements ConfigManager {
                     }
                 } else {
                     RootConfiguration rootConfiguration =
-                            configProvider.getConfigurationObject(RootConfiguration.class);
+                            configProvider.getConfigurationObject(SIDDHI_NAMESPACE, RootConfiguration.class);
                     if (LOGGER.isDebugEnabled()) {
                         LOGGER.debug("Matching siddhi property is looked for under name space " +
                                 "'siddhi.properties'.");
@@ -100,7 +107,7 @@ public class FileConfigManager implements ConfigManager {
                 }
             } else {
                 RootConfiguration rootConfiguration = configProvider
-                        .getConfigurationObject(RootConfiguration.class);
+                        .getConfigurationObject(SIDDHI_NAMESPACE, RootConfiguration.class);
                 this.references = rootConfiguration.getRefs();
                 LOGGER.debug("Matching references is loaded from under name space 'siddhi.extensions'.");
             }
@@ -120,7 +127,7 @@ public class FileConfigManager implements ConfigManager {
                         "'extensions'.");
             } else {
                 RootConfiguration rootConfiguration = configProvider.
-                        getConfigurationObject(RootConfiguration.class);
+                        getConfigurationObject(SIDDHI_NAMESPACE, RootConfiguration.class);
                 this.extensions = rootConfiguration.getExtensions();
                 LOGGER.debug("Matching extensions system configurations is loaded from under name space " +
                         "'siddhi.extensions'.");
