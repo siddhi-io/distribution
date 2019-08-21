@@ -96,7 +96,7 @@ Download the latest released distributions from [here](https://github.com/siddhi
    http://localhost:<EDITOR_PORT>/editor   (e.g: https://localhost:9390/editor)
    
 
-Please refer the [link](https://siddhi-io.github.io/siddhi/documentation/siddhi-5.x/user-guide-5.x/#using-siddhi-as-local-micro-service) for more details.
+Please refer the [link](https://siddhi.io/en/v5.1/docs/siddhi-as-a-local-microservice/) for more details.
 
 ## Reporting Issues ##
 
