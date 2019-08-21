@@ -161,6 +161,8 @@ public class SiddhiStoreAPITestcase {
                     sendHRequest(body, baseURI, API_CONTEXT_PATH, CONTENT_TYPE_JSON, HTTP_METHOD_POST,
                             true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
             if (expectedResponseCode == Response.Status.OK.getStatusCode()) {
+                assert httpResponseMessage != null;
+                assert httpResponseMessage.getSuccessContent() != null;
                 ModelApiResponse response =
                         gson.fromJson(httpResponseMessage.getSuccessContent().toString(), ModelApiResponse.class);
                 if (httpResponseMessage.getResponseCode() == expectedResponseCode &&
