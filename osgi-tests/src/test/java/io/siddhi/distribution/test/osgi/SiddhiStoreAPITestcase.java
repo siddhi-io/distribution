@@ -43,7 +43,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.wso2.carbon.container.CarbonContainerFactory;
 import org.wso2.carbon.kernel.CarbonServerInfo;
-import org.wso2.msf4j.MicroservicesRegistry;
 
 import java.net.URI;
 import java.nio.file.Path;
