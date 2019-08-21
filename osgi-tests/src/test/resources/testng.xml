@@ -17,22 +17,22 @@ limitations under the License.
 <suite name="Siddhi-Distribution-Test-Suite">
     <test name="siddhi-distribution-tests" preserve-order="true" parallel="false" thread-count="1">
         <classes>
-            <class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase2"/>
-            <class name="io.siddhi.distribution.test.osgi.SiddhiAsAPITestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.SiddhiMetricsTestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.DBPersistenceStoreTestcase"/>
+            <!--<class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase"/>-->
+            <!--<class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase2"/>-->
+            <!--<class name="io.siddhi.distribution.test.osgi.SiddhiAsAPITestcase"/>-->
+            <!--<class name="io.siddhi.distribution.test.osgi.SiddhiMetricsTestcase"/>-->
+            <!--<class name="io.siddhi.distribution.test.osgi.DBPersistenceStoreTestcase"/>-->
 
             <!--TODO mohan disabled due to snapshot changes -->
             <!--<class name="io.siddhi.distribution.test.osgi.IncrementalFileSystemPersistenceStoreTestcase"/>-->
             <!--<class name="io.siddhi.distribution.test.osgi.IncrementalDBPersistenceStoreTestcase"/>-->
             <!--<class name="io.siddhi.distribution.test.osgi.FileSystemPersistenceStoreConfigTestcase"/>-->
 
-            <class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase"/>
-            <class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase2"/>
+            <!--<class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase"/>-->
+            <!--<class name="io.siddhi.distribution.test.osgi.ConfigReaderTestCase2"/>-->
             <class name="io.siddhi.distribution.test.osgi.SiddhiStoreAPITestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.SimulatorAPITestcase"/>
-            <class name="io.siddhi.distribution.test.osgi.SiddhiToolingTestCase"/>
+            <!--<class name="io.siddhi.distribution.test.osgi.SimulatorAPITestcase"/>-->
+            <!--<class name="io.siddhi.distribution.test.osgi.SiddhiToolingTestCase"/>-->
         </classes>
     </test>
 </suite>

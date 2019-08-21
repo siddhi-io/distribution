@@ -39,9 +39,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.awaitility.Awaitility.await;
 import static java.lang.System.currentTimeMillis;
 import static java.net.URLConnection.guessContentTypeFromName;
+import static org.awaitility.Awaitility.await;
 
 
 /**
@@ -98,8 +98,15 @@ public class TestUtil {
     public static void waitForAppDeployment(SiddhiAppRuntimeService runtimeService,
                                             EventStreamService streamService, String appName, Duration atMost) {
         await().atMost(atMost).until(() -> {
+            Map<String, SiddhiAppRuntime> runtimes = runtimeService.getActiveSiddhiAppRuntimes();
+            if (runtimes.size() != 0) {
+                for (String name : runtimes.keySet()) {
+                    logger.info("!!! Runtime for:" + name + " is available. !!!");
+                }
+            }
             SiddhiAppRuntime app = runtimeService.getActiveSiddhiAppRuntimes().get(appName);
             if (app != null) {
+                logger.info("!!! Application:" + appName + " is successfully deployed. !!!");
                 List<String> streams = streamService.getStreamNames(appName);
                 if (!streams.isEmpty()) {
                     return true;

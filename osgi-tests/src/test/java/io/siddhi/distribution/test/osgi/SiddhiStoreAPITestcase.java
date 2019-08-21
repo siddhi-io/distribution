@@ -77,16 +77,13 @@ public class SiddhiStoreAPITestcase {
     private final Gson gson = new Gson();
 
     @Inject
+    private CarbonServerInfo carbonServerInfo;
+
+    @Inject
     private SiddhiAppRuntimeService siddhiAppRuntimeService;
 
     @Inject
     private EventStreamService eventStreamService;
-
-    @Inject
-    private MicroservicesRegistry microservicesRegistry;
-
-    @Inject
-    private CarbonServerInfo carbonServerInfo;
 
     @Inject
     private BundleContext bundleContext;
@@ -98,7 +95,9 @@ public class SiddhiStoreAPITestcase {
                 copySiddhiFileOption(),
                 carbonDistribution(
                         Paths.get("target", "siddhi-runner-"
-                                + System.getProperty("io.siddhi.distribution.version")), "runner")
+                                + System.getProperty("io.siddhi.distribution.version")), "runner")/*,
+
+                    CarbonDistributionOption.debug(5005)*/
         };
     }
 
@@ -147,7 +146,7 @@ public class SiddhiStoreAPITestcase {
 
     private void testQuery(String body, Event[] events, int expectedResponseCode, String expectedResponse) throws
             InterruptedException {
-        TestUtil.waitForAppDeployment(siddhiAppRuntimeService, eventStreamService, APP_NAME, Duration.TEN_SECONDS);
+        TestUtil.waitForAppDeployment(siddhiAppRuntimeService, eventStreamService, APP_NAME, Duration.ONE_MINUTE);
         for (Event event : events) {
             eventStreamService.pushEvent(APP_NAME, "SmartHomeData", event);
         }
