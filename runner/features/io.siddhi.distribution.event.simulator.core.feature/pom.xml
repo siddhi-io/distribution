@@ -202,7 +202,7 @@
                                     <version>${org.wso2.json.version}</version>
                                 </bundle>
                                 <bundle>
-                                    <symbolicName>org.apache.commons.csv</symbolicName>
+                                    <symbolicName>org.apache.commons.commons-csv</symbolicName>
                                     <version>${apache.commons.csv.version}</version>
                                 </bundle>
                                 <bundle>
