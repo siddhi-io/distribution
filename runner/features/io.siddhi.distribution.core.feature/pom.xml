@@ -66,6 +66,10 @@
             <artifactId>json-path</artifactId>
         </dependency>
         <dependency>
+            <groupId>net.minidev</groupId>
+            <artifactId>json-smart</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.wso2.orbit.org.apache.tapestry</groupId>
             <artifactId>tapestry-json</artifactId>
         </dependency>
@@ -233,6 +237,10 @@
                                 <bundle>
                                     <symbolicName>com.jayway.jsonpath.json-path</symbolicName>
                                     <version>${jayway.jsonpath.version}</version>
+                                </bundle>
+                                <bundle>
+                                    <symbolicName>net.minidev.json-smart</symbolicName>
+                                    <version>${net.minidev.json.version}</version>
                                 </bundle>
                                 <bundle>
                                     <symbolicName>tapestry-json</symbolicName>
