@@ -39,9 +39,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static org.awaitility.Awaitility.await;
 import static java.lang.System.currentTimeMillis;
 import static java.net.URLConnection.guessContentTypeFromName;
-import static org.awaitility.Awaitility.await;
 
 
 /**
