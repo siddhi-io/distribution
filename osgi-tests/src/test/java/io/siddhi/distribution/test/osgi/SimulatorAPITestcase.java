@@ -261,7 +261,7 @@ public class SimulatorAPITestcase {
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 200);
     }
 
-    @Test(dependsOnMethods = {"testGetFilesApi"})
+    @Test(dependsOnMethods = {"testDeleteFeedConfApi"})
     public void testDeleteUnavailableFeedConf() throws Exception {
         String path = "/simulation/feed/FeedSimulation2";
         String method = "DELETE";
@@ -270,6 +270,7 @@ public class SimulatorAPITestcase {
                 method, true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 404);
         logger.info(httpResponseMessage.getErrorContent());
+        Thread.sleep(6000);
     }
 
     @Test(dependsOnMethods = {"testDeleteUnavailableFeedConf"})
