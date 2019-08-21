@@ -71,7 +71,7 @@
         </dependency>
         <dependency>
             <groupId>net.minidev</groupId>
-            <artifactId>asm</artifactId>
+            <artifactId>accessors-smart</artifactId>
         </dependency>
         <dependency>
             <groupId>org.wso2.orbit.org.apache.tapestry</groupId>
@@ -247,7 +247,7 @@
                                     <version>${net.minidev.json.version}</version>
                                 </bundle>
                                 <bundle>
-                                    <symbolicName>net.minidev.asm</symbolicName>
+                                    <symbolicName>net.minidev.accessors-smart</symbolicName>
                                     <version>${net.minidev.asm.version}</version>
                                 </bundle>
                                 <bundle>
