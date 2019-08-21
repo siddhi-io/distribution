@@ -40,9 +40,9 @@ import java.util.Map;
 import java.util.Optional;
 
 import static org.awaitility.Awaitility.await;
+import static org.awaitility.Awaitility.given;
 import static java.lang.System.currentTimeMillis;
 import static java.net.URLConnection.guessContentTypeFromName;
-
 
 /**
  * Util class for test cases.
@@ -97,7 +97,7 @@ public class TestUtil {
 
     public static void waitForAppDeployment(SiddhiAppRuntimeService runtimeService,
                                             EventStreamService streamService, String appName, Duration atMost) {
-        await().atMost(atMost).until(() -> {
+        given().pollThread(Thread::new).await().atMost(atMost).until(() -> {
             Map<String, SiddhiAppRuntime> runtimes = runtimeService.getActiveSiddhiAppRuntimes();
             if (runtimes.size() != 0) {
                 for (String name : runtimes.keySet()) {
