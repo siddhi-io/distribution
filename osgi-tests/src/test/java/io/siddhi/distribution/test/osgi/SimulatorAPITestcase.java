@@ -259,6 +259,8 @@ public class SimulatorAPITestcase {
                 method, true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
         logger.info(httpResponseMessage.getSuccessContent());
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 200);
+        // Wait until simulation file deletes from file system
+        Thread.sleep(6000);
     }
 
     @Test(dependsOnMethods = {"testDeleteFeedConfApi"})
@@ -270,7 +272,6 @@ public class SimulatorAPITestcase {
                 method, true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 404);
         logger.info(httpResponseMessage.getErrorContent());
-        Thread.sleep(6000);
     }
 
     @Test(dependsOnMethods = {"testDeleteUnavailableFeedConf"})
