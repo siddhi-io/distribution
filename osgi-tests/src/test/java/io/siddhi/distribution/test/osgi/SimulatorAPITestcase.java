@@ -259,9 +259,11 @@ public class SimulatorAPITestcase {
                 method, true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
         logger.info(httpResponseMessage.getSuccessContent());
         Assert.assertEquals(httpResponseMessage.getResponseCode(), 200);
+        // Wait until simulation file deletes from file system
+        Thread.sleep(6000);
     }
 
-    @Test(dependsOnMethods = {"testGetFilesApi"})
+    @Test(dependsOnMethods = {"testDeleteFeedConfApi"})
     public void testDeleteUnavailableFeedConf() throws Exception {
         String path = "/simulation/feed/FeedSimulation2";
         String method = "DELETE";
