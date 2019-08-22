@@ -1233,7 +1233,7 @@
         <swagger.models.version>1.5.22</swagger.models.version>
 
         <!-- nats test dependencies -->
-        <io.nats.version>2.2.0</io.nats.version>
+        <io.nats.version>2.2.1</io.nats.version>
         <org.testcontainers.version>1.12.0</org.testcontainers.version>
         <assertj.version>3.13.2</assertj.version>
 
