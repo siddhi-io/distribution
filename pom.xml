@@ -1246,7 +1246,7 @@
         <siddhi.execution.map.version>5.0.5-SNAPSHOT</siddhi.execution.map.version>
         <siddhi.execution.unitconversion.version>2.0.3-SNAPSHOT</siddhi.execution.unitconversion.version>
         <siddhi.execution.reorder.version>5.0.4-SNAPSHOT</siddhi.execution.reorder.version>
-        <siddhi.execution.unique.version>5.0.3-SNAPSHOT</siddhi.execution.unique.version>
+        <siddhi.execution.unique.version>5.0.4-SNAPSHOT</siddhi.execution.unique.version>
 
         <siddhi.io.kafka.version>5.0.4-SNAPSHOT</siddhi.io.kafka.version>
         <siddhi.io.http.version>2.1.1-SNAPSHOT</siddhi.io.http.version>
