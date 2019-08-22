@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # use siddhi-runner-base
-FROM siddhiio/siddhi-runner-base-alpine:5.1.0-m2
+FROM siddhiio/siddhi-runner-base-alpine:{{PRODUCT_VERSION}}
 MAINTAINER Siddhi IO Docker Maintainers "siddhi-dev@googlegroups.com"
 
 ARG HOST_BUNDLES_DIR=./bundles
