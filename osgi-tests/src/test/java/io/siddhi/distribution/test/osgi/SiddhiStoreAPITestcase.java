@@ -147,7 +147,7 @@ public class SiddhiStoreAPITestcase {
 
     private void testQuery(String body, Event[] events, int expectedResponseCode, String expectedResponse) throws
             InterruptedException {
-        TestUtil.waitForAppDeployment(siddhiAppRuntimeService, eventStreamService, APP_NAME, Duration.TEN_SECONDS);
+        TestUtil.waitForAppDeployment(siddhiAppRuntimeService, eventStreamService, APP_NAME, Duration.ONE_MINUTE);
         for (Event event : events) {
             eventStreamService.pushEvent(APP_NAME, "SmartHomeData", event);
         }
