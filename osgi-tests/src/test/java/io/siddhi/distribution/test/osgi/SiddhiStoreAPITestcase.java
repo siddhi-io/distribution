@@ -65,6 +65,7 @@ public class SiddhiStoreAPITestcase {
     private static final String APP_NAME = "StoreApiTest";
     private static final String SIDDHI_EXTENSION = ".siddhi";
     private static final String STORE_API_BUNDLE_NAME = "io.siddhi.distribution.store.api.rest";
+    private static final String SIDDHI_IO_TCP_BUNDLE_NAME = " siddhi-io-tcp";
     private static final int HTTP_PORT = 9090;
     private static final String HOSTNAME = TestConstants.HOSTNAME_LOCALHOST;
     private static final String API_CONTEXT_PATH = "/stores/query";
@@ -129,6 +130,8 @@ public class SiddhiStoreAPITestcase {
 
     @Test
     public void testStoreApiBundle() {
+        Bundle tcpBundle = getBundle(SIDDHI_IO_TCP_BUNDLE_NAME);
+        Assert.assertEquals(tcpBundle.getState(), Bundle.ACTIVE);
         Bundle coreBundle = getBundle(STORE_API_BUNDLE_NAME);
         Assert.assertEquals(coreBundle.getState(), Bundle.ACTIVE);
     }
