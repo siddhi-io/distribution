@@ -65,7 +65,7 @@ public class SiddhiStoreAPITestcase {
     private static final String APP_NAME = "StoreApiTest";
     private static final String SIDDHI_EXTENSION = ".siddhi";
     private static final String STORE_API_BUNDLE_NAME = "io.siddhi.distribution.store.api.rest";
-    private static final String SIDDHI_IO_TCP_BUNDLE_NAME = " siddhi-io-tcp";
+    private static final String SIDDHI_IO_TCP_BUNDLE_NAME = "siddhi-io-tcp";
     private static final int HTTP_PORT = 9090;
     private static final String HOSTNAME = TestConstants.HOSTNAME_LOCALHOST;
     private static final String API_CONTEXT_PATH = "/stores/query";
