@@ -120,9 +120,16 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withConfig(String confPath) {
-        withFileSystemBind(confPath, CONF_DIRECTORY, BindMode.READ_ONLY);
-        initCommand.append(BLANK_SPACE).append(OVERRIDE_CONF_SYSTEM_PARAMETER).append("=").append(CONF_DIRECTORY);
-        return this;
+        File configFile = new File(confPath);
+        if (!configFile.isDirectory()) {
+            withFileSystemBind(confPath, CONF_DIRECTORY, BindMode.READ_ONLY);
+            initCommand.append(BLANK_SPACE).append(OVERRIDE_CONF_SYSTEM_PARAMETER).append("=").append(CONF_DIRECTORY);
+            return this;
+        } else {
+            logger().error("Provided configurations path points to a directory. " +
+                    "Hence, configuration merging is skipped.");
+            return this;
+        }
     }
 
     /**
@@ -132,7 +139,12 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        withFileSystemBind(deploymentDirectory, DEPLOYMENT_DIRECTORY, BindMode.READ_ONLY);
+        File siddhiApps = new File(deploymentDirectory);
+        String deploymentPath = DEPLOYMENT_DIRECTORY;
+        if (!siddhiApps.isDirectory()) {
+            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(siddhiApps.getName());
+        }
+        withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
         return this;
     }
