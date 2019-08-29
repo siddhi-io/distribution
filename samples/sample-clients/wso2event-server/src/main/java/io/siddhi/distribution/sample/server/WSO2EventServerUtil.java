@@ -43,20 +43,4 @@ public class WSO2EventServerUtil {
         System.setProperty("Security.KeyStore.Password", "wso2carbon");
     }
 
-    public static String getDataBridgeConfigPath() {
-        File filePath = new File("src" + File.separator + "main" + File.separator + "resources");
-        if (!filePath.exists()) {
-            filePath = new File("modules" + File.separator + "samples" + File.separator +
-                    "sample-clients" + File.separator + "wso2event-server" + File.separator + "src" +
-                    File.separator + "main" + File.separator + "resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("resources");
-        }
-        if (!filePath.exists()) {
-            filePath = new File("test" + File.separator + "resources");
-        }
-        return filePath.getAbsolutePath() + File.separator + "databridge.config.yaml";
-    }
-
 }
