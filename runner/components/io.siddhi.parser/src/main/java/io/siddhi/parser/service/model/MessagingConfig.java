@@ -26,7 +26,7 @@ import java.util.Arrays;
  */
 public class MessagingConfig {
 
-    @SerializedName("clusterId")
+    @SerializedName("streamingClusterId")
     private String clusterId;
 
     @SerializedName("bootstrapServers")
