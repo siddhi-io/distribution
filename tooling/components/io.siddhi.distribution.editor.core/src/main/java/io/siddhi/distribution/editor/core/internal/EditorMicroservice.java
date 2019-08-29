@@ -26,6 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSyntaxException;
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.debugger.SiddhiDebugger;
@@ -44,14 +45,13 @@ import io.siddhi.distribution.editor.core.commons.response.GeneralResponse;
 import io.siddhi.distribution.editor.core.commons.response.MetaDataResponse;
 import io.siddhi.distribution.editor.core.commons.response.Status;
 import io.siddhi.distribution.editor.core.commons.response.ValidationSuccessResponse;
-import io.siddhi.distribution.editor.core.exception.DockerGenerationException;
-import io.siddhi.distribution.editor.core.exception.KubernetesGenerationException;
 import io.siddhi.distribution.editor.core.exception.SiddhiAppDeployerServiceStubException;
 import io.siddhi.distribution.editor.core.exception.SiddhiStoreQueryHelperException;
 import io.siddhi.distribution.editor.core.internal.local.LocalFSWorkspace;
 import io.siddhi.distribution.editor.core.util.Constants;
 import io.siddhi.distribution.editor.core.util.DebugCallbackEvent;
 import io.siddhi.distribution.editor.core.util.DebugStateHolder;
+import io.siddhi.distribution.editor.core.util.FileJsonObjectReaderUtil;
 import io.siddhi.distribution.editor.core.util.LogEncoder;
 import io.siddhi.distribution.editor.core.util.MimeMapper;
 import io.siddhi.distribution.editor.core.util.SampleEventGenerator;
@@ -112,6 +112,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -297,6 +298,59 @@ public class EditorMicroservice implements Microservice {
         } catch (SiddhiStoreQueryHelperException e) {
             log.error("Cannot execute the store query.", e);
             return Response.serverError().entity("Failed executing the Siddhi query.").build();
+        }
+    }
+
+    @GET
+    @Path("/filterDirectories")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response filterDirectories(@QueryParam("directory") String directoryList) {
+        try {
+            List<String> directories = Arrays.stream(
+                    new String(Base64.getDecoder().decode(directoryList), Charset.defaultCharset())
+                            .split(","))
+                    .filter(directory -> directory != null && !directory.trim().isEmpty())
+                    .map(directory -> "\"" + directory + "\"")
+                    .collect(Collectors.toList());
+
+            String location = Paths.get(Constants.CARBON_HOME).toString();
+            JsonArray filteredDirectoryFiles = FileJsonObjectReaderUtil.listDirectoryInPath(location, directories);
+
+            JsonObject rootElement = FileJsonObjectReaderUtil.getJsonRootObject(filteredDirectoryFiles);
+
+            return Response.status(Response.Status.OK)
+                    .entity(rootElement)
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        } catch (IOException e) {
+            return Response.serverError().entity("failed." + e.getMessage())
+                    .build();
+        } catch (Throwable ignored) {
+            return Response.serverError().entity("failed")
+                    .build();
+        }
+    }
+
+    @GET
+    @Path("/listFilesInPath")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response listFilesInRootPath(@QueryParam("path") String path) {
+        try {
+            String location = Paths.get(Constants.CARBON_HOME).toString();
+            java.nio.file.Path pathLocation = SecurityUtil.resolvePath(
+                    Paths.get(location).toAbsolutePath(),
+                    Paths.get(new String(Base64.getDecoder().decode(path), Charset.defaultCharset())));
+
+            return Response.status(Response.Status.OK)
+                    .entity(FileJsonObjectReaderUtil.listFilesInPath(pathLocation, "jar"))
+                    .type(MediaType.APPLICATION_JSON)
+                    .build();
+        } catch (IOException e) {
+            return Response.serverError().entity("failed." + e.getMessage())
+                    .build();
+        } catch (Throwable ignored) {
+            return Response.serverError().entity("failed")
+                    .build();
         }
     }
 
@@ -1051,16 +1105,23 @@ public class EditorMicroservice implements Microservice {
      */
     @POST
     @Path("/export")
-    public Response exportApps(@QueryParam("type") String exportType, ExportAppsRequest exportAppsRequest) {
-        ExportUtils exportUtils = new ExportUtils(configProvider, exportAppsRequest, exportType);
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response exportApps(@QueryParam("type") String exportType, @FormParam("payload") String payload) {
         try {
+            ExportAppsRequest exportAppsRequest = new Gson().fromJson(payload, ExportAppsRequest.class);
+            ExportUtils exportUtils = new ExportUtils(configProvider, exportAppsRequest, exportType);
             File zipFile = exportUtils.createZipFile();
             return Response
                     .status(Response.Status.OK)
                     .entity(zipFile)
                     .header("Content-Disposition", "attachment; filename=siddhi-docker.zip")
                     .build();
-        } catch (DockerGenerationException | KubernetesGenerationException e) {
+        } catch (JsonSyntaxException e) {
+            log.error("Incorrect configuration format.", e);
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .build();
+        } catch (Exception e) {
             log.error("Cannot generate export-artifacts archive.", e);
             return Response
                     .status(Response.Status.INTERNAL_SERVER_ERROR)
