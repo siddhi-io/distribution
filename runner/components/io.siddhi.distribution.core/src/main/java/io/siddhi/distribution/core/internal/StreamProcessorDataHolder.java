@@ -27,12 +27,8 @@ import io.siddhi.distribution.core.distribution.DistributionService;
 import org.osgi.framework.BundleContext;
 import org.wso2.carbon.analytics.permissions.PermissionProvider;
 import org.wso2.carbon.config.provider.ConfigProvider;
-import org.wso2.carbon.databridge.commons.ServerEventListener;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.kernel.CarbonRuntime;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class which holds the OSGI Service references.
@@ -50,10 +46,7 @@ public class StreamProcessorDataHolder {
     private static DistributionService distributionService;
     private static RecordTableHandlerManager recordTableHandlerManager;
     private static PermissionProvider permissionProvider;
-    /**
-     * List used to hold all the registered subscribers.
-     */
-    private static List<ServerEventListener> serverListeners = new ArrayList<>();
+
     private CarbonRuntime carbonRuntime;
     private BundleContext bundleContext;
     private ConfigProvider configProvider;
@@ -141,18 +134,6 @@ public class StreamProcessorDataHolder {
 
     public static void setDistributionService(DistributionService distributionService) {
         StreamProcessorDataHolder.distributionService = distributionService;
-    }
-
-    public static void setServerListener(ServerEventListener serverListener) {
-        serverListeners.add(serverListener);
-    }
-
-    public static void removeServerListener(ServerEventListener serverListener) {
-        serverListeners.remove(serverListener);
-    }
-
-    public static List<ServerEventListener> getServerListeners() {
-        return serverListeners;
     }
 
     public static PermissionProvider getPermissionProvider() {
