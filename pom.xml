@@ -1094,7 +1094,7 @@
         <postgresql.version>42.2.6</postgresql.version>
         <mssql-jdbc.version>7.4.1.jre12</mssql-jdbc.version>
         <io.fabric8.version>0.31.0</io.fabric8.version>
-        <awaitility.version>3.1.6</awaitility.version>
+        <awaitility.version>4.0.0</awaitility.version>
 
         <!-- OSGI -->
         <osgi.api.version>6.0.0</osgi.api.version>
