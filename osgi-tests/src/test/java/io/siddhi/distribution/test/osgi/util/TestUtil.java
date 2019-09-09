@@ -184,7 +184,7 @@ public class TestUtil {
                 logger.error("Error Occurred. " + errorContent);
             } else {
                 successContent = readSuccessContent();
-                logger.error("Request successful. " + successContent);
+                logger.info("Request successful. " + successContent);
             }
             return new HTTPResponseMessage(connection.getResponseCode(),
                     connection.getContentType(), connection.getResponseMessage(), successContent, errorContent);
