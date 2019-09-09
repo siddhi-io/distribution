@@ -181,8 +181,10 @@ public class TestUtil {
         try {
             if (connection.getResponseCode() >= 400) {
                 errorContent = readErrorContent();
+                logger.error("Error Occurred. " + errorContent);
             } else {
                 successContent = readSuccessContent();
+                logger.error("Request successful. " + successContent);
             }
             return new HTTPResponseMessage(connection.getResponseCode(),
                     connection.getContentType(), connection.getResponseMessage(), successContent, errorContent);
