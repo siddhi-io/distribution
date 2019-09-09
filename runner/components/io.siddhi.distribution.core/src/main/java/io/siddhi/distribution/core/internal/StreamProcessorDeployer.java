@@ -18,6 +18,7 @@
 
 package io.siddhi.distribution.core.internal;
 
+import io.siddhi.core.exception.SiddhiAppCreationException;
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SimulationDependencyListener;
 import io.siddhi.distribution.core.internal.exception.SiddhiAppAlreadyExistException;
@@ -86,10 +87,17 @@ public class StreamProcessorDeployer implements Deployer {
                     } catch (SiddhiAppAlreadyExistException e) {
                         throw e;
                     } catch (Exception e) {
-                        SiddhiAppData siddhiAppData = new SiddhiAppData(siddhiApp, false);
-                        StreamProcessorDataHolder.getStreamProcessorService().
-                                addSiddhiAppFile(siddhiAppFileNameWithoutExtension, siddhiAppData);
-                        throw new SiddhiAppDeploymentException(e);
+                        if (e instanceof SiddhiAppCreationException &&
+                                e.getMessage().contains("No extension exist for")) {
+                            StreamProcessorDataHolder.getWaitingForDependencyApps().put(siddhiAppFileName, siddhiApp);
+                            log.warn("Siddhi App " + file.getName() + " deployment held back due to "
+                                    + e.getMessage() + ". Retry deployment will activate soon");
+                        } else {
+                            SiddhiAppData siddhiAppData = new SiddhiAppData(siddhiApp, false);
+                            StreamProcessorDataHolder.getStreamProcessorService().
+                                    addSiddhiAppFile(siddhiAppFileNameWithoutExtension, siddhiAppData);
+                            throw new SiddhiAppDeploymentException(e);
+                        }
                     }
                 } else {
                     log.error(("Error: File extension of file name "
@@ -136,7 +144,7 @@ public class StreamProcessorDeployer implements Deployer {
         return sb.toString();
     }
 
-    private static String getFileNameWithoutExtenson(String fileName) {
+    public static String getFileNameWithoutExtenson(String fileName) {
         int pos = fileName.lastIndexOf(".");
         if (pos > 0) {
             return fileName.substring(0, pos);
