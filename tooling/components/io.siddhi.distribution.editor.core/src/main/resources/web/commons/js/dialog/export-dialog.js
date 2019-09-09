@@ -82,12 +82,14 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                                 "<div class=\"step-description\">Configure Kubernetes for Siddhi</div>" +
                                 "</div>\n" +
                                 "</div>");
+
+                        form.find('#form-steps').addClass('k8_export_header_item');
                     }
 
                     // Toolbar extra buttons
                     var btnExportForm = $('' +
                         '<form id="submit-form"  method="post" enctype="application/x-www-form-urlencoded" target="export-download" >' +
-                        '<button  type="button" class="btn btn-default hidden" id="export-btn" data-dismiss="modal" >Export</button>' +
+                        '<button  type="button" class="btn btn-primary hidden" id="export-btn" data-dismiss="modal" >Export</button>' +
                         '</form>');
                     btnExportForm.find('#export-btn').on('click', function () {
                         self.sendExportRequest()
@@ -124,7 +126,10 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                                 self.payload.configuration = self.configTemplateModel.getTemplatedConfig();
                                 self.payload.templatedSiddhiApps = self.appTemplatingModel.getTemplatedApps();
                             } else if (stepNumber === 3) {
-                                self.payload.templatedVariables = self._fill_template_value_dialog.getTemplatedKeyValues();
+                                self.payload.templatedVariables = self._fill_template_value_dialog.
+                                getTemplatedKeyValues();
+                                return self._fill_template_value_dialog.
+                                validateTemplatedValues(self.payload.templatedVariables)
                             }
                         }
                     });
@@ -133,13 +138,22 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                     form.on("showStep", function (e, anchorObject, stepNumber, stepDirection, stepPosition) {
                         // Finish button enable/disable
                         if (stepPosition === 'first') {
-                            $("#prev-btn").addClass('disabled');
+                            $(".sw-btn-prev").addClass('disabled');
+                            $(".sw-btn-prev").addClass('hidden');
                         } else if (stepPosition === 'final') {
-                            $("#next-btn").addClass('hidden disabled');
+                            $(".sw-btn-next").addClass('hidden disabled');
+                            $(".sw-btn-next").parent().addClass('sw-btn-group_left');
+                            $(".sw-btn-next").parent().removeClass('sw-btn-group_right');
                             $("#export-btn").removeClass('hidden');
+                            $("#export-btn").parent().parent().addClass('sw-btn-group_right');
                         } else {
-                            $("#prev-btn").removeClass('disabled');
-                            $("#next-btn").removeClass('disabled');
+                            $(".sw-btn-prev").removeClass('disabled');
+                            $(".sw-btn-next").removeClass('disabled');
+                            $(".sw-btn-next").parent().addClass('sw-btn-group_right');
+                            $(".sw-btn-next").removeClass('hidden');
+                            $(".sw-btn-prev").removeClass('hidden');
+                            $("#export-btn").addClass('hidden');
+
                         }
 
                         if (stepDirection === 'forward') {
