@@ -17,9 +17,9 @@
  */
 
 define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelectorDialog', 'jarsSelectorDialog',
-        'templateFileDialog', 'templateConfigDialog', 'fillTemplateValueDialog', 'kubernetesConfigDialog'],
+        'templateAppDialog', 'templateConfigDialog', 'fillTemplateValueDialog', 'kubernetesConfigDialog'],
     function (require, $, log, Backbone, smartWizard, SiddhiAppSelectorDialog, JarsSelectorDialog,
-              TemplateFileDialog, TemplateConfigDialog, FillTemplateValueDialog, KubernetesConfigDialog) {
+              TemplateAppDialog, TemplateConfigDialog, FillTemplateValueDialog, KubernetesConfigDialog) {
 
         var ExportDialog = Backbone.View.extend(
             /** @lends ExportDialog.prototype */
@@ -29,14 +29,15 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                  * @constructs
                  * @class ExportDialog
                  * @param {Object} options exportContainerModal
-                 * @param {boolean} isDocker  is Docker File Export
+                 * @param {boolean} isExportDockerFlow  is Docker File Export
                  */
-                initialize: function (options, isDocker) {
-                    this.app = options;
-                    this.options = _.cloneDeep(_.get(options.config, 'export_dialog'));
-                    this.exportContainer;
-                    this.isDocker = isDocker;
-                    this.payload = {
+                initialize: function (options, isExportDockerFlow) {
+                    this._options = options;
+                    var exportDialog = _.cloneDeep(_.get(options.config, 'export_dialog'));
+                    this._exportContainer = $(_.get(exportDialog, 'selector')).clone();
+
+                    this._isExportDockerFlow = isExportDockerFlow;
+                    this._payload = {
                         templatedSiddhiApps: [],
                         configuration: '',
                         templatedVariables: [],
@@ -44,31 +45,41 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                         jars: [],
                         kubernetesConfiguration: ''
                     };
-                    this.appTemplatingModel;
-                    this.configTemplateModel;
-                    this.kubernetesConfigModel;
+                    this._siddhiAppSelector;
+                    this._jarsSelectorDialog;
+                    this._appTemplatingModel;
+                    this._configTemplateModel;
+                    this._kubernetesConfigModel;
                     this._fill_template_value_dialog;
+
+                    var type;
+                    if (isExportDockerFlow) {
+                        type = 'docker';
+                    } else {
+                        type = 'kubernetes';
+                    }
+                    var exportUrl = options.config.baseUrl + "/export?type=" + type;
+                    this._btnExportForm =  $('' +
+                        '<form id="submit-form" method="post" enctype="application/x-www-form-urlencoded" target="export-download" >' +
+                        '<button  type="button" class="btn btn-primary hidden" id="export-btn" data-dismiss="modal" >Export</button>' +
+                        '</form>').attr('action', exportUrl);
+
                 },
 
                 show: function () {
-                    this.exportContainer.modal('show');
+                    this._exportContainer.modal('show');
                 },
 
                 render: function () {
-
                     var self = this;
-                    if (!_.isNil(this.exportContainer)) {
-                        this.exportContainer.remove();
-                    }
+                    var isExportDockerFlow = this._isExportDockerFlow;
+                    var options = this._options;
 
-                    var isDocker = this.isDocker;
-                    var options = this.options;
-                    var app = this.app;
-                    var exportContainer = $(_.get(options, 'selector')).clone();
+                    var exportContainer = this._exportContainer;
                     var heading = exportContainer.find('#initialHeading');
                     var form = exportContainer.find('#export-form');
 
-                    if (isDocker) {
+                    if (isExportDockerFlow) {
                         heading.text('Export Siddhi Apps for Docker image');
                     } else {
                         heading.text('Export Siddhi Apps For Kubernetes CRD');
@@ -82,19 +93,13 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                                 "<div class=\"step-description\">Configure Kubernetes for Siddhi</div>" +
                                 "</div>\n" +
                                 "</div>");
-
-                        form.find('#form-steps').addClass('k8_export_header_item');
                     }
 
                     // Toolbar extra buttons
-                    var btnExportForm = $('' +
-                        '<form id="submit-form"  method="post" enctype="application/x-www-form-urlencoded" target="export-download" >' +
-                        '<button  type="button" class="btn btn-primary hidden" id="export-btn" data-dismiss="modal" >Export</button>' +
-                        '</form>');
+                    var btnExportForm = this._btnExportForm;
                     btnExportForm.find('#export-btn').on('click', function () {
                         self.sendExportRequest()
                     });
-                    self.btnExportForm = btnExportForm;
 
                     form.smartWizard({
                         selected: 0,
@@ -110,26 +115,26 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                         }
                     });
 
-                    self.siddhiAppSelector = new SiddhiAppSelectorDialog(app, form);
-                    self.siddhiAppSelector.render();
+                    self._siddhiAppSelector = new SiddhiAppSelectorDialog(options, form);
+                    self._siddhiAppSelector.render();
 
                     // Initialize the leaveStep event - validate before next
                     form.on("leaveStep", function (e, anchorObject, stepNumber, stepDirection) {
                         if (stepDirection === 'forward') {
                             if (stepNumber === 0) {
-                                return self.siddhiAppSelector.validateSiddhiApps();
+                                return self._siddhiAppSelector.validateSiddhiAppSelection();
                             }
                             if (stepNumber === 1) {
-                                self.payload.templatedSiddhiApps = self.appTemplatingModel.getTemplatedApps();
+                                self._payload.templatedSiddhiApps = self._appTemplatingModel.getTemplatedApps();
                             }
                             if (stepNumber === 2) {
-                                self.payload.configuration = self.configTemplateModel.getTemplatedConfig();
-                                self.payload.templatedSiddhiApps = self.appTemplatingModel.getTemplatedApps();
+                                self._payload.configuration = self._configTemplateModel.getTemplatedConfig();
+                                self._payload.templatedSiddhiApps = self._appTemplatingModel.getTemplatedApps();
                             } else if (stepNumber === 3) {
-                                self.payload.templatedVariables = self._fill_template_value_dialog.
+                                self._payload.templatedVariables = self._fill_template_value_dialog.
                                 getTemplatedKeyValues();
                                 return self._fill_template_value_dialog.
-                                validateTemplatedValues(self.payload.templatedVariables)
+                                validateTemplatedValues(self._payload.templatedVariables)
                             }
                         }
                     });
@@ -140,20 +145,18 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                         if (stepPosition === 'first') {
                             $(".sw-btn-prev").addClass('disabled');
                             $(".sw-btn-prev").addClass('hidden');
+                            $(".sw-btn-prev").parent().removeClass("sw-btn-group-final");
                         } else if (stepPosition === 'final') {
                             $(".sw-btn-next").addClass('hidden disabled');
-                            $(".sw-btn-next").parent().addClass('sw-btn-group_left');
-                            $(".sw-btn-next").parent().removeClass('sw-btn-group_right');
+                            $(".sw-btn-next").parent().addClass("sw-btn-group-final");
                             $("#export-btn").removeClass('hidden');
-                            $("#export-btn").parent().parent().addClass('sw-btn-group_right');
                         } else {
-                            $(".sw-btn-prev").removeClass('disabled');
                             $(".sw-btn-next").removeClass('disabled');
-                            $(".sw-btn-next").parent().addClass('sw-btn-group_right');
                             $(".sw-btn-next").removeClass('hidden');
+                            $(".sw-btn-prev").removeClass('disabled');
                             $(".sw-btn-prev").removeClass('hidden');
+                            $(".sw-btn-prev").parent().removeClass("sw-btn-group-final");
                             $("#export-btn").addClass('hidden');
-
                         }
 
                         if (stepDirection === 'forward') {
@@ -164,27 +167,27 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                                     siddhiAppTemplateContainer.empty();
                                     siddhiAppTemplateContainer.accordion("destroy");
                                 }
-                                var siddhiAppsNamesList = self.siddhiAppSelector.getSiddhiApps();
+                                var siddhiAppsNamesList = self._siddhiAppSelector.getSiddhiApps();
                                 var templateOptions = {
-                                    app: self.app,
+                                    app: self._options,
                                     siddhiAppNames: siddhiAppsNamesList,
-                                    templateHeader: siddhiAppTemplateContainer
+                                    templateContainer: siddhiAppTemplateContainer
                                 };
-                                self.appTemplatingModel = new TemplateFileDialog(templateOptions);
-                                self.appTemplatingModel.render();
+                                self._appTemplatingModel = new TemplateAppDialog(templateOptions);
+                                self._appTemplatingModel.render();
                             } else if (stepNumber === 2) {
                                 var templateStep = exportContainer.find('#config-template-container-id');
                                 if (templateStep.children().length > 0) {
                                     templateStep.empty();
                                 }
-                                self.configTemplateModel = new TemplateConfigDialog({
-                                    app: self.app,
-                                    templateHeader: templateStep
+                                self._configTemplateModel = new TemplateConfigDialog({
+                                    app: self._options,
+                                    templateContainer: templateStep
                                 });
-                                self.configTemplateModel.render();
+                                self._configTemplateModel.render();
                             } else if (stepNumber === 4) {
-                                self.jarsSelectorDialog = new JarsSelectorDialog(app, form);
-                                self.jarsSelectorDialog.render();
+                                self._jarsSelectorDialog = new JarsSelectorDialog(options, form);
+                                self._jarsSelectorDialog.render();
                             } else if (stepNumber === 3) {
                                 var fillTemplateContainer
                                     = exportContainer.find('#fill-template-container-id');
@@ -193,46 +196,45 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                                 }
                                 var fillTemplateOptions = {
                                     container: fillTemplateContainer,
-                                    payload: self.payload
+                                    payload: self._payload
                                 };
                                 self._fill_template_value_dialog = new FillTemplateValueDialog(fillTemplateOptions);
                                 self._fill_template_value_dialog.render();
                             } else if (stepNumber === 5) {
-                                self.kubernetesConfigModel = new KubernetesConfigDialog({
-                                    app: self.app,
+                                self._kubernetesConfigModel = new KubernetesConfigDialog({
+                                    app: self._options,
                                     templateHeader: exportContainer.find('#kubernetes-configuration-step-id')
                                 });
-                                self.kubernetesConfigModel.render();
+                                self._kubernetesConfigModel.render();
                             }
                         }
                     });
 
-                    this.exportContainer = exportContainer;
+                    this._exportContainer = exportContainer;
                 },
 
                 sendExportRequest: function () {
-                    var self = this;
-                    var type;
-                    if (this.isDocker) {
-                        type = 'docker';
-                    } else {
-                        type = 'kubernetes';
-                        this.payload.kubernetesConfiguration = this.kubernetesConfigModel.getKubernetesConfigs();
+                    if (!this._isExportDockerFlow) {
+                        this._payload.kubernetesConfiguration = this._kubernetesConfigModel.getKubernetesConfigs();
                     }
-                    this.payload.bundles = this.jarsSelectorDialog.getSelected('bundles');
-                    this.payload.jars = this.jarsSelectorDialog.getSelected('jars');
+                    this._payload.bundles = this._jarsSelectorDialog.getSelected('bundles');
+                    this._payload.jars = this._jarsSelectorDialog.getSelected('jars');
 
-                    var payload = $('<input id="payload" name="payload" type="text" style="display: none;"/>')
-                        .attr('value', JSON.stringify(this.payload));
+                    var payloadInputField = $('<input id="payload" name="payload" type="text" style="display: none;"/>')
+                        .attr('value', JSON.stringify(this._payload));
+                    this._btnExportForm.append(payloadInputField);
 
-                    var exportUrl = this.app.config.baseUrl + "/export?type=" + type;
+                    $(document.body).append(this._btnExportForm);
+                    this._btnExportForm.submit();
+                },
 
-                    this.btnExportForm.append(payload);
-                    this.btnExportForm.attr('action', exportUrl);
-
-                    $(document.body).append(this.btnExportForm);
-                    this.btnExportForm.submit();
-
+                clear: function () {
+                    if (!_.isNil(this._exportContainer)) {
+                        this._exportContainer.remove();
+                    }
+                    if (!_.isNil(this._btnExportForm)) {
+                        this._btnExportForm.remove();
+                    }
                 }
             });
         return ExportDialog;

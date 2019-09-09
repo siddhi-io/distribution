@@ -16,25 +16,25 @@
  * under the License.
  */
 
-define(['require', 'lodash', 'jquery', 'log', 'ace/ace', 'app/source-editor/editor'],
-    function (require, _, $, log, ace, SiddhiEditor) {
+define(['require', 'lodash', 'jquery', 'log', 'ace/ace', 'app/source-editor/editor', 'alerts'],
+    function (require, _, $, log, ace, SiddhiEditor, alerts) {
 
-        var TemplateFileDialog = function (options) {
+        // todo rename to template-app-dialog.js
+        var TemplateAppDialog = function (options) {
             this.app = options.app;
             this.appNames = options.siddhiAppNames;
-            this.templateContainer = options.templateHeader;
-            this.appArr = this.readSiddhiApps(this.appNames);
-            this.editorObjArr = [];
+            this.templateContainer = options.templateContainer;
+            this.appObjectArrayList = this.readSiddhiApps(this.appNames);
+            this.editorObjectArrayList = [];
         };
 
-        TemplateFileDialog.prototype.constructor = TemplateFileDialog;
+        TemplateAppDialog.prototype.constructor = TemplateAppDialog;
 
-        TemplateFileDialog.prototype.render = function () {
+        TemplateAppDialog.prototype.render = function () {
             var self = this;
-            var i;
-            for (i = 0; i < self.appArr.length; i++) {
-                var entry = self.appArr[i];
-                var divId = "siddhi-app-content-id".concat(i);
+
+            self.appObjectArrayList.forEach(function (entry, index) {
+                var divId = "siddhi-app-content-id".concat(index.toString());
 
                 var heading = $('<h3 class="siddhi-app-template-header"></h3>').text(entry.name);
                 var div = $('<div class="siddhi-app-template-container"></div>').attr("id", divId);
@@ -44,8 +44,8 @@ define(['require', 'lodash', 'jquery', 'log', 'ace/ace', 'app/source-editor/edit
 
                 this._mainEditor = new SiddhiEditor({
                     divID: divId,
-                    realTimeValidation: true,
-                    autoCompletion: true
+                    realTimeValidation: false,
+                    autoCompletion: false
                 });
 
                 this._editor = ace.edit(divId);
@@ -55,24 +55,19 @@ define(['require', 'lodash', 'jquery', 'log', 'ace/ace', 'app/source-editor/edit
                     name: entry.name,
                     content: this._editor
                 };
-                self.editorObjArr.push(obj);
-            }
+                self.editorObjectArrayList.push(obj);
+            });
             self.templateContainer.accordion();
         };
 
-        TemplateFileDialog.prototype.readSiddhiApps = function (appNames) {
+        TemplateAppDialog.prototype.readSiddhiApps = function (appNames) {
             var self = this;
             var apps = [];
-            var i;
-            for (i = 0; i < appNames.length; i++) {
-                var fileName = appNames[i];
-                var fileRelativeLocation = "workspace" + self.app.getPathSeperator() +
-                    fileName;
-                var defaultView = {configLocation: fileRelativeLocation};
-                var workspaceServiceURL = self.app.config.services.workspace.endpoint;
-                var openServiceURL = workspaceServiceURL + "/read";
 
-                var path = defaultView.configLocation;
+            appNames.forEach(function (fileName) {
+                var openServiceURL = self.app.config.services.workspace.endpoint + "/read";
+                var path = "workspace" + self.app.getPathSeperator() +fileName;
+
                 $.ajax({
                     url: openServiceURL,
                     type: "POST",
@@ -82,16 +77,14 @@ define(['require', 'lodash', 'jquery', 'log', 'ace/ace', 'app/source-editor/edit
                     success: function (data, textStatus, xhr) {
                         if (xhr.status == 200) {
                             var pathArray = _.split(path, self.app.getPathSeperator()),
-                                fileName = _.last(pathArray),
-                                folderPath = _.join(_.take(pathArray, pathArray.length - 1), self.app
-                                    .getPathSeperator());
+                                fileName = _.last(pathArray);
                             var siddhiApp = {
                                 name: fileName,
                                 content: data.content
                             };
                             apps.push(siddhiApp);
                         } else {
-                            console.error("Failed to read Siddhi Application" + data.error);
+                            alerts.error("Failed to read Siddhi Application" + data.error);
                         }
                     },
                     error: function (res, errorCode, error) {
@@ -102,31 +95,35 @@ define(['require', 'lodash', 'jquery', 'log', 'ace/ace', 'app/source-editor/edit
                                 msg = _.get(resObj, 'Error');
                             }
                         }
-                        console.error(msg);
+                        alerts.error(msg);
                     }
                 });
-            }
+            });
             return apps;
         };
 
-        TemplateFileDialog.prototype.show = function () {
-            this._fileOpenModal.modal('show');
-        };
+        function isJsonString(str) {
+            try {
+                JSON.parse(str);
+            } catch (e) {
+                return false;
+            }
+            return true;
+        }
 
-        TemplateFileDialog.prototype.getTemplatedApps = function () {
+        TemplateAppDialog.prototype.getTemplatedApps = function () {
             var self = this;
             var templatedApps = [];
-            var i;
-            for (i = 0; i < self.editorObjArr.length; i++) {
+            self.editorObjectArrayList.forEach(function(editorObj) {
                 var appEntry = {
-                    appName: self.editorObjArr[i].name,
-                    appContent: self.editorObjArr[i].content.session.getValue()
-                }
+                    appName: editorObj.name,
+                    appContent: editorObj.content.session.getValue()
+                };
                 templatedApps.push(appEntry);
-            }
+            });
             return templatedApps;
         };
-        return TemplateFileDialog;
+        return TemplateAppDialog;
     });
 
 

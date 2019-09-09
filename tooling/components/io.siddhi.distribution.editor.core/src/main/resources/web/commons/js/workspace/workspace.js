@@ -15,8 +15,8 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welcome-page'],
-    function (ace, $, _, log, Dialogs, ServiceClient, WelcomePages) {
+define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welcome-page', 'alerts'],
+    function (ace, $, _, log, Dialogs, ServiceClient, WelcomePages, alerts) {
 
         // workspace manager constructor
         /**
@@ -250,6 +250,7 @@ define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welco
                 this.updateExportMenuItem();
                 this.updateRunMenuItem();
                 this.updateDeleteMenuItem();
+                this.updateExportArtifactsItem()
             };
 
             this.manageConsoles = function(evt){
@@ -483,6 +484,34 @@ define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welco
                 }
             };
 
+            this.updateExportArtifactsItem = function () {
+                var exportMenuItem = app.menuBar.getMenuItemByID('export.export-for-docker'),
+                    exportKubeMenuItem = app.menuBar.getMenuItemByID('export.export-for-kubernetes');
+
+                var listFilesEndpoint = app.config.services.workspace.endpoint + "/listFiles/workspace?path=" +
+                                                                        app.utils.base64EncodeUnicode("workspace");
+
+                jQuery.ajax({
+                    async: false,
+                    url: listFilesEndpoint,
+                    type: self.HTTP_GET,
+                    success: function (data) {
+                        if (data.length === 0) {
+                            exportMenuItem.disable();
+                            exportKubeMenuItem.disable();
+                        } else {
+                            exportMenuItem.enable();
+                            exportKubeMenuItem.enable();
+                        }
+                    },
+                    error: function (msg) {
+                        alerts.error("Error getting siddhi apps: " + msg.statusText);
+                        exportMenuItem.enable();
+                        exportKubeMenuItem.enable();
+                    }
+                });
+            };
+
             this.openFileSaveDialog = function openFileSaveDialog(options) {
                 if(_.isNil(this._saveFileDialog)){
                     this._saveFileDialog = new Dialogs.save_to_file_dialog(app);
@@ -525,8 +554,7 @@ define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welco
 
             this.handleExportForDocker = function handleExportForDocker() {
                 if (!_.isNil(this._handleExport)) {
-                    this._handleExport.exportContainer.remove();
-                    this._handleExport.btnExportForm.remove();
+                    this._handleExport.clear();
                 }
                 this._handleExport = new Dialogs.export_dialog(app, true);
                 this._handleExport.render();
@@ -535,8 +563,7 @@ define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welco
 
             this.handleExportForKubernetes = function handleExportForKubernetes() {
                 if (!_.isNil(this._handleExport)) {
-                    this._handleExport.exportContainer.remove();
-                    this._handleExport.btnExportForm.remove();
+                    this._handleExport.clear();
                 }
                 this._handleExport = new Dialogs.export_dialog(app, false);
                 this._handleExport.render();
@@ -752,9 +779,6 @@ define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welco
 
             // Open settings dialog
             app.commandManager.registerHandler('open-settings-dialog', this.openSettingsDialog, this);
-
-            // Open settings dialog
-            //app.commandManager.registerHandler('template-file-dialog', this.openSettingsDialog, this);
 
             // Delete file delete dialog
             app.commandManager.registerHandler('delete-file-delete-dialog', this.openDeleteFileConfirmDialog, this);

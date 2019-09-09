@@ -109,7 +109,7 @@ hr.export-dialog-hr {
 }
 
 .config-template-container {
-
+    height: 98% !important
 }
 
 .kubernetes-configuration-step {
@@ -130,6 +130,7 @@ hr.export-dialog-hr {
 .step-description {
     padding: 10px;
     background-color: transparent;
+    transition: background-color 500ms linear;
 }
 
 .export-siddhi-app-list {
@@ -147,4 +148,8 @@ hr.export-dialog-hr {
 
 .sw-theme-default > ul.step-anchor.k8_export_header_item li {
     width: 16%;
+}
+
+.link-disabled {
+    pointer-events: none;
 }

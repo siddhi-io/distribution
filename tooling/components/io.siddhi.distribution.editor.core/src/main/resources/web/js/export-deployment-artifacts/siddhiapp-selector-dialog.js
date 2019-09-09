@@ -16,8 +16,8 @@
  * under the License.
  */
 
-define(['jquery', 'backbone', 'lodash', 'log', 'file_browser', /** void module - jquery plugin **/ 'js_tree'],
-    function ($, Backbone, _, log, FileBrowser) {
+define(['jquery', 'lodash', 'log', 'file_browser', 'js_tree'],
+    function ($,  _, log, FileBrowser, jsTree) {
 
         var SiddhiAppSelectorDialog = function (application, form) {
             var siddhiAppSelectorStep = form.find("#siddiAppsTree");
@@ -53,8 +53,8 @@ define(['jquery', 'backbone', 'lodash', 'log', 'file_browser', /** void module -
             });
 
         };
-
-        SiddhiAppSelectorDialog.prototype.validateSiddhiApps = function () {
+        
+        SiddhiAppSelectorDialog.prototype.validateSiddhiAppSelection = function () {
             var files = this.fileBrowser.getSelected();
             if (files.length === 0) {
                 this.openFileWizardError.css('background-color', '#d9534f !important');
@@ -68,6 +68,7 @@ define(['jquery', 'backbone', 'lodash', 'log', 'file_browser', /** void module -
             var files = this.fileBrowser.getSelected();
             for (var i = 0; i < files.length; i++) {
                 var fileName = _.last(files[i].id.split(this.pathSeparator));
+                // prevent directory also to be selected
                 if (fileName.lastIndexOf(".siddhi") !== -1) {
                     siddhiApps.push(fileName);
                 }
