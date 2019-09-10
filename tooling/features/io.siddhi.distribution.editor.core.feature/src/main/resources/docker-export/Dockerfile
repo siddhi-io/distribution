@@ -40,8 +40,6 @@ COPY --chown=siddhi_user:siddhi_io ${HOST_APPS_DIR}/ ${APPS}
 # expose ports
 EXPOSE 9090 9443 9712 9612 7711 7611 7070 7443
 
-RUN bash ${RUNTIME_SERVER_HOME}/bin/install-jars.sh
-
 STOPSIGNAL SIGINT
 
-ENTRYPOINT ["/home/siddhi_user/init.sh" {{CONFIGURATION_PARAMETER_BLOCK}}]
+ENTRYPOINT ["/home/siddhi_user/siddhi-runner/bin/runner.sh" {{CONFIGURATION_PARAMETER_BLOCK}}]
