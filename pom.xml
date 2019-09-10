@@ -1233,8 +1233,8 @@
 
         <!-- Removed due to size constraint -->
         <!--<siddhi.execution.streamingml.version>2.0.2</siddhi.execution.streamingml.version>-->
-        <!--<siddhi.execution.tensorflow.version>2.0.1</siddhi.execution.tensorflow.version>-->
-        <!--<siddhi.store.elasticsearch.version>3.1.0</siddhi.store.elasticsearch.version>-->
+        <!--<siddhi.execution.tensorflow.version>2.0.2</siddhi.execution.tensorflow.version>-->
+        <!--<siddhi.store.elasticsearch.version>3.1.1</siddhi.store.elasticsearch.version>-->
         <!--<siddhi.io.googlepubsub.version>2.0.1</siddhi.io.googlepubsub.version>-->
 
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
