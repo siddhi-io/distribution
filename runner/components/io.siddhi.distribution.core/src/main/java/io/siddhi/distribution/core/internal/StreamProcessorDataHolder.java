@@ -30,6 +30,9 @@ import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.carbon.datasource.core.api.DataSourceService;
 import org.wso2.carbon.kernel.CarbonRuntime;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Class which holds the OSGI Service references.
  */
@@ -46,6 +49,7 @@ public class StreamProcessorDataHolder {
     private static DistributionService distributionService;
     private static RecordTableHandlerManager recordTableHandlerManager;
     private static PermissionProvider permissionProvider;
+    private static Map<String, String> waitingForDependencyApps = new HashMap<String, String>();
 
     private CarbonRuntime carbonRuntime;
     private BundleContext bundleContext;
@@ -177,5 +181,13 @@ public class StreamProcessorDataHolder {
 
     public void setConfigProvider(ConfigProvider configProvider) {
         this.configProvider = configProvider;
+    }
+
+    public static Map<String, String> getWaitingForDependencyApps() {
+        return waitingForDependencyApps;
+    }
+
+    public static void setWaitingForDependencyApps(Map<String, String> waitingForDependencyApps) {
+        StreamProcessorDataHolder.waitingForDependencyApps = waitingForDependencyApps;
     }
 }

@@ -70,7 +70,12 @@ public class StoresApiServiceImpl extends StoresApiService {
         SiddhiAppRuntimeService siddhiAppRuntimeService =
                 SiddhiStoreDataHolder.getInstance().getSiddhiAppRuntimeService();
         Map<String, SiddhiAppRuntime> siddhiAppRuntimes = siddhiAppRuntimeService.getActiveSiddhiAppRuntimes();
+        log.info("Siddhi App Name " + body.getAppName());
+        log.info("Siddhi App Body " + body.toString());
         SiddhiAppRuntime siddhiAppRuntime = siddhiAppRuntimes.get(body.getAppName());
+        log.info("Siddhi App Runtimes " + siddhiAppRuntimes.size());
+        log.info("Siddhi App Runtime " + siddhiAppRuntime);
+
         if (siddhiAppRuntime == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ApiResponseMessage(ApiResponseMessage
                     .ERROR, "Cannot find an active SiddhiApp with name: " + body.getAppName())).build();

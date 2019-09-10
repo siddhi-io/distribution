@@ -19,6 +19,7 @@ package io.siddhi.distribution.core.internal;
 
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.config.StatisticsConfiguration;
+import io.siddhi.core.exception.SiddhiAppCreationException;
 import io.siddhi.core.util.SiddhiComponentActivator;
 import io.siddhi.core.util.persistence.IncrementalPersistenceStore;
 import io.siddhi.core.util.persistence.PersistenceStore;
@@ -27,6 +28,7 @@ import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.common.common.utils.config.FileConfigManager;
 import io.siddhi.distribution.core.DeploymentMode;
 import io.siddhi.distribution.core.NodeInfo;
+import io.siddhi.distribution.core.internal.exception.SiddhiAppAlreadyExistException;
 import io.siddhi.distribution.core.internal.util.SiddhiAppProcessorConstants;
 import io.siddhi.distribution.core.persistence.PersistenceManager;
 import io.siddhi.distribution.core.persistence.beans.PersistenceConfigurations;
@@ -50,6 +52,7 @@ import org.wso2.carbon.kernel.CarbonRuntime;
 import org.wso2.carbon.kernel.config.model.CarbonConfiguration;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -201,6 +204,9 @@ public class ServiceComponent {
         bundleContext.registerService(NodeInfo.class.getName(), nodeInfo, null);
         StreamProcessorDataHolder.setNodeInfo(nodeInfo);
         StreamProcessorDataHolder.getInstance().setBundleContext(bundleContext);
+
+        RetrySiddhiAppDeployment retrySiddhiAppDeployment = new RetrySiddhiAppDeployment();
+        retrySiddhiAppDeployment.start();
     }
 
     /**
@@ -346,4 +352,50 @@ public class ServiceComponent {
         StreamProcessorDataHolder.setPermissionProvider(null);
     }
 
+    /**
+     * Class which handles the Siddhi app deployment retry mechanism.
+     */
+    public static class RetrySiddhiAppDeployment extends Thread {
+        public void run() {
+            int i = 1;
+            while (i <= 3) {
+                try {
+                    Thread.sleep(10000);
+                    Map<String, String> siddhiApps = StreamProcessorDataHolder.getWaitingForDependencyApps();
+                    if (siddhiApps != null) {
+                        Iterator<Map.Entry<String, String>> iter = siddhiApps.entrySet().iterator();
+                        while (iter.hasNext()) {
+                            Map.Entry<String, String> entry = iter.next();
+                            String siddhiAppFileName = entry.getKey();
+                            String siddhiApp = entry.getValue();
+                            String siddhiAppName = StreamProcessorDeployer
+                                    .getFileNameWithoutExtenson(siddhiAppFileName);
+                            try {
+                                StreamProcessorDataHolder.getStreamProcessorService().deploySiddhiApp(siddhiApp,
+                                        siddhiAppName);
+                            } catch (SiddhiAppAlreadyExistException e) {
+                                log.error("Siddhi App " + siddhiAppFileName + " is already exists.", e);
+                            } catch (Exception e) {
+                                if (e instanceof SiddhiAppCreationException &&
+                                        e.getMessage().contains("No extension exist for") && i < 3) {
+                                    log.debug("Siddhi App deployment retry #" + i + " failed " + siddhiAppFileName, e);
+                                } else {
+                                    SiddhiAppData siddhiAppData = new SiddhiAppData(siddhiApp, false);
+                                    StreamProcessorDataHolder.getStreamProcessorService().
+                                            addSiddhiAppFile(siddhiAppName, siddhiAppData);
+                                    iter.remove();
+                                    log.error("Error occurred in the retry app deployment task for Siddhi App "
+                                            + siddhiAppFileName, e);
+                                }
+                            }
+                        }
+                    }
+                } catch (InterruptedException e) {
+                    log.error("Retry App deployment task interrupted ", e);
+                } finally {
+                    i++;
+                }
+            }
+        }
+    }
 }
