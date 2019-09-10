@@ -1083,7 +1083,7 @@
     </dependencyManagement>
 
     <properties>
-        <siddhi.version>5.1.4-SNAPSHOT</siddhi.version>
+        <siddhi.version>5.1.5-SNAPSHOT</siddhi.version>
         <siddhi.bundle.version>5.1.4.SNAPSHOT</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.1.31</carbon.analytics-common.version>
@@ -1197,7 +1197,7 @@
         <assertj.version>3.13.2</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.5-SNAPSHOT</siddhi.execution.string.version>
+        <siddhi.execution.string.version>5.0.6-SNAPSHOT</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.4-SNAPSHOT</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.6-SNAPSHOT</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.4-SNAPSHOT</siddhi.execution.time.version>
@@ -1229,12 +1229,12 @@
         <siddhi.store.mongodb.version>2.0.2-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
-        <siddhi.script.js.version>5.0.2-SNAPSHOT</siddhi.script.js.version>
+        <siddhi.script.js.version>5.0.3-SNAPSHOT</siddhi.script.js.version>
 
         <!-- Removed due to size constraint -->
         <!--<siddhi.execution.streamingml.version>2.0.2</siddhi.execution.streamingml.version>-->
-        <!--<siddhi.execution.tensorflow.version>2.0.1</siddhi.execution.tensorflow.version>-->
-        <!--<siddhi.store.elasticsearch.version>3.1.0</siddhi.store.elasticsearch.version>-->
+        <!--<siddhi.execution.tensorflow.version>2.0.2</siddhi.execution.tensorflow.version>-->
+        <!--<siddhi.store.elasticsearch.version>3.1.1</siddhi.store.elasticsearch.version>-->
         <!--<siddhi.io.googlepubsub.version>2.0.1</siddhi.io.googlepubsub.version>-->
 
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
