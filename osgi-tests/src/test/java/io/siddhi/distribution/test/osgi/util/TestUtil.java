@@ -190,6 +190,11 @@ public class TestUtil {
             } else {
                 successContent = readSuccessContent();
                 logger.info("Request successful. " + successContent);
+                logger.error("Response Message. " + connection.getResponseMessage());
+                logger.error("Request Method. " + connection.getRequestMethod());
+                logger.error("Request Url. " + connection.getURL());
+                logger.error("Request ContentType. " + connection.getContentType());
+                logger.error("Response Code. " + connection.getResponseCode());
             }
             return new HTTPResponseMessage(connection.getResponseCode(),
                     connection.getContentType(), connection.getResponseMessage(), successContent, errorContent);
