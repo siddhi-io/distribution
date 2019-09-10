@@ -1193,7 +1193,7 @@
 
         <!-- nats test dependencies -->
         <io.nats.version>2.2.2</io.nats.version>
-        <org.testcontainers.version>1.12.0</org.testcontainers.version>
+        <org.testcontainers.version>1.12.1</org.testcontainers.version>
         <assertj.version>3.13.2</assertj.version>
 
         <!--Siddhi Extension Versions-->
