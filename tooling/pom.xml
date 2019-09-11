@@ -35,7 +35,9 @@
     <modules>
         <module>components/io.siddhi.distribution.editor.log.appender</module>
         <module>components/io.siddhi.distribution.editor.core</module>
+        <module>components/io.siddhi.distribution.event.simulator.core</module>
         <module>features/io.siddhi.distribution.editor.core.feature</module>
+        <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
     </modules>
 
     <dependencies>

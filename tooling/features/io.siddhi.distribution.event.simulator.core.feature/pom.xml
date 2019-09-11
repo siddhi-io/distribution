@@ -173,7 +173,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <propertyFile>../etc/feature.properties</propertyFile>
+                            <propertyFile>../../../runner/features/etc/feature.properties</propertyFile>
                             <adviceFileContents>
                                 <advice>
                                     <name>org.wso2.carbon.p2.category.type</name>
