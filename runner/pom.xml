@@ -35,7 +35,6 @@
     <modules>
         <module>components/io.siddhi.distribution.common</module>
         <module>components/io.siddhi.distribution.core</module>
-        <module>components/io.siddhi.distribution.event.simulator.core</module>
         <module>components/io.siddhi.distribution.metrics.core</module>
         <module>components/io.siddhi.distribution.store.api.rest</module>
         <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
@@ -44,7 +43,6 @@
 
         <module>features/io.siddhi.distribution.core.feature</module>
         <module>features/io.siddhi.distribution.common.feature</module>
-        <module>features/io.siddhi.distribution.event.simulator.core.feature</module>
         <module>features/io.siddhi.distribution.metrics.core.feature</module>
         <module>features/io.siddhi.distribution.store.api.rest.feature</module>
         <module>features/io.siddhi.distribution.msf4j.interceptor.common.feature</module>
@@ -178,11 +176,6 @@
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.common.feature</artifactId>
-            <type>zip</type>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.event.simulator.core.feature</artifactId>
             <type>zip</type>
         </dependency>
         <dependency>
@@ -592,10 +585,6 @@
                                     <version>${project.version}</version>
                                 </feature>
                                 <feature>
-                                    <id>io.siddhi.distribution.event.simulator.core.feature</id>
-                                    <version>${project.version}</version>
-                                </feature>
-                                <feature>
                                     <id>io.siddhi.feature</id>
                                     <version>${siddhi.version}</version>
                                 </feature>
@@ -763,10 +752,6 @@
                                 </feature>
                                 <feature>
                                     <id>io.siddhi.distribution.common.feature.group</id>
-                                    <version>${project.version}</version>
-                                </feature>
-                                <feature>
-                                    <id>io.siddhi.distribution.event.simulator.core.feature.group</id>
                                     <version>${project.version}</version>
                                 </feature>
                                 <feature>
