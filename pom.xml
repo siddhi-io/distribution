@@ -1091,7 +1091,7 @@
         <io.siddhi.distribution.version.range>[5.0.0, 6.0.0)</io.siddhi.distribution.version.range>
 
         <!-- Test Dependencies-->
-        <postgresql.version>42.2.6</postgresql.version>
+        <postgresql.version>42.2.7</postgresql.version>
         <mssql-jdbc.version>7.4.1.jre12</mssql-jdbc.version>
         <io.fabric8.version>0.31.0</io.fabric8.version>
         <awaitility.version>3.1.6</awaitility.version>
