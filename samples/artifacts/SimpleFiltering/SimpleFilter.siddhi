@@ -1,0 +1,54 @@
+@App:name("SimpleFilter")
+@App:description("Filters provide a way of filtering input stream events based on a specified condition")
+
+/*
+Purpose:
+    This application demonstrates how to filter using siddhi.
+    The sample depicts a scenario for high tempertature.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * SimpleFilter.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'SimpleFilter' as Siddhi App Name
+    4) Select 'TempStream' as StreamName
+    5) Provide attribute values
+        - roomNo: 140
+        - amount: 35
+    6) Send event
+    7) Provide attribute values
+        - roomNo: 140
+        - amount: 45
+    8) Send event
+    9) Provide attribute values
+        - roomNo: 230
+        - amount: 20
+    10) Send event
+    11) Provide attribute values
+        - roomNo: 230
+        - amount: 50
+    12) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568267724796, data=[140, 45.0], isExpired=false}
+
+*/
+
+
+define stream TempStream(roomNo int,temp double);
+
+@sink(type ='log',prefix='LOGGER')
+define stream HighTempStream(roomNo int, temp double);
+
+-- Filter the events with roomNo between 100 to 210 and temp greater than 40
+@info(name='query1')
+from TempStream[(roomNo >= 100 and roomNo < 210) and temp > 40]
+select roomNo, temp
+insert into HighTempStream;
+
