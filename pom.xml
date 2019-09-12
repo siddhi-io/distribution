@@ -1215,6 +1215,7 @@
         <siddhi.io.cdc.version>2.0.3</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>2.0.1</siddhi.io.prometheus.version>
         <siddhi.io.nats.version>2.0.4</siddhi.io.nats.version>
+        <siddhi.io.grpc.version>1.0.0-beta</siddhi.io.grpc.version>
 
         <siddhi.map.json.version>5.0.4</siddhi.map.json.version>
         <siddhi.map.avro.version>2.0.2</siddhi.map.avro.version>
@@ -1223,6 +1224,7 @@
         <siddhi.map.xml.version>5.0.3</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>2.0.3</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>2.0.2</siddhi.map.csv.version>
+        <siddhi.map.protobuf.version>1.0.0-beta</siddhi.map.protobuf.version>
 
         <siddhi.store.rdbms.version>6.0.3</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.1</siddhi.store.mongodb.version>

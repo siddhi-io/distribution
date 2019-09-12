@@ -388,6 +388,12 @@
                                     <version>${siddhi.io.nats.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>io.siddhi.extension.io.grpc</groupId>
+                                    <artifactId>siddhi-io-grpc</artifactId>
+                                    <version>${siddhi.io.grpc.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>io.siddhi.extension.io.googlepubsub</groupId>-->
                                     <!--<artifactId>siddhi-io-googlepubsub</artifactId>-->
@@ -436,6 +442,12 @@
                                     <groupId>io.siddhi.extension.map.avro</groupId>
                                     <artifactId>siddhi-map-avro</artifactId>
                                     <version>${siddhi.map.avro.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>io.siddhi.extension.map.protobuf</groupId>
+                                    <artifactId>siddhi-map-protobuf</artifactId>
+                                    <version>${siddhi.map.protobuf.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
 
