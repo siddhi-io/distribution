@@ -1,0 +1,39 @@
+@App:name("TimeExtensionSample")
+@App:description("Returns the current system date in the yyyy-MM-dd format.")
+
+/*
+
+Purpose:
+	Returns the item and current system date in the yyyy-MM-dd format.
+
+Prerequisites:
+    * Save this sample. If there is no syntax error, the following messages would be shown on the console
+	     * - Siddhi App TimeExtensionSample successfully deployed.
+
+Executing the Sample:
+	1) Start the Siddhi application by clicking on 'Run'
+	2) If the Siddhi application starts successfully, the following messages would be shown on the console
+            * TimeExtensionSample.siddhi - Started Successfully!
+
+Testing the Sample:
+  You can publish data event to the file, through event simulator
+        a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
+    	b) In the Single Simulation tab of the panel, select values as follows:
+                * Siddhi App Name  : TimeExtensionSample
+                * Stream Name     : TimeStream
+        c) Enter following values in the fields and send
+                item: Cake
+
+Viewing the Results:
+   TimeExtensionSample : OutputStream : Event{timestamp=1568289861068, data=[cake, 2019-09-12], isExpired=false}
+
+*/
+
+define stream TimeStream (item string);
+
+@sink(type='log')
+define stream OutputStream(item string,date string);
+
+from  TimeStream
+select item,time:currentDate ( ) as date
+insert into OutputStream;
