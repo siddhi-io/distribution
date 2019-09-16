@@ -26,7 +26,6 @@ Testing the Sample:
                 name: CaKe
                 amount: 55.6
 
-
 Viewing the Results:
     Messages similar to the following would be shown on the console.
         INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - StringExtensionSample : OutputStream : Event{timestamp=1568616025618, data=[cake, 4, a, 55.6], isExpired=false}

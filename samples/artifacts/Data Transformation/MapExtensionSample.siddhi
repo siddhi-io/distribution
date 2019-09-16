@@ -30,7 +30,6 @@ Viewing the Results:
     Messages similar to the following would be shown on the console.
         INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - MapExtensionSample: Event: , StreamEvent{ timestamp=1513384974698, beforeWindowData=null, onAfterWindowData=null, outputData=[true, false], type=CURRENT, next=null}
 
-
 */
 
 @sink(type='log')
@@ -38,17 +37,16 @@ define stream CheckedMapStream(isMap1 bool, isMap2 bool);
 
 define stream SweetProductionStream (name string, amount double);
 
-@info(name = 'query1')
+@info(name = 'map-create')
 from SweetProductionStream
 select name, amount, map:create() as tmpMap
-insert into tmpStream;
+insert into TmpStream;
 
-@info(name = 'query2')
-from tmpStream  select name, amount, map:put(tmpMap,name,amount) as map1
-insert into outputStream;
+@info(name = 'map-insert')
+from TmpStream  select name, amount, map:put(tmpMap,name,amount) as map1
+insert into OutputStream;
 
-@info(name = 'query3')
-from outputStream
+@info(name = 'map-check')
+from OutputStream
 select map:isMap(map1) as isMap1, map:isMap(name) as isMap2
 insert into CheckedMapStream;
-

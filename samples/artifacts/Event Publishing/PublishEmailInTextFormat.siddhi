@@ -64,4 +64,3 @@ insert into LowProductionAlertStream;
 
 from LowProductionAlertStream
 insert into EmailLogStream;
-

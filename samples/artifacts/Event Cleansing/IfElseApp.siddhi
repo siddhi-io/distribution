@@ -27,7 +27,6 @@ Viewing the Results:
 
 */
 
-
 @source(type = 'http', receiver.url = "http://0.0.0.0:8006/number", @map(type = 'json'))
 define stream CheckNumberStream (num int);
 
