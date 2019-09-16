@@ -30,9 +30,7 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-
         INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - DelayWindow : OutputStream : Event{timestamp=1568619092537, data=[chocolate], isExpired=false}
-
 */
 
 define window delayWindow(symbol string, volume int) delay(1 hour);
@@ -42,12 +40,12 @@ define stream DeliveryStream(symbol string);
 @sink(type='log')
 define stream OutputStream(symbol string);
 
-@info(name='query1')
+-- Insert PurchaseStream events into delayWindow.
 from PurchaseStream
 select symbol, volume
 insert into delayWindow;
 
-@info(name='query2')
+-- Events from DeliveryStream are matched with delayWindow using 'symbol' attribute.
 from delayWindow join DeliveryStream
 on delayWindow.symbol == DeliveryStream.symbol
 select delayWindow.symbol

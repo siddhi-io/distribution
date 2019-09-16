@@ -41,20 +41,16 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-
         INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SessionWindow : OutputStream : [Event{timestamp=1568615675686, data=[user1, 35, 1025.0, 3], isExpired=false}, Event{timestamp=1568615685685, data=[user1, 60, 50.0, 10], isExpired=false}]
         INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SessionWindow : OutputStream : Event{timestamp=1568615689071, data=[user2, 60, 50.0, 10], isExpired=false}
-
-
 */
-
 
 define stream PurchaseEventStream (user string, item_number int, price float, quantity int);
 
 @sink(type='log')
 define stream OutputStream(user string, item_number int, price float, quantity int);
 
-@info(name='query1')
+-- Selects events with the matching user name that even arrive 2 seconds after the expiration of the session.
 from PurchaseEventStream#window.session(10 sec, user, 2 sec)
 select *
 insert all events into OutputStream;

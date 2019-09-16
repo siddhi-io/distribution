@@ -1,7 +1,6 @@
 @App:name("LimitAndOffset")
 @App:description("These provide a way to select a limited number of events (via limit) from the desired index (using an offset) from the output event chunks produced by the query.")
 
-
 /*
 Purpose:
     Query to calculate the average temp, per roomNo and deviceID combination,
@@ -47,18 +46,15 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-
-    INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LimitAndOffset : HighestAvgTempStream : [Event{timestamp=1568464659298, data=[35, 110, 45.0], isExpired=false}, Event{timestamp=1568464694291, data=[37, 115, 42.0], isExpired=false}, Event{timestamp=1568464701748, data=[38, 115, 41.0], isExpired=false}]
-
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LimitAndOffset : HighestAvgTempStream : [Event{timestamp=1568464659298, data=[35, 110, 45.0], isExpired=false}, Event{timestamp=1568464694291, data=[37, 115, 42.0], isExpired=false}, Event{timestamp=1568464701748, data=[38, 115, 41.0], isExpired=false}]
 */
-
-
 
 define stream TempStream(roomNo int,deviceID int,temp double);
 
 @sink(type='log')
 define stream HighestAvgTempStream(roomNo int, deviceID int, avgTemp double);
 
+-- For every 1 minutes batches, select third, forth and fifth events when sorted in descending order based on their avgTemp value.
 from TempStream#window.timeBatch(1 min)
 select roomNo, deviceID, avg(temp) as avgTemp
 group by roomNo, deviceID

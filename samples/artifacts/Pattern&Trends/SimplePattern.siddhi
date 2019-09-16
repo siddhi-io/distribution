@@ -1,7 +1,6 @@
 @App:name("SimplePattern")
 @App:description("Patterns allow you to identify trends in events over a time period.")
 
-
 /*
 Purpose:
     This application sends an alert if the temperature of a room increases by 5 degrees within 10 min.
@@ -35,18 +34,15 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-
-    INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SimplePattern : AlertStream : Event{timestamp=1568606647911, data=[2, 35.0, 40.0], isExpired=false}
-
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SimplePattern : AlertStream : Event{timestamp=1568606647911, data=[2, 35.0, 40.0], isExpired=false}
 */
-
-
 
 define stream TempStream(roomNo int, temp double);
 
 @sink(type='log')
 define Stream AlertStream(roomNo int, initialTemp double, finalTemp double);
 
+-- Identify if the temperature of a room increases by 5 degrees within 10 min.
 from every( e1=TempStream ) -> e2=TempStream[ e1.roomNo == roomNo and (e1.temp + 5) <= temp ]
     within 10 min
 select e1.roomNo, e1.temp as initialTemp, e2.temp as finalTemp

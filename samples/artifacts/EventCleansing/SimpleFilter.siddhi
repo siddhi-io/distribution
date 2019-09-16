@@ -35,11 +35,8 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-
         INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568267724796, data=[140, 45.0], isExpired=false}
-
 */
-
 
 define stream TempStream(roomNo int,temp double);
 
@@ -51,4 +48,3 @@ define stream HighTempStream(roomNo int, temp double);
 from TempStream[(roomNo >= 100 and roomNo < 210) and temp > 40]
 select roomNo, temp
 insert into HighTempStream;
-
