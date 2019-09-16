@@ -1,0 +1,60 @@
+@App:name("SessionWindow")
+@App:description("This is a session window that holds events that belong to a specific session.")
+
+/*
+Purpose:
+    This query processes events that arrive at the PurchaseEvent input stream.
+    The 'user' attribute is the session key, and the session gap is 10 seconds.
+    '2 sec' is specified as the allowed latency. Therefore, events with the matching
+    user name that arrive 2 seconds after the expiration of the session are also
+    considered when performing aggregations for the session identified by the given user name.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * SessionWindow.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'SessionWindow' as Siddhi App Name
+    4) Select 'PurchaseEventStream' as StreamName
+    5) Provide attribute values
+        - user : user1
+        - item_number : 35
+        - price : 1025
+        - quantity : 3
+    6) Send event
+    7) Provide attribute values
+        - user : user1
+        - item_number : 60
+        - price : 50
+        - quantity : 10
+    8) Send event
+    7) Provide attribute values
+        - user : user2
+        - item_number : 60
+        - price : 50
+        - quantity : 10
+    8) Send event
+
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SessionWindow : OutputStream : [Event{timestamp=1568615675686, data=[user1, 35, 1025.0, 3], isExpired=false}, Event{timestamp=1568615685685, data=[user1, 60, 50.0, 10], isExpired=false}]
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SessionWindow : OutputStream : Event{timestamp=1568615689071, data=[user2, 60, 50.0, 10], isExpired=false}
+
+
+*/
+
+
+define stream PurchaseEventStream (user string, item_number int, price float, quantity int);
+
+@sink(type='log')
+define stream OutputStream(user string, item_number int, price float, quantity int);
+
+@info(name='query1')
+from PurchaseEventStream#window.session(10 sec, user, 2 sec)
+select *
+insert all events into OutputStream;
