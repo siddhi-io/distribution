@@ -1,4 +1,4 @@
-@App:name("Test")
+@App:name("PersistEventsInMongoDB")
 
 @App:description('Receive events via simulator and persist the received data in the store.')
 
