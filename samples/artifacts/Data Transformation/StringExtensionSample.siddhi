@@ -1,11 +1,11 @@
 @App:name("StringExtensionSample")
 
-@App:description('Converts the sweet name to lowercase letters.')
+@App:description('Converts the sweet name to lowercase letters, returns the length of the sweet name and returns the char value at the 1st index of the sweet name.')
 
 /*
 
 Purpose:
-	This String function converts the string value to lowercase letters
+	This String function converts the string value to lowercase letters, returns the length of the string value and returns the char value at the 1st index of the string
 
 Prerequisites:
     * Save this sample. If there is no syntax error, the following messages would be shown on the console
@@ -29,15 +29,15 @@ Testing the Sample:
 
 Viewing the Results:
     Messages similar to the following would be shown on the console.
-INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - StringExtensionSample : OutputStream : Event{timestamp=1513760993921, data=[cake, 55.6], isExpired=false}
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - StringExtensionSample : OutputStream : Event{timestamp=1568616025618, data=[cake, 4, a, 55.6], isExpired=false}
 */
 
 define stream SweetProductionStream (name string, amount double);
 
 @sink(type='log')
-define stream OutputStream(name string, amount double);
+define stream OutputStream(lowerName string, length int, charAtName string, amount double);
 
 from SweetProductionStream
-select str:lower(name) as name, amount
+select str:lower(name) as lowerName, str:length(name) as length, str:charAt(name,1) as charAtName, amount
 insert into OutputStream;
 
