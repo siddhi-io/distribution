@@ -48,3 +48,4 @@ define stream HighTempStream(roomNo int, temp double);
 from TempStream[(roomNo >= 100 and roomNo < 210) and temp > 40]
 select roomNo, temp
 insert into HighTempStream;
+

@@ -42,3 +42,4 @@ define stream ChocolateProductStream(name string, isAChocolateProduct bool);
 from SweetProductionStream
 select name, regex:matches('chocolate(.*)', name) as isAChocolateProduct
 insert into ChocolateProductStream;
+

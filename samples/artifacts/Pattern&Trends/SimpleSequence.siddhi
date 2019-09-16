@@ -47,3 +47,4 @@ define Stream AlertStream(initialTemp double, finalTemp double);
 from every e1=TempStream, e2=TempStream[e1.temp + 1 < temp]
 select e1.temp as initialTemp, e2.temp as finalTemp
 insert into AlertStream;
+

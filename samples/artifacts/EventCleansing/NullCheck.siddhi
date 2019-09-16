@@ -48,3 +48,4 @@ define stream NullCheckStream(roomNum bool,temp bool,roomName bool);
 from TempStream
 select instanceOfInteger(roomNum) as roomNum, instanceOfFloat(temp) as temp,instanceOfString(roomName) as roomName
 insert into NullCheckStream;
+

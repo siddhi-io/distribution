@@ -54,3 +54,4 @@ define stream OutputStream(user string, item_number int, price float, quantity i
 from PurchaseEventStream#window.session(10 sec, user, 2 sec)
 select *
 insert all events into OutputStream;
+

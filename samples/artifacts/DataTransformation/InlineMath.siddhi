@@ -37,3 +37,4 @@ define stream FarenheitTempStream (temp double);
 from CelciusTempStream
 select (temp*9/5)+32 as temp
 insert into FarenheitTempStream;
+

@@ -55,3 +55,4 @@ define stream TempDiffStream(roomNo int, tempDiff double);
 from every( e1=RegulatorStream) -> e2=TempStream[e1.roomNo==roomNo]<1:> -> e3=RegulatorStream[e1.roomNo==roomNo]
 select e1.roomNo, e2[0].temp - e2[last].temp as tempDiff
 insert into TempDiffStream;
+

@@ -47,3 +47,4 @@ insert into detailedProductionstream;
 from detailedProductionstream
 select *
 insert into logStream;
+

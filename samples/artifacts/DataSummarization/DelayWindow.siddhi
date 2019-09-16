@@ -50,3 +50,4 @@ from delayWindow join DeliveryStream
 on delayWindow.symbol == DeliveryStream.symbol
 select delayWindow.symbol
 insert into OutputStream;
+

@@ -47,3 +47,4 @@ define stream LowProductionAlertStream (name string, amount double);
 from SweetProductionStream
 select *
 insert into LowProductionAlertStream;
+

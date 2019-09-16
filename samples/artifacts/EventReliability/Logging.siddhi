@@ -56,3 +56,4 @@ insert into barStream;
 from fooStream#log("Sample Event :")
 select *
 insert into barStream;
+

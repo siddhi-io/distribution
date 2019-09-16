@@ -38,3 +38,4 @@ define stream logStream (roomNum string, temp int);
 from fooStream
 select convert(roomNum, 'string') as roomNum, convert(temp, 'int') as temp
 insert into logStream;
+
