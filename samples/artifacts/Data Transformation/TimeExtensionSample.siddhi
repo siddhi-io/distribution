@@ -1,10 +1,10 @@
 @App:name("TimeExtensionSample")
-@App:description("Returns the current system date in the yyyy-MM-dd format.")
+@App:description("Returns the current system date, time and extract the year of the date when sweet item is added.")
 
 /*
 
 Purpose:
-	Returns the item and current system date in the yyyy-MM-dd format.
+	Returns the current system date in the yyyy-MM-dd format, time in the HH:mm:ss format and extrat the year from the date
 
 Prerequisites:
     * Save this sample. If there is no syntax error, the following messages would be shown on the console
@@ -25,15 +25,15 @@ Testing the Sample:
                 item: Cake
 
 Viewing the Results:
-   TimeExtensionSample : OutputStream : Event{timestamp=1568289861068, data=[cake, 2019-09-12], isExpired=false}
+   INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - TimeExtensionSample : OutputStream : Event{timestamp=1568634197317, data=[cake, 2019-09-16, 17:13:17, 2019], isExpired=false}
 
 */
 
 define stream TimeStream (item string);
 
 @sink(type='log')
-define stream OutputStream(item string,date string);
+define stream OutputStream(item string, date string, time string, year int);
 
 from  TimeStream
-select item,time:currentDate ( ) as date
+select item, time:currentDate ( ) as date, time:currentTime() as time, time:extract('year', time: currentTimestamp ( ), 'yyyy-MM-dd hh:mm:ss') as year
 insert into OutputStream;
