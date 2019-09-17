@@ -1,0 +1,47 @@
+@App:name("DelayWindow")
+@App:description("A delay window holds events for a specific time period that is regarded as a delay period before processing them.")
+
+/*
+Purpose:
+    This application monitors whether the delivery of products is done with a minimum delay of one hour after the purchase.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * DelayWindow.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'DelayWindow' as Siddhi App Name
+    4) Select 'PurchaseStream' as StreamName
+    5) Provide attribute values
+        - symbol : chocolate
+        - volume : 10
+    6) Send event
+    7) Provide attribute values
+        - symbol : cake
+        - volume : 2
+    8) Send event
+    9) Select 'DeliveryStream' as StreamName
+    10) Provide attribute values
+        - symbol : chocolate
+    11) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - DelayWindow : OutputStream : Event{timestamp=1568619092537, data=[chocolate], isExpired=false}
+*/
+
+define stream PurchaseStream(symbol string, volume int);
+define stream DeliveryStream(symbol string);
+
+@sink(type='log')
+define stream OutputStream(symbol string);
+
+-- Insert PurchaseStream events into delayWindow
+from PurchaseStream#window.delay(1 hour) join DeliveryStream
+on PurchaseStream.symbol == DeliveryStream.symbol
+select PurchaseStream.symbol
+insert into OutputStream;
+
