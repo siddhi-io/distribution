@@ -3,7 +3,7 @@
 
 /*
 Purpose:
-    This application uses a defined window to find the maximum price and resets to zero as a batch every 10 seconds.
+    This application uses a defined window find the maximum price and resets to zero as a batch every 10 seconds.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
@@ -17,39 +17,38 @@ Testing the Sample:
     4) Select 'StockEventStream' as StreamName
     5) Provide attribute values
         - symbol : chocolate
-        - price : 25
-    6) Send event in first 10 seconds
+        - price : 40
+    6) Send event in 0-20 seconds
     7) Provide attribute values
         - symbol : chocolate
-        - price : 10
-    8) Send event in first 10 seconds
+        - price : 25
+    8) Send event in 0-20 seconds
     9) Provide attribute values
         - symbol : chocolate
-        - price : 35
-    10) Send event in next 10 seconds
+        - price : 20
+    10) Send event in 0-20 seconds
     11) Provide attribute values
         - symbol : chocolate
-        - price : 45
-    12) Send event in next 10 seconds
+        - price : 30
+    12) Send event in 20-40 seconds
+    13) Provide attribute values
+        - symbol : chocolate
+        - price : 35
+    14) Send event in 20-40 seconds
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - CronWindow : OutputStream : Event{timestamp=1568697559859, data=[chocolate, 25.0], isExpired=false}
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - CronWindow : OutputStream : Event{timestamp=1568697575684, data=[chocolate, 45.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - CronWindow : OutputStream : [Event{timestamp=1568711127812, data=[chocolate, 40.0], isExpired=false}, Event{timestamp=1568711132582, data=[chocolate, 40.0], isExpired=false}, Event{timestamp=1568711136508, data=[chocolate, 40.0], isExpired=false}]
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - CronWindow : OutputStream : [Event{timestamp=1568711148731, data=[chocolate, 30.0], isExpired=false}, Event{timestamp=1568711152768, data=[chocolate, 35.0], isExpired=false}]
 */
 
 define stream StockEventStream (symbol string, price float);
-define window StockEventWindow (symbol string, price float) cron('*/10 * * * * ?');
 
 @sink(type='log')
 define stream OutputStream(symbol string, maxPrice float);
 
--- Insert StockEventStream events into StockEventWindow.
-from StockEventStream
-insert into StockEventWindow;
-
 -- Select the symbol and maximum price for each window.
-from StockEventWindow
+from StockEventStream#window.cron('*/20 * * * * ?')
 select symbol, max(price) as maxPrice
-insert into OutputStream ;
+insert into OutputStream;
 

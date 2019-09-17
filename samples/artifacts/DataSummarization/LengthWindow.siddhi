@@ -34,24 +34,19 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568694973237, data=[milk, 50.0], isExpired=false}
-        NFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568694983065, data=[chocolate, 10.0], isExpired=false}
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568695003719, data=[rice, 10.0], isExpired=false}
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568695034355, data=[apple, 5.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568709936664, data=[milk, 50.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568709945740, data=[chocolate, 10.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568709954527, data=[rice, 10.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : [Event{timestamp=1568709962623, data=[milk, 10.0], isExpired=false}, Event{timestamp=1568709962622, data=[apple, 5.0], isExpired=false}]
 */
 
 define stream StockEventStream(symbol string, price float);
-define window StockEventWindow (symbol string, price float) length(3) output all events;
 
 @sink(type='log')
 define stream OutputStream(symbol string,price float);
 
---
-from StockEventStream
-insert into StockEventWindow;
-
---
-from StockEventWindow
+-- Select items with minimum price for sliding window of length 3.
+from StockEventStream#window.length(3)
 select symbol,min(price) as price
-insert all events into OutputStream ;
+insert all events into OutputStream;
 
