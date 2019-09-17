@@ -1,11 +1,10 @@
 @App:name("PublishEmailInTextFormat")
-
 @APP:description("Demonstrates how to use siddhi-io-email for publishing events to files.")
 
 /*
 
 Purpose:
-    This application demonstrates how to use siddhi-io-email for publishing events to files.
+    This application demonstrates how to send a customized email by including the user input. An email is sent to the user by including the name of the item added to the Sweet Production list along with the time.
 
 Prerequisites:
     1) Replace the Sink configuration values for following options.
@@ -28,23 +27,25 @@ Testing the Sample:
     3) Select 'PublishEmailInTextFormat' as Siddhi App Name
     4) Select 'SweetProductionStream' as Stream Name
     5) Provide attribute values
-        - name: chocolate cake
-        - amount: 10.10
+            - name: Mike
+            - item: Cake
     6) Click on the start button (Arrow symbol) next to the newly created simulator
 
 Viewing the Results:
     Check the receiver gmail inbox (The gmail referred to in 'to' Sink configuration) to see the alert similar to the following.
         Subject: Test Siddhi-io-email-{{name}}
         Content: 
-            name:"chocolate cake",
-            hourlyTotal:10.1,
-            currentHour:<current hour of the system's timestamp>
+             Hey <name>,
+
+            The item <item> is added to the Sweet Productons list on <date>.
+
+            Thanks.
 
 */
 
-define stream SweetProductionStream (name string, amount double);
+define stream SweetProductionStream (name string, item string);
 
-@sink(type='email', @map(type='text') ,
+@sink(type='email',  
                     username ='<senders email user name>',
                     address ='<senders email address>',
                     password= '<senders email password>',
@@ -52,16 +53,20 @@ define stream SweetProductionStream (name string, amount double);
                     to='<receivers email address>',
                     port = '465',
                     host = 'smtp.gmail.com',
-                    ssl.enable = 'true',
-                    auth = 'true')                
-define stream LowProductionAlertStream(name string, hourlyTotal double, currentHour  double);
+                    ssl.enable = 'true', @map(type='text', @payload(""" 
+                    Hey {{name}}, 
+                    
+                    The item {{item}} is added to the Sweet Productons list on {{date}}.
+                    
+                    Thanks.
+            """)))
+define stream LowProductionAlertStream(name string, item string, date  string);
 
 @sink(type='log')
-define stream EmailLogStream(name string, hourlyTotal double, currentHour  double);
+define stream EmailLogStream(name string, item string, date string);
 
 from SweetProductionStream#window.time(1 min)
-select name, sum(amount) as hourlyTotal,
-convert(time:extract('HOUR', time:currentTimestamp(), 'yyyy-MM-dd hh:mm:ss'), 'double') as currentHour
+select name, item, time:currentDate() as date
 insert into LowProductionAlertStream;
 
 from LowProductionAlertStream
