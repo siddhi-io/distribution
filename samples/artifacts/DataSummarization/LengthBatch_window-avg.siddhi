@@ -1,0 +1,44 @@
+@App:name("LengthBatch_window-avg")
+@APP:description("Demonstrates how to calculate the average of events by using a Siddhi lengthbatch window.")
+
+/*
+Purpose:
+    This application demonstrates how to calculate the average of events by using a Siddhi length batch window with an accepted level of accuracy.
+
+Prerequisites:
+    Save this sample
+    
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * LengthBatch_window-avg.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Feed Simulation'
+    3) Select LengthBatch_window-avg under 'Active Feed Simulations'
+    4) Click on the start button (Arrow symbol) next to the simulator
+
+Viewing the Results:
+    See the output on the console.
+*/
+
+
+
+define stream InputEventStream (itemId string, price float, volume int);
+
+@sink(type="log")
+define stream OutputStream(itemId string, averagePrice double);
+
+@info(name = 'query1')
+
+
+from InputEventStream#window.lengthBatch(3)
+select itemId, avg(price)as averagePrice
+insert into OutputStream;
+
+
+
+
+
+
