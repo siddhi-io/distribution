@@ -1,0 +1,45 @@
+@App:name("timeBatchWindowSum")
+@APP:description("Demonstrates how to calculate the sum of events by using a Siddhi timeBatch window.")
+
+/*
+
+Purpose:
+    This application demonstrates how to simulate random events via Feed Simulation and calculate the sum of events. The aggregation is executed on events within a time batch window. A batch time window of 10 seconds is used in this sample. For more information on windows please refer to "https://siddhi.io/siddhi/documentation/siddhi-5.0/#window". The 'group by' clause helps to perform aggregation on events grouped by a certain attribute. In this sample, the symbol information per items is aggregated and summarized, for a window of 10 seconds in batch manner.
+
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * timeBatchWindowSum.siddhi - Started Successfully!
+
+Testing the Sample:
+    Configure random event simulation as follows
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Feed Simulation' -> 'Create'
+    3) Give a name (Or the default name in the place holder will be used as its name)
+    4) Select 'Random' as the 'Simulation Source'
+    5) Click on 'Add Simulation Source'
+    6) Select timeBatchWindowSum as 'Siddhi App Name'
+    7) Select TradesStream as 'StreamName'
+    8) Keep 'Primitive Based' as the config type for symbol,price and volume
+    9) Save the simulator configuration
+    10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
+    11) Click on the start button (Arrow symbol) next to the newly created simulator
+
+Viewing the Results:
+    See the input and respective output on the console. The output show the total volume for the events sent during last 10 seconds in batch manner.
+
+*/
+
+define stream TradesStream (symbol string, price float, volume int);
+
+@sink(type="log")
+define stream TotalItemsStream (symbol string, totalVolume long);
+
+@info(name = 'query1')
+from TradesStream #window.timeBatch(10 sec)
+select symbol, sum(volume) as totalVolume
+group by symbol
+insert into TotalItemsStream;
