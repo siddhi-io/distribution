@@ -14,7 +14,7 @@ Testing the Sample:
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Single Simulation' (this will be already selected)
     3) Select 'Logging' as Siddhi App Name
-    4) Select 'fooStream' as StreamName
+    4) Select 'EventStream' as StreamName
     5) Provide attribute values
         - symbol: item1
         - price : 10
@@ -30,30 +30,30 @@ Viewing the Results:
         INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
 */
 
-define stream fooStream(symbol string,price float);
+define stream EventStream(symbol string,price float);
 
--- This will log as INFO with the message "Sample Event :" + fooStream:events.
-from fooStream#log("INFO", "Sample Event :", true)
+-- This will log as INFO with the message "Sample Event :" + EventStream:events.
+from EventStream#log("INFO", "Sample Event :", true)
 select *
-insert into barStream;
+insert into OutputStream;
 
 -- This will logs with default log level as INFO.
-from fooStream#log("Sample Event :", true)
+from EventStream#log("Sample Event :", true)
 select *
-insert into barStream;
+insert into OutputStream;
 
 -- This will only log message.
-from fooStream#log("Sample Event :", false)
+from EventStream#log("Sample Event :", false)
 select *
-insert into barStream;
+insert into OutputStream;
 
--- This will only log fooStream:events.
-from fooStream#log(true)
+-- This will only log EventStream:events.
+from EventStream#log(true)
 select *
-insert into barStream;
+insert into OutputStream;
 
--- This will log message and fooStream:events.
-from fooStream#log("Sample Event :")
+-- This will log message and EventStream:events.
+from EventStream#log("Sample Event :")
 select *
-insert into barStream;
+insert into OutputStream;
 

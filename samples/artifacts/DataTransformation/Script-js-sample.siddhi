@@ -23,16 +23,16 @@ Testing the Sample:
 
 Viewing the Results:
     *See the output on the console. Description of the raw material with the passed details are shown in the logger.You will get the output as follows:
-        [2017-12-20_14-26-03_120] INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - Script-js-sample : logStream : Event{timestamp=1513760163112, data=[toffee, 45.25, There are 45.25kg of toffee in the store], isExpired=false}
+        [2017-12-20_14-26-03_120] INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - Script-js-sample : LogStream : Event{timestamp=1513760163112, data=[toffee, 45.25, There are 45.25kg of toffee in the store], isExpired=false}
 
 Notes:
     If you need to edit this application while it is running, then Save -> Start.
 */
 
-define stream sweetProductionStream (name string, amount double);
+define stream SweetProductionStream (name string, amount double);
 
 @sink(type='log')
-define stream logStream (name string, amount double, itemDescription string);
+define stream LogStream (name string, amount double, itemDescription string);
 
 define function detailedMaterial[JavaScript] return string {
      var name = data[0];
@@ -41,10 +41,10 @@ define function detailedMaterial[JavaScript] return string {
      return res;
 };
 
-from sweetProductionStream select name , amount, detailedMaterial(name,amount) as itemDescription
-insert into detailedProductionstream;
+from SweetProductionStream select name , amount, detailedMaterial(name,amount) as itemDescription
+insert into DetailedProductionstream;
 
-from detailedProductionstream
+from DetailedProductionstream
 select *
-insert into logStream;
+insert into LogStream;
 
