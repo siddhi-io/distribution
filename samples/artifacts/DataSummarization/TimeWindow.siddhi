@@ -1,0 +1,53 @@
+@App:name("TimeWindow")
+@App:description("Holds events that arrived during the last windowTime period at a given time, and gets updated for each event arrival and expiry.")
+
+/*
+Purpose:
+    This application demonstrates how to process(count) events that arrived within the last 20000 milliseconds.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * TimeWindow.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'TimeWindow' as Siddhi App Name
+    4) Select 'StockEventWindow' as StreamName
+    5) Provide attribute values
+        - symbol : chocolate cake
+        - volume : 5
+    6) Send event
+    7) Provide attribute values
+         symbol : butter cake
+        - volume : 10
+    8) Send event
+    9) Provide attribute values cake
+         symbol : chocolate cake
+        - volume : 20
+    10) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - TimeWindow : OutputStream : Event{timestamp=1568692715367, data=[1], isExpired=false}
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - TimeWindow : OutputStream : Event{timestamp=1568692716909, data=[2], isExpired=false}
+        NFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - TimeWindow : OutputStream : Event{timestamp=1568692717730, data=[3], isExpired=false}
+*/
+
+define  stream StockEventStream (symbol string, volume int);
+
+define window EventWindow (symbol string, volume int) time(20000) output all events;
+
+@sink(type='log')
+define stream OutputStream(total long);
+
+-- Insert StockEventStream events into EventWindow
+from StockEventStream
+insert into EventWindow;
+
+-- Count the number of symbol attributes in EventWindow
+from EventWindow
+select count(symbol) as total
+insert into OutputStream ;
+
