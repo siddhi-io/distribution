@@ -1,4 +1,4 @@
-@App:name("Test")
+@App:name("PersistEventsInMongoDB")
 
 @App:description('Receive events via simulator and persist the received data in the store.')
 
@@ -57,34 +57,33 @@ define stream LogStream(name string, amount double);
 
 @Store(type="mongodb",mongodb.uri='mongodb://localhost/production')
 
---@PrimaryKey("name")
 @IndexBy("amount {background:true}")
 define table SweetProductionTable (name string, amount double);
 
-/* Inserting event into the mongo store */
+--Inserting event into mongo store
 @info(name='insertQuery')
 from InsertSweetProductionStream
 insert into SweetProductionTable;
 
-/* Deleting event from mongo store */
+--Deleting event from mongo store
 @info(name = 'deleteQuery')
 from DeleteSweetProductionStream
 delete SweetProductionTable
 on SweetProductionTable.name == name ;
 
-/* Updating event from mongo store */
+--Updating event in mongo store
 @info(name = 'updateQuery')
 from UpdateSweetProductionStream
 update SweetProductionTable
 on SweetProductionTable.name == name ;
 
-/* Updating or inserting event from mongo store */
+--Updating or inserting event in  mongo store
 @info(name = 'updateOrInsertQuery')
 from UpdateOrInsertSweetProductionStream
 update or insert into SweetProductionTable
 on SweetProductionTable.name == name;
 
-/* Siddhi In in mongo store */
+--Verify whether a given material and an amount is stored in mongo store
 @info(name = 'containsQuery')
 from ContainsSweetProductionStream
 [(SweetProductionTable.name == name and SweetProductionTable.amount == amount) in SweetProductionTable]
