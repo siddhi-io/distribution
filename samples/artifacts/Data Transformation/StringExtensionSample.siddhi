@@ -17,11 +17,11 @@ Executing the Sample:
             * StringExtensionSample.siddhi - Started Successfully!
 
 Testing the Sample:
-  You can publish data event to the file, through event simulator
+    You can publish data event to the file, through event simulator
         a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
     	b) In the Single Simulation tab of the panel, select values as follows:
                 * Siddhi App Name  : StringExtensionSample
-                * Stream Name     : SweetProductionStream
+                * Stream Name      : SweetProductionStream
         c) Enter following values in the fields and send
                 name: CaKe
                 amount: 55.6
@@ -39,4 +39,3 @@ define stream OutputStream(lowerName string, length int, charAtName string, amou
 from SweetProductionStream
 select str:lower(name) as lowerName, str:length(name) as length, str:charAt(name,1) as charAtName, amount
 insert into OutputStream;
-

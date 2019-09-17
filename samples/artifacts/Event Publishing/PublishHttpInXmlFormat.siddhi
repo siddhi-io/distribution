@@ -24,7 +24,7 @@ Testing the Sample:
         a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
     	b) In the Single Simulation tab of the panel, specifiy the values as follows:
                 * Siddhi App Name  : PublishHttpInXmlFormat
-                * Stream Name     : SweetProductionStream
+                * Stream Name      : SweetProductionStream
         c) In the name and amount fields, enter 'toffees' and '75.6' respectively and then click Send to send the event. 
         d) Send more events as desired.
 
@@ -46,9 +46,9 @@ Testing the Sample:
 Viewing the Results:
     See the output on the terminal.
 
- Notes:
-  If the message "LowProductionAlertStream' stream could not connect to 'localhost:8080", it could be due to port 8080
-  defined in the Siddhi application is already being used by a different program. To resolve this issue, do the following:
+Notes:
+    If the message "LowProductionAlertStream' stream could not connect to 'localhost:8080", it could be due to port 8080
+    defined in the Siddhi application is already being used by a different program. To resolve this issue, do the following:
         1) Stop this Siddhi application (Click 'Run' on menu bar -> 'Stop').
         2) Change the port from 8080 to an unused port in this Siddhi application's source configuration and in the http-server file.
         3) Start the application and check whether the expected output appears on the console. 

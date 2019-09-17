@@ -1,7 +1,9 @@
 @App:name("PublishEmailInTextFormat")
+
 @APP:description("Demonstrates how to use siddhi-io-email for publishing events to files.")
 
 /*
+
 Purpose:
     This application demonstrates how to use siddhi-io-email for publishing events to files.
 
@@ -26,8 +28,8 @@ Testing the Sample:
     3) Select 'PublishEmailInTextFormat' as Siddhi App Name
     4) Select 'SweetProductionStream' as Stream Name
     5) Provide attribute values
-            - name: chocolate cake
-            - amount: 10.10
+        - name: chocolate cake
+        - amount: 10.10
     6) Click on the start button (Arrow symbol) next to the newly created simulator
 
 Viewing the Results:

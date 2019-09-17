@@ -17,7 +17,7 @@ Executing the Sample:
             * MapExtensionSample.siddhi - Started Successfully!
 
 Testing the Sample:
-  You can publish data event to the file, through event simulator
+    You can publish data event to the file, through event simulator
         a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
     	b) In the Single Simulation tab of the panel, select values as follows:
                 * Siddhi App Name  : MapExtensionSample

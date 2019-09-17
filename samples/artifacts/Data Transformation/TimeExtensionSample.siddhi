@@ -1,10 +1,11 @@
 @App:name("TimeExtensionSample")
-@App:description("Returns the current system date, time and extract the year of the date when sweet item is added.")
+
+@App:description("Returns the current system date, time and extract the year from the date when a sweet item is added.")
 
 /*
 
 Purpose:
-	Returns the current system date in the yyyy-MM-dd format, time in the HH:mm:ss format and extrat the year from the date
+	Returns the current system date in the yyyy-MM-dd format, time in the HH:mm:ss format and extract the year from the date.
 
 Prerequisites:
     * Save this sample. If there is no syntax error, the following messages would be shown on the console
@@ -16,11 +17,11 @@ Executing the Sample:
             * TimeExtensionSample.siddhi - Started Successfully!
 
 Testing the Sample:
-  You can publish data event to the file, through event simulator
+    You can publish data event to the file, through event simulator
         a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
     	b) In the Single Simulation tab of the panel, select values as follows:
                 * Siddhi App Name  : TimeExtensionSample
-                * Stream Name     : TimeStream
+                * Stream Name      : TimeStream
         c) Enter following values in the fields and send
                 item: Cake
 

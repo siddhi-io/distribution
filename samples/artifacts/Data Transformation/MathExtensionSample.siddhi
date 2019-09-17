@@ -6,14 +6,14 @@
 
 Purpose:
 	This Siddhi Application returns: 
-	1) The round up which is the smallest (closest to negative infinity) double value that is greater than or equal to the
-	 p1 argument, and is equal to a mathematical integer. This function wraps thejava.lang.Math.ceil() method.
-	2) The natural logarithm (base e) of  p1.
-	3) The unbiased exponent used in the representation of p1. This function wraps the java.lang.Math.getExponent() function.
+	    1) The round up which is the smallest (closest to negative infinity) double value that is greater than or equal to the
+	    p1 argument, and is equal to a mathematical integer. This function wraps thejava.lang.Math.ceil() method.
+	    2) The natural logarithm (base e) of  p1.
+	    3) The unbiased exponent used in the representation of p1. This function wraps the java.lang.Math.getExponent() function.
 
 Prerequisites:
     * Save this sample. If there is no syntax error, the following messages would be shown on the console
-	     * - Siddhi App MathExtensionSample successfully deployed.
+	    * - Siddhi App MathExtensionSample successfully deployed.
 
 Executing the Sample:
 	1) Start the Siddhi application by clicking on 'Run'
@@ -21,7 +21,7 @@ Executing the Sample:
             * MathExtensionSample.siddhi - Started Successfully!
 
 Testing the Sample:
-  You can publish data event to the file, through event simulator
+    You can publish data event to the file, through event simulator
         a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
     	b) In the Single Simulation tab of the panel, select values as follows:
                 * Siddhi App Name  : MathExtensionSample

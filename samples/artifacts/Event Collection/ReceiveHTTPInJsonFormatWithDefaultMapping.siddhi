@@ -1,6 +1,6 @@
 @App:name('ReceiveHTTPInJsonFormatWithDefaultMapping')
 
-@App:description('Receive events via HTTP transport in JSON format with default mapping and view the output on the console')
+@App:description('Receive events via HTTP transport in JSON format with default mapping and view the output on the console.')
 
 /*
 Purpose:
@@ -46,7 +46,7 @@ Notes:
 
 Viewing the Results:
     See the output. Following message would be shown on the console.
-    ReceiveHTTPInXMLFormatWithDefaultMapping : LowProducitonAlertStream : Event{timestamp=1511938781887, data=[sugar, 300.0], isExpired=false}
+    ReceiveHTTPInXMLFormatWithDefaultMapping : LowProductionAlertStream : Event{timestamp=1511938781887, data=[sugar, 300.0], isExpired=false}
 
 */
 
@@ -57,7 +57,7 @@ define stream SweetProductionStream (name string, amount double);
 @sink(type='log')
 define stream LowProductionAlertStream (name string, amount double);
 
--- Passthrough data in the SweetProductionStream into LowProducitonAlertStream
+-- Passthrough data in the SweetProductionStream into LowProductionAlertStream
 @info(name='query1')
 from SweetProductionStream
 select *
