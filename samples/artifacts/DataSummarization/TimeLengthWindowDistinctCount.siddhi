@@ -1,0 +1,46 @@
+@App:name("TimeLengthWindowDistinctCount")
+@APP:description("Demonstrates how to count the distinct events within a Siddhi TimeLenghtWindow.")
+
+/*
+Purpose:
+    This application demonstrates how to simulate random events via Feed Simulation and calculate the distinct events. The aggregation is executed on events within a time length window. 
+
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * TimeLengthWindowDistinctCount.siddhi - Started Successfully!
+
+Testing the Sample:
+    Configure random event simulation as follows
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Feed Simulation' -> 'Create'
+    3) Give a name (Or the default name in the place holder will be used as its name)
+    4) Select 'Random' as the 'Simulation Source'
+    5) Click on 'Add Simulation Source'
+    6) Select TimeLengthWindowDistinctCount as 'Siddhi App Name'
+    7) Select TradesStream as 'StreamName'
+    8) Keep 'Primitive Based' as the config type for itemId,price and volume
+    9) Save the simulator configuration
+    10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
+    11) Click on the start button (Arrow symbol) next to the newly created simulator
+
+Viewing the Results:
+See the output on the console similar to the following (timestamp will be different). The output show the count of distinct events sent within the last 10 seconds on the last 10 events and gets updated for every event arrival and expiry
+[2019-09-18_11-34-51_956] INFO {io.siddhi.core.stream.output.sink.LogSink} - TimeLengthWindowDistinctCount : DistinctItemStream : Event{timestamp=1568786691956, data=[hTCpY, 1], isExpired=false}
+[2019-09-18_11-34-52_957] INFO {io.siddhi.core.stream.output.sink.LogSink} - TimeLengthWindowDistinctCount : DistinctItemStream : Event{timestamp=1568786692956, data=[VSov-, 2], isExpired=false}
+[2019-09-18_11-34-53_958] INFO {io.siddhi.core.stream.output.sink.LogSink} - TimeLengthWindowDistinctCount : DistinctItemStream : Event{timestamp=1568786693956, data=[LqCgU, 3], isExpired=false}
+[2019-09-18_11-34-54_959] INFO {io.siddhi.core.stream.output.sink.LogSink} - TimeLengthWindowDistinctCount : DistinctItemStream : Event{timestamp=1568786694956, data=[oGV76, 4], isExpired=false}
+*/
+
+define stream TradesStream(itemId string, price float, volume int);
+
+@sink(type="log")
+define stream DistinctItemStream(itemId string, distinctPrice long);
+
+@info(name = 'distinctCount')
+from TradesStream#window.timeLength(10 sec, 10)
+select itemId, distinctCount(price)as distinctPrice
+insert into DistinctItemStream;
