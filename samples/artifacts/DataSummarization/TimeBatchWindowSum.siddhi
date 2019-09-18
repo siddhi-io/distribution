@@ -1,4 +1,4 @@
-@App:name("timeBatchWindowSum")
+@App:name("TimeBatchWindowSum")
 @APP:description("Demonstrates how to calculate the sum of events by using a Siddhi timeBatch window.")
 
 /*
@@ -12,7 +12,7 @@ Prerequisites:
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
-        * timeBatchWindowSum.siddhi - Started Successfully!
+        * TimeBatchWindowSum.siddhi - Started Successfully!
 
 Testing the Sample:
     Configure random event simulation as follows
@@ -21,7 +21,7 @@ Testing the Sample:
     3) Give a name (Or the default name in the place holder will be used as its name)
     4) Select 'Random' as the 'Simulation Source'
     5) Click on 'Add Simulation Source'
-    6) Select timeBatchWindowSum as 'Siddhi App Name'
+    6) Select TimeBatchWindowSum as 'Siddhi App Name'
     7) Select TradesStream as 'StreamName'
     8) Keep 'Primitive Based' as the config type for symbol,price and volume
     9) Save the simulator configuration
@@ -38,7 +38,7 @@ define stream TradesStream (symbol string, price float, volume int);
 @sink(type="log")
 define stream TotalItemsStream (symbol string, totalVolume long);
 
-@info(name = 'query1')
+@info(name = 'sumVolume')
 from TradesStream #window.timeBatch(10 sec)
 select symbol, sum(volume) as totalVolume
 group by symbol

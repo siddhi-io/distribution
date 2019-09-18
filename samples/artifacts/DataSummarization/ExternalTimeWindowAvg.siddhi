@@ -1,0 +1,44 @@
+@App:name("ExternalTimeWindowAvg")
+@APP:description("Demonstrates how to calculates the average of events within a Siddhi ExternalTime Window.")
+
+/*
+
+Purpose:
+    This application demonstrates how to simulate random events via Feed Simulation and calculate the average of events. The aggregation is executed on events within a external time window. 
+
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * ExternalTimeWindowAvg.siddhi - Started Successfully!
+
+Testing the Sample:
+    Configure random event simulation as follows
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Feed Simulation' -> 'Create'
+    3) Give a name (Or the default name in the place holder will be used as its name)
+    4) Select 'Random' as the 'Simulation Source'
+    5) Click on 'Add Simulation Source'
+    6) Select ExternalTimeWindowAvg as 'Siddhi App Name'
+    7) Select TradesStream as 'StreamName'
+    8) Keep 'Primitive Based' as the config type for itemId,price,volume and eventTime
+    9) Save the simulator configuration
+    10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
+    11) Click on the start button (Arrow symbol) next to the newly created simulator
+
+Viewing the Results:
+    See the input and respective output on the console.The output show the average volume for the events sent within the last 10 seconds from the eventTime.
+
+*/
+
+define stream TradesStream(itemId string, price float, volume int,eventTime long);
+
+@sink(type="log")
+define stream AverageItemStream(itemId string, avgVolume double);
+
+@info(name = 'avgVolume')
+from TradesStream #window.externalTime(eventTime, 10 sec)
+select itemId,avg(volume)as avgVolume
+insert into AverageItemStream;
