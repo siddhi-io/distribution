@@ -28,9 +28,13 @@ Testing the Sample:
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
     11) Click on the start button (Arrow symbol) next to the newly created simulator
 
-Viewing the Results:
-    See the input and respective output on the console.The output show the average volume for the events sent within the last 10 seconds from the eventTime.
-
+iewing the Results:
+See the output on the console similar to the following (timestamp will be different).The output show the average volume for the events sent within the last 10 seconds from the eventTime.
+[2019-09-18_11-18-52_528] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785732528, data=[K1qcV, 429.0], isExpired=false}
+[2019-09-18_11-18-53_529] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785733528, data=[8KVU5, 258.0], isExpired=false}
+[2019-09-18_11-18-54_530] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785734528, data=[2QRwM, 397.0], isExpired=false}
+[2019-09-18_11-18-55_532] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785735528, data=[J1Lzo, 383.0], isExpired=false}
+[2019-09-18_11-18-56_533] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785736528, data=[zopeb, 416.4], isExpired=false}
 */
 
 define stream TradesStream(itemId string, price float, volume int,eventTime long);
