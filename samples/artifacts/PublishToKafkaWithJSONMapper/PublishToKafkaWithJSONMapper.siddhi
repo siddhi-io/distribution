@@ -39,7 +39,7 @@ Testing the Sample:
         ant -DtopicList=kafka_json_topic  -DpartitionList=0 -Dtype=json
     2) Simulate single events:
         a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
-        b) Select 'PublishToKafkaWithJSONMapper' as 'Siddhi App Name' and select 'SweetProductionStream' as 'Stream Name
+        b) Select 'PublishToKafkaWithJSONMapper' as 'Siddhi App Name' and select 'SweetProductionStream' as Stream Name
         c) Provide attribute values, and then click Send.
 
 Viewing the Results:
@@ -52,7 +52,7 @@ define stream SweetProductionStream (name string, amount double);
       topic='kafka_json_topic',
       partition.no='0',
       bootstrap.servers='localhost:9092',
-      @map(type='json'))
+      @map(type='json', enclosing.element='$.material', validate.json='true', @payload( """{"Name":"{{name}}","Amount":{{amount}}}""")))
 define stream LowProductionAlertStream (name string, amount double);
 
 --Send events to kafka_json_topic
