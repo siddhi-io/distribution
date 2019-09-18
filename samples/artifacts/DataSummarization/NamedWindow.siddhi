@@ -3,7 +3,7 @@
 
 /*
 Purpose:
-    This application demonstrates how to create the named window for better query performance.In this example the named window keeps the events for 10 sec and send those events from it to outputstream.
+    This application demonstrates how to create the named window for better query performance.In this example the named window keeps the events for 10 sec and display those events through the outputstream.
 
 Prerequisites:
     1) Save this sample
@@ -28,8 +28,8 @@ Testing the Sample:
     11) Click on the start button (Arrow symbol) next to the newly created simulator
 
 Viewing the Results:
-See the output on the console similar to the following (timestamp will be different).
-[2019-09-18_14-26-52_235] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797012234, data=[FM3kX, 378.86], isExpired=false}
+         See the output on the console similar to the following (timestamp will be different).
+             [2019-09-18_14-26-52_235] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797012234, data=[FM3kX, 378.86], isExpired=false}
 [2019-09-18_14-26-53_237] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797013234, data=[66KOo, 342.56], isExpired=false}
 [2019-09-18_14-26-54_239] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797014234, data=[yT7aG, 283.05], isExpired=false}
 [2019-09-18_14-26-55_241] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797015234, data=[S50Ni, 89.62], isExpired=false} */
