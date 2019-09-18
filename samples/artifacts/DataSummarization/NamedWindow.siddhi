@@ -1,0 +1,52 @@
+@App:name("NamedWindow")
+@App:description("Demonstrates how to create a named window for better query performance.")
+
+/*
+Purpose:
+    This application demonstrates how to create the named window for better query performance.In this example the named window keeps the events for 10 sec and send those events from it to outputstream.
+
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * NamedWindow.siddhi - Started Successfully!
+
+Testing the Sample:
+    Configure random event simulation as follows
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Feed Simulation' -> 'Create'
+    3) Give a name (Or the default name in the place holder will be used as its name)
+    4) Select 'Random' as the 'Simulation Source'
+    5) Click on 'Add Simulation Source'
+    6) Select NamedWindow as 'Siddhi App Name'
+    7) Select TempStream as 'StreamName'
+    8) Keep 'Primitive Based' as the config type for tempId and temp 
+    9) Save the simulator configuration
+    10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
+    11) Click on the start button (Arrow symbol) next to the newly created simulator
+
+Viewing the Results:
+See the output on the console similar to the following (timestamp will be different).
+[2019-09-18_14-26-52_235] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797012234, data=[FM3kX, 378.86], isExpired=false}
+[2019-09-18_14-26-53_237] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797013234, data=[66KOo, 342.56], isExpired=false}
+[2019-09-18_14-26-54_239] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797014234, data=[yT7aG, 283.05], isExpired=false}
+[2019-09-18_14-26-55_241] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1568797015234, data=[S50Ni, 89.62], isExpired=false} */
+
+define stream TempStream(tempId string,temp double);
+
+define window OneMinTempWindow(tempId string, temp double) time(10 sec);
+
+@sink(type="log")
+define stream OutPutStream(tempId string,temp double);
+
+@info(name='insertEventsToWindow') 
+from TempStream
+select *
+insert into OneMinTempWindow;
+
+@info(name='insertEventsToStream') 
+from OneMinTempWindow
+select *
+insert into OutPutStream;
