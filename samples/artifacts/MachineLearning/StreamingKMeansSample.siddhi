@@ -35,6 +35,7 @@ define stream SweetProductionStream(temperature double, density double);
 
 @sink(type='log')
 define stream SweetStatePredictionStream(closestCentroidCoordinate1 double, closestCentroidCoordinate2 double, temperature double, density double);
+
 from SweetProductionStream#streamingml:kMeansIncremental(2, 0.2, temperature, density)
 select closestCentroidCoordinate1, closestCentroidCoordinate2, temperature, density
 insert into SweetStatePredictionStream;

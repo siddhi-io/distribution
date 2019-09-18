@@ -1,0 +1,27 @@
+@App:name("StartupTrigger")
+@App:description("A trigger to generate an event at SiddhiApp startup.")
+
+/*
+Purpose:
+    This application triggers the SiddhiApp startup and logs a message.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * StartupTrigger.siddhi - Started Successfully!.
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - StartupTrigger : LogStream : Event{timestamp=1568797897618, data=[startup triggered], isExpired=false}
+*/
+
+@sink(type='log')
+define stream LogStream (event string);
+
+define trigger InitTrigger at 'start';
+
+-- Once the app has started, insert an event into LogStream as 'startup triggered'
+from InitTrigger
+select 'startup triggered' as event
+insert into LogStream;
+
