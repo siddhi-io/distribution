@@ -1,0 +1,47 @@
+@App:name("Query-rdbms")
+@App:description("This function performs SQL retrieval queries on datasources")
+
+/*
+Purpose:
+    This application demonstrates how to perform RDBMS record retrievals using Siddhi 'query'. The sample depicts a scenario of retrieving customer details from inner join of tables.
+
+Prerequisites:
+    1) Ensure that MySQL is installed on your machine.
+    2) Create a database named 'Customers' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Customers' url.
+    3) Create a table named 'CustomerTable': CREATE TABLE CustomerTable (name VARCHAR(20),amount int));
+    4) Insert some values into the table: INSERT INTO CustomerTable VALUES ('David',5000);
+    5) Create a table named 'CustomerDetails': CREATE TABLE CustomerDetails (name VARCHAR(20),address VARCHAR(20)));
+    6) Insert some values into the table: INSERT INTO CustomerDetails VALUES ('David','LONDON');
+    7) Go to {SIDDI-HOME/conf/tooling} and open deployment.yaml
+    8) Change the 'Datasource configurations' according to the database that you have created.
+    9) Save this sample.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'.
+    2) If the Siddhi application starts successfully, the following message is shown on the console
+        * Query-rdbms.siddhi - Started Successfully!
+
+    Note:
+    If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
+
+Testing the Sample:
+    1) Simulate single events:
+        a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
+        b) Select 'Query-rdbms' as 'Siddhi App Name' and select 'DataStream' as 'Stream Name'.
+        c) Provide attribute values, and then click Send.
+    2) Send at least one event where the name matches a name value in the data you previously inserted into the CustomerTable.
+
+Viewing the Results:
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - Query-rdbms : RecordStream : Event{timestamp=1568876647275, data=[David, 5000, LONDON], isExpired=false}
+*/
+
+define stream DataStream (name string);
+
+@sink(type='log')
+define stream RecordStream(selectName string,amount int,address string);
+
+-- Retrieve data
+from DataStream#rdbms:query('Customers', 'select CustomerTable.name,CustomerTable.amount,CustomerDetails.address from CustomerTable inner join CustomerDetails on CustomerDetails.name=CustomerTable.name where CustomerDetails.name=?', name, 'selectName string, amount int, address string')
+select selectName,amount,address
+insert into RecordStream;
+
