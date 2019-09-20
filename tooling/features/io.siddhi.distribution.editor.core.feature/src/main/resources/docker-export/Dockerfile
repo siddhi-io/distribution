@@ -30,7 +30,7 @@ ARG CONFIG_FILE=./configurations.yaml
 ARG CONFIG_FILE_PATH=${HOME}/configurations.yaml
 
 # copy bundles & jars to the siddhi-runner distribution
-COPY --chown=siddhi_user:siddhi_io ${HOST_APPS_DIR}/ ${APPS}
+{{APPS_BLOCK}}
 {{JARS_BLOCK}}
 {{BUNDLES_BLOCK}}
 {{CONFIGURATION_BLOCK}}
