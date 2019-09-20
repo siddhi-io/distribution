@@ -1,0 +1,47 @@
+@App:name("TransformJson")
+@App:description("Function retrieves the specified value in the given path of the JSON element.")
+
+/*
+Purpose:
+    This application demonstrates how to transform json messages.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * TransformJson.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'TransformJson' as Siddhi App Name
+    4) Select 'InputStream' as StreamName
+    5) Provide attribute values
+        - data : {'name' : 'John', 'address' : {'city' : 'NY', 'country' : 'USA'}}
+        - age : 30
+    6) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - TransformJson : NameLogStream : Event{timestamp=1568957321088, data=[John], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - TransformJson : AddressLogStream : Event{timestamp=1568957321088, data=[{"city":"NY","country":"USA"}], isExpired=false}
+
+*/
+
+define stream InputStream(data string,age int);
+
+@sink(type='log')
+define stream NameLogStream(name string);
+
+@sink(type='log')
+define stream AddressLogStream(address string);
+
+-- Retrieves value specified in the given path of the JSON 'name' element as a string.
+from InputStream
+select json:getString(data,'$.name') as name
+insert into NameLogStream;
+
+-- Retrieves value specified in the given path of the JSON 'address' element as a string.
+from InputStream
+select json:getString(data,'$.address') as address
+insert into AddressLogStream;
+
