@@ -1,0 +1,74 @@
+@App:name("QueryAPI-aggregation")
+@App:description("Use of aggregation functions available.")
+
+/*
+Purpose:
+    This application demonstrates how to use aggregate functions such as
+    'and','count','avg'
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * QueryAPI-aggregation.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'QueryAPI-aggregation' as Siddhi App Name
+    4) Select 'TransactionStream' as StreamName
+    5) Provide attribute values
+        - id : 210
+        - amount : 200
+        - isFraud : no
+    6) Send event
+    7) Provide attribute values
+        - id : 211
+        - amount : 300
+        - isFraud : no
+    8) Send event
+    9) Provide attribute values
+        - id : 212
+        - amount : 40000
+        - isFraud : yes
+    10) Send event
+    11) Provide attribute values
+        - id : 213
+        - amount : 450
+        - isFraud : no
+    12) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following.
+    Once you feed 4 events this message will be printed :
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - QueryAPI-aggregation : AlertFraudStream : Event{timestamp=1568959851677, data=[false], isExpired=false}
+    These 2 messages will be prited after passing 60 seconds.
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - QueryAPI-aggregation : AlertCountStream : Event{timestamp=1568959851677, data=[4], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - QueryAPI-aggregation : AlertAvgStream : Event{timestamp=1568959851677, data=[10237.5], isExpired=false}
+*/
+
+define stream TransactionStream(id int,amount double,isFraud bool);
+
+@sink(type='log')
+define stream AlertFraudStream(isFraudTransaction bool);
+
+@sink(type='log')
+define stream AlertAvgStream(avgAmount double);
+
+@sink(type='log')
+define stream AlertCountStream(countEvents long);
+
+-- Returns the results of AND operation for 4 events.
+from TransactionStream#window.lengthBatch(4)
+select and(isFraud) as isFraudTransaction
+insert into AlertFraudStream;
+
+-- Returns the average value for all the events based on their arrival and expiry.
+from TransactionStream#window.timeBatch(60 sec)
+select avg(amount) as avgAmount
+insert into AlertAvgStream;
+
+-- Return the count of all the events for time batch in 60 seconds.
+from TransactionStream#window.timeBatch(60 sec)
+select count() as countEvents
+insert into AlertCountStream;
+
