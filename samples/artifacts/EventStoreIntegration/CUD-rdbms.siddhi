@@ -55,17 +55,17 @@ define stream LogCreateStream(name string,age int);
 @sink(type='log')
 define stream LogDeleteStream(name string);
 
--- Create new records
+@info(name='Create new records')
 from CreateStream#rdbms:cud("Customers", "INSERT INTO CustomerTable(name,age) VALUES(?,?)", name , age)
 select name,age
 insert into  LogCreateStream;
 
--- Update existing records
+@info(name='Update existing records')
 from UpdateStream#rdbms:cud("Customers", "UPDATE CustomerTable SET name=? where name=?", updatedName , name)
 select updatedName
 insert into  LogUpdateStream;
 
---Delete records
+@info(name='Delete existing records')
 from DeleteStream#rdbms:cud("Customers", "DELETE FROM CustomerTable WHERE name=?", name)
 select name
 insert into  LogDeleteStream;

@@ -1,5 +1,5 @@
 @App:name("Caching-rdbms")
-@App:description("An RDBMS Store configuration to work with an indexed MySQL database using a cache.")
+@App:description("Use caching of results for better performance")
 
 /*
 Purpose:

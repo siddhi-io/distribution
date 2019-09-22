@@ -1,5 +1,5 @@
 @App:name("CronBasedTrigger")
-@App:description("A trigger to generate events at a particular time on every weekdays.")
+@App:description("Generate events based on any cron job defined")
 
 /*
 Purpose:

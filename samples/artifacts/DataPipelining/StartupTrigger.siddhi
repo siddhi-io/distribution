@@ -1,5 +1,5 @@
 @App:name("StartupTrigger")
-@App:description("A trigger to generate an event at SiddhiApp startup.")
+@App:description("Generate an event at SiddhiApp startup.")
 
 /*
 Purpose:

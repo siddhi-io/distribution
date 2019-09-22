@@ -40,7 +40,7 @@ define stream DataStream (name string);
 @sink(type='log')
 define stream RecordStream(selectName string,amount int,address string);
 
--- Retrieve data
+@info(name='Retrieve data')
 from DataStream#rdbms:query('Customers', 'select CustomerTable.name,CustomerTable.amount,CustomerDetails.address from CustomerTable inner join CustomerDetails on CustomerDetails.name=CustomerTable.name where CustomerDetails.name=?', name, 'selectName string, amount int, address string')
 select selectName,amount,address
 insert into RecordStream;
