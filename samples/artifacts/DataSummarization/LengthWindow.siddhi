@@ -1,0 +1,52 @@
+@App:name("LengthWindow")
+@App:description("A sliding length window that holds the last 'window.length' events at a given time, and gets updated for each arrival and expiry.")
+
+/*
+Purpose:
+    This application demonstrates how to find the minimum price for the last 3 events.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * LengthWindow.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'LengthWindow' as Siddhi App Name
+    4) Select 'StockEventStream' as StreamName
+    5) Provide attribute values
+        - symbol: milk
+        - price: 50
+    6) Send event
+    7) Provide attribute values
+        - symbol: chocolate
+        - price: 10
+    8) Send event
+    9) Provide attribute values
+        - symbol: rice
+        - price: 100
+    10) Send event
+    11) Provide attribute values
+        - symbol: apple
+        - price: 5
+    12) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568709936664, data=[milk, 50.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568709945740, data=[chocolate, 10.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : Event{timestamp=1568709954527, data=[rice, 10.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthWindow : OutputStream : [Event{timestamp=1568709962623, data=[milk, 10.0], isExpired=false}, Event{timestamp=1568709962622, data=[apple, 5.0], isExpired=false}]
+*/
+
+define stream StockEventStream(symbol string, price float);
+
+@sink(type='log')
+define stream OutputStream(symbol string,price float);
+
+-- Select items with minimum price for sliding window of length 3.
+from StockEventStream#window.length(3)
+select symbol,min(price) as price
+insert all events into OutputStream;
+

@@ -1,0 +1,54 @@
+@App:name("CronWindow")
+@App:description("Cron window outputs the arriving events as and when they arrive, and resets the window periodically based on the given cron expression.")
+
+/*
+Purpose:
+    This application uses a defined window find the maximum price and resets to zero as a batch every 10 seconds.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * CronWindow.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'CronWindow' as Siddhi App Name
+    4) Select 'StockEventStream' as StreamName
+    5) Provide attribute values
+        - symbol : chocolate
+        - price : 40
+    6) Send event in 0-20 seconds
+    7) Provide attribute values
+        - symbol : chocolate
+        - price : 25
+    8) Send event in 0-20 seconds
+    9) Provide attribute values
+        - symbol : chocolate
+        - price : 20
+    10) Send event in 0-20 seconds
+    11) Provide attribute values
+        - symbol : chocolate
+        - price : 30
+    12) Send event in 20-40 seconds
+    13) Provide attribute values
+        - symbol : chocolate
+        - price : 35
+    14) Send event in 20-40 seconds
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - CronWindow : OutputStream : [Event{timestamp=1568711127812, data=[chocolate, 40.0], isExpired=false}, Event{timestamp=1568711132582, data=[chocolate, 40.0], isExpired=false}, Event{timestamp=1568711136508, data=[chocolate, 40.0], isExpired=false}]
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - CronWindow : OutputStream : [Event{timestamp=1568711148731, data=[chocolate, 30.0], isExpired=false}, Event{timestamp=1568711152768, data=[chocolate, 35.0], isExpired=false}]
+*/
+
+define stream StockEventStream (symbol string, price float);
+
+@sink(type='log')
+define stream OutputStream(symbol string, maxPrice float);
+
+-- Select the symbol and maximum price for each window.
+from StockEventStream#window.cron('*/20 * * * * ?')
+select symbol, max(price) as maxPrice
+insert into OutputStream;
+
