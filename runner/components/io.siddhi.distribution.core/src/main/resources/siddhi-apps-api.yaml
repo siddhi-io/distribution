@@ -40,7 +40,7 @@ paths:
         HTTP/1.1 201 Created Location:
         http://localhost:9090/siddhi-apps/TestSiddhiApp1 Content-Type:
         application/json  {"type":"success","message":"Siddhi App saved
-        succesfully and will be deployed in next deployment cycle"}
+        successfully and will be deployed in next deployment cycle"}
       tags:
         - Artifact
       summary: Saves the Siddhi Application.
@@ -84,7 +84,7 @@ paths:
         insert into BarStream;
       x-wso2-response: >-
         HTTP/1.1 200 OK Content-Type: application/json
-        {"type":"success","message":"Siddhi App updated succesfully and will be
+        {"type":"success","message":"Siddhi App updated successfully and will be
         deployed in next deployment cycle"}
       tags:
         - Artifact
