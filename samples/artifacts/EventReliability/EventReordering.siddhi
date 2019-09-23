@@ -1,0 +1,55 @@
+@App:name("EventReordering")
+@App:description("Reorder out-of-order events using K-Slack algorithm.")
+
+/*
+Purpose:
+    This application demonstrates an instance where the query reorders events based on
+    the 'eventTime' attribute value, and it forcefully flushes all the events who have
+    arrived older than the given 'timeout' value (50000 milliseconds) every second.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * EventReordering.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'EventReordering' as Siddhi App Name
+    4) Select 'StockStream' as StreamName
+    5) Provide attribute values
+        - eventTime : 000000300
+        - symbol : AA
+        - volume : 100
+    6) Send event
+    7) Provide attribute values
+        - eventTime : 000000298
+        - symbol : AB
+        - volume : 60
+    8) Send event
+    7) Provide attribute values
+        - eventTime : 000000295
+        - symbol : AC
+        - volume : 20
+    8) Send event
+    9) Provide attribute values
+        - eventTime : 000000305
+        - symbol : AA
+        - volume : 90
+    10) Send event
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - EventReordering : OutputStream : Event{timestamp=1569219664536, data=[300, AA, 100], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - EventReordering : OutputStream : Event{timestamp=1569219664536, data=[295, AC, 20], isExpired=false}
+*/
+
+define stream StockStream (eventTime long, symbol string, volume long);
+
+@sink(type='log')
+define stream OutputStream(eventTime long, symbol string, volume long);
+
+--  Reorders events based on the 'eventTime', and it forcefully flushes all the events arrived older than the given 'timeout' value every second.
+from StockStream#reorder:kslack(eventTime,50000L)
+select eventTime,symbol,volume
+insert into OutputStream;
+
