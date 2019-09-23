@@ -18,29 +18,30 @@ Testing the Sample:
     3) Select 'EventReordering' as Siddhi App Name
     4) Select 'StockStream' as StreamName
     5) Provide attribute values
-        - eventTime : 000000300
+        - eventTime : 000300
         - symbol : AA
         - volume : 100
     6) Send event
     7) Provide attribute values
-        - eventTime : 000000298
-        - symbol : AB
+        - eventTime : 000298
+        - symbol : AA
         - volume : 60
     8) Send event
     7) Provide attribute values
-        - eventTime : 000000295
-        - symbol : AC
+        - eventTime : 000295
+        - symbol : AA
         - volume : 20
     8) Send event
     9) Provide attribute values
-        - eventTime : 000000305
+        - eventTime : 000305
         - symbol : AA
         - volume : 90
     10) Send event
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - EventReordering : OutputStream : Event{timestamp=1569219664536, data=[300, AA, 100], isExpired=false}
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - EventReordering : OutputStream : Event{timestamp=1569219664536, data=[295, AC, 20], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - EventReordering : OutputStream : Event{timestamp=1569222600086, data=[300, AA, 100], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - EventReordering : OutputStream : Event{timestamp=1569222600086, data=[295, AA, 20], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - EventReordering : OutputStream : [Event{timestamp=1569222600086, data=[298, AA, 60], isExpired=false}, Event{timestamp=1569222600086, data=[305, AA, 90], isExpired=false}]
 */
 
 define stream StockStream (eventTime long, symbol string, volume long);
