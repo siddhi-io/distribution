@@ -1,0 +1,50 @@
+@App:name("LogicalSequence")
+@App:description("Logical and condition")
+
+/*
+Purpose:
+    This application sends a regulator activation event immediately followed by both
+    temperature sensor and humidity sensor activation events in either order.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * LogicalSequence.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'LogicalSequence' as Siddhi App Name
+    4) Select 'RegulatorStream' as StreamName
+    5) Provide attribute values
+        - deviceId : 12
+        - isOn : true
+    6) Send event
+    7) Select 'TempStream' as StreamName
+    8) Provide attribute values
+        - deviceId : 12
+        - isActive : false
+    9) Send event
+    10) Select 'HumidStream' as StreamName
+    11) Provide attribute values
+        - deviceId : 12
+        - isActive : true
+    12) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LogicalSequence : StateNotificationStream : Event{timestamp=1569230495754, data=[false, true], isExpired=false}
+*/
+
+define stream TempStream(deviceID long, isActive bool);
+define stream HumidStream(deviceID long, isActive bool);
+define stream RegulatorStream(deviceID long, isOn bool);
+
+@sink(type='log')
+define stream StateNotificationStream(tempSensorActive bool, humidSensorActive bool);
+
+-- Generates an output when HumidStream and TempStream events occur in any order while RegulatorStream stream having the isOn attribute true.
+from every e1=RegulatorStream[isOn == true], e2=TempStream and e3=HumidStream
+select e2.isActive as tempSensorActive, e3.isActive as humidSensorActive
+insert into StateNotificationStream;
+
