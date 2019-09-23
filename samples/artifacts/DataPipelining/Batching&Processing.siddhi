@@ -1,7 +1,6 @@
 @App:name("Batching&Processing")
 @App:description("Process a batch of events")
 
---
 /*
 Purpose:
     This application defines a maximum number of events that will be fetched from the event buffer
