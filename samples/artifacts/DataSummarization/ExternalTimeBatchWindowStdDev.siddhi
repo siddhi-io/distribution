@@ -1,5 +1,5 @@
 @App:name("ExternalTimeBatchWindowStdDev")
-@APP:description("Demonstrates how to calculate the standard deviation of events by using a Siddhi external time batch window.")
+@APP:description("Demonstrates how to calculate the standard deviation based on event timestamps")
 
 /*
 

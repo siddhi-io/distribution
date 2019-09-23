@@ -1,5 +1,5 @@
 @App:name("NamedWindow")
-@App:description("Demonstrates how to create a named window for better query performance.")
+@App:description("Demonstrates how to create a named window as an another way to define windows so that it can be shared across various queries")
 
 /*
 Purpose:
