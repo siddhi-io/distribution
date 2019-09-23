@@ -13,7 +13,7 @@ Prerequisites:
         - password: senders password
         - to: receivers address (Ex:- 'example987@gmail.com')
         - subject: subject of the email
-    2) you need to enable access to "less secure apps" in the sender's gmail account via "https://myaccount.google.com/lesssecureapps" link
+    2) You need to enable access to "less secure apps" in the sender's gmail account via "https://myaccount.google.com/lesssecureapps" link
     3) Save this sample
 
 Executing the Sample:
@@ -33,23 +33,32 @@ Testing the Sample:
 
 Viewing the Results:
     Check the receiver gmail inbox (The gmail referred to in 'to' Sink configuration) to see the alert similar to the following.
-        Subject: Test Siddhi-io-email-{{name}}
-        Content: 
-             Hey <name>,
+        Subject: Test Siddhi-io-email
+        Content:
+             Hey Mike,
+
+            The item cake is added to the Sweet Productons list on 2019-08-20.
+
+            Thanks.
+
+        Template:
+            Hey <name>,
 
             The item <item> is added to the Sweet Productons list on <date>.
 
             Thanks.
 
+        The email content is displayed according to the above template.
+
 */
 
 define stream SweetProductionStream (name string, item string);
 
-@sink(type='email',  
+@sink(type='email',
                     username ='<senders email user name>',
                     address ='<senders email address>',
                     password= '<senders email password>',
-                    subject='Test Siddhi-io-email-{{name}}', 
+                    subject='Test Siddhi-io-email',
                     to='<receivers email address>',
                     port = '465',
                     host = 'smtp.gmail.com',
