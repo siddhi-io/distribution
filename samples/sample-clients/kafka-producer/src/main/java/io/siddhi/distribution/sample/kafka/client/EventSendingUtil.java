@@ -45,7 +45,7 @@ public class EventSendingUtil {
             iterator = fileEntriesList.iterator();
         }
 
-        while (sendEventsContinuously || sentEvents != noOfEventsToSend) {
+        while (sendEventsContinuously || sentEvents != noOfEventsToSend + 1) {
             objectList = new ArrayList<>();
             if (null != iterator && iterator.hasNext()) {
                 String[] stringArray = (String[]) iterator.next();
