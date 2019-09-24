@@ -1,0 +1,50 @@
+@App:name("SimpleSequence")
+@App:description("Allows you to detect the sequence of event occurrences over time.")
+
+/*
+Purpose:
+    This application sends an alert if the increase in the temperature between
+    two consecutive temperature events exceeds one degree.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * SimpleSequence.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'SimpleSequence' as Siddhi App Name
+    4) Select 'TempStream' as StreamName
+    5) Provide attribute values
+        - roomNo: 2
+        - amount: 35
+    6) Send event
+    7) Provide attribute values
+        - roomNo: 2
+        - amount: 35.5
+    8) Send event
+    9) Provide attribute values
+        - roomNo: 2
+        - amount: 36.3
+    10) Send event
+    11) Provide attribute values
+        - roomNo: 2
+        - amount: 38
+    12) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SimpleSequence : AlertStream : Event{timestamp=1568608274237, data=[36.3, 38.0], isExpired=false}
+*/
+
+define stream TempStream(roomNo int, temp double);
+
+@sink(type='log')
+define Stream AlertStream(initialTemp double, finalTemp double);
+
+-- Identify the increase in the temperature between two consecutive temperature events exceeds one degree.
+from every e1=TempStream, e2=TempStream[e1.temp + 1 < temp]
+select e1.temp as initialTemp, e2.temp as finalTemp
+insert into AlertStream;
+

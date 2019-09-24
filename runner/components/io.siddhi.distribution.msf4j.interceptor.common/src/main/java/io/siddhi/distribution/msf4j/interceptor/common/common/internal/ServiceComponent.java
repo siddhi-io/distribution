@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.analytics.idp.client.core.api.IdPClient;
-import org.wso2.carbon.analytics.idp.client.core.utils.IdPClientConstants;
 import org.wso2.carbon.analytics.idp.client.core.utils.config.IdPClientConfiguration;
 import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.config.provider.ConfigProvider;
@@ -33,6 +32,9 @@ import org.wso2.carbon.config.provider.ConfigProvider;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+
+import static org.wso2.carbon.analytics.idp.client.core.utils.IdPClientConstants.SP_AUTH_NAMESPACE;
+import static org.wso2.carbon.analytics.idp.client.core.utils.IdPClientConstants.STREAMLINED_AUTH_NAMESPACE;
 
 /**
  * component to get the registered IdPClient OSGi service.
@@ -48,13 +50,18 @@ public class ServiceComponent {
     protected void start(BundleContext bundleContext) throws ConfigurationException {
         ConfigProvider configProvider = DataHolder.getInstance().getConfigProvider();
         IdPClientConfiguration idPClientConfiguration;
-        if (configProvider.getConfigurationObject(IdPClientConstants.SP_AUTH_NAMESPACE) == null) {
-            idPClientConfiguration = new IdPClientConfiguration();
-        } else {
+
+        if (configProvider.getConfigurationObject(STREAMLINED_AUTH_NAMESPACE) != null) {
+            idPClientConfiguration = configProvider.getConfigurationObject(
+                    STREAMLINED_AUTH_NAMESPACE, IdPClientConfiguration.class);
+        } else if (configProvider.getConfigurationObject(SP_AUTH_NAMESPACE) != null) {
             idPClientConfiguration = configProvider.getConfigurationObject(IdPClientConfiguration.class);
+        } else {
+            idPClientConfiguration = new IdPClientConfiguration();
         }
+
         String enableInterceptor = idPClientConfiguration.getRestAPIAuthConfigs().getAuthEnable();
-        Boolean isInterceptorEnabled = Boolean.parseBoolean(enableInterceptor);
+        boolean isInterceptorEnabled = Boolean.parseBoolean(enableInterceptor);
         DataHolder.getInstance().setInterceptorEnabled(isInterceptorEnabled);
 
         List<Pattern> excludeURI = idPClientConfiguration.getRestAPIAuthConfigs().getExclude().stream().map((glob) -> {

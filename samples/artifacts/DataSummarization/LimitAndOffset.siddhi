@@ -1,0 +1,65 @@
+@App:name("LimitAndOffset")
+@App:description("These provide a way to select a limited number of events (via limit) from the desired index (using an offset) from the output event chunks produced by the query.")
+
+/*
+Purpose:
+    Query to calculate the average temp, per roomNo and deviceID combination,
+    for every 1 minutes batches, for the events arriving at the TempStream stream,
+    and emits only the third, forth and fifth events when sorted in descending order
+    based on their avgTemp value.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * LimitAndOffset.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'LimitAndOffset' as Siddhi App Name
+    4) Select 'TempStream' as StreamName
+    5) Provide attribute values
+        - roomNo: 35
+        - deviceID: 110
+        - temp: 45
+    6) Send event
+    7) Provide attribute values
+        - roomNo: 35
+        - deviceID: 123
+        - temp: 80
+    8) Send event
+    9) Provide attribute values
+        - roomNo: 36
+        - deviceID: 114
+        - temp: 60
+    10) Send event
+    11) Provide attribute values
+        - roomNo: 37
+        - deviceID: 115
+        - temp: 42
+    12) Send event
+    13) Provide attribute values
+        - roomNo: 38
+        - deviceID: 115
+        - temp: 41
+    14) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LimitAndOffset : HighestAvgTempStream : [Event{timestamp=1568464659298, data=[35, 110, 45.0], isExpired=false}, Event{timestamp=1568464694291, data=[37, 115, 42.0], isExpired=false}, Event{timestamp=1568464701748, data=[38, 115, 41.0], isExpired=false}]
+*/
+
+define stream TempStream(roomNo int,deviceID int,temp double);
+
+@sink(type='log')
+define stream HighestAvgTempStream(roomNo int, deviceID int, avgTemp double);
+
+-- For every 1 minutes batches, select third, forth and fifth events when sorted in descending order based on their avgTemp value.
+from TempStream#window.timeBatch(1 min)
+select roomNo, deviceID, avg(temp) as avgTemp
+group by roomNo, deviceID
+order by avgTemp desc
+limit 3
+offset 2
+insert into HighestAvgTempStream;
+

@@ -834,9 +834,9 @@
                                 <delete dir="target/archive-tmp" />
                                 <delete dir="target/dependency-maven-plugin-markers" />
                                 <delete dir="target/org.eclipse.equinox.executable-3.5.0.v20110530-7P7NFUFFLWUl76mart" />
-                                <delete dir="target/p2-repo" />
+                                <delete failonerror="false" dir="target/p2-repo" />
                                 <delete file="target/tmp" />
-                                <delete dir="target/wso2carbon-kernel-${carbon.kernel.version}" />
+                                <delete failonerror="false" dir="target/wso2carbon-kernel-${carbon.kernel.version}" />
                                 <delete dir="target/antrun" />
                                 <delete dir="target/maven-shared-archive-resources" />
                                 <delete dir="target/findbugs" />
@@ -885,23 +885,23 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>io.siddhi</groupId>-->
-                <!--<artifactId>siddhi-doc-gen</artifactId>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<phase>verify</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>generate-md-docs</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<moduleTargetDirectory>target/</moduleTargetDirectory>-->
-                    <!--<includeOrigin>true</includeOrigin>-->
-                    <!--<loadFromAllJars>true</loadFromAllJars>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>io.siddhi</groupId>
+                <artifactId>siddhi-doc-gen</artifactId>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate-md-docs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <moduleTargetDirectory>target/</moduleTargetDirectory>
+                    <includeOrigin>true</includeOrigin>
+                    <loadFromAllJars>true</loadFromAllJars>
+                </configuration>
+            </plugin>
         </plugins>
         <resources>
             <resource>
