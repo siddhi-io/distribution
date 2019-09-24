@@ -280,6 +280,12 @@
                                     <type>jar</type>
                                 </artifactItem>
                                 <artifactItem>
+                                    <groupId>io.siddhi.extension.execution.list</groupId>
+                                    <artifactId>siddhi-execution-list</artifactId>
+                                    <version>${siddhi.execution.list.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
                                     <groupId>io.siddhi.extension.execution.unitconversion</groupId>
                                     <artifactId>siddhi-execution-unitconversion</artifactId>
                                     <version>${siddhi.execution.unitconversion.version}</version>
