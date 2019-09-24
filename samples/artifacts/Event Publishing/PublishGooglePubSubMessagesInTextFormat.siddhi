@@ -1,4 +1,4 @@
-@App:name("PublishGooglePubSubMessagesInTextFormate")
+@App:name("PublishGooglePubSubMessagesInTextFormat")
 
 @App:description('Send events to a Google Pub/Sub Topic')
 
@@ -30,14 +30,14 @@ Testing the Sample:
             a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
             b) In the Single Simulation tab of the panel, specify the values as follows:
                     * Siddhi App Name  : PublishGooglePubSubMessagesInTextFormat
-                    * Stream Name      : FooStream
+                    * Stream Name      : MessageStream
             c) In the message field, enter the following and then click Send to send the event.
                     message: Hello
             d) Send some more events.
 
 Viewing the Results:
     See the output on the terminal:
-        2019-03-14_12-50-21_966] INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SendEvent : BarStream : Event{timestamp=1552548021825, data=[Hello], isExpired=false} 
+        2019-03-14_12-50-21_966] INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - SendEvent : OutputStream : Event{timestamp=1552548021825, data=[Hello], isExpired=false}
 
 Notes:
 	Make sure the the credential file is correct and user have write access to make api calls.
@@ -50,12 +50,12 @@ Notes:
       credential.path = '<credential path>',
       project.id = '<project id>',
       @map(type='text'))
-define stream FooStream (message string);
+define stream MessageStream (message string);
 
 @sink(type = 'log')
-define stream BarStream(message string);
+define stream OutputStream(message string);
 
 @info(name = 'EventsReceiveQuery')
-from FooStream
+from MessageStream
 select message 
-insert into BarStream;
+insert into OutputStream;
