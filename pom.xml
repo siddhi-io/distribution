@@ -1202,7 +1202,7 @@
         <siddhi.execution.time.version>5.0.4-SNAPSHOT</siddhi.execution.time.version>
         <siddhi.execution.json.version>2.0.3-SNAPSHOT</siddhi.execution.json.version>
         <siddhi.execution.map.version>5.0.6-SNAPSHOT</siddhi.execution.map.version>
-        <siddhi.execution.list.version>1.0.0</siddhi.execution.list.version>
+        <siddhi.execution.list.version>1.0.1-SNAPSHOT</siddhi.execution.list.version>
         <siddhi.execution.unitconversion.version>2.0.3-SNAPSHOT</siddhi.execution.unitconversion.version>
         <siddhi.execution.reorder.version>5.0.4-SNAPSHOT</siddhi.execution.reorder.version>
         <siddhi.execution.unique.version>5.0.4-SNAPSHOT</siddhi.execution.unique.version>
