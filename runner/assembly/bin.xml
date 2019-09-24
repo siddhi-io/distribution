@@ -112,14 +112,6 @@
         </fileSet>
         <fileSet>
             <directory>.</directory>
-            <outputDirectory>wso2/runner/deployment/simulation-configs</outputDirectory>
-            <excludes>
-                <exclude>*/**</exclude>
-            </excludes>
-            <fileMode>644</fileMode>
-        </fileSet>
-        <fileSet>
-            <directory>.</directory>
             <outputDirectory>deployment/siddhi-files</outputDirectory>
             <excludes>
                 <exclude>*/**</exclude>

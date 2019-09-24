@@ -1,0 +1,86 @@
+@App:name("PersistEventsInRedis")
+@App:description('Receive events via simulator and persist the received data in the redis store.')
+
+/*
+
+Purpose:
+    This application demonstrates how to perform operations on Redis using Siddhi queries. The sample depicts a scenario in a sweet production factory. The sweet production details, such as the name of the raw material and amount used for production, can be stored using InsertSweetProductionStream. The following streams can be used to search, delete, update, or upsert (update or insert) the existing data in the store:
+    search - SearchSweetProductionStream
+    insert - InsertSweetProductionStream
+    delete - DeleteSweetProductionStream
+    update - UpdateSweetProductionStream
+    update or insert - UpdateOrInsertSweetProductionStream
+
+Prerequisites:
+    1) Ensure that Redis is installed on your machine and redis server is started.
+    2) Add jedis-2.9.0.jar into {Siddhi_Distribution_Home}/libs as follows:
+           a) Download jedis-2.9.0.jar  from: https://repo1.maven.org/maven2/redis/clients/jedis/2.9.0/jedis-2.9.0.jar
+           c) Copy jedis-2.9.0.jar to {Siddhi_Distribution_Home}/bin directory.
+    3) Save this sample.
+    4) Restart the editor
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'.
+    2) If the Siddhi application starts successfully, the following message is shown on the console
+        * PersistEventsInRedis.siddhi - Started Successfully!
+
+    Note:
+    If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
+
+Testing the Sample:
+    1) Simulate single events:
+        a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
+        b) Select 'PersistEventsInRedis' as 'Siddhi App Name' and select 'InsertSweetProductionStream' as 'Stream Name'.
+        c) Provide attribute values, and then click Send.
+    2) Optionally, send events to the other corresponding streams to delete, update, and search events.
+
+    Notes:
+    - After a change in the store, you can use the search stream to see whether the operation is successful.
+
+Viewing the Results:
+    See the output for raw materials on the console. You can use SearchSweetProductionStream to check for inserted, deleted, and updated events.
+
+*/
+
+define stream InsertSweetProductionStream (name string, amount double);
+define stream DeleteSweetProductionStream (name string);
+define stream SearchSweetProductionStream (name string);
+define stream UpdateSweetProductionStream (name string, amount double);
+define stream UpdateOrInsertSweetProductionStream (name string, amount double);
+
+@sink(type='log')
+define stream LogStream(name string, amount double);
+
+@store(type='redis',host='localhost', table.name="SweetProductionTable",port='6379')
+@PrimaryKey('name')
+define table SweetProductionTable(name string,amount double);
+
+--Inserting event into the redis store
+@info(name='insertQuery')
+from InsertSweetProductionStream
+insert into SweetProductionTable;
+
+--Deleting event from redis store
+@info(name = 'deleteQuery')
+from DeleteSweetProductionStream
+delete SweetProductionTable
+on SweetProductionTable.name == name ;
+
+--Updating event in redis store
+@info(name = 'updateQuery')
+from UpdateSweetProductionStream
+update SweetProductionTable
+on SweetProductionTable.name == name ;
+
+--Updating or inserting event in redis store
+@info(name = 'updateOrInsertQuery')
+from UpdateOrInsertSweetProductionStream
+update or insert into SweetProductionTable
+on SweetProductionTable.name == name;
+
+--Perform a join on raw material name to find a record from redis store
+@info(name='searchQuery')
+from SearchSweetProductionStream as materialName join SweetProductionTable as sweetProductionTable
+    on materialName.name == sweetProductionTable.name
+select sweetProductionTable.name, sweetProductionTable.amount
+insert into LogStream;

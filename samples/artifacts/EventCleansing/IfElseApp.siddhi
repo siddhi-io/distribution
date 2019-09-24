@@ -1,0 +1,42 @@
+@App:name("IfElseApp")
+
+@App:description("Check if a number is greater than or less than a particular constant")
+
+/*
+
+Purpose:
+    This application demonstrates how to check if an input number is greater than or less than a constant(35) and display the result to the output console.
+        ex: If the user inputs 55, the application outputs 'Number is greater than 35" because 55 is greater than 35
+
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'.
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console.
+        * IfElseApp - Started Successfully!
+
+Testing the Sample:
+    You may send events to jms sink, via event simulator
+        a) Open the event simulator by clicking on the second icon on the left or pressing Ctrl+Shift+I.
+        b) In the Single Simulation tab of the panel, specify the values as follows:
+            * Siddhi App Name  : IfElseApp
+            * Stream Name      : CheckNumberStream
+        c) In the num(INT) field, enter an integer value(ex: 55) and then click Send to send the event.
+        d) Send some more events.
+
+Viewing the Results:
+    [2019-09-12 15:25:41,768]  INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568282141766, data=[Number is greater than 35], isExpired=false}
+
+*/
+
+@source(type = 'http', receiver.url = "http://0.0.0.0:8006/number", @map(type = 'json'))
+define stream CheckNumberStream (num int);
+
+@sink(type='log', prefix='LOGGER')
+define stream OutputStream(result string);
+
+@info(name='IfElseQuery')
+from CheckNumberStream
+select ifThenElse(num > 35,'Number is greater than 35','Number is less than 35') as result
+insert into OutputStream;
