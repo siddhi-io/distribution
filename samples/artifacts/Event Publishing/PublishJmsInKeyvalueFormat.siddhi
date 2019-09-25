@@ -5,14 +5,14 @@
 /*
 
 Purpose:
-	This application demonstrates how to configure a Siddhi application to send Sweet Production events via JMS transport in Keyvalue format.
+	This application demonstrates how to configure a Siddhi application to send Sweet Production events via JMS transport in keyvalue format.
 
 Prerequisites:
     1) Setup ActiveMQ
         * Download activemq-client-5.x.x.jar (http://central.maven.org/maven2/org/apache/activemq/activemq-client/5.9.0/activemq-client-5.9.0.jar)
         * Download apache-activemq-5.x.x-bin.zip (http://archive.apache.org/dist/activemq/apache-activemq/5.9.0/apache-activemq-5.9.0-bin.zip)
         * ActiveMQ activemq-client-5.x.x.jar lib to be added and converted to OSGI (See Note: To convert ActiveMQ lib to OSGI).
-        * Unzip the apache-activemq-5.x.x-bin.zip and copy the following ActiveMQ libs in apache-activemq-5.x.x/lib to {SiddhiHome}/samples/sample-clients/lib and {SiddhiHome}/lib
+        * Unzip the apache-activemq-5.x.x-bin.zip and copy the following ActiveMQ libs in apache-activemq-5.x.x/lib to {SiddhiHome}/samples/sample-clients/lib and {SiddhiHome}/bundles
               - hawtbuf-1.9.jar
               - geronimo-j2ee-management_1.1_spec-1.0.1.jar
               - geronimo-jms_1.1_spec-1.1.1.jar
@@ -38,12 +38,11 @@ Note:
                      [timestamp] org.wso2.carbon.tools.spi.ICFProviderTool addBundleActivatorHeader
               - INFO: Running jar to bundle conversion [timestamp] org.wso2.carbon.tools.converter.utils.BundleGeneratorUtils convertFromJarToBundle
               - INFO: Created the OSGi bundle activemq_client_5.x.x_1.0.0.jar for JAR file <absolute_path>/activemq-client-5.x.x/activemq-client-5.x.x.jar
-    	3) You can find the osgi converted libs in activemq-client-5.x.x folder. You can copy 'activemq-client-5.x.x/activemq-client-5.x.x_1.0.0.jar' to {SiddhiHome}/lib
+    	3) You can find the osgi converted libs in activemq-client-5.x.x folder. You can copy 'activemq-client-5.x.x/activemq-client-5.x.x_1.0.0.jar' to {SiddhiHome}/bundles
     	   and 'activemq-client-5.x.x/activemq-client-5.x.x.jar' to {SiddhiHome}/samples/sample-clients/lib
 
-
 Executing the Sample:
-    1) Navigate to {apache-activemq-5.x.x} unzipped directory and start ActiveMQ server node using bin/activemq
+    1) Navigate to {apache-activemq-5.x.x} unzipped directory and start ActiveMQ server node using "sudo sh activemq start"
 	2) Start the Siddhi application by clicking on 'Run'.
 
 	* If the Siddhi application starts successfully, the following messages are shown on the console:
@@ -84,7 +83,6 @@ Testing the Sample:
 Viewing the Results:
   See the output on the terminal of {SiddhiHome}/samples/sample-clients/jms-consumer:
       [java] [org.wso2.siddhi.core.stream.output.sink.LogSink] : JmsReceiver : logStream : Event{timestamp=1513607495863, data=['chocolate cake', 50.50], isExpired=false}
-
 */
 
 define stream SweetProductionStream (name string, amount double);
