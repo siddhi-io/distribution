@@ -3,7 +3,7 @@
 
 /*
 Purpose:
-    This application demonstrates how to calculate aggregates for various time granularity.In this example the named aggregation gives the aggregation of events such as average of price and sum of price and top maximum price items with in last 5hours.
+    This application demonstrates how to calculate aggregates for various time granularity.In this example two queries are demonstrate such as find the average ,total of price and find the max price items within a last certain hours.
 
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
@@ -38,14 +38,16 @@ Testing the Sample:
     3)  Click on 'Event Simulator' (double arrows on left tab)
            a) Click 'Single Simulation' (this will be already selected)
            b) Select 'NamedAggregation' as Siddhi App Name
-           c) Select 'DashBoardStream' as StreamName
+           c) Select ' DashboardTriggerStream' as StreamName
            d) Provide symbol values
               - symbol: WSO10
-           e) Send event
+              -startTime:1569305232000
+              -endTime:1569305238000
+           e) Send event and it gives per hour granularity level summarizations for that provided symbol.
             See the output on the console similar to the following (timestamp will be different):
            [2019-09-24_13-21-14_228] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedAggregation : AggregateStockStream : Event{timestamp=1569311474221, data=[WSO10, 1100.0, 220.0], isExpired=false}
          
-          f) Select 'QueryStream' as StreamName
+          f) Select 'QueryTriggerStream' as StreamName
           g) Provide triggerId values
               - triggerId: 1
           h) Send event
@@ -56,12 +58,12 @@ Testing the Sample:
         
 define stream TradeStream(symbol string, price double, volume long,timestamp long);
 
-define stream DashBoardStream(symbol string);
+define stream  DashboardTriggerStream(symbol string,startTime long,endTime long);
 
-define stream QueryStream(triggerId string);
+define stream QueryTriggerStream(triggerId string);
 
 @sink(type="log")
-define stream AggregateStockStream(symbol string,total double,avgPrice double);
+define stream AggregateStockStream(symbol string,totalPrice double,avgPrice double);
 
 @sink(type="log")
 define stream MaxStockStream(symbol string,maxPrice double);
@@ -71,23 +73,23 @@ define stream MaxStockStream(symbol string,maxPrice double);
        username="username",
        password="password",
        jdbc.driver.name="com.mysql.jdbc.Driver")
-
 define aggregation TradeAggregation
 from TradeStream
-select symbol, avg(price) as avgPrice, sum(price) as total,max(price) as maxPrice
+select symbol, avg(price) as avgPrice, sum(price) as totalPrice,max(price) as maxPrice
 group by symbol
 aggregate by timestamp every sec...year;
 
 @info(name='AggregationQuery') 
-from DashBoardStream as s join TradeAggregation as t
+from  DashboardTriggerStream as s join TradeAggregation as t
 on s.symbol==t.symbol
 within "2016-06-06 12:00:00 +05:30", "2020-06-06 12:00:00 +05:30"
 per 'hours'
-select t.symbol,t.total, t.avgPrice
+select t.symbol,t.totalPrice, t.avgPrice
 insert into AggregateStockStream;
 
+-- There must be events for last 5 hours to execute this query otherwise it won't work.
 @info(name='MaxItemQuery') 
-from QueryStream as s join TradeAggregation as t
+from QueryTriggerStream as s join TradeAggregation as t
 within currentTimeMillis()-1800000000,currentTimeMillis()
 per 'hours'
 select t.symbol,t.maxPrice
