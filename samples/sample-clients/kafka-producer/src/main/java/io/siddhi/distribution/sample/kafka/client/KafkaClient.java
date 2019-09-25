@@ -20,6 +20,8 @@ package io.siddhi.distribution.sample.kafka.client;
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.stream.input.InputHandler;
+import io.siddhi.extension.io.kafka.sink.KafkaSink;
+import io.siddhi.extension.map.avro.sinkmapper.AvroSinkMapper;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -43,24 +45,27 @@ public class KafkaClient {
      */
     public static void main(String[] args) throws IOException, InterruptedException {
         log.info("Initialize kafka producer client.");
-        final String[] types = new String[]{"json", "xml", "text", "binary"};
+        final String[] types = new String[]{"json", "xml", "text", "binary", "avro"};
         String bootstrapServers = args[0];
         String topic = args[1];
         String partitionNo = !args[2].isEmpty() ? args[2] : null;
         String sequenceId = !args[3].isEmpty() ? args[3] : null;
         String key = !args[4].isEmpty() ? args[4] : null;
-        String optionalConfiguration = !args[5].isEmpty() ? args[5] : null;
-        Boolean isBinaryMessage = !args[6].isEmpty() && Boolean.parseBoolean(args[6]);
-        String type = Arrays.asList(types).contains(args[7]) ? args[7] : "json";
+        String schemaDefinition = args[5];
+        String optionalConfiguration = !args[6].isEmpty() ? args[6] : null;
+        Boolean isBinaryMessage = !args[7].isEmpty() && Boolean.parseBoolean(args[7]);
+        String type = Arrays.asList(types).contains(args[8]) ? args[8] : "json";
         if (isBinaryMessage) {
-            type = "binary";
+            if (!"avro".equals(type)) {
+                type = "binary";
+            }
         }
-        int delay = !args[8].isEmpty() ? Integer.parseInt(args[8]) : 1000;
-        String customMapping = args[9];
-        String filePath = args[10];
-        String eventDefinition = args[11];
-        int noOfEventsToSend = !args[12].isEmpty() ? Integer.parseInt(args[12]) : -1;
-        boolean continuouslyReadFile = !args[13].isEmpty() && Boolean.parseBoolean(args[13]);
+        int delay = !args[9].isEmpty() ? Integer.parseInt(args[9]) : 1000;
+        String customMapping = args[10];
+        String filePath = args[11];
+        String eventDefinition = args[12];
+        int noOfEventsToSend = !args[13].isEmpty() ? Integer.parseInt(args[13]) : -1;
+        boolean continuouslyReadFile = !args[14].isEmpty() && Boolean.parseBoolean(args[14]);
 
         boolean sendEventsContinuously = true;
         if (noOfEventsToSend != -1) {
@@ -76,6 +81,23 @@ public class KafkaClient {
                     eventDefinition = "{\"item\": {\"id\":\"{0}\",\"amount\": {1}}}";
                 } else if (type.equals("xml")) {
                     eventDefinition = "<events><item><id>{0}</id><amount>{1}</amount></item></events>";
+                } else if (type.equals("avro")) {
+                    if (schemaDefinition.isEmpty()) {
+                        schemaDefinition = "\"\"\"\n" +
+                                "            {\n" +
+                                "\t            \"type\": \"record\",\n" +
+                                "\t            \"name\": \"sweetProduction\",\n" +
+                                "\t            \"namespace\": \"material\",\n" +
+                                "\t            \"fields\": [{\n" +
+                                "\t\t            \"name\": \"name\",\n" +
+                                "\t\t            \"type\": \"string\"\n" +
+                                "\t            }, {\n" +
+                                "\t\t            \"name\": \"amount\",\n" +
+                                "\t\t            \"type\": \"double\"\n" +
+                                "\t\t        }]\n" +
+                                "            }\"\"\"";
+                         eventDefinition = "{\"event\": {\"name\":\"{0}\",\"amount\": {1}}}";
+                    }
                 } else {
                     eventDefinition = "id:\"{0}\"\namount:{1}";
                 }
@@ -84,6 +106,24 @@ public class KafkaClient {
                     eventDefinition = "{\"event\": {\"name\":\"{0}\",\"amount\": {1}}}";
                 } else if (type.equals("xml")) {
                     eventDefinition = "<events><event><name>{0}</name><amount>{1}</amount></event></events>";
+                } else if (type.equals("avro")) {
+                    if (schemaDefinition.isEmpty()) {
+                        schemaDefinition = "\"\"\"\n" +
+                                "            {\n" +
+                                "\t            \"type\": \"record\",\n" +
+                                "\t            \"name\": \"sweetProduction\",\n" +
+                                "\t            \"namespace\": \"material\",\n" +
+                                "\t            \"fields\": [{\n" +
+                                "\t\t            \"name\": \"name\",\n" +
+                                "\t\t            \"type\": \"string\"\n" +
+                                "\t            }, {\n" +
+                                "\t\t            \"name\": \"amount\",\n" +
+                                "\t\t            \"type\": \"double\"\n" +
+                                "\t\t        }]\n" +
+                                "            }\"\"\"";
+                        eventDefinition = "{\"event\": {\"name\":\"{0}\",\"amount\": {1}}}";
+                    }
+
                 } else {
                     eventDefinition = "name:\"{0}\"\namount:{1}";
                 }
@@ -114,6 +154,12 @@ public class KafkaClient {
         }
         if ("binary".equalsIgnoreCase(type)) {
             builder.append("@map(type='").append(type).append("'))\n");
+            builder.append("define stream SweetProductionStream(name string, amount double);\n");
+        } else if ("avro".equalsIgnoreCase(type)) {
+            siddhiManager.setExtension("sink:kafka", KafkaSink.class);
+            siddhiManager.setExtension("sinkMapper:avro", AvroSinkMapper.class);
+            builder.append("is.binary.message='true',\n");
+            builder.append("@map(type='").append(type).append("',schema.def=").append(schemaDefinition).append("))\n");
             builder.append("define stream SweetProductionStream(name string, amount double);\n");
         } else {
             builder.append("@map(type='").append(type).append("', @payload(\"{{message}}\")))\n");

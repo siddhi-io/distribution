@@ -31,6 +31,7 @@
     <property name="partitionNo" value=""/>
     <property name="sequenceId" value=""/>
     <property name="key" value=""/>
+    <property name="schemaDefinition" value=""/>
     <property name="optionalConfiguration" value=""/>
     <property name="isBinaryMessage" value="false"/>
     <!-- common for all transports -->
@@ -106,6 +107,7 @@
             <arg value="${partitionNo}"/>
             <arg value="${sequenceId}"/>
             <arg value="${key}"/>
+            <arg value="${schemaDefinition}"/>
             <arg value="${optionalConfiguration}"/>
             <arg value="${isBinaryMessage}"/>
             <arg value="${type}"/>
