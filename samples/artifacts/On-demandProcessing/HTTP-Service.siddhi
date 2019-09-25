@@ -1,8 +1,6 @@
 @App:name("HTTP-Service")
 
-@App:description('Receive events via HTTP transport and view the output on the console')
-
-/*
+@App:description('Use siddhi as a HTTP service')
 
 Purpose:
     This application demonstrates how to use Siddhi 'http-service' source to receive events via HTTP transport and send a response back through the 'http-service-response' sink.
@@ -45,7 +43,7 @@ Viewing the Results:
     You will get a output like this as a response.
         {
             "event": {
-                "messageId": "dba91410-8247-4317-ace1-d42fdbed9e61",    //auto-generated message id
+                "messageId": "dba91410-8247-4317-ace1-d42fdbed9e61",    //auto-generated message id (messageId can be defferent since it is auto generated)
                 "results": 32   // sum of the value1 and value2
             }
         }
