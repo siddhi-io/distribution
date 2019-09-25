@@ -11,7 +11,7 @@ Executing the Sample:
         * CronBasedTrigger.siddhi - Started Successfully!.
 
 Viewing the Results:
-    See the input and respective output on the console (according to the time you have defined in the program) similar to the following
+    See the input and respective output on the console (you can change the cron job in line number 21) similar to the following.
         INFO {io.siddhi.core.stream.output.sink.LogSink} - CronBasedTrigger : LogStream : Event{timestamp=1568798760023, data=[new event triggered], isExpired=false}
 */
 

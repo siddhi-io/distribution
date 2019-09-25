@@ -3,7 +3,8 @@
 
 /*
 Purpose:
-    This application demonstrates how to perform RDBMS CUD using Siddhi. The sample depicts a scenario related to customer database.
+    This application demonstrates how to perform RDBMS CUD against tables in a datasource using Siddhi.
+    The sample depicts a scenario related to customer database.
 
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.

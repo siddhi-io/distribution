@@ -9,7 +9,7 @@ Prerequisites:
     1) Ensure that MySQL is installed on your machine.
     2) Create a database named 'Hotel' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Hotel' url.
     3) Create a table named 'RoomDetails': CREATE TABLE RoomDetails (roomNo INT PRIMARY KEY,people INT,type VARCHAR(20)));
-    4) Save this sample.
+    4) Enter your username and password (in line 69) for MySQL server and save this sample.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
@@ -66,7 +66,7 @@ Note :- You can either use CURL commands or 'Siddhi Store Query' provided in Sid
 
 */
 
-@Store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/Hotel?useSSL=false", username="", password="", jdbc.driver.name="com.mysql.jdbc.Driver")
+@Store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/Hotel?useSSL=false", username="your_username", password="your_password", jdbc.driver.name="com.mysql.jdbc.Driver")
 @PrimaryKey("roomNo")
 define table RoomDetails (roomNo int, people int, type string);
 

@@ -44,6 +44,9 @@ Viewing the Results:
         INFO {io.siddhi.core.stream.output.sink.LogSink} - Batching&Processing : OutputStream : Event{timestamp=1569233369217, data=[AC, 10.0, 105], isExpired=false}
 */
 
+-- 'buffer.size' defines the size of the event buffer that holds the events until they are picked by worker threads for processing.
+-- 'workers' defines the number of worker threads that process the buffered events.
+-- 'batch.size.max' defines the maximum number of events that will be fetched from the event buffer to be processed together by a worker thread
 @async(buffer.size='16' , workers='2', batch.size.max='3')
 define stream StockEventStream(symbol string, price float, volume int);
 
