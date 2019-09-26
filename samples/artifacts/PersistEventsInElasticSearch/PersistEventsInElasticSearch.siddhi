@@ -54,7 +54,7 @@ define stream UpdateOrInsertSweetProductionStream (name string, amount double);
 define stream ContainsSweetProductionStream (name string, amount double);
 
 @sink(type='log')
-define stream logStream(name string, amount double);
+define stream LogStream(name string, amount double);
 
 @Store(type="elasticsearch", host="localhost", index.name="mystocktable", field.length="symbol:100", bulk.actions="5000", bulk.size="1", concurrent.requests="2", flush.interval="1", backoff.policy.retry.no="3", backoff.policy.wait.time="1")
 @PrimaryKey("symbol")
@@ -87,11 +87,11 @@ on SweetProductionTable.name == name;
 @info(name = 'containsQuery')
 from ContainsSweetProductionStream
 [(SweetProductionTable.name == name and SweetProductionTable.amount == amount) in SweetProductionTable]
-insert into logStream;
+insert into LogStream;
 
 --Perform a join on raw material name so that the data in the store can be viewed
 @info(name='searchQuery')
 from SearchSweetProductionStream as materialName join SweetProductionTable as sweetProductionTable
     on materialName.name == sweetProductionTable.name
 select sweetProductionTable.name, sweetProductionTable.amount
-insert into logStream;
+insert into LogStream;
