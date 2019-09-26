@@ -1,5 +1,4 @@
 @App:name("StringExtensionSample")
-
 @App:description('Converts the sweet name to lowercase letters, returns the length of the sweet name and returns the char value at the 1st index of the sweet name.')
 
 /*
@@ -14,7 +13,7 @@ Prerequisites:
 Executing the Sample:
 	1) Start the Siddhi application by clicking on 'Run'
 	2) If the Siddhi application starts successfully, the following messages would be shown on the console
-            * StringExtensionSample.siddhi - Started Successfully!
+            * StringTransformation.siddhi - Started Successfully!
 
 Testing the Sample:
     You can publish data event to the file, through event simulator
