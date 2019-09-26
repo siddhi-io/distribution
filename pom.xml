@@ -1072,6 +1072,68 @@
                 <artifactId>testcontainers</artifactId>
                 <version>${org.testcontainers.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-client</artifactId>
+                <classifier>shaded</classifier>
+                <version>${com.spotify.docker.client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons.lang.commons.lang.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.connectors</groupId>
+                <artifactId>jersey-apache-connector</artifactId>
+                <version>${org.glassfish.jersey.connectors.jersey.apache.connector.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${org.apache.httpcomponents.httpclient.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>commons-logging</groupId>
+                        <artifactId>commons-logging</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.inject</groupId>
+                <artifactId>jersey-hk2</artifactId>
+                <version>${org.glassfish.jersey.inject.jersey.hk2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-client</artifactId>
+                <version>${org.glassfish.jersey.core.jersey.client.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.core</groupId>
+                <artifactId>jersey-common</artifactId>
+                <version>${org.glassfish.jersey.core.jersey.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.hk2</groupId>
+                <artifactId>hk2-api</artifactId>
+                <version>${org.glassfish.hk2.hk2.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.jersey.bundles.repackaged</groupId>
+                <artifactId>jersey-guava</artifactId>
+                <version>${org.glassfish.jersey.bundles.repackaged.jersey.guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.hk2.external</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>${org.glassfish.hk2.external.javax.inject.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kohlschutter.junixsocket</groupId>
+                <artifactId>junixsocket-core</artifactId>
+                <version>${com.kohlschutter.junixsocket.junixsocket.core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -1243,6 +1305,18 @@
         <carbon.feature.plugin.version>3.1.4</carbon.feature.plugin.version>
         <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
         <com.spotify.docker.plugin.version>1.1.1</com.spotify.docker.plugin.version>
+        <com.spotify.docker.client.version>8.16.0</com.spotify.docker.client.version>
+        <org.glassfish.jersey.connectors.jersey.apache.connector.version>2.22.2</org.glassfish.jersey.connectors.jersey.apache.connector.version>
+        <org.apache.httpcomponents.httpclient.version>4.5.6</org.apache.httpcomponents.httpclient.version>
+        <commons.lang.commons.lang.version>2.6</commons.lang.commons.lang.version>
+        <org.glassfish.jersey.inject.jersey.hk2.version>2.27</org.glassfish.jersey.inject.jersey.hk2.version>
+        <org.glassfish.jersey.core.jersey.client.version>2.22.2</org.glassfish.jersey.core.jersey.client.version>
+        <org.glassfish.jersey.core.jersey.common.version>2.22.2</org.glassfish.jersey.core.jersey.common.version>
+        <org.glassfish.hk2.hk2.api.version>2.4.0-b34</org.glassfish.hk2.hk2.api.version>
+        <org.glassfish.jersey.bundles.repackaged.jersey.guava.version>2.22.2</org.glassfish.jersey.bundles.repackaged.jersey.guava.version>
+        <org.glassfish.hk2.external.javax.inject.version>2.4.0-b34</org.glassfish.hk2.external.javax.inject.version>
+        <com.kohlschutter.junixsocket.junixsocket.core.version>2.2.0</com.kohlschutter.junixsocket.junixsocket.core.version>
+
         <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
         <swagger.codegen.maven.plugin.version>2.4.8</swagger.codegen.maven.plugin.version>
