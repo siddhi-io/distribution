@@ -1,0 +1,46 @@
+@App:name("ExternalTimeBatchWindowStdDev")
+@APP:description("Demonstrates how to calculate the standard deviation based on event timestamps")
+
+/*
+
+Purpose:
+    This application demonstrates how to simulate random events via Feed Simulation and calculate the standard deviation of events. The aggregation is executed on events within a external batch window.In this example it will processing the events that arrive every 2 sec from event time.
+    
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * ExternalTimeBatchWindowStdDev.siddhi - Started Successfully!
+
+Testing the Sample:
+    Configure random event simulation as follows
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Feed Simulation' -> 'Create'
+    3) Give a name (Or the default name in the place holder will be used as its name)
+    4) Select 'Random' as the 'Simulation Source'
+    5) Click on 'Add Simulation Source'
+    6) Select ExternalTimeBatchWindowStdDev as 'Siddhi App Name'
+    7) Select TradesStream as 'StreamName'
+    8) Keep 'Primitive Based' as the config type for symbol,price,volume and eventTime moreover set the range from 0 to 9999999999 for eventTime and leave others attribute's range  as defalut.
+    9) Save the simulator configuration
+    10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
+    11) Click on the start button (Arrow symbol) next to the newly created simulator
+
+Viewing the Results:
+See the output on the console similar to the following (timestamp will be different). The output show the standard deviation for the events sent during last 2 sec from event time.
+[2019-09-19_16-22-32_657] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeBatchWindowStdDev : stdDevStream : Event{timestamp=1568890351655, data=[Hm45H, 191.72444671761863], isExpired=false}
+[2019-09-19_16-22-37_659] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeBatchWindowStdDev : stdDevStream : Event{timestamp=1568890356655, data=[FzLxm, 110.01660517890893], isExpired=false}
+
+*/
+
+define stream TradesStream (symbol string, price float, volume int,eventTime long);
+
+@sink(type="log")
+define stream stdDevStream (symbol string,stdPrice double);
+
+@info(name = 'stdDevPrice')
+from TradesStream#window.externalTimeBatch(eventTime,2 sec)
+select symbol,stdDev(price) as stdPrice
+insert into stdDevStream;

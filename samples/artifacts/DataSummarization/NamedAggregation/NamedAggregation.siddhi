@@ -1,0 +1,98 @@
+@App:name("NamedAggregation")
+@App:description("Demonstrates how to calculate aggregates for various time granularity")
+
+/*
+Purpose:
+    This application demonstrates how to calculate aggregates for various time granularity.In this example two queries are demonstrate such as find the average ,total of price and find the max price items within a last certain hours.
+
+Prerequisites:
+    1) Ensure that MySQL is installed on your machine.
+    2) Add the MySQL JDBC driver into {Siddhi_HOME}/lib as follows:
+           a) Download the JDBC driver from: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz
+           b) Unzip the archive.
+           c) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Home}/lib directory.
+    3) Create a database named 'production' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/production' url.
+    4)In the store configuration of this application, replace 'username' and 'password' values with your MySQL credentials.
+    5) Save this sample
+       
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * NamedAggregation.siddhi - Started Successfully!
+        
+Testing the Sample:
+     1) The '{SiddhiDistribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file is used to provide the sample data for TradeStream. To simulate the events in this CSV file, execute the following steps,
+        a) Click on 'Event Simulator' (double arrows on left tab)
+        b) Click 'Feed Simulation' -> 'Create'
+        c) Give a name, description and time interval
+        d) Select 'CSV file' as the 'Simulation Source'
+        e) Click on 'Add Simulation Source'
+        f) Select 'NamedAggregation' as 'Siddhi App Name'
+        g) Select 'TradeStream' as 'StreamName'
+        h) Click on 'Upload' button under 'CSV file' section and upload the '{SiddhiDistribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file
+        i) Give ',' as the delimiter
+        j) Save the configuration.
+        
+    2) Click on the start button (Arrow symbol) next to the newly created simulator, and wait few seconds to complete the  events sending from the '{SiddhiDistribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file to TradeStream.
+    
+    3)  Click on 'Event Simulator' (double arrows on left tab)
+           a) Click 'Single Simulation' (this will be already selected)
+           b) Select 'NamedAggregation' as Siddhi App Name
+           c) Select ' DashboardTriggerStream' as StreamName
+           d) Provide symbol values
+              - symbol: WSO10
+              -startTime:1569305232000
+              -endTime:1569305238000
+           e) Send event and it gives per hour granularity level summarizations for that provided symbol.
+            See the output on the console similar to the following (timestamp will be different):
+           [2019-09-24_13-21-14_228] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedAggregation : AggregateStockStream : Event{timestamp=1569311474221, data=[WSO10, 1100.0, 220.0], isExpired=false}
+         
+          f) Select 'QueryTriggerStream' as StreamName
+          g) Provide triggerId values
+              - triggerId: 1
+          h) Send event
+         See the output on the console similar to the following (timestamp will be different):
+         [2019-09-24_13-21-21_495] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedAggregation : MaxStockStream : [Event{timestamp=1569311481486, data=[WSO11, 800.0], isExpired=false}, Event{timestamp=1569311481486, data=[WSO16, 700.0], isExpired=false}, Event{timestamp=1569311481486, data=[WSO15, 600.0], isExpired=false}, Event{timestamp=1569311481486, data=[WSO14, 500.0], isExpired=false}, Event{timestamp=1569311481486, data=[WSO10, 500.0], isExpired=false}, Event{timestamp=1569311481486, data=[WSO13, 400.0], isExpired=false}, Event{timestamp=1569311481486, data=[WSO12, 300.0], isExpired=false}]
+         
+         */
+        
+define stream TradeStream(symbol string, price double, volume long,timestamp long);
+
+define stream  DashboardTriggerStream(symbol string,startTime long,endTime long);
+
+define stream QueryTriggerStream(triggerId string);
+
+@sink(type="log")
+define stream AggregateStockStream(symbol string,totalPrice double,avgPrice double);
+
+@sink(type="log")
+define stream MaxStockStream(symbol string,maxPrice double);
+
+@Store(type="rdbms",
+       jdbc.url="jdbc:mysql://localhost:3306/production?useSSL=false",
+       username="username",
+       password="password",
+       jdbc.driver.name="com.mysql.jdbc.Driver")
+define aggregation TradeAggregation
+from TradeStream
+select symbol, avg(price) as avgPrice, sum(price) as totalPrice,max(price) as maxPrice
+group by symbol
+aggregate by timestamp every sec...year;
+
+@info(name='AggregationQuery') 
+from  DashboardTriggerStream as s join TradeAggregation as t
+on s.symbol==t.symbol
+within "2016-06-06 12:00:00 +05:30", "2020-06-06 12:00:00 +05:30"
+per 'hours'
+select t.symbol,t.totalPrice, t.avgPrice
+insert into AggregateStockStream;
+
+-- There must be events for last 5 hours to execute this query otherwise it won't work.
+@info(name='MaxItemQuery') 
+from QueryTriggerStream as s join TradeAggregation as t
+within currentTimeMillis()-1800000000,currentTimeMillis()
+per 'hours'
+select t.symbol,t.maxPrice
+group by symbol
+order by maxPrice desc
+insert into MaxStockStream;
