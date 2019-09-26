@@ -1,5 +1,4 @@
-@App:name("ReceiveAndCount")
-
+@App:name("ReceiveThroughHttp.siddhi")
 @App:description('Receive events via HTTP transport and view the output on the console')
 
 /*
@@ -15,7 +14,7 @@ Executing the Sample:
 
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
         * Source Listener has created for url http://localhost:8006/productionStream
-        * ReceiveAndCount.siddhi - Started Successfully!
+        * ReceiveThroughHttp.siddhi.siddhi - Started Successfully!
 
     Notes:
     If you edit this application while it's running, stop the application -> Save -> Start.
@@ -47,7 +46,7 @@ Testing the Sample:
             }
 
 Viewing the Results:
-    See the output on the console. Note how the count increments with every event you send.
+    See the output on the console.
 
 */
 
@@ -58,10 +57,10 @@ Viewing the Results:
 define stream SweetProductionStream (name string, amount double);
 
 @sink(type='log')
-define stream TotalCountStream (totalCount long);
+define stream OutputStream (totalCount long);
 
 -- Count the incoming events
 @info(name='query1')
 from SweetProductionStream
-select count() as totalCount
-insert into TotalCountStream;
+select *
+insert into OutputStream;
