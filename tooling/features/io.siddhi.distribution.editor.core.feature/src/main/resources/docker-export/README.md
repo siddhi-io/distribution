@@ -1,16 +1,24 @@
-# Siddhi Editor Docker Artifacts
+# Siddhi Docker Artifacts
 
-Docker artifacts in Siddhi Editor can be used to build Docker containers with Siddhi files.
+Exported Docker artifacts from Siddhi Tooling can be used to manually 
+build **Siddhi Runner** docker image bundling the Siddhi applications, configurations and dependency jars/bundles configured during the Export Docker phase.
+
 
 ## Directory Structure
 
-In Siddhi Editor, Docker artifacts can be created for **Runner** runtime. Directory structure of the ZIP file is as follows.
+Directory structure of the exported docker artifacts zip file is as follows.
 
 ```
 .
+├── bundles
+│   ├── <BUNDLE_FILE_1>.jar
+│   └── <BUNDLE_FILE_2>.jar
+├── configurations.yaml
+├── Dockerfile
+├── jars
+│   └── <JAR_FILE_1>.jar
 ├── README.md
-├── docker-compose.yml
-└── workspace
+└── siddhi-files
     ├── <SIDDHI_FILE_1>.siddhi
     └── <SIDDHI_FILE_2>.siddhi
 ```
@@ -19,26 +27,33 @@ In Siddhi Editor, Docker artifacts can be created for **Runner** runtime. Direct
 Purpose of each file in the above archive is as follows.
 
 - **README.md**: This readme file.
-- **docker-compose.yml**: Docker Compose file which contains Docker configurations to build and run the Docker container.
+- **Dockerfile**: Docker image build script which contains all commands to assemble Siddhi Runner image. 
 - **siddhi-files**: Directory which contains Siddhi files.
+- **bundles**: Directory maintained for OSGI bundles which needs to be copied to Siddhi Runner image during build phase.
+- **jars**: Directory maintained for Jar files which may not have their corresponding OSGi bundle implementation. These Jars will be converted as OSGI bundles and copied to Siddhi Runner image during build phase.
 
 ## How to Run?
 
-To run this archive, following applications are required.
+To run this archive, you need **Docker** installed in your environment.
 
-- Docker
-- Docker Compose
+If the docker prerequisite is met, follow the steps mentioned below to create and run the docker image.
 
-Once the above prerequisites are installed in your environment, follow the steps mentioned below to create and run the docker image.
+Let the extracted directory be referred as `<DOCKER_BUILD_HOME>` within this document.
 
-1. Unzip the docker-artifact.zip archive file. The extracted directory will be referred as `<DOCKER_HOME>` within this document.
+1. Go to `<DOCKER_HOME>` directory.
 
-2. Go to `<DOCKER_HOME>` directory.
-
-3. Run the following command to start the Docker container.
+2. Run the following command to build the Docker image.
 
 ```
-docker-compose up
+docker build . -t siddhi-runner:custom-1.0.0
+```
+
+3. Run the following command to run the Docker image.(
+
+Note: Container ports are forwarded to its specific ports in the host machine assuming those ports are not in use.
+   
+```
+docker run -it {{BIND_PORTS}} siddhi-runner:custom-1.0.0
 ```
 
 
