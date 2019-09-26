@@ -1,65 +1,61 @@
-@App:name("Batching&Processing")
-@App:description("Process a batch of events")
+@App:name("AsyncBatching&Processing")
+@App:description("Improve performance using parallel processing and event chunking")
 
 /*
 Purpose:
     This application defines a maximum number of events that will be fetched from the event buffer
-    to be processed together by a worker thread, at a given time.
+    to be processed together by worker threads, at a given time.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
-        * Batching&Processing.siddhi - Started Successfully!.
+        * AsyncBatching&Processing.siddhi - Started Successfully!.
 
 Testing the Sample:
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Single Simulation' (this will be already selected)
-    3) Select 'Batching&Processing' as Siddhi App Name
-    4) Select 'StockEventStream' as StreamName
+    3) Select 'AsyncBatching&Processing' as Siddhi App Name
+    4) Select 'StockStream' as StreamName
     5) Provide attribute values
-        - symbol : AA
-        - price : 30
-        - volume : 100
+        - symbol : S1
+        - noOfStocks : 5
     6) Send event
-    5) Provide attribute values
-        - symbol : AB
-        - price : 40
-        - volume : 110
-    6) Send event
-    5) Provide attribute values
-        - symbol : AA
-        - price : 80
-        - volume : 120
-    6) Send event
-    5) Provide attribute values
-        - symbol : AC
-        - price : 10
-        - volume : 105
-    6) Send event
+    7) Provide attribute values
+        - symbol : S2
+        - noOfStocks : 10
+    8) Send event
+    9) Provide attribute values
+        - symbol : S3
+        - noOfStocks : 8
+    10) Send event
+    11) Provide attribute values
+        - symbol : S4
+        - noOfStocks : 7
+    12) Send event
+    13) Provide attribute values
+        - symbol : S5
+        - noOfStocks : 12
+    14) Send event
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - Batching&Processing : OutputStream : Event{timestamp=1569233330970, data=[AA, 30.0, 100], isExpired=false}
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - Batching&Processing : OutputStream : Event{timestamp=1569233342696, data=[AB, 40.0, 110], isExpired=false}
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - Batching&Processing : OutputStream : Event{timestamp=1569233369217, data=[AC, 10.0, 105], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569501841953, data=[S1, 50], isExpired=false}, Event{timestamp=1569501851183, data=[S2, 100], isExpired=false}]
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569501857936, data=[S3, 80], isExpired=false}, Event{timestamp=1569501865491, data=[S4, 70], isExpired=false}]
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569501872409, data=[S5, 120], isExpired=false}]
 */
+
 
 -- 'buffer.size' defines the size of the event buffer that holds the events until they are picked by worker threads for processing.
 -- 'workers' defines the number of worker threads that process the buffered events.
 -- 'batch.size.max' defines the maximum number of events that will be fetched from the event buffer to be processed together by a worker thread
-@async(buffer.size='16' , workers='2', batch.size.max='3')
-define stream StockEventStream(symbol string, price float, volume int);
-
 @sink(type='log')
-define stream OutputStream(symbol string, price float, volume int);
+@async(buffer.size='1024', workers='1', batch.size.max='2')
+define stream TotalPriceStream(symbol string, totalPrice int);
 
-@info(name='Select events from StockEventStream where price less than 70')
-from StockEventStream[70 > price]
-select *
-insert into InnerStream;
+define stream StockStream(symbol string, noOfStocks int);
 
-@info(name='Select events from InnerStream where volume greater than 90')
-from InnerStream[volume  > 90]
-select *
-insert into OutputStream;
+-- A window to hold incoming events as a batch of 5 and process the events.
+from StockStream#window.lengthBatch(5)
+select symbol,noOfStocks*10 as totalPrice
+insert into TotalPriceStream;
 
