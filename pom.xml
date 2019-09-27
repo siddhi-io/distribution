@@ -1219,7 +1219,7 @@
         <siddhi.io.grpc.version>1.0.0-beta</siddhi.io.grpc.version>
 
         <siddhi.map.json.version>5.0.5-SNAPSHOT</siddhi.map.json.version>
-        <siddhi.map.avro.version>2.0.4-SNAPSHOT</siddhi.map.avro.version>
+        <siddhi.map.avro.version>2.0.4</siddhi.map.avro.version>
         <siddhi.map.binary.version>2.0.4-SNAPSHOT</siddhi.map.binary.version>
         <siddhi.map.text.version>2.0.5-SNAPSHOT</siddhi.map.text.version>
         <siddhi.map.xml.version>5.0.4-SNAPSHOT</siddhi.map.xml.version>
