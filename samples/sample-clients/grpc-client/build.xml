@@ -70,9 +70,9 @@
     </target>
 
     <target name="run" depends="compile">
+        <echo>Publishing events to grpc endpoints to port 5545</echo>
         <java classname="io.siddhi.distribution.sample.grpc.client.GrpcClient" classpathref="javac.classpath"
                fork="true">
-            <echo>Publishing events to grpc endpoints to port 5545</echo>
             <arg value="${port}"/>
             <arg value="${noOfEventsToSend}"/>
         </java>

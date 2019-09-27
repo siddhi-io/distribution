@@ -31,11 +31,7 @@ public class GrpcClient {
             log.info(response);
             Thread.sleep(1000);
             sentEvents++;
-
         }
-
-
-
     }
 
 
