@@ -1,0 +1,59 @@
+@App:name("PublishEventsToPrometheus")
+@App:description("Use siddhi-io-prometheus to publish events to Prometheus")
+
+/*
+Purpose:
+    This application demonstrates how to use prometheus-sink to pusblish events to prometheus.
+
+Pre-requisites:
+    1) The following steps must be executed to enable WSO2 SP to publish and retrieve events via Prometheus.
+        a) Download and copy the prometheus client jars to the {Siddhi_Distribution_Home}/bundles directory as follows.
+              i) Download the following jars from https://mvnrepository.com/artifact/io.prometheus and copy them to {Siddhi_Distribution_Home}/bundles directory.
+                 * simpleclient_common-0.5.0.jar
+                 * simpleclient-0.5.0.jar
+		         * simpleclient_httpserver-0.5.0.jar
+		         * simpleclient_pushgateway-0.5.0.jar
+    2) Start the Siddhi_Distribution
+    3) Save this sample
+        "Siddhi App PublishEventsToPrometheus successfully deployed" message would be shown in the console
+
+Executing the Sample:
+    1) Start the Siddhi app by clicking on 'Run'.
+    2) If the Siddhi application starts successfully, the following message is shown on the console
+        * PublishEventsToPrometheus.siddhi - Started Successfully!
+        * SinkStream has successfully connected at http://localhost:9080
+
+Note:
+    If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
+
+Testing the Sample:
+    1) Simulate single events:
+        a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
+        b) Select 'PublishEventsToPrometheus' as 'Siddhi App Name' and select 'InputStream' as 'Stream Name'.
+        c) Provide attribute values, and then click Send.
+
+Viewing the Results:
+    Output similar to the following would be shown at the http end point http://localhost:9080/metrics
+    -total_device_power_consumption_WATTS{deviceID="server004",roomID="roomNoF5",} 12.0
+*/
+
+define stream InputStream (deviceID string, roomID string,power int);
+
+@sink(type='prometheus',
+      job='prometheusSample',
+      publish.mode='server',
+      server.url='http://localhost:9080',
+      metric.type='counter',
+      value.attribute= 'power',
+      metric.name= 'total_device_power_consumption_WATTS',
+      metric.help= 'Total Power consumption of each devices in Watts',
+      @map(type = 'keyvalue'))
+
+Define stream SinkStream (deviceID string, roomID string, power int);
+
+@info(name = 'publishQuery')
+from InputStream
+select *
+insert into SinkStream;
+
+
