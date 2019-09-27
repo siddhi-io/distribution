@@ -1,0 +1,66 @@
+@App:name("ErrorHandling")
+@App:description("Demonstartes how errors can be handled at sink and stream")
+
+/*
+
+Purpose:
+    This application demonstrates how error handling can be integrated into siddhi apps.The sample depicts two scenarios of sending events via simulator to unavailable http endpoint and converting a null value to upper case which demonstrates error handling at sink and stream respectively.Failed events are pushed with the corresponding error to the associated fault stream.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following message would be shown on the console
+        * ErrorHandling.siddhi-Started Successfully!
+
+    Notes:
+    If you edit this application while it's running, stop the application -> Save -> Start.
+
+Testing the Sample:
+    1) Simulate single events:
+        a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
+        b) Select 'ErrorHandling' as 'Siddhi App Name' and select 'TempInStream' as 'Stream Name'.
+        c) Provide attribute values, and then click Send.
+    2) Follow the same steps to observe error handling at stream by selecting 'MessageInStream' as 'Stream Name' and checking 'is Null' on the upper right of attributes box to send a null event.
+
+Viewing the Results:
+    View the printed message on console. You should get something simillar to following for the two scenarios at sink and stream respectively.
+    - INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - ErrorHandling: Error Occurred!, StreamEvent{ timestamp=1569565435919, beforeWindowData=null, onAfterWindowData=null, outputData=[2, 2, 2.0, io.siddhi.core.exception.ConnectionUnavailableException: Siddhi App ErrorHandling failed to publish events to HTTP endpoint: http://localhost:5000/temperature], type=CURRENT, next=null}
+
+    -INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - ErrorHandling: Error Occurred!, StreamEvent{ timestamp=1569565992444, beforeWindowData=null, onAfterWindowData=null, outputData=[null, io.siddhi.core.exception.SiddhiAppRuntimeException: Invalid input given to str:upper() function. The argument cannot be null. Exception on class 'io.siddhi.extension.execution.string.UpperFunctionExtension'], type=CURRENT, next=null}
+
+    Note:
+    Stop this Siddhi application, once you are done with the execution
+
+*/
+
+define stream TempInStream (deviceID long, roomNo int, temp double);
+
+@OnError(action='STREAM')
+define stream MessageInStream (message string);
+
+--Error handling at sink
+@OnError(action='STREAM')
+@sink(type = 'http', on.error='STREAM', publisher.url = "http://localhost:5000/temperature",
+    @map(type = 'json'))
+define stream TempOutStream (deviceID long, roomNo int, temp double);
+
+@info(name = 'Error-generation-sink')
+from TempInStream
+select *
+insert into TempOutStream;
+
+@info(name = 'Handle-error-sink')
+from !TempOutStream#log("Error Occurred!")
+select *
+insert into TempIgnoreStream;
+
+
+--Error handling at stream
+@info(name = 'Error-generation-stream')
+from MessageInStream
+select str:upper(message) as message
+insert into MessageOutStream;
+
+@info(name = 'Handle-error-stream')
+from !MessageInStream#log("Error Occurred!")
+select *
+insert into MessageIgnoreStream;
