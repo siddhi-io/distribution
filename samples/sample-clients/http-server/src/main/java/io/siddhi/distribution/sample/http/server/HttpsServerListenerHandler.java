@@ -32,6 +32,7 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
+
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLParameters;
@@ -40,14 +41,14 @@ import javax.net.ssl.TrustManagerFactory;
 /**
  * Https test sever listener.
  */
-public class HttpsServerListnerHandler {
-    private static final Logger logger = Logger.getLogger(HttpsServerListnerHandler.class);
+public class HttpsServerListenerHandler {
+    private static final Logger logger = Logger.getLogger(HttpsServerListenerHandler.class);
     private HttpServerListener sl;
     private int port;
     private KeyStore ks;
     private HttpsServer server;
 
-    public HttpsServerListnerHandler(int port) throws KeyStoreException {
+    public HttpsServerListenerHandler(int port) throws KeyStoreException {
         this.sl = new HttpServerListener();
         this.port = port;
         ks = KeyStore.getInstance("JKS");
