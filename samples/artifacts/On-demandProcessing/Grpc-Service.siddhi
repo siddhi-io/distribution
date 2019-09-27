@@ -1,5 +1,5 @@
 @App:name("Grpc-Service")
-@App:description("Description of the plan")
+@App:description("Use siddhi as a gRPC service")
 
 /*
 

@@ -8,6 +8,7 @@ import org.wso2.grpc.EventServiceGrpc;
 
 public class GrpcClient {
     private static final Logger log = Logger.getLogger(GrpcClient.class);
+
     /**
      * Main method to start the test client.
      *
@@ -33,6 +34,4 @@ public class GrpcClient {
             sentEvents++;
         }
     }
-
-
 }
