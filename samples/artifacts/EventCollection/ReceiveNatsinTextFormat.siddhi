@@ -1,0 +1,51 @@
+@App:name("ReceiveNatsinTextFormat")
+@App:description('Receive events via NATS transport in text format with default mapping and view the output on the console.')
+
+/*
+Purpose:
+    This application demonstrates how to configure siddhi applications to receive events to the SweetProductionStream via NATS transport in text format with some regular expression and log the events in LowProductionAlertStream to the output console.
+
+Prerequisites:
+    1)Install the NATS Streaming server from "https://nats-io.github.io/docs/nats_streaming/gettingstarted/install.html"
+    2)The Siddhi app runtime will need the following JARs to connect to the NATS streaming server. Download those JARs using the following links and add those JARs to "{SiddhiHome}/jars" directory.
+        a)Java NATS streaming :-"https://mvnrepository.com/artifact/io.nats/java-nats-streaming/2.1.2"
+        b)JNATS:-"https://mvnrepository.com/artifact/io.nats/jnats/2.3.0"
+    3)It also needs the Protobuf bundle. Download the Protobuf bundle using the following link and add the bundle to "s{SiddhiHome}/bundles" directory.
+        a)Protobuf:-"https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java/3.6.1"
+        
+Configurations:
+      For local deployments to testing this sample, need set up these environmental variables as follows.
+        a)STAN_CLUSTER_ID="test-cluster"
+        b)STAN_SERVER_URL="nats://localhost:4222"
+   
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'.
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console.
+       * ReceiveNatsinTextFormat.siddhi - Started Successfully!
+
+Testing the Sample:
+    1)Save this sample.
+    2)To test this sample you have to send a request to the NATS streaming server.  you can send the request using various NATS clients. In this use case, you can use NATS streaming Go language client to easily send requests. To do that you need to have to install Golang in your machine. Or else you can use other clients like (Java:-"https://github.com/nats-io/stan.java", JS:-"https://github.com/nats-io/stan.js", Python:-"https://github.com/nats-io/stan.py", or Ruby:-"https://github.com/nats-io/stan.rb" etc). You can use following Golang commands to send a request to the NATS streaming cluster in your terminal.
+       a) $ go get github.com/nats-io/stan.go/
+       b) $ go run $GOPATH/src/github.com/nats-io/stan.go/examples/stan-pub/main.go -s localhost:4222 -c test-cluster SweetProduction "name:cakes,price:45.5675784757,volume:10" 
+
+  Viewing the Results in console similar to the following (timestamp will be different):
+  [2019-09-27_14-50-36_266] INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveNatsinTextFormat : LowProductionAlertStream : Event{timestamp=1569576036266, data=[cakes, 45.5675784757, 10], isExpired=false}
+*/
+
+@source(
+    type='nats', 
+    cluster.id='test-cluster', --STAN_CLUSTER_ID 
+    destination='SweetProduction',--Optional value
+    bootstrap.servers='nats://localhost:4222',--STAN_SERVER_URL
+    @map(type='text',fail.on.missing.attribute='true',regex.A='name:(\w+),price:(\d+\.\d+),volume:(\d+)',
+    @attributes(name = 'A[1]', price = 'A[2]',volume='A[3]')))
+define stream SweetProductionStream(name string,price double,volume int);
+
+@sink(type='log')
+define stream LowProductionAlertStream (name string,price double,volume int);
+
+-- Passthrough data in the SweetProductionStream into LowProducitonAlertStream
+from SweetProductionStream
+select name,price,volume
+insert into LowProductionAlertStream;
