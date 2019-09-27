@@ -24,8 +24,8 @@ Executing the Sample:
     
 
 Testing the Sample:
-    Publish events to the http endpoint defined by 'receiver.url' in Source configuration. You may publish events with curl command or Postman application as follows,
-    1) Navigate to {SiddhiDistribution_Home}/samples/sample-clients/grpc-client and run "ant" command as follows:
+    Publish events to the grpc service defined by 'receiver.url' in Source configuration. You may publish events with ant command as follows,
+    1) Navigate to {SiddhiDistribution_Home}/samples/sample-clients/grpc-generic-client and run "ant" command as follows:
             Run "ant" command in the terminal
             If you want to publish custom number of events, you need to run "ant" command as follows
                 ant -DnoOfEventsToSend=5
