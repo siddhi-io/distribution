@@ -377,6 +377,12 @@
                                     <version>${siddhi.io.grpc.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>io.siddhi.extension.io.rabbitmq</groupId>
+                                    <artifactId>siddhi-io-rabbitmq</artifactId>
+                                    <version>${siddhi.io.rabbitmq.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
                                 <!--<artifactItem>-->
                                     <!--<groupId>io.siddhi.extension.io.googlepubsub</groupId>-->
                                     <!--<artifactId>siddhi-io-googlepubsub</artifactId>-->
