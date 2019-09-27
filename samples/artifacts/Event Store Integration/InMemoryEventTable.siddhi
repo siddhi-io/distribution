@@ -21,7 +21,7 @@ Testing the Sample:
             Stream Name      : SweetProductionStream
             itemId           : 10
             name             : cake
-        d) Similarly, send another event by specifying the following values.
+        c) Similarly, send another event by specifying the following values.
             Siddhi App Name  : InMemoryEventTable
             Stream Name      : TempStream
             itemId           : 10
