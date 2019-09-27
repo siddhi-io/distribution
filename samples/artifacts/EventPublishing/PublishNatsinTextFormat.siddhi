@@ -38,7 +38,7 @@ Testing the Sample:
                  a) $ go get github.com/nats-io/stan.go/
                  b) $ go run $GOPATH/src/github.com/nats-io/stan.go/examples/stan-sub/main.go -s localhost:4222 -c test-cluster LowerProduction
 
-                  Viewing the Results in terminal similar to the following (timestamp will be different)::
+                  Viewing the Results in terminal similar to the following (timestamp will be different):
                         [#1] Received: sequence:1 subject:"LowerProduction" data:"name:\"cakes\",\namount:350.5,\nvolume:10" timestamp:1569558673534580034
 */
 
