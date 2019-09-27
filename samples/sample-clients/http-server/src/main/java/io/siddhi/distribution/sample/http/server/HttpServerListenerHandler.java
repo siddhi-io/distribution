@@ -18,7 +18,6 @@
  */
 package io.siddhi.distribution.sample.http.server;
 
-
 import com.sun.net.httpserver.HttpServer;
 import org.apache.log4j.Logger;
 
@@ -41,7 +40,6 @@ public class HttpServerListenerHandler {
     HttpServerListenerHandler(int port) {
         this.sl = new HttpServerListener();
         this.port = port;
-        run();
     }
 
     public void run() {
@@ -54,15 +52,5 @@ public class HttpServerListenerHandler {
         } catch (IOException e) {
             logger.error("Error in creating test server.");
         }
-
     }
-
-    void shutdown() {
-        if (server != null) {
-            server.stop(1);
-        }
-
-    }
-
-
 }
