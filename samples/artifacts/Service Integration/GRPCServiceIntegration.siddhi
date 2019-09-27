@@ -4,7 +4,7 @@
 /*
 
 Purpose:
-    This application demonstrates how to use grpc as a service with custom grpc service (EventService)
+    This application demonstrates how to publish grpc requests with default grpc service(EventService) and receive their response and process them.
 
 Prerequisites:
     1) Save this sample
