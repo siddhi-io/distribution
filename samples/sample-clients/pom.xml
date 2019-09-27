@@ -42,5 +42,6 @@
         <module>websocket-receiver</module>
         <module>kafka-avro-consumer</module>
         <module>prometheus-client</module>
+        <module>grpc-client</module>
     </modules>
 </project>
