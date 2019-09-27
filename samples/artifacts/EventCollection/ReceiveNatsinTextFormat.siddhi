@@ -12,11 +12,7 @@ Prerequisites:
         b)JNATS:-"https://mvnrepository.com/artifact/io.nats/jnats/2.3.0"
     3)It also needs the Protobuf bundle. Download the Protobuf bundle using the following link and add the bundle to "s{SiddhiHome}/bundles" directory.
         a)Protobuf:-"https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java/3.6.1"
-        
-Configurations:
-      For local deployments to testing this sample, need set up these environmental variables as follows.
-        a)STAN_CLUSTER_ID="test-cluster"
-        b)STAN_SERVER_URL="nats://localhost:4222"
+
    
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
