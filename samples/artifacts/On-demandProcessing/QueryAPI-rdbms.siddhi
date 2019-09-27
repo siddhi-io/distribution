@@ -1,0 +1,72 @@
+@App:name("QueryAPI-rdbms")
+@App:description("On-demand queries with rdbms")
+
+/*
+Purpose:
+    This application demonstrates how to use on-demand query to retrieve daily aggregations from the TradeAggregation within a specified time period.
+
+Prerequisites:
+    1) Ensure that MySQL is installed on your machine.
+    2) Create a database named 'Hotel' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Hotel' url.
+    3) Create a table named 'RoomDetails': CREATE TABLE RoomDetails (roomNo INT PRIMARY KEY,people INT,type VARCHAR(20)));
+    4) Enter your username and password (in line 69) for MySQL server and save this sample.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * QueryAPI-rdbms.siddhi - Started Successfully!.
+
+Testing the Sample using CURL commands:
+    1) Send the following CURL command to insert new records.
+        curl -X POST \
+          http://localhost:9390/stores/query \
+          -H 'Content-Type: application/json' \
+          -d '{
+        "appName": "QueryAPI-rdbms",
+        "query": "select 1 as roomNo,1 as people,\"single\" as type insert into RoomDetails"
+        }'
+    2) Send the following CURL command to update a record.
+        curl -X POST \
+          http://localhost:9390/stores/query \
+          -H 'Content-Type: application/json' \
+          -d '{
+        "appName": "QueryAPI-rdbms",
+        "query": "update RoomDetails set RoomDetails.people = RoomDetails.people + 1,RoomDetails.type=\"double\" on RoomDetails.roomNo == 1"
+        }'
+    3) Send the following CURL command to retrieve records.
+        curl -X POST \
+          http://localhost:9390/stores/query \
+          -H 'Content-Type: application/json' \
+          -d '{
+        "appName": "QueryAPI-rdbms",
+        "query": "from RoomDetails select *"
+        }'
+    4) Send the following CURL command to delete a record.
+        curl -X POST \
+          http://localhost:9390/stores/query \
+          -H 'Content-Type: application/json' \
+          -d '{
+        "appName": "QueryAPI-rdbms",
+        "query": "delete RoomDetails on RoomDetails.roomNo == 1"
+        }'
+
+Testing the sample using 'Siddhi Store Query' provided in Siddhi Editor.
+    1) Go to 'Tools' -> 'Siddhi Store Query'
+    2) Select Siddhi App Name as "QueryAPI-rdbms"
+    3) To insert a record provide the query as below.
+        select 1 as roomNo,1 as people,\"single\" as type insert into RoomDetails
+    4) To update a record provide the query as below.
+        update RoomDetails set RoomDetails.people = RoomDetails.people + 1,RoomDetails.type=\"double\" on RoomDetails.roomNo == 1
+    5) To retrieve records provide the query as below.
+        from RoomDetails select *
+    6) To delete a record provide the query as below.
+        delete RoomDetails on RoomDetails.roomNo == 1
+
+Note :- You can either use CURL commands or 'Siddhi Store Query' provided in Siddhi Editor to make on-demand queries with rdbms.
+
+*/
+
+@Store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/Hotel?useSSL=false", username="your_username", password="your_password", jdbc.driver.name="com.mysql.jdbc.Driver")
+@PrimaryKey("roomNo")
+define table RoomDetails (roomNo int, people int, type string);
+

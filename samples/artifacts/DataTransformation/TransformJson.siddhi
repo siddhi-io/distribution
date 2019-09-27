@@ -1,0 +1,64 @@
+@App:name("TransformJson")
+@App:description("Process JSON object")
+
+/*
+Purpose:
+    This application demonstrates how to transform json messages.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * TransformJson.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'TransformJson' as Siddhi App Name
+    4) Select 'InputStream' as StreamName
+    5) Provide attribute values
+        - data : {'name' : 'John', 'age' : 25 , 'married' : true , 'address' : {'city' : 'NY', 'country' : 'USA'}}
+    6) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different).
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - TransformJson : NameLogStream : Event{timestamp=1569160833468, data=[John], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - TransformJson : AgeLogStream : Event{timestamp=1569160833468, data=[25], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - TransformJson : MarriedLogStream : Event{timestamp=1569160833468, data=[true], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - TransformJson : AddressLogStream : Event{timestamp=1569160833468, data=[{city=NY, country=USA}], isExpired=false}
+
+*/
+
+define stream InputStream(data string);
+
+@sink(type='log')
+define stream NameLogStream(name string);
+
+@sink(type='log')
+define stream AgeLogStream(age int);
+
+@sink(type='log')
+define stream MarriedLogStream(married bool);
+
+@sink(type='log')
+define stream AddressLogStream(address object);
+
+-- Retrieves value specified in the given path of the JSON 'name' element as a string.
+from InputStream
+select json:getString(data,'$.name') as name
+insert into NameLogStream;
+
+-- Retrieves value specified in the given path of the JSON 'age' element as a integer.
+from InputStream
+select json:getInt(data,'$.age') as age
+insert into AgeLogStream;
+
+-- Retrieves value specified in the given path of the JSON 'married' element as a boolean.
+from InputStream
+select json:getBool(data,'$.married') as married
+insert into MarriedLogStream;
+
+-- Retrieves value specified in the given path of the JSON 'address' element as a object.
+from InputStream
+select json:getObject(data,'$.address') as address
+insert into AddressLogStream;
+

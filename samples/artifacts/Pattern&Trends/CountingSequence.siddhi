@@ -1,0 +1,44 @@
+@App:name("CountingSequence")
+
+@App:description("Send alerts when temperature increases at least by one degree between two consecutive temperature events.")
+
+/*
+
+Purpose:
+    This application demonstrates how to configure a Siddhi application to send alerts when temperature increases at least by one degree between two consecutive temperature events using counting sequence.
+
+Executing the Sample:
+    1) Save this sample
+    2) Start the Siddhi application by clicking on 'Run'.
+    3) If the Siddhi application starts successfully, the following messages would be shown on the console.
+        * CountingSequence.siddhi - Started Successfully!
+
+Testing the Sample:
+     You may send events via event simulator
+        a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
+        b) In the Single Simulation tab of the panel, specify the values as follows:
+            * Siddhi App Name  : CountingSequence
+            * Stream Name      : TempStream
+        c) In the roomId and temp fields, enter the following and then click "Send" to send the event.
+            roomId: 10
+            temp: 25
+        d) Similarly, send another event in which the temperature increases at least by one degree compared to the temperature in the previous event.
+            roomId: 10
+            temp: 27
+            
+    Notes:
+    * Temperature increase between two consecutive temperature events should be greater than one degree in order to display the alert.
+
+Viewing the Results:
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - CountingSequence : AlertStream : Event{timestamp=1569234392967, data=[25.0, 27.0], isExpired=false}
+
+*/
+
+define stream TempStream(roomId int, temp double);
+
+@sink(type='log')
+define stream AlertStream(initialTemp double, finalTemp double);
+
+from every e1=TempStream, e2=TempStream[temp > e1.temp + 1]
+select e1.temp as initialTemp, e2.temp as finalTemp
+insert into AlertStream;

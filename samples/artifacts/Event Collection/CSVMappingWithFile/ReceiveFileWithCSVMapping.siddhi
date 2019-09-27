@@ -1,0 +1,42 @@
+@App:name("ReceiveFileWithCSVMapping")
+
+@App:description('Receive data events in CSV files and display the output on the console.')
+
+/*
+
+Purpose:
+	This application demonstrates how to configure a Siddhi application to receive data events in CSV files and display the output on the console.
+
+Prerequisites:
+    * Edit the uri '{SiddhiHome}/samples/artifacts/CSVMappingWithFile/new/example.csv' by replacing {SiddhiHome} with the absolute path of your Siddhi home directory.
+	* Save this sample. If there is no syntax error, the following messages would be shown on the console:
+	    * ReceiveFileWithCSVMapping successfully deployed.
+
+Executing & testing the Sample:
+	1) Start the Siddhi application by clicking on 'Run'.
+	2) If the Siddhi application starts successfully, the following messages are shown on the console:
+        * ReceiveFileWithCSVMapping.siddhi - Started Successfully!
+
+Viewing the Results:
+	Source takes input from the '{SiddhiHome}/samples/artifacts/CSVMappingWithFile/new/example.csv' then produce the event.
+	example.csv has data in below format
+			1,WSO2,23.5
+			2,IBM,2.5
+	Output is displayed in the console in the below format.
+	    INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveFileWithCSVMapping : OutputStream : Event{timestamp=1569480543496, data=[﻿1, WSO2, 23.5], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveFileWithCSVMapping : OutputStream : Event{timestamp=1569480543497, data=[2, IBM, 2.5], isExpired=false}
+
+*/
+
+@source(type='file',
+dir.uri='file://{SiddhiHome}/samples/artifacts/CSVMappingWithFile/new',
+action.after.process='NONE',
+@map(type='csv'))
+define stream InputStream (id string, name string, amount double);
+
+@sink(type="log")
+define stream OutputStream (id string, name string, amount double);
+
+from InputStream
+select *
+insert into OutputStream;
