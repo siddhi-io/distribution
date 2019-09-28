@@ -1272,6 +1272,10 @@
         <org.yaml.snakeyaml.version.range>[1.0.0, 2.0.0)</org.yaml.snakeyaml.version.range>
         <slf4j.version.range>[1.7,2)</slf4j.version.range>
 
+
+        <!-- grpc dependency version-->
+        <grpc.version>1.22.1</grpc.version>
+
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>
     </properties>
