@@ -38,22 +38,6 @@
             <artifactId>io.siddhi.distribution.common</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.siddhi</groupId>
-            <artifactId>siddhi-query-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi</groupId>
-            <artifactId>siddhi-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi</groupId>
-            <artifactId>siddhi-query-compiler</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.siddhi</groupId>
-            <artifactId>siddhi-annotations</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.wso2.carbon.deployment</groupId>
             <artifactId>org.wso2.carbon.deployment.engine</artifactId>
         </dependency>
@@ -88,22 +72,6 @@
                                 <bundle>
                                     <symbolicName>io.siddhi.distribution.common</symbolicName>
                                     <version>${project.version}</version>
-                                </bundle>
-                                <bundle>
-                                    <symbolicName>siddhi-core</symbolicName>
-                                    <version>${siddhi.bundle.version}</version>
-                                </bundle>
-                                <bundle>
-                                    <symbolicName>siddhi-query-api</symbolicName>
-                                    <version>${siddhi.bundle.version}</version>
-                                </bundle>
-                                <bundle>
-                                    <symbolicName>siddhi-query-compiler</symbolicName>
-                                    <version>${siddhi.bundle.version}</version>
-                                </bundle>
-                                <bundle>
-                                    <symbolicName>siddhi-annotations</symbolicName>
-                                    <version>${siddhi.bundle.version}</version>
                                 </bundle>
                             </bundles>
                         </configuration>
