@@ -21,29 +21,29 @@
 
 <suppressions>
 
-    <suppress checks="Javadoc.*" files=".*/src/test/java/.*" />
+    <suppress checks="Javadoc.*" files=".*[\\/]src[\\/]test[\\/]java/.*" />
 
-    <suppress checks="JavadocPackage" files=".*/src/(main|integration)/java/.*" />
+    <suppress checks="JavadocPackage" files=".*[\\/]src[\\/](main|integration)[\\/]java[\\/].*" />
     <suppress checks="JavadocPackage" files=".*/src/.*/internal/.*" />
 
-    <suppress checks="JavadocStyle" files=".*/src/(main|integration)/java/.*" />
+    <suppress checks="JavadocStyle" files=".*[\\/]src[\\/](main|integration)[\\/]java[\\/].*" />
     <suppress checks="JavadocStyle" files=".*/src/.*/internal/.*" />
 
-    <suppress checks="MethodNameCheck" files=".*/*CommandProvider.java" />
-    <suppress checks="Regexp" files=".*/*CommandProvider.java" />
+    <suppress checks="MethodNameCheck" files=".*[\\/]*CommandProvider.java" />
+    <suppress checks="Regexp" files=".*[\\/]*CommandProvider.java" />
 
 
     <!-- copied from apache hadoop, won't fix style to keep diff minimal -->
-    <suppress checks=".*" files=".*/LocalJobRunnerWithFix.java" />
+    <suppress checks=".*" files=".*[\\/]LocalJobRunnerWithFix.java" />
 
     <!-- do not check thrift generated files -->
-    <suppress checks=".*" files=".*/transaction/distributed/thrift/.*" />
+    <suppress checks=".*" files=".*[\\/]transaction[\\/]distributed[\\/]thrift[\\/].*" />
 
     <!-- do not check swagger generated files -->
-    <suppress checks=".*" files=".*/src/gen/java/.*" />
+    <suppress checks=".*" files=".*[\\/]src[\\/]gen[\\/]java[\\/].*" />
 
     <!-- do not check protoc generated files -->
-    <suppress checks=".*" files=".*/src/main/java/org/wso2/grpc/.*" />
-    <suppress checks=".*" files=".*/src/main/java/io/siddhi/extension/io/grpc/proto/.*" />
+    <suppress checks=".*" files=".*[\\/]src[\\/]main[\\/]java[\\/]org[\\/]wso2[\\/]grpc[\\/].*" />
+    <suppress checks=".*" files=".*[\\/]src[\\/]main[\\/]java[\\/]io[\\/]siddhi[\\/]extension[\\/]io[\\/]grpc[\\/]proto[\\/].*" />
 
 </suppressions>
