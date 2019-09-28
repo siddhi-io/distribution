@@ -42,25 +42,24 @@ Viewing the Results:
     receiver.url='grpc://localhost:5546/io.siddhi.extension.io.grpc.proto.MyService/process', source.id='1',
     @map(type='protobuf' ,
     @attributes(messageId='trp:message.id', a = 'stringValue', b = 'intValue', c = 'longValue',d ='booleanValue', e = 'floatValue', f ='doubleValue')))
-     define stream FooStream (a string,messageId string, b int,c long,d bool,e float,f double);
+define stream FooStream (a string,messageId string, b int,c long,d bool,e float,f double);
 
 @sink(type='grpc-service-response',
-        publisher.url='grpc://localhost:5546/io.siddhi.extension.io.grpc.proto.MyService/process', source.id='1',message.id='{{messageId}}',
-        @map(type='protobuf', @payload(stringValue='a',intValue='b',longValue='c',booleanValue='d',floatValue = 'e', doubleValue ='f')))
-        define stream BarStream (a string,messageId string, b int,c long,d bool,e float,f double);
-        
+    publisher.url='grpc://localhost:5546/io.siddhi.extension.io.grpc.proto.MyService/process', source.id='1',message.id='{{messageId}}',
+    @map(type='protobuf', @payload(stringValue='a',intValue='b',longValue='c',booleanValue='d',floatValue = 'e', doubleValue ='f')))
+define stream BarStream (a string,messageId string, b int,c long,d bool,e float,f double);
+
+--only to show output in the console
 @sink(type='log')
-    define stream OutputStream (a string,messageId string, b int,c long,d bool,e float,f double); --only to show output in the console
+define stream OutputStream (a string,messageId string, b int,c long,d bool,e float,f double);
                 
 @info(name = 'query')
-    from FooStream select * insert into BarStream;
+from FooStream
+select *
+insert into BarStream;
 
 @info(name = 'query2')
-    from BarStream select * insert into OutputStream;
+from BarStream
+select * insert
+into OutputStream;
 
-                
-                
-                
-                
-                
-                

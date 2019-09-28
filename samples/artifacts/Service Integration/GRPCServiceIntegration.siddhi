@@ -43,13 +43,17 @@ Viewing the Results:
 @sink(type='grpc-call',
     publisher.url = 'grpc://localhost:8889/org.wso2.grpc.EventService/process/mySeq',
     sink.id= '1', @map(type='json'))
-    define stream FooStream (message String);
+define stream FooStream (message String);
 
 @source(type='grpc-call-response', sink.id= '1', @map(type='json'))
-    define stream BarStream (message String);
+define stream BarStream (message String);
 
 @sink(type='log')
-    define stream OutputStream (message String);
+define stream OutputStream (message String);
 
 @info(name = 'query')
-    from BarStream select * insert into OutputStream;
+from BarStream
+select * insert
+into OutputStream;
+
+

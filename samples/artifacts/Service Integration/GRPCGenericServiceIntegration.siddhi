@@ -40,16 +40,18 @@ Viewing the Results:
  */
  
 @sink(type='grpc-call',publisher.url = 'grpc://localhost:8890/io.siddhi.extension.io.grpc.proto.MyService/process',
-                sink.id= '1', @map(type='protobuf'))
-                define stream FooStream (stringValue string, intValue int,longValue long,booleanValue bool,floatValue float,doubleValue double);
+    sink.id= '1', @map(type='protobuf'))
+define stream FooStream (stringValue string, intValue int,longValue long,booleanValue bool,floatValue float,doubleValue double);
 
 @source(type='grpc-call-response', receiver.url = 'grpc://localhost:8890/io.siddhi.extension.io.grpc.proto.MyService/process',
-                sink.id= '1', @map(type='protobuf'))
-                define stream BarStream (stringValue string, intValue int,longValue long,booleanValue bool, floatValue float,doubleValue double);
+    sink.id= '1', @map(type='protobuf'))
+define stream BarStream (stringValue string, intValue int,longValue long,booleanValue bool, floatValue float,doubleValue double);
                 
 @sink(type='log')
-    define stream outputStream (stringValue string, intValue int,longValue long,booleanValue bool,floatValue float,doubleValue double);
+define stream outputStream (stringValue string, intValue int,longValue long,booleanValue bool,floatValue float,doubleValue double);
                 
 @info(name = 'query')
 from BarStream
-    select * insert into outputStream;
+select *
+insert into outputStream;
+
