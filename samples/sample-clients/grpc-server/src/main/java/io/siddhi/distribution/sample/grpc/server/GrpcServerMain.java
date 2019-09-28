@@ -2,14 +2,15 @@ package io.siddhi.distribution.sample.grpc.server;
 
 import java.io.IOException;
 
-public class GrpcRunServer {
+public class GrpcServerMain {
     /**
-     * Main method to start the test client.
+     * Main method to start the test server.
      *
      * @param args no args need to be provided
      */
     public static void main(String[] args) throws InterruptedException, IOException {
-        Server server = new Server(8889);
+        int port = Integer.parseInt(args[0]);
+        Server server = new Server(port);
         server.start();
     }
 }

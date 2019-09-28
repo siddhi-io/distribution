@@ -22,10 +22,9 @@
     <property name="resources.dir" value="src/main/resources"/>
     <property name="temp.dir" value="temp"/>
     <property name="class.dir" value="${temp.dir}/classes"/>
-    <property name="main-class" value="io.siddhi.distribution.sample.grpc.server.GrpcRunServer"/>
+    <property name="main-class" value="io.siddhi.distribution.sample.grpc.server.GrpcServerMain"/>
     <property name="lib.dir" value="${carbon.home}/lib"/>
-    <property name="port" value="5545"/>
-    <property name="noOfEventsToSend" value=""/>
+    <property name="port" value="8889"/>
 
     <path id="javac.classpath">
         <pathelement path="${class.dir}"/>
@@ -70,11 +69,9 @@
     </target>
 
     <target name="run" depends="compile">
-        <echo>Publishing events to grpc endpoints to port 5545</echo>
         <java classname="${main-class}" classpathref="javac.classpath"
                fork="true">
             <arg value="${port}"/>
-            <arg value="${noOfEventsToSend}"/>
         </java>
     </target>
 
