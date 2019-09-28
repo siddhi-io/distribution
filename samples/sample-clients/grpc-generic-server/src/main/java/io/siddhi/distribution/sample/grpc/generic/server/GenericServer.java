@@ -28,6 +28,9 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
+/**
+ * Test Grpc Generic server
+ */
 public class GenericServer {
     private static final Logger logger = Logger.getLogger(GenericServer.class.getName());
     private Server server;

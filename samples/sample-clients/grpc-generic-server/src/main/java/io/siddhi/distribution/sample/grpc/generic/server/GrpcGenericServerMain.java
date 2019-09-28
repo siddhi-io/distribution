@@ -19,6 +19,9 @@ package io.siddhi.distribution.sample.grpc.generic.server;
 
 import java.io.IOException;
 
+/**
+ * This is the class that starts the Generic gRPC server.
+ */
 public class GrpcGenericServerMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
