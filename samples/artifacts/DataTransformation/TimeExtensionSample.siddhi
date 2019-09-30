@@ -33,8 +33,8 @@ Viewing the Results:
 define stream TimeStream (item string);
 
 @sink(type='log')
-define stream OutputStream(item string, date string, time string, year int);
+define stream OutputStream(item string, currentDate string, currentTime string, currentYear int);
 
 from  TimeStream
-select item, time:currentDate ( ) as date, time:currentTime() as time, time:extract('year', time: currentTimestamp ( ), 'yyyy-MM-dd hh:mm:ss') as year
+select item, time:currentDate ( ) as currentDate, time:currentTime() as currentTime, time:extract('year', time: currentTimestamp ( ), 'yyyy-MM-dd hh:mm:ss') as currentYear
 insert into OutputStream;
