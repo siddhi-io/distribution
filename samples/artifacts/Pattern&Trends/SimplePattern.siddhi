@@ -2,6 +2,7 @@
 @App:description("Patterns allow you to identify trends in events over a time period.")
 
 /*
+
 Purpose:
     This application sends an alert if the temperature of a room increases by 5 degrees within 10 min.
 
@@ -39,12 +40,11 @@ Viewing the Results:
 
 define stream TempStream(roomNo int, temp double);
 
-@sink(type='log')
+@sink(type = 'log')
 define Stream AlertStream(roomNo int, initialTemp double, finalTemp double);
 
 -- Identify if the temperature of a room increases by 5 degrees within 10 min.
-from every( e1=TempStream ) -> e2=TempStream[ e1.roomNo == roomNo and (e1.temp + 5) <= temp ]
-    within 10 min
+from every( e1 = TempStream ) -> e2 = TempStream[ e1.roomNo == roomNo and (e1.temp + 5) <= temp ]
+ within 10 min
 select e1.roomNo, e1.temp as initialTemp, e2.temp as finalTemp
 insert into AlertStream;
-

@@ -42,5 +42,5 @@ define stream DistinctItemStream(itemId string, distinctPrice long);
 
 @info(name = 'distinctCount')
 from TradesStream#window.timeLength(10 sec, 10)
-select itemId, distinctCount(price)as distinctPrice
+select itemId, distinctCount(price) as distinctPrice
 insert into DistinctItemStream;

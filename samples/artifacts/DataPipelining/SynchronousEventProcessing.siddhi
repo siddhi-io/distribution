@@ -1,10 +1,11 @@
-@App:name("AsyncEventProcessing")
-@App:description("Async event processing in a single thread.")
+@App:name("SynchronousEventProcessing")
+@App:description("Synchronuos event processing flow.")
 
 /*
 Purpose:
-    This application demonstrates how to remove the effect of race conditions using asynchronous event
-    processing in Siddhi.
+    This application demonstrates how to remove the effect of race conditions using synchronous event
+    processing in Siddhi. Here, StockStream first looks up at the DB to get the present number of sales,
+    and increments the value based on the input
 
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
@@ -18,12 +19,12 @@ Prerequisites:
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
-        * AsyncEventProcessing.siddhi - Started Successfully!.
+        * SynchronousEventProcessing.siddhi - Started Successfully!.
 
 Testing the Sample
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Single Simulation' (this will be already selected)
-    3) Select 'AsyncEventProcessing' as Siddhi App Name
+    3) Select 'SynchronousEventProcessing' as Siddhi App Name
     4) Select 'StockStream' as StreamName
     5) Provide attribute values
         - symbol : S1
@@ -38,31 +39,30 @@ Viewing the Results:
     After sending the events you will be able to observe the datasource has been changed.
     And als you can see the respective output on the console similar to the following (timestamp will be different).
     Result for first event :
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncEventProcessing : DBUpdateStream : Event{timestamp=-1, data=[S1, 10, 5], isExpired=false}
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncEventProcessing : DBStream : Event{timestamp=-1, data=[S1, 10, 5], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBUpdateStream : Event{timestamp=-1, data=[S1, 10, 5], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBStream : Event{timestamp=-1, data=[S1, 10, 5], isExpired=false}
     Result for second event :
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncEventProcessing : DBInsertStream : Event{timestamp=1569498956919, data=[S3, null, 5], isExpired=false}
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncEventProcessing : DBStream : Event{timestamp=1569498956919, data=[S3, null, 5], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBInsertStream : Event{timestamp=1569498956919, data=[S3, null, 5], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBStream : Event{timestamp=1569498956919, data=[S3, null, 5], isExpired=false}
 */
 
-
-@sink(type='log')
-define stream DBStream(symbol string, previousStocks int, noOfSales int);
-
-@sink(type='log')
-define stream DBUpdateStream(symbol string, previousStocks int, noOfSales int);
-
-@sink(type='log')
-define stream DBInsertStream(symbol string, previousStocks int, noOfSales int);
+-- Execution flow begin from StockStream, will be executed synchronously by a single thread.
+@async(buffer.size='64')
+define stream StockStream(symbol string, noOfSales int);
 
 @store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/StockDB?useSSL=false",
        username="your_username", password="your_password",
        jdbc.driver.name="com.mysql.jdbc.Driver")
 define table StockTable(symbol string, noOfStocks int);
 
--- Execution flow begin from StockStream, will be executed synchronously by a single thread.
-@async(buffer.size='64')
-define stream StockStream(symbol string, noOfSales int);
+@sink(type='log')
+define stream DBStream(symbol string, previousStocks int, noOfSales int);
+
+@sink(type='log')
+define stream DBUpdateStream(symbol string, totalStocks int);
+
+@sink(type='log')
+define stream DBInsertStream(symbol string, previousStocks int, noOfSales int);
 
 from StockStream as s left outer join StockTable as t
 on s.symbol == t.symbol
@@ -71,7 +71,7 @@ insert into DBStream;
 
 @info(name='check whether previousStock value is not null')
 from DBStream[not(previousStocks is null)]
-select *
+select symbol, previousStocks + noOfSales as totalStocks
 insert into DBUpdateStream;
 
 @info(name='check whether previousStock value is null')
@@ -81,7 +81,7 @@ insert into DBInsertStream;
 
 @info(name='update existing records in datasource')
 from DBUpdateStream
-select symbol , previousStocks+noOfSales as totalStocks
+select *
 update StockTable
 set StockTable.noOfStocks = totalStocks
 on symbol == StockTable.symbol;

@@ -51,8 +51,8 @@ Testing the Sample:
     1) Navigate to {SiddhiHome}/samples/sample-clients/jms-producer and run "ant -Dtype='keyvalue'" command.
 
 Viewing the Results:
-    Messages similar to the following would be shown on the editor console.
-    - INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - ReceiveJMSInKeyValueFormat : OutputStream : Event{timestamp=1513617090756, data=[Cream Sandwich, 790.7842348407036], isExpired=false}
+    Messages similar to the following would be shown on the tooling console.
+    - INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveJMSInKeyValueFormat : OutputStream : Event{timestamp=1513617090756, data=[Cream Sandwich, 790.7842348407036], isExpired=false}
 */
 
 @source(type='jms',
