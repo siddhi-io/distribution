@@ -45,5 +45,6 @@
         <module>grpc-client</module>
         <module>grpc-generic-client</module>
         <module>grpc-generic-server</module>
+        <module>grpc-server</module>
     </modules>
 </project>

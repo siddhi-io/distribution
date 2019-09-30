@@ -46,7 +46,7 @@ public class GrpcClient {
         while (sendEventsContinuously || sentEvents != noOfEventsToSend) {
             String json = "{ \"message\": \"Request " + (sentEvents + 1) + "\"}";
             requestBuilder.setPayload(json);
-            requestBuilder.putHeaders("stream.id", "FooStream");
+            requestBuilder.putHeaders("stream.id", "InputStream");
             Event sequenceCallRequest = requestBuilder.build();
             EventServiceGrpc.EventServiceBlockingStub blockingStub = EventServiceGrpc.newBlockingStub(channel);
             Event response = blockingStub.process(sequenceCallRequest);
