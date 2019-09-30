@@ -48,7 +48,7 @@ Testing the Sample:
     Optional: Update existing row and obverse the change data events
 
     Note: For updates, the previous values of the row are not returned with the event. Use listening mode to obtain such details.
-          Polling mode is can also be used with Oracle, MS-SQL server, Postgres, H2.
+          Polling mode can also be used with Oracle, MS-SQL server, Postgres, H2.
 
 */
 
