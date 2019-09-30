@@ -40,7 +40,7 @@ If the docker prerequisite is met, follow the steps mentioned below to create an
 
 Let the extracted directory be referred as `<DOCKER_BUILD_HOME>` within this document.
 
-1. Go to `<DOCKER_HOME>` directory.
+1. Go to `<DOCKER_BUILD_HOME>` directory.
 
 2. Run the following command to build the Docker image.
 
