@@ -57,10 +57,10 @@ Viewing the Results:
 define stream SweetProductionStream (name string, amount double);
 
 @sink(type='log')
-define stream OutputStream (totalCount long);
+define stream OutputStream (name string, amount double);
 
 -- Count the incoming events
-@info(name='query1')
+@info(name='passThrough')
 from SweetProductionStream
 select *
 insert into OutputStream;

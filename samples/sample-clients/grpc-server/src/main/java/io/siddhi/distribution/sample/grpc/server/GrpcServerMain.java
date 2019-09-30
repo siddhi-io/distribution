@@ -19,6 +19,9 @@ package io.siddhi.distribution.sample.grpc.server;
 
 import java.io.IOException;
 
+/**
+ * This is a sample to run the grpc server
+ */
 public class GrpcServerMain {
     /**
      * Main method to start the test server.

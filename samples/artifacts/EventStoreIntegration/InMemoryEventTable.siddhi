@@ -1,0 +1,55 @@
+@App:name("InMemoryEventTable")
+
+@App:description("Insert Sweet Production item values into in-memory event table and send an alert.")
+
+/*
+
+Purpose:
+    This application demonstrates how to configure a Siddhi application to insert Sweet Production item into in-memory event table and log the events to the output console when the item id entered by the user in two streams is the same.
+
+Executing the Sample:
+    1) Save this sample
+    2) Start the Siddhi application by clicking on 'Run'.
+    3) If the Siddhi application starts successfully, the following messages would be shown on the console.
+        * InMemoryEventTable.siddhi - Started Successfully!
+
+Testing the Sample:
+    You may send events via event simulator
+        a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
+        b) In the Single Simulation tab of the panel, specify the values as follows:
+            Siddhi App Name  : InMemoryEventTable
+            Stream Name      : SweetProductionStream
+            itemId           : 10
+            name             : cake
+        c) Similarly, send another event by specifying the following values.
+            Siddhi App Name  : InMemoryEventTable
+            Stream Name      : TempStream
+            itemId           : 10
+            name             : chocolate cake
+    Notes:
+        * The itemId should be equal in order to display the alert.
+
+Viewing the Results:
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - InMemoryEventTable : SampleLogStream : Event{timestamp=1569309965067, data=[10], isExpired=false}
+
+*/
+
+define stream SweetProductionStream(itemId string, name string);
+
+define stream TempStream(itemId string, name string);
+
+@primaryKey('itemId')
+@index('itemId')
+define table TempTable(itemId string, name string);
+
+@sink(type = 'log')
+define stream SampleLogStream(itemId string);
+
+from SweetProductionStream
+select *
+insert into TempTable;
+
+from TempStream join TempTable
+ 	on TempStream.itemId == TempTable.itemId
+select TempTable.itemId
+insert into SampleLogStream;

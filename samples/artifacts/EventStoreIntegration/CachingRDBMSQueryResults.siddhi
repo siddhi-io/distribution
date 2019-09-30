@@ -1,0 +1,54 @@
+@App:name("CachingRDBMSQueryResults")
+@App:description("Use caching of results for better performance")
+
+/*
+
+Purpose:
+    RDBMS store is defined with a cache of size 100 that every minute removes the entries added to the cache
+    which are older than 5 minutes. The store connects to the MySQL table named SalaryDetails, that is configured
+    with the primary key username and index salary, and located in a MySQL the database Employees hosted on localhost:3306
+
+Prerequisites:
+    1) Ensure that MySQL is installed on your machine.
+    2) Create a database named 'Employees' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Employees' url.
+    3) Create a table named 'SalaryDetails': CREATE TABLE SalaryDetails (username VARCHAR(20),salary int));
+    4) Insert some values into the table: INSERT INTO SalaryDetails VALUES ('David',10000);
+    5) Enter your username and password (in line 42) for MySQL server and save this sample.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'.
+    2) If the Siddhi application starts successfully, the following message is shown on the console
+        * CachingRDBMSQueryResults.siddhi - Started Successfully!
+
+    Note:
+    If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
+
+Testing the Sample:
+    1) Simulate single events:
+        a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
+        b) Select 'CachingRDBMSQueryResults' as 'Siddhi App Name' and select 'InputStream' as 'Stream Name' and enter he attribute values.
+            - username : David
+        c) Then click Send.
+
+Viewing the Results:
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - Caching-rdbms : LogStream : Event{timestamp=-1, data=[David, 10000], isExpired=false}
+*/
+
+define stream InputStream(username string);
+
+@sink(type = 'log')
+define stream LogStream(username string, salary int);
+
+@store(type = "rdbms", jdbc.url = "jdbc:mysql://localhost:3306/Employees?useSSL=false",
+	username = "your_username", password = "your_password",
+	jdbc.driver.name = "com.mysql.jdbc.Driver",
+	@cache(size = "100", retention.period = "5 min", purge.interval = "1 min"))
+@primaryKey('username')
+@index('salary')
+define table SalaryDetails(username string, salary int);
+
+-- If InputStream username matches with SalaryDetails username in the cached table, then select username and salary for that particular match.
+from InputStream as input join SalaryDetails as tbl
+	on tbl.username == input.username
+select tbl.username as username, tbl.salary as salary
+insert into LogStream;

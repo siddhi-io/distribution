@@ -2,6 +2,7 @@
 @App:description("Reorder out-of-order events using K-Slack algorithm.")
 
 /*
+
 Purpose:
     This application demonstrates an instance where the query reorders events based on
     the 'eventTime' attribute value, and it forcefully flushes all the events who have
@@ -46,11 +47,10 @@ Viewing the Results:
 
 define stream StockStream (eventTime long, symbol string, volume long);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream OutputStream(eventTime long, symbol string, volume long);
 
 --  Reorders events based on the 'eventTime', and it forcefully flushes all the events arrived older than the given 'timeout' value every second.
-from StockStream#reorder:kslack(eventTime,50000L)
-select eventTime,symbol,volume
+from StockStream#reorder:kslack(eventTime, 50000L)
+select eventTime, symbol, volume
 insert into OutputStream;
-

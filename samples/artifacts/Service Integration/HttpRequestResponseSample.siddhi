@@ -8,7 +8,7 @@ Purpose:
 	This application demonstrates how to configure a Siddhi application to send sweet production events via HTTP transport in JSON default format, Receive response from the http server and process the response using siddhi.
 
 Prerequisites:
-	* Save this sample. If there is no syntax error, the following message is shown on the console:
+	* Save this sample. The following message is shown on the console:
         * Siddhi App HttpRequestResponseSample successfully deployed.
 
 Executing the Sample:
@@ -34,7 +34,7 @@ Testing the Sample:
        - Received response will be converted to a siddhi event using using json default mapping and pushed to the ResponseStream.
 
 Viewing the Results:
-    The received responses will be logged in the terminal/editor console as following.
+    The received responses will be logged in the terminal/tooling console as following.
         * INFO {io.siddhi.core.stream.output.sink.LogSink} - HttpRequestResponseSample : ResponseStream : Event{timestamp=1569581345992, data=[toffees, 75.6], isExpired=false}
 
 Notes:
@@ -48,20 +48,20 @@ Notes:
 
 define stream SweetProductionStream (name string, amount double);
 
-@sink(type='http-request', sink.id='production-request', publisher.url='http://localhost:8080/abc',
-@map(type='json'))
+@sink(type = 'http-request', sink.id = 'production-request', publisher.url = 'http://localhost:8080/abc',
+	@map(type = 'json'))
 define stream LowProductionAlertStream (name string, amount double);
 
-@sink(type='log')
-@source(type='http-response' , sink.id='production-request', http.status.code='200',
-@map(type='json'))
+@sink(type = 'log')
+@source(type = 'http-response' , sink.id = 'production-request', http.status.code = '200',
+	@map(type = 'json'))
 define stream ResponseStream(name string, amount double);
 
-@source(type='http-response' , sink.id='production-request', http.status.code='500',
-@map(type='json'))
-@sink(type='log')
+@source(type = 'http-response' , sink.id = 'production-request', http.status.code = '500',
+	@map(type = 'json'))
+@sink(type = 'log')
 
-@info(name='passThrough')
+@info(name = 'passThrough')
 from SweetProductionStream
 select *
 insert into LowProductionAlertStream;
