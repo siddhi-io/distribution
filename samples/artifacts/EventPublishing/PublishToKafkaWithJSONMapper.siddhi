@@ -48,16 +48,16 @@ Viewing the Results:
 
 define stream SweetProductionStream (name string, amount double);
 
-@sink(type='kafka',
-      topic='kafka_json_topic',
-      partition.no='0',
-      bootstrap.servers='localhost:9092',
-      @map(type='json', enclosing.element='$.material', validate.json='true', @payload( """{"Name":"{{name}}","Amount":{{amount}}}""")))
+@sink(type = 'kafka',
+	topic = 'kafka_json_topic',
+	partition.no = '0',
+	bootstrap.servers = 'localhost:9092',
+	@map(type = 'json', enclosing.element = '$.material', validate.json = 'true',
+		@payload( """{"Name":"{{name}}","Amount":{{amount}}}""")))
 define stream LowProductionAlertStream (name string, amount double);
 
 --Send events to kafka_json_topic
-@info(name='passThroughQuery')
+@info(name = 'passThroughQuery')
 from SweetProductionStream
 select *
 insert into LowProductionAlertStream;
-

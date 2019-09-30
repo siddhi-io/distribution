@@ -1,8 +1,9 @@
-@App:name("PersistEventsInMongoDB")
+@App:name("MongoDBIntegration")
 
-@App:description('Receive events via simulator and persist the received data in the store.')
+@App:description('Receive events via simulator and persist the received data in MongoDB.')
 
 /*
+
 Purpose:
 This application demonstrates how to perform CRUD operations using Siddhi queries in MongoDB stores. The sample depicts a scenario in a sweet production factory. The sweet production details, such as name of the raw material and amount used for production, can be stored using insertSweetProductionStream. The following streams can be used to insert, update, search, delete and update or insert the existing data in the store.
     search - SearchSweetProductionStream
@@ -22,7 +23,7 @@ Prerequisites:
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
     2) If the Siddhi application starts successfully, the following message is shown on the console:
-        * PersistEventsInMongoDB.siddhi - Started Successfully!
+        * MongoDBIntegration.siddhi - Started Successfully!
 
     Note:
     If you want to edit this application, stop the application, make your edits and save, and then start the application again.
@@ -30,7 +31,7 @@ Executing the Sample:
 Testing the Sample:
     1) Simulate single events as follows:
         a) Click on Event Simulator (double arrows on left tab) and then 'Single Simulation'.
-        b) For the Siddhi App Name, select 'PersistEventsInMongoDB'.
+        b) For the Siddhi App Name, select 'MongoDBIntegration'.
         c) For the Stream Name, select 'searchSweetProductionStream'.
         d) Enter attribute values and click Send.
     2) Send an event where the name matches a name value in the data you just inserted to the SweetProductionTable. This will satisfy the 'on' condition of the join query.
@@ -38,7 +39,7 @@ Testing the Sample:
     Notes:
       * You can send events to the other corresponding streams to add, delete, update, insert, and search events.
       * The Primary Key constraint in SweetProductionTable is disabled, because the name cannot be used as a PrimaryKey in a ProductionTable.
-      * You can use Siddhi functions to create a unique ID for the received events, which you can then use to apply the Primary Key constraint on the data store records. (http://wso2.github.io/siddhi/documentation/siddhi-4.0/#function)
+      * You can use Siddhi functions to create a unique ID for the received events, which you can then use to apply the Primary Key constraint on the data store records. (https://siddhi.io/en/v5.1/docs/query-guide/#function)
 
 Viewing the Results:
     See the output for raw materials on the console. You can use searchSweetProductionStream to check for inserted, deleted, and updated events.
@@ -46,22 +47,26 @@ Viewing the Results:
 */
 
 define stream InsertSweetProductionStream (name string, amount double);
+
 define stream DeleteSweetProductionStream (name string);
+
 define stream SearchSweetProductionStream (name string);
+
 define stream UpdateSweetProductionStream (name string, amount double);
+
 define stream UpdateOrInsertSweetProductionStream (name string, amount double);
+
 define stream ContainsSweetProductionStream (name string, amount double);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream LogStream(name string, amount double);
 
-@Store(type="mongodb",mongodb.uri='mongodb://localhost/production')
-
+@Store(type = "mongodb", mongodb.uri = 'mongodb://localhost/production')
 @IndexBy("amount {background:true}")
 define table SweetProductionTable (name string, amount double);
 
 --Inserting event into mongo store
-@info(name='insertQuery')
+@info(name = 'insertQuery')
 from InsertSweetProductionStream
 insert into SweetProductionTable;
 
@@ -69,19 +74,20 @@ insert into SweetProductionTable;
 @info(name = 'deleteQuery')
 from DeleteSweetProductionStream
 delete SweetProductionTable
-on SweetProductionTable.name == name ;
+	on SweetProductionTable.name == name ;
 
 --Updating event in mongo store
 @info(name = 'updateQuery')
 from UpdateSweetProductionStream
 update SweetProductionTable
-on SweetProductionTable.name == name ;
+	on SweetProductionTable.name == name ;
 
 --Updating or inserting event in  mongo store
 @info(name = 'updateOrInsertQuery')
 from UpdateOrInsertSweetProductionStream
-update or insert into SweetProductionTable
-on SweetProductionTable.name == name;
+update or
+insert into SweetProductionTable
+	on SweetProductionTable.name == name;
 
 --Verify whether a given material and an amount is stored in mongo store
 @info(name = 'containsQuery')
@@ -90,8 +96,8 @@ from ContainsSweetProductionStream
 insert into LogStream;
 
 --Perform a join on raw material name so that the data in the store can be viewed
-@info(name='searchQuery')
+@info(name = 'searchQuery')
 from SearchSweetProductionStream as searchingMaterial join SweetProductionTable as material
-    on searchingMaterial.name == material.name
+ 	on searchingMaterial.name == material.name
 select material.name, material.amount
 insert into LogStream;

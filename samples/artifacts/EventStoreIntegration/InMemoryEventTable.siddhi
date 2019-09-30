@@ -42,13 +42,14 @@ define stream TempStream(itemId string, name string);
 @index('itemId')
 define table TempTable(itemId string, name string);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream SampleLogStream(itemId string);
 
 from SweetProductionStream
 select *
 insert into TempTable;
 
-from TempStream join TempTable on TempStream.itemId==TempTable.itemId
+from TempStream join TempTable
+ 	on TempStream.itemId == TempTable.itemId
 select TempTable.itemId
 insert into SampleLogStream;

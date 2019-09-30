@@ -1,4 +1,4 @@
-@App:name("PersistEventsInElasticSearch")
+@App:name("ElasticSearchIntegration")
 @App:description('Receive events via simulator and persist the received events in elasticsearch store.')
 
 /*
@@ -20,12 +20,12 @@ Prerequisites:
            a) Download the bundle from: https://mvnrepository.com/artifact/io.siddhi.extension.store.elasticsearch/siddhi-store-elasticsearch/3.1.1
            b) Copy the jar into {Siddhi_Distribution_Home}/lib
     7) Save this sample.
-    8) Restart the editor
+    8) Restart the tooling server
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
     2) If the Siddhi application starts successfully, the following message is shown on the console
-        * PersistEventsInElasticSearch.siddhi - Started Successfully!
+        * ElasticSearchIntegration.siddhi - Started Successfully!
 
     Note:
     If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
@@ -33,7 +33,7 @@ Executing the Sample:
 Testing the Sample:
     1) Simulate single events:
         a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
-        b) Select 'PersistEventsInElasticSearch as 'Siddhi App Name' and select 'InsertSweetProductionStream' as 'Stream Name'.
+        b) Select 'ElasticSearchIntegration as 'Siddhi App Name' and select 'InsertSweetProductionStream' as 'Stream Name'.
         c) Provide attribute values, and then click Send.
     3) Optionally, send events to the other corresponding streams to add, delete, update, insert, and search events.
 
@@ -45,53 +45,60 @@ Viewing the Results:
 
 */
 
-
 define stream InsertSweetProductionStream (name string, amount double);
+
 define stream DeleteSweetProductionStream (name string);
+
 define stream SearchSweetProductionStream (name string);
+
 define stream UpdateSweetProductionStream (name string, amount double);
+
 define stream UpdateOrInsertSweetProductionStream (name string, amount double);
+
 define stream ContainsSweetProductionStream (name string, amount double);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream LogStream(name string, amount double);
 
-@Store(type="elasticsearch", host="localhost", index.name="mystocktable", field.length="symbol:100", bulk.actions="5000", bulk.size="1", concurrent.requests="2", flush.interval="1", backoff.policy.retry.no="3", backoff.policy.wait.time="1")
+@Store(type = "elasticsearch", host = "localhost", index.name = "mystocktable", field.length = "symbol:100", bulk.actions = "5000", bulk.size = "1", concurrent.requests = "2", flush.interval = "1", backoff.policy.retry.no = "3", backoff.policy.wait.time = "1")
 @PrimaryKey("symbol")
-define table SweetProductionTable (name string,amount double);
+define table SweetProductionTable (name string, amount double);
 
---Inserting event into the elaststicsearch store
-@info(name='insertQuery')
+--Inserting event into the elastic search store
+@info(name = 'insertQuery')
 from InsertSweetProductionStream
+select *
 insert into SweetProductionTable;
 
 --Deleting event from elasticsearch store
 @info(name = 'deleteQuery')
 from DeleteSweetProductionStream
 delete SweetProductionTable
-on SweetProductionTable.name == name ;
+	on SweetProductionTable.name == name ;
 
 --Updating an event in elasticsearch store
 @info(name = 'updateQuery')
 from UpdateSweetProductionStream
 update SweetProductionTable
-on SweetProductionTable.name == name ;
+	on SweetProductionTable.name == name ;
 
---Updating or inserting event to elasticearch store
+--Updating or inserting event to elastic search store
 @info(name = 'updateOrInsertQuery')
 from UpdateOrInsertSweetProductionStream
-update or insert into SweetProductionTable
-on SweetProductionTable.name == name;
+select *
+update or
+insert into SweetProductionTable
+	on SweetProductionTable.name == name;
 
 --Verifying whether a particular name,amount pair is in the elasticsearch store
 @info(name = 'containsQuery')
-from ContainsSweetProductionStream
-[(SweetProductionTable.name == name and SweetProductionTable.amount == amount) in SweetProductionTable]
+from ContainsSweetProductionStream[(SweetProductionTable.name == name and SweetProductionTable.amount == amount) in SweetProductionTable]
+select *
 insert into LogStream;
 
 --Perform a join on raw material name so that the data in the store can be viewed
-@info(name='searchQuery')
+@info(name = 'searchQuery')
 from SearchSweetProductionStream as materialName join SweetProductionTable as sweetProductionTable
-    on materialName.name == sweetProductionTable.name
+ 	on materialName.name == sweetProductionTable.name
 select sweetProductionTable.name, sweetProductionTable.amount
 insert into LogStream;
