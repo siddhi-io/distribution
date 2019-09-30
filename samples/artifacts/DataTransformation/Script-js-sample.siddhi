@@ -34,14 +34,14 @@ define stream SweetProductionStream (name string, amount double);
 @sink(type='log')
 define stream LogStream (name string, amount double, itemDescription string);
 
-define function detailedMaterial[JavaScript] return string {
+define function getMaterialDetailString[JavaScript] return string {
      var name = data[0];
      var amount = data[1];
      var res = "There are "+amount+"kg of "+name+ " in the store";
      return res;
 };
 
-from SweetProductionStream select name , amount, detailedMaterial(name,amount) as itemDescription
+from SweetProductionStream select name , amount, getMaterialDetailString(name,amount) as itemDescription
 insert into DetailedProductionstream;
 
 from DetailedProductionstream
