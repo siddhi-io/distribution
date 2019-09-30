@@ -3,6 +3,7 @@
 @App:description('Receive events via HTTP transport in JSON format with default mapping and view the output on the console.')
 
 /*
+
 Purpose:
     This application demonstrates how to configure Siddhi application to receive events to the SweetProductionStream via HTTP transport in JSON format using default mapping and log the events in LowProductionAlertStream to the  output  console.
 
@@ -10,7 +11,7 @@ Prerequisites:
     1) Save this sample
 
 Executing the Sample:
-    1) Start the Siddhi application by clicking on 'Run'.
+    1) Start the Siddhi application by clicking 'Run'.
     2) If the Siddhi application starts successfully, the following messages would be shown on the console.
         * Source Listener has created for url http://localhost:8006/productionStream
         * ReceiveHTTPInJsonFormat.siddhi - Started Successfully!
@@ -50,15 +51,15 @@ Viewing the Results:
 
 */
 
-@Source(type = 'http', receiver.url='http://localhost:8006/productionStream', basic.auth.enabled='false',
-    @map(type='json'))
+@Source(type = 'http', receiver.url = 'http://localhost:8006/productionStream', basic.auth.enabled = 'false',
+	@map(type = 'json'))
 define stream SweetProductionStream (name string, amount double);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream LowProductionAlertStream (name string, amount double);
 
 -- Passthrough data from the SweetProductionStream into LowProductionAlertStream
-@info(name='query1')
+@info(name = 'query1')
 from SweetProductionStream
 select *
 insert into LowProductionAlertStream;
