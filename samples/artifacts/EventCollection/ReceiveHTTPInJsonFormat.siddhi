@@ -17,7 +17,7 @@ Executing the Sample:
 
 Testing the Sample:
     Option1: Publish events with http sample client:
-    1) Navigate to {WSO2SPHome}/samples/sample-clients/http-client and run "ant" command as follows:
+    1) Navigate to {SiddhiHome}/samples/sample-clients/http-client and run "ant" command as follows:
         Run "ant" command in the terminal
         If you want to publish custom number of events, you need to run "ant" command as follows
             ant -DnoOfEventsToSend=5
@@ -46,7 +46,7 @@ Notes:
 
 Viewing the Results:
     See the output. Following message would be shown on the console.
-    ReceiveHTTPInJsonFormat : LowProductionAlertStream : Event{timestamp=1511938781887, data=[sugar, 300.0], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveHTTPInJsonFormat : LowProductionAlertStream : Event{timestamp=1569842887138, data=[sugar, 300.0], isExpired=false}
 
 */
 
@@ -57,8 +57,7 @@ define stream SweetProductionStream (name string, amount double);
 @sink(type='log')
 define stream LowProductionAlertStream (name string, amount double);
 
--- Passthrough data from the SweetProductionStream into LowProductionAlertStream
-@info(name='query1')
+@info(name='EventsPassthroughQuery')
 from SweetProductionStream
 select *
 insert into LowProductionAlertStream;
