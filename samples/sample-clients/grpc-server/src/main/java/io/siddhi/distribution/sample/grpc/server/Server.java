@@ -26,7 +26,9 @@ import org.wso2.grpc.Event;
 import org.wso2.grpc.EventServiceGrpc;
 
 import java.io.IOException;
-
+/**
+ * GRPC service class
+ */
 public class Server {
     private static final Logger logger = Logger.getLogger(Server.class.getName());
     private io.grpc.Server server;
