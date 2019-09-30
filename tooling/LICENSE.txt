@@ -145,7 +145,7 @@ siddhi-execution-unique-5.0.4.jar                                               
 siddhi-execution-unitconversion-2.0.2.jar                                       bundle         apache2   4422
 siddhi-io-cdc-2.0.3.jar                                                         bundle         apache2   4429
 siddhi-io-email-2.0.4.jar                                                       bundle         apache2   4514
-siddhi-io-file-2.0.1.jar                                                        bundle         apache2   4416
+siddhi-io-file-2.0.2.jar                                                        bundle         apache2   4416
 siddhi-io-grpc-1.0.2.jar                                                        bundle         apache2   4513
 siddhi-io-http-2.1.2.jar                                                        bundle         apache2   4522
 siddhi-io-jms-2.0.2.jar                                                         bundle         apache2   4437
