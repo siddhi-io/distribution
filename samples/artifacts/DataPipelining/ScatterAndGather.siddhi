@@ -1,0 +1,73 @@
+@App:name("Scatter&Gathers")
+@App:description("Demonstrates how to divide the events for specific process and combine results.")
+
+/* 
+Purpose:
+    This application demonstrates how to split the event for a specific process and  how to combine them after they are processed.In this example, you can send events to stream `dataStream` to match with the regex pattern defined for the `str:tokenize` method (such as Android,Windows8,iOS ). Then respective input value get scattered and call the defined js-script function. The return values from the js-function is gathered and send as output. 
+    
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * Scatter&Gathers.siddhi - Started Successfully!
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'Scatter&Gathers' as Siddhi App Name
+    4) Select 'dataStream as StreamName
+    5) Provide attribute values
+        - items: Android-Windows8-iOS
+       
+See the output on the console similar to the following (timestamp will be different).
+[2019-09-30_18-59-08_500] INFO {io.siddhi.core.stream.output.sink.LogSink} - Scatter&Gathers : productStream : Event{timestamp=1569850148495, data=[Android, 450.45], isExpired=false} (Encoded)
+[2019-09-30_18-59-08_501] INFO {io.siddhi.core.stream.output.sink.LogSink} - Scatter&Gathers : itemStream : Event{timestamp=1569850148495, data=[Android], isExpired=false} (Encoded)
+[2019-09-30_18-59-08_502] INFO {io.siddhi.core.stream.output.sink.LogSink} - Scatter&Gathers : productStream : Event{timestamp=1569850148495, data=[Windows8, 650.45], isExpired=false} (Encoded)
+[2019-09-30_18-59-08_502] INFO {io.siddhi.core.stream.output.sink.LogSink} - Scatter&Gathers : itemStream : Event{timestamp=1569850148495, data=[Windows8], isExpired=false} (Encoded)
+[2019-09-30_18-59-08_502] INFO {io.siddhi.core.stream.output.sink.LogSink} - Scatter&Gathers : mergeProductStream : Event{timestamp=1569850148495, data=[Android,Windows8,iOS, 1881.3560000000002], isExpired=false} (Encoded)
+[2019-09-30_18-59-08_503] INFO {io.siddhi.core.stream.output.sink.LogSink} - Scatter&Gathers : productStream : Event{timestamp=1569850148495, data=[iOS, 780.456], isExpired=false} (Encoded)
+[2019-09-30_18-59-08_503] INFO {io.siddhi.core.stream.output.sink.LogSink} - Scatter&Gathers : itemStream : Event{timestamp=1569850148495, data=[iOS], isExpired=false} (Encoded)
+*/
+
+--script function for allocate price to each divided items
+define function PriceAssign[javascript] return double{
+     var item=data[0];
+     var pri=0.00;
+     if (item=="Android") {
+        pri=450.45;  
+    } else if (item=="Windows8") {
+              pri=650.45;}
+      else {
+            pri=780.456;}
+    return pri;
+};
+
+define stream dataStream(items string);
+
+@sink(type='log')
+define stream itemStream(name string);
+
+@sink(type='log')
+define stream productStream(name string,price double);
+
+@sink(type='log')
+define stream mergeProductStream(items string,totalPrice double);
+
+--tokenize the value based on the regex conditions
+from dataStream#str:tokenize(items ,'-')
+select token as name
+insert into itemStream;
+
+--allocate the price for each and every items through using script function
+@info(name = 'PriceAllocate')
+from itemStream
+select name,PriceAssign(name) as price
+insert into productStream;
+
+-- merge the sub events and provide total price
+@info(name = 'mergeItems')
+from productStream#window.lengthBatch(3)
+select  str:groupConcat(name) as items,sum(price) as totalPrice
+insert into mergeProductStream;
