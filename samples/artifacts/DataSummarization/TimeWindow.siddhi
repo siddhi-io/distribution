@@ -50,3 +50,4 @@ from TradesStream#window.time(10 sec)
 select trader, count() as noOfTrades, sum(quantity) as totalTradingQuantity, min(quantity) as minTradingQuantity, max(quantity) as maxTradingQuantity, avg(quantity) as avgTradingQuantity
 group by trader
 insert into SummarizedTradingInformation;
+
