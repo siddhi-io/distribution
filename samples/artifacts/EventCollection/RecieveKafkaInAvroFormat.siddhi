@@ -4,10 +4,10 @@
 
 /*
 Purpose:
-    This application demonstrates how to configure Siddhi App to receive events to the SweetProductionStream via Kafka transport in Avro Formatand and and log the events in LowProductionAlertStream to the output console.
+    This application demonstrates how to configure Siddhi App to receive events to the SweetProductionStream via Kafka transport in Avro format and log the events in LowProductionAlertStream to the output console.
 
 Prerequisites:
-    1) The following steps must be executed to enable to receive events via the Kafka transport. Since you need to shut down the server to execute these steps, get a copy of these instructions prior to proceeding.
+    1) The following steps must be executed to enable tooling distribution to receive events via the Kafka transport. Since you need to shut down the server to execute these steps, get a copy of these instructions prior to proceeding.
         a) Download the Kafka broker from here: https://archive.apache.org/dist/kafka/0.10.0.0/kafka_2.11-0.10.0.0.tgz
         b) Convert and copy the Kafka client jars from the {KafkaHome}/libs directory to the {Siddhi_Distribution_Home}/libs directory as follows.
               i) Create a directory named {Source} in a preferred location in your machine and copy the following JARs to it from the {KafkaHome}/libs directory.
@@ -32,13 +32,13 @@ Prerequisites:
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
     2) If the Siddhi application starts successfully, the following messages would be shown on the console,
-        * ReceiveKafkaInBinaryFormat.siddhi - Started Successfully!
+        * ReceiveKafkaInAvroFormat.siddhi - Started Successfully!
 
     Notes:
     If you edit this application while it's running, stop the application -> Save -> Start.
 
 Testing the Sample:
-    1) kafka-avro-producer client is used to publish avro recoreds in to kafaka.
+    1) kafka-avro-producer client is used to publish Avro records in to Kafka.
        Navigate to {Siddhi_Distribution_Home}/samples/sample-clients/kafka-producer and run "ant" command as follows:
         ant -DnoOfEventsToSend=5 -DtopicName='sample_kafka_avro_topic' -Dtype=avro -DisBinaryMessage=true
 
