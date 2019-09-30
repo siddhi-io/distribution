@@ -12,7 +12,7 @@ Prerequisites:
     that get creates in the target folder after executing the 'mvn clean install' command)
         (Please finds the "auto-generated-gRPC-classes.jar" from here "https://github.com/siddhi-io/siddhi-io-grpc/tree/master/component/src/main/resources")
     3) Navigate to {SiddhiDistribution_Home}/jars and put that packed jar into jars folder
-    4) Stop the siddhi editor and re-start the editor again.
+    4) Stop the siddhi tooling and re-start the tooling again.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'

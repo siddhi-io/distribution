@@ -2,6 +2,7 @@
 @App:description("Logical and condition")
 
 /*
+
 Purpose:
     This application sends a regulator activation event immediately followed by both
     temperature sensor and humidity sensor activation events in either order.
@@ -37,14 +38,15 @@ Viewing the Results:
 */
 
 define stream TempStream(deviceID long, isActive bool);
+
 define stream HumidStream(deviceID long, isActive bool);
+
 define stream RegulatorStream(deviceID long, isOn bool);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream StateNotificationStream(tempSensorActive bool, humidSensorActive bool);
 
 -- Generates an output when HumidStream and TempStream events occur in any order while RegulatorStream stream having the isOn attribute true.
-from every e1=RegulatorStream[isOn == true], e2=TempStream and e3=HumidStream
+from every e1 = RegulatorStream[isOn == true], e2 = TempStream and e3 = HumidStream
 select e2.isActive as tempSensorActive, e3.isActive as humidSensorActive
 insert into StateNotificationStream;
-

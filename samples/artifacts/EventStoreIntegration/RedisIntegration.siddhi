@@ -17,7 +17,7 @@ Prerequisites:
            a) Download jedis-2.9.0.jar  from: https://repo1.maven.org/maven2/redis/clients/jedis/2.9.0/jedis-2.9.0.jar
            c) Copy jedis-2.9.0.jar to {Siddhi_Distribution_Home}/bin directory.
     3) Save this sample.
-    4) Restart the editor
+    4) Restart the tooling
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.

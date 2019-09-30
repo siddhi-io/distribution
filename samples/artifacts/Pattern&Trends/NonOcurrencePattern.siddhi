@@ -1,6 +1,6 @@
 @App:name("NonOccurrencePattern")
 
-@App:description("Generate an alert if no temperature events having less than 12 arrived in the TempStream for 10 seconds time period after starting the regulator.")
+@App:description("Generate an alert if no temperature events having less than 12 degrees arrived in the TempStream for 10 seconds time period after starting the regulator.")
 
 /*
 
@@ -37,10 +37,10 @@ define stream RegulatorStateChangeStream(action string);
 
 define stream TempStream (temp double);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream AlertStream(roomNo string);
 
-from every e1=RegulatorStateChangeStream[action == 'start']
-     -> not TempStream[temp <= 12] for 10 seconds
+-- detects non occurrence of events in TempStream after an event arrives in RegulatorStream
+from every e1 = RegulatorStateChangeStream[action == 'start'] -> not TempStream[temp <= 12] for 10 seconds
 select e1.action as roomNo
 insert into AlertStream;

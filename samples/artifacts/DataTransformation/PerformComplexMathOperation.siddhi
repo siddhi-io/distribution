@@ -35,8 +35,8 @@ Testing the Sample:
 
 Viewing the Results:
     Messages similar to the following would be shown on the console.
-    [2019-09-16_11-48-14_323] INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - PerformComplexMathOperation : AmountCorrectionStream : Event{timestamp=1568614694322, data=[chocolate cake, 51.0, 3.9219733362813143, 5], isExpired=false}
-    [2019-09-16_11-48-34_108] INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - PerformComplexMathOperation : AmountCorrectionStream : Event{timestamp=1568614714107, data=[coffee cake, 51.0, 3.9180050771056933, 5], isExpired=false}
+    [2019-09-16_11-48-14_323] INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformComplexMathOperation : AmountCorrectionStream : Event{timestamp=1568614694322, data=[chocolate cake, 51.0, 3.9219733362813143, 5], isExpired=false}
+    [2019-09-16_11-48-34_108] INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformComplexMathOperation : AmountCorrectionStream : Event{timestamp=1568614714107, data=[coffee cake, 51.0, 3.9180050771056933, 5], isExpired=false}
 
 */
 

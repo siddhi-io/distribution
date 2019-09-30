@@ -3,7 +3,7 @@
 
 /*
 Purpose:
-    This application uses a defined window find the maximum price and resets to zero as a batch every 10 seconds.
+    This application uses a defined window find the maximum price and resets to zero as a batch every 20 seconds.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
@@ -47,7 +47,7 @@ define stream StockEventStream (symbol string, price float);
 @sink(type='log')
 define stream OutputStream(symbol string, maxPrice float);
 
--- Select the symbol and maximum price for each window.
+-- Select the symbol and maximum price for every 20 seconds
 from StockEventStream#window.cron('*/20 * * * * ?')
 select symbol, max(price) as maxPrice
 insert into OutputStream;

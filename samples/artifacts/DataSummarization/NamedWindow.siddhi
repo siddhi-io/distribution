@@ -2,6 +2,7 @@
 @App:description("Demonstrates how to create a named window as an another way to define windows so that it can be shared across various queries")
 
 /*
+
 Purpose:
     This application demonstrates how to create the named window for better query performance.In this example the named window keeps the events for 10 sec and display those events through the outputstream.
 
@@ -22,7 +23,7 @@ Testing the Sample:
     5) Click on 'Add Simulation Source'
     6) Select NamedWindow as 'Siddhi App Name'
     7) Select TempStream as 'StreamName'
-    8) Keep 'Primitive Based' as the config type for tempId and temp 
+    8) Keep 'Primitive Based' as the config type for tempId and temp
     9) Save the simulator configuration
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
     11) Click on the start button (Arrow symbol) next to the newly created simulator
@@ -46,31 +47,31 @@ See the output on the console similar to the following (timestamp will be differ
 [2019-09-24_16-53-29_823] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : HighTempCountStream : Event{timestamp=1569324209822, data=[1, 6], isExpired=false}
  */
 
-define stream SenserStream(tempId string,temp double);
+define stream SenserStream(tempId string, temp double);
 
 define window OneMinTempWindow(tempId string, temp double) time(1 min);
 
 define stream CheckStream(requestId string);
 
-@sink(type="log")
-define stream OutPutStream(tempId string,temp double);
+@sink(type = "log")
+define stream OutPutStream(tempId string, temp double);
 
-@sink(type="log")
-define stream HighTempCountStream(requestId string,counts long);
+@sink(type = "log")
+define stream HighTempCountStream(requestId string, counts long);
 
-@info(name='insertEventsToWindow') 
+@info(name = 'insertEventsToWindow')
 from SenserStream
 select *
 insert into OneMinTempWindow;
 
-@info(name='insertEventsToStream') 
+@info(name = 'insertEventsToStream')
 from OneMinTempWindow
 select *
 insert into OutPutStream;
 
-@info(name='heighTempCount') 
-from CheckStream as c join  OneMinTempWindow as t
- on t.temp > 40
-select requestId,count(t.temp) as counts
-group by requestId
+@info(name = 'heighTempCount')
+from CheckStream as c join OneMinTempWindow as t
+ 	on t.temp > 40
+select requestId, count(t.temp) as counts
+	group by requestId
 insert into HighTempCountStream;
