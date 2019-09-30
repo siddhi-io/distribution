@@ -1,0 +1,51 @@
+@App:name("StreamJoin")
+
+@App:description("Combine events from two streams")
+
+/*
+
+Purpose:
+    This application demonstrates how to configure a Siddhi application to combine events from two streams and display the output on the console.
+
+Executing the Sample:
+    1) Save this sample
+    2) Start the Siddhi application by clicking on 'Run'.
+    3) If the Siddhi application starts successfully, the following messages would be shown on the console.
+        * StreamJoin.siddhi - Started Successfully!
+
+Testing the Sample:
+    You may send events via event simulator
+        a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
+        b) In the Single Simulation tab of the panel, specify the values as follows:
+            Siddhi App Name  : StreamJoin
+            Stream Name      : StockStream
+            stockId          : 10
+            price            : 500
+            volume           : 100
+        d) Similarly, send another event by specifying the following values.
+            Siddhi App Name  : StreamJoin
+            Stream Name      : TwitterStream
+            companyId        : 10
+            tweet            : Hello
+
+Viewing the Results:
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - StreamJoin : OutputStream : Event{timestamp=1569409922325, data=[10, null, 500.0], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - StreamJoin : OutputStream : Event{timestamp=1569409936295, data=[10, Hello, 500.0], isExpired=false}
+
+    Notes:
+    * The combination of stockId from the StockStream, tweet from the TweetStream and price from the Stockstream is displayed on the output console as a result.
+
+*/
+
+define stream StockStream (stockId string, price float, volume long);
+
+define stream TwitterStream (companyId string, tweet string);
+
+@sink(type='log')
+define stream OutputStream(id string, tweet string, price float);
+
+from StockStream#window.time(10 min) as S
+    full outer join TwitterStream#window.time(20 min) as T
+    on S.stockId== T.companyId
+select S.stockId as id, T.tweet, S.price
+insert into OutputStream ;
