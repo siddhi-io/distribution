@@ -23,7 +23,7 @@ Testing the Sample:
 
 Viewing the Results:
     *See the output on the console. Description of the room with the passed details are shown in the logger.You will get the output as follows:
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformMathOperations : FahrenheitTempStream : Event{timestamp=1568644786354, data=[95.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - InlineMath : FarenheitTempStream : Event{timestamp=1568644786354, data=[95.0], isExpired=false}
 
 Notes:
     If you need to edit this application while it is running, then Save -> Start.
