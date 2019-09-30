@@ -29,7 +29,8 @@ Optional pre-requisites:
     1) Enable state persistence in siddhi apps.
        This will enable the cdc polling mode capturing changes from the last point it stopped.
        If not enabled, polling mode will only capture changes after start of the app.
-            1.1) Change state.persistence enabled=true in deployment.yaml file.
+            1.1) Change statePersistence >> enabled=true in deployment.yaml file.
+            1.2) After the changes restart the server.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
@@ -62,13 +63,13 @@ Testing the Sample:
 	password = '',
 	table.name = 'SweetProductionTable',
 	@map(type = 'keyvalue' ))
-define stream InsertSweetProductionStream (name string, amount double);
+define stream CaptureSweetProductionStream (name string, amount double);
 
 @sink(type = 'log')
 define stream LogStream (name string, amount double);
 
 @info(name = 'Insert selected attributes into LogStream')
-from InsertSweetProductionStream
+from CaptureSweetProductionStream
 select name, amount
 insert into LogStream;
 

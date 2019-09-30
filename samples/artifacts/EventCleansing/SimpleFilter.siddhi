@@ -35,7 +35,7 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568267724796, data=[140, 45.0], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568267724796, data=[140, 45.0], isExpired=false}
 */
 
 define stream TempStream(roomNo int,temp double);

@@ -23,11 +23,11 @@ Testing the Sample:
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
 
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
 */
 
 define stream EventStream(symbol string,price float);

@@ -34,9 +34,9 @@ Purpose:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568274053845, data=[true, true, true], isExpired=false}
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568274075613, data=[false, false, false], isExpired=false}
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568274109248, data=[true, true, false], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568274053845, data=[true, true, true], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568274075613, data=[false, false, false], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568274109248, data=[true, true, false], isExpired=false}
 */
 
 define stream TempStream (roomNum int,temp float,roomName string);
