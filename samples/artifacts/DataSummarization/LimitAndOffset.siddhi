@@ -46,7 +46,7 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LimitAndOffset : HighestAvgTempStream : [Event{timestamp=1568464659298, data=[35, 110, 45.0], isExpired=false}, Event{timestamp=1568464694291, data=[37, 115, 42.0], isExpired=false}, Event{timestamp=1568464701748, data=[38, 115, 41.0], isExpired=false}]
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LimitAndOffset : HighestAvgTempStream : [Event{timestamp=1568464659298, data=[35, 110, 45.0], isExpired=false}, Event{timestamp=1568464694291, data=[37, 115, 42.0], isExpired=false}, Event{timestamp=1568464701748, data=[38, 115, 41.0], isExpired=false}]
 */
 
 define stream TempStream(roomNo int,deviceID int,temp double);

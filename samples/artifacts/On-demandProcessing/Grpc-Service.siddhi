@@ -26,7 +26,6 @@ Testing the Sample:
             If you want to publish custom number of events, you need to run "ant" command as follows
                 ant -DnoOfEventsToSend=5
 
-
 Viewing the Results:
     See the output on the console.
         "Grpc-Service : OutputStream : Event{timestamp=1569601652726, data=[9f3cecfa-a211-4ddb-90bc-91e8bb82e907, Request 5], isExpired=false}"
@@ -34,21 +33,27 @@ Viewing the Results:
 
 */
 
-@source(type='grpc-service',
-                receiver.url = 'grpc://localhost:5545/org.wso2.grpc.EventService/process', source.id='1',
-                @map(type='json', @attributes(messageId='trp:message.id', message='message')))
-                define stream InputStream (messageId String, message String);
+@source(type = 'grpc-service',
+	receiver.url = 'grpc://localhost:5545/org.wso2.grpc.EventService/process', source.id = '1',
+	@map(type = 'json',
+		@attributes(messageId = 'trp:message.id', message = 'message')))
+define stream InputStream (messageId String, message String);
 
-@sink(type='grpc-service-response',  source.id='1',
-                message.id='{{messageId}}',
-                @map(type='json'))
-                define stream ResponseStream (messageId String, message String);
+@sink(type = 'grpc-service-response', source.id = '1',
+	message.id = '{{messageId}}',
+	@map(type = 'json'))
+define stream ResponseStream (messageId String, message String);
 
-@sink(type='log')
-    define stream OutputStream (messageId String, message String); --only to show output in the console
+@sink(type = 'log')
+define stream OutputStream (messageId String, message String);
 
+ --only to show output in the console
 @info(name = 'query1')
-                from InputStream select * insert into ResponseStream;
+from InputStream
+select *
+insert into ResponseStream;
 
 @info(name = 'query2')
-                from ResponseStream select * insert into OutputStream;
+from ResponseStream
+select *
+insert into OutputStream;

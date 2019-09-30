@@ -31,10 +31,10 @@ Viewing the Results:
 
 define stream CheckNumberStream (num int);
 
-@sink(type='log')
-define stream OutputStream(result string);
+@sink(type = 'log')
+define stream ResultStream(result string);
 
-@info(name='IfElseQuery')
+@info(name = 'IfElseQuery')
 from CheckNumberStream
-select ifThenElse(num > 35,'Number is greater than 35','Number is less than 35') as result
-insert into OutputStream;
+select ifThenElse(num > 35, 'Number is greater than 35', 'Number is less than 35') as result
+insert into ResultStream;

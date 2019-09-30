@@ -1,4 +1,4 @@
-@App:name("PersistEventsInRedis")
+z@App:name("PersistEventsInRedis")
 @App:description('Receive events via simulator and persist the received data in the redis store.')
 
 /*
@@ -17,12 +17,12 @@ Prerequisites:
            a) Download jedis-2.9.0.jar  from: https://repo1.maven.org/maven2/redis/clients/jedis/2.9.0/jedis-2.9.0.jar
            c) Copy jedis-2.9.0.jar to {Siddhi_Distribution_Home}/bin directory.
     3) Save this sample.
-    4) Restart the editor
+    4) Restart the tooling
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
     2) If the Siddhi application starts successfully, the following message is shown on the console
-        * PersistEventsInRedis.siddhi - Started Successfully!
+        * RedisIntegration.siddhi - Started Successfully!
 
     Note:
     If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.

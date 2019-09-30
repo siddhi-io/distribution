@@ -24,13 +24,14 @@ Pre-requisites:
                     >> use production;
             3.3) Create table "SweetProductionTable".
                     >> CREATE TABLE SweetProductionTable (last_update TIMESTAMP, name VARCHAR(20),amount double(10,2));
-    4) Save this sample.
+    4) Enter mysql server username in line 62 and password in line 63. Then save this sample.
 
 Optional pre-requisites:
     1) Enable state persistence in siddhi apps.
        This will enable the CDC polling mode captures changes from the last point in time, when it stopped.
        If not enabled, polling mode will only capture changes after start of the app.
             1.1) Change statePersistence enabled=true in deployment.yaml file.
+            1.2) Then restart the server.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking 'Run'.
@@ -58,16 +59,17 @@ Testing the Sample:
 	jdbc.driver.name = 'com.mysql.jdbc.Driver',
 	polling.column = 'last_update',
 	polling.interval = '1',
-	username = '',
-	password = '',
+	username = 'your_username',
+	password = 'your_password',
 	table.name = 'SweetProductionTable',
 	@map(type = 'keyvalue' ))
-define stream InsertSweetProductionStream (name string, amount double);
+define stream CaptureSweetProductionStream (name string, amount double);
 
 @sink(type = 'log')
 define stream LogStream (name string, amount double);
 
 @info(name = 'Insert selected attributes into LogStream')
-from InsertSweetProductionStream
+from CaptureSweetProductionStream
 select name, amount
 insert into LogStream;
+

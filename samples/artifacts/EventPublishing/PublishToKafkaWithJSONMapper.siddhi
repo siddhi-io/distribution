@@ -26,7 +26,7 @@ Prerequisites:
               v) Add the original Kafka libs from {Source} to {Siddhi_Distribution_Home}/samples/sample-clients/lib
              vi) Navigate to {KafkaHome} and start zookeeper node using "sh bin/zookeeper-server-start.sh config/zookeeper.properties" command
             vii) Navigate to {KafkaHome} and start Kafka server node using "sh bin/kafka-server-start.sh config/server.properties" command
-           viii) Start the server: sh editor.sh
+           viii) Start the server: sh tooling.sh
     2) Save this sample
 
 Executing the Sample:
@@ -48,16 +48,16 @@ Viewing the Results:
 
 define stream SweetProductionStream (name string, amount double);
 
-@sink(type='kafka',
-      topic='kafka_json_topic',
-      partition.no='0',
-      bootstrap.servers='localhost:9092',
-      @map(type='json', enclosing.element='$.material', validate.json='true', @payload( """{"Name":"{{name}}","Amount":{{amount}}}""")))
+@sink(type = 'kafka',
+	topic = 'kafka_json_topic',
+	partition.no = '0',
+	bootstrap.servers = 'localhost:9092',
+	@map(type = 'json', enclosing.element = '$.material', validate.json = 'true',
+		@payload( """{"Name":"{{name}}","Amount":{{amount}}}""")))
 define stream LowProductionAlertStream (name string, amount double);
 
 --Send events to kafka_json_topic
-@info(name='passThroughQuery')
+@info(name = 'passThroughQuery')
 from SweetProductionStream
 select *
 insert into LowProductionAlertStream;
-
