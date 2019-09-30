@@ -36,8 +36,8 @@
         <dependency>
             <groupId>io.siddhi.distribution</groupId>
             <artifactId>io.siddhi.distribution.event.simulator.core</artifactId>
+            <version>${project.version}</version>
         </dependency>
-
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
