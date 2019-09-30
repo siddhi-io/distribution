@@ -50,6 +50,10 @@
             <groupId>io.siddhi.extension.io.kafka</groupId>
             <artifactId>siddhi-io-kafka</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.siddhi.extension.map.avro</groupId>
+            <artifactId>siddhi-map-avro</artifactId>
+        </dependency>
 
     </dependencies>
 

@@ -100,7 +100,7 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
                 URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + "/" +
                         siddhiAppName);
                 jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
-                        "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
+                        "Siddhi App saved successfully and will be deployed in next deployment cycle"));
                 return Response.created(location).entity(jsonString).build();
             } else {
                 jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.CONFLICT,
@@ -134,12 +134,12 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
             if (siddhiAppName != null) {
                 if (isAlreadyExists) {
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
-                            "Siddhi App updated succesfully and will be deployed in next deployment cycle"));
+                            "Siddhi App updated successfully and will be deployed in next deployment cycle"));
                 } else {
                     URI location = URI.create(SiddhiAppProcessorConstants.SIDDHI_APP_REST_PREFIX + "/" +
                             siddhiAppName);
                     jsonString = new Gson().toJson(new ApiResponseMessage(ApiResponseMessage.SUCCESS,
-                            "Siddhi App saved succesfully and will be deployed in next deployment cycle"));
+                            "Siddhi App saved successfully and will be deployed in next deployment cycle"));
                     return Response.created(location).entity(jsonString).build();
                 }
             }

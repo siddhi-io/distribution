@@ -4,7 +4,7 @@
 /*
 Purpose:
     This application demonstrates how to filter using siddhi.
-    The sample depicts a scenario for high tempertature.
+    The sample depicts a scenario for high temperature.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
@@ -40,11 +40,11 @@ Viewing the Results:
 
 define stream TempStream(roomNo int,temp double);
 
-@sink(type ='log',prefix='LOGGER')
+@sink(type ='log', prefix='LOGGER')
 define stream HighTempStream(roomNo int, temp double);
 
 -- Filter the events with roomNo between 100 to 210 and temp greater than 40
-@info(name='query1')
+@info(name='filterHighTempRooms')
 from TempStream[(roomNo >= 100 and roomNo < 210) and temp > 40]
 select roomNo, temp
 insert into HighTempStream;
