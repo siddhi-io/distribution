@@ -39,7 +39,7 @@ Testing the Sample:
             select symbol, total, avgPrice;
     13) Or else you can send a CURL command as below.
             curl -X POST \
-              http://localhost:9390/stores/query \
+              http://localhost:9390/query \
               -H 'Content-Type: application/json' \
               -d '{
             "appName": "RunOnDemandQueryOnAggregation",

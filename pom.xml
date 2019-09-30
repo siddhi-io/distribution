@@ -1189,11 +1189,11 @@
         <assertj.version>3.13.2</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.5</siddhi.execution.string.version>
+        <siddhi.execution.string.version>5.0.6</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.4</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.5</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.4</siddhi.execution.time.version>
-        <siddhi.execution.json.version>2.0.2</siddhi.execution.json.version>
+        <siddhi.execution.json.version>2.0.3</siddhi.execution.json.version>
         <siddhi.execution.map.version>5.0.4</siddhi.execution.map.version>
         <siddhi.execution.list.version>1.0.0</siddhi.execution.list.version>
         <siddhi.execution.unitconversion.version>2.0.2</siddhi.execution.unitconversion.version>
@@ -1209,7 +1209,7 @@
         <siddhi.io.cdc.version>2.0.3</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>2.1.0</siddhi.io.prometheus.version>
         <siddhi.io.nats.version>2.0.6</siddhi.io.nats.version>
-        <siddhi.io.grpc.version>1.0.1</siddhi.io.grpc.version>
+        <siddhi.io.grpc.version>1.0.2</siddhi.io.grpc.version>
         <siddhi.io.rabbitmq.version>3.0.2</siddhi.io.rabbitmq.version>
 
         <siddhi.map.json.version>5.0.4</siddhi.map.json.version>
@@ -1219,7 +1219,7 @@
         <siddhi.map.xml.version>5.0.3</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>2.0.4</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>2.0.3</siddhi.map.csv.version>
-        <siddhi.map.protobuf.version>1.0.0-beta</siddhi.map.protobuf.version>
+        <siddhi.map.protobuf.version>1.0.0</siddhi.map.protobuf.version>
 
         <siddhi.store.rdbms.version>6.0.4</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.2</siddhi.store.mongodb.version>

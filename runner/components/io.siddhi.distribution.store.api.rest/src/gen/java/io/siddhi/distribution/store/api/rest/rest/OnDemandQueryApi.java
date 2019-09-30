@@ -44,25 +44,23 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
 /**
- * Stores API.
+ * OnDemand Query API.
  */
 @Component(
-        name = "siddhi-store-query-service",
+        name = "ondemand-query-service",
         service = Microservice.class,
         immediate = true
 )
-@Deprecated
-@Path("/stores")
+@Path("/query")
 @RequestInterceptor(AuthenticationInterceptor.class)
 @io.swagger.annotations.Api(description = "The stores API")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-11-01T11:26:25.925Z")
-public class StoresApi implements Microservice {
+public class OnDemandQueryApi implements Microservice {
     private final StoresApiService delegate = StoresApiServiceFactory.getStoresApi();
-    private Logger log = LoggerFactory.getLogger(StoresApi.class);
+    private Logger log = LoggerFactory.getLogger(OnDemandQueryApi.class);
 
     @POST
-    @Path("/query")
     @Consumes({"application/json"})
     @Produces({"application/json"})
     @io.swagger.annotations.ApiOperation(value = "Submit a Siddhi query and get the result records from a store",

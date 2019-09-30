@@ -68,7 +68,7 @@ public class SiddhiStoreAPITestcase {
     private static final String STORE_API_BUNDLE_NAME = "io.siddhi.distribution.store.api.rest";
     private static final int HTTP_PORT = 9090;
     private static final String HOSTNAME = TestConstants.HOSTNAME_LOCALHOST;
-    private static final String API_CONTEXT_PATH = "/stores/query";
+    private static final String API_CONTEXT_PATH = "/query";
     private static final String CONTENT_TYPE_JSON = TestConstants.CONTENT_TYPE_JSON;
     private static final String HTTP_METHOD_POST = TestConstants.HTTP_METHOD_POST;
     private static final String TABLENAME = "SmartHomeTable";
