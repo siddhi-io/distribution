@@ -18,7 +18,7 @@ Prerequisites:
               - geronimo-jms_1.1_spec-1.1.1.jar
 	2) Save this sample.
 
-	* If there is no syntax error, the following message is shown on the console:
+	* If the above steps are followed correctly without any errors, the following message is shown on the console:
 	       - Siddhi App PublishJmsInKeyvalueFormat successfully deployed.
 
 Note:

@@ -26,7 +26,7 @@ Testing the Sample:
                 item: Cake
 
 Viewing the Results:
-   INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - TimeExtensionSample : OutputStream : Event{timestamp=1568634197317, data=[cake, 2019-09-16, 17:13:17, 2019], isExpired=false}
+   INFO {io.siddhi.core.stream.output.sink.LogSink} - TimeExtensionSample : OutputStream : Event{timestamp=1569840998291, data=[Cake, 2019-09-30, 16:26:38, 2019], isExpired=false}
 
 */
 

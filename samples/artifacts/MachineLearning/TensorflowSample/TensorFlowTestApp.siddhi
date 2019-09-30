@@ -55,7 +55,7 @@ define stream InputStream (x string);
 @sink(type='log') 
 define stream OutputStream (outputPoint0 double, outputPoint1 double);
 
-@info(name = 'query1')
+@info(name = 'Tensorflow')
 from InputStream#tensorFlow:predict('/{SiddhiHome}/samples/artifacts/TensorflowSample/Regression', 'inputPoint', 'outputPoint', x)
 select outputPoint0, outputPoint1
 insert into OutputStream;
