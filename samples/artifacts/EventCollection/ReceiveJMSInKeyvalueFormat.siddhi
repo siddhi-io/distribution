@@ -1,11 +1,11 @@
-@App:name('ReceiveJMSInKeyvalueFormat')
+@App:name('ReceiveJMSInKeyValueFormat')
 
 @App:description('Receive events via JMS provider in Keyvalue format with default mapping and view the output on the console.')
 
 /*
 
 Purpose:
-    This application demonstrates how to configure a Siddhi application to receive events to the SweetProductionStream via Jms transport in Keyvalue format and log the events in LowProductionAlertStream to the output console.
+    This application demonstrates how to configure a Siddhi application to receive events to the SweetProductionStream via Jms transport in key-value format and log the events in LowProductionAlertStream to the output console.
 
 Prerequisites:
     1) Setup ActiveMQ
@@ -19,7 +19,7 @@ Prerequisites:
 	2) Save this sample.
 
 	* If there is no syntax error, the following message is shown on the console:
-	       - Siddhi App ReceiveJMSInKeyvalueFormat successfully deployed.
+	       - Siddhi App ReceiveJMSInKeyValueFormat successfully deployed.
 
 Note:
     To convert ActiveMQ lib to OSGI,
@@ -45,14 +45,14 @@ Executing the Sample:
     1) Navigate to {apache-activemq-5.x.x} unzipped directory and start ActiveMQ server node using bin/activemq start
 
 	* If the Siddhi application starts successfully, the following messages are shown on the console:
-    	- ReceiveJMSInKeyvalueFormat.siddhi - Started Successfully!
+    	- ReceiveJMSInKeyValueFormat.siddhi - Started Successfully!
 
 Testing the Sample:
     1) Navigate to {SiddhiHome}/samples/sample-clients/jms-producer and run "ant -Dtype='keyvalue'" command.
 
 Viewing the Results:
     Messages similar to the following would be shown on the editor console.
-    - INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - ReceiveJMSInKeyvalueFormat : OutputStream : Event{timestamp=1513617090756, data=[Cream Sandwich, 790.7842348407036], isExpired=false}
+    - INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - ReceiveJMSInKeyValueFormat : OutputStream : Event{timestamp=1513617090756, data=[Cream Sandwich, 790.7842348407036], isExpired=false}
 */
 
 @source(type='jms',
