@@ -41,9 +41,9 @@ Testing the Sample:
 
 @sink(
     type='nats', 
-    cluster.id='test-cluster', --STAN_CLUSTER_ID 
-    destination='LowerProduction',--Optional value
-    bootstrap.servers='nats://localhost:4222',--STAN_SERVER_URL
+    cluster.id='test-cluster',
+    destination='LowerProduction',
+    bootstrap.servers='nats://localhost:4222',
     @map(type='text'))
 define stream LowProductionAlertStream(name string,amount double, volume int);
 

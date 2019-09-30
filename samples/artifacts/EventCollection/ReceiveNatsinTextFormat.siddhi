@@ -31,9 +31,9 @@ Testing the Sample:
 
 @source(
     type='nats', 
-    cluster.id='test-cluster', --STAN_CLUSTER_ID 
-    destination='SweetProduction',--Optional value
-    bootstrap.servers='nats://localhost:4222',--STAN_SERVER_URL
+    cluster.id='test-cluster', 
+    destination='SweetProduction',
+    bootstrap.servers='nats://localhost:4222',
     @map(type='text',fail.on.missing.attribute='true',regex.A='name:(\w+),price:(\d+\.\d+),volume:(\d+)',
     @attributes(name = 'A[1]', price = 'A[2]',volume='A[3]')))
 define stream SweetProductionStream(name string,price double,volume int);
