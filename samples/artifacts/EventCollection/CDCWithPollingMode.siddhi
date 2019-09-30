@@ -24,7 +24,7 @@ Pre-requisites:
                     >> use production;
             3.3) Create table "SweetProductionTable".
                     >> CREATE TABLE SweetProductionTable (last_update TIMESTAMP, name VARCHAR(20),amount double(10,2));
-    4) Save this sample.
+    4) Enter mysql server username in line 62 and password in line 63. Then save this sample.
 
 Optional pre-requisites:
     1) Enable state persistence in siddhi apps.
@@ -59,8 +59,8 @@ Testing the Sample:
 	jdbc.driver.name = 'com.mysql.jdbc.Driver',
 	polling.column = 'last_update',
 	polling.interval = '1',
-	username = '',
-	password = '',
+	username = 'your_username',
+	password = 'your_password',
 	table.name = 'SweetProductionTable',
 	@map(type = 'keyvalue' ))
 define stream CaptureSweetProductionStream (name string, amount double);
