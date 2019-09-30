@@ -1,26 +1,26 @@
-@APP:name("MapExtensionSample")
+@APP:name("ManipulateJavaMapObjects")
 
 @App:description('Create a map, insert values into the map and checks if the given object is a map or not')
 
 /*
 
 Purpose:
-	This function creates a map, add values and checks whether the given object is a map or not
+	This function creates a map, add values and checks whether the given object is a map or not. Map objects can be passed through Siddhi object data type
 
 Prerequisites:
-    * Save this sample. If there is no syntax error, the following messages would be shown on the console
-	     * - Siddhi App MapExtensionSample successfully deployed.
+    * Save this sample. The following messages would be shown on the console
+	     * - Siddhi App ManipulateJavaMapObjects successfully deployed.
 
 Executing the Sample:
 	1) Start the Siddhi application by clicking on 'Run'
 	2) If the Siddhi application starts successfully, the following messages would be shown on the console
-            * MapExtensionSample.siddhi - Started Successfully!
+            * ManipulateJavaMapObjects.siddhi - Started Successfully!
 
 Testing the Sample:
     You can publish data event to the file, through event simulator
         a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
     	b) In the Single Simulation tab of the panel, select values as follows:
-                * Siddhi App Name  : MapExtensionSample
+                * Siddhi App Name  : ManipulateJavaMapObjects
                 * Stream Name     : SweetProductionStream
         c) Enter following values in the fields and send
                 name: chocolate cake
@@ -28,11 +28,11 @@ Testing the Sample:
 
 Viewing the Results:
     Messages similar to the following would be shown on the console.
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - MapExtensionSample: Event: , StreamEvent{ timestamp=1513384974698, beforeWindowData=null, onAfterWindowData=null, outputData=[true, false], type=CURRENT, next=null}
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - ManipulateJavaMapObjects: Event: , StreamEvent{ timestamp=1513384974698, beforeWindowData=null, onAfterWindowData=null, outputData=[true, false], type=CURRENT, next=null}
 
 */
 
-@sink(type='log')
+@sink(type = 'log')
 define stream CheckedMapStream(isMap1 bool, isMap2 bool);
 
 define stream SweetProductionStream (name string, amount double);
@@ -43,7 +43,8 @@ select name, amount, map:create() as tmpMap
 insert into TmpStream;
 
 @info(name = 'map-insert')
-from TmpStream  select name, amount, map:put(tmpMap,name,amount) as map1
+from TmpStream
+select name, amount, map:put(tmpMap, name, amount) as map1
 insert into OutputStream;
 
 @info(name = 'map-check')

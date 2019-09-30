@@ -1,6 +1,6 @@
-@App:name("JoinWithStoredData")
+@App:name("RDBMSIntegration")
 
-@App:description('Join streaming data with data stored in an RDBMS table')
+@App:description('Join streaming data with data stored in an RDBMS table to perform complex select operations')
 
 /*
 
@@ -18,10 +18,10 @@ Prerequisites:
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
-        * JoinWithStoredData.siddhi - Started Successfully!
+        * RDBMSIntegration.siddhi - Started Successfully!
 
 Testing the Sample:
-    1) Simulate single events. For this, click on 'Event Simulator' (double arrows on left tab) -> 'Single Simulation' -> Select 'JoinWithStoredData' as 'Siddhi App Name' -> Select 'TradeStream' as 'Stream Name' -> Provide attribute values -> Send
+    1) Simulate single events. For this, click on 'Event Simulator' (double arrows on left tab) -> 'Single Simulation' -> Select 'RDBMSIntegration' as 'Siddhi App Name' -> Select 'TradeStream' as 'Stream Name' -> Provide attribute values -> Send
     2) Send at-least one event with the single event simulator, where the creditCardNo matches a creditCardNo value in the data we previously inserted to the FraudTable. This would satisfy the 'on' condition of our join query
 
 Viewing the Results:
@@ -44,7 +44,7 @@ define stream TradeStream(creditCardNo string, trader string, tradeInfo string);
 define stream SuspiciousTradeStream(creditCardNo string, suspiciousTrader string, suspiciousInfoTrade string);
 
 --Perform a join on credit card number, to capture transactions with credit cards that have previously been used for fraudulent activity
-@info(name='query1')
+@info(name='tableJoin')
 from TradeStream as t join FraudTable as f
     on t.creditCardNo == f.creditCardNo
 select t.creditCardNo, t.trader as suspiciousTrader, t.tradeInfo as suspiciousInfoTrade

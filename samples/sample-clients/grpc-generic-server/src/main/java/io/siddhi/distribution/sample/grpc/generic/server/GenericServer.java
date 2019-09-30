@@ -21,9 +21,8 @@ package io.siddhi.distribution.sample.grpc.generic.server;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import io.siddhi.extension.io.grpc.proto.MyServiceGrpc;
-import io.siddhi.extension.io.grpc.proto.Request;
-import io.siddhi.extension.io.grpc.proto.Response;
+import io.siddhi.distribution.sample.grpc.Sweet;
+import io.siddhi.distribution.sample.grpc.SweetServiceGrpc;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -46,26 +45,21 @@ public class GenericServer {
         }
         server = ServerBuilder
                 .forPort(port)
-                .addService(new MyServiceGrpc.MyServiceImplBase() {
-
+                .addService(new SweetServiceGrpc.SweetServiceImplBase() {
                     @Override
-                    public void process(Request request, StreamObserver<Response> responseObserver) {
+                    public void getDiscount(Sweet request, StreamObserver<Sweet> responseObserver) {
                         if (logger.isDebugEnabled()) {
                             logger.debug("Server hits with request :\n" + request);
                         }
-                        Response response = Response.newBuilder()
-                                .setIntValue(request.getIntValue())
-                                .setStringValue("Hello from Server!")
-                                .setDoubleValue(request.getDoubleValue())
-                                .setLongValue(request.getLongValue())
-                                .setBooleanValue(request.getBooleanValue())
-                                .setFloatValue(request.getFloatValue())
+                        double discountPrice = request.getPrice() * 0.9; //give 10% discount
+                        Sweet response = Sweet.newBuilder()
+                                .setName(request.getName())
+                                .setPrice(discountPrice)
                                 .build();
                         responseObserver.onNext(response);
                         responseObserver.onCompleted();
                     }
                 }).build();
-
         server.start();
         if (logger.isDebugEnabled()) {
             logger.debug("Generic Server started");
