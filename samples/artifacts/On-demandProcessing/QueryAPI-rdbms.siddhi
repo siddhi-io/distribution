@@ -19,7 +19,7 @@ Executing the Sample:
 Testing the Sample using CURL commands:
     1) Send the following CURL command to insert new records.
         curl -X POST \
-          http://localhost:9390/stores/query \
+          http://localhost:9390/query \
           -H 'Content-Type: application/json' \
           -d '{
         "appName": "QueryAPI-rdbms",
@@ -27,7 +27,7 @@ Testing the Sample using CURL commands:
         }'
     2) Send the following CURL command to update a record.
         curl -X POST \
-          http://localhost:9390/stores/query \
+          http://localhost:9390/query \
           -H 'Content-Type: application/json' \
           -d '{
         "appName": "QueryAPI-rdbms",
@@ -35,7 +35,7 @@ Testing the Sample using CURL commands:
         }'
     3) Send the following CURL command to retrieve records.
         curl -X POST \
-          http://localhost:9390/stores/query \
+          http://localhost:9390/query \
           -H 'Content-Type: application/json' \
           -d '{
         "appName": "QueryAPI-rdbms",
@@ -43,7 +43,7 @@ Testing the Sample using CURL commands:
         }'
     4) Send the following CURL command to delete a record.
         curl -X POST \
-          http://localhost:9390/stores/query \
+          http://localhost:9390/query \
           -H 'Content-Type: application/json' \
           -d '{
         "appName": "QueryAPI-rdbms",
