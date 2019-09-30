@@ -2,8 +2,9 @@
 @App:description("Allow you to match multiple events that may have been received for the same matching condition.")
 
 /*
+
 Purpose:
-    This application calculates the temperature difference between two regulator events.
+    This application calculates the temperature difference between two regulator events. Here, when at least one TempStream event occurs between two RegulatorStream events the pattern is valid and logs can be seen.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
@@ -46,13 +47,13 @@ Viewing the Results:
 */
 
 define stream TempStream (deviceID long, roomNo int, temp double);
+
 define stream RegulatorStream (deviceID long, roomNo int, tempSet double, isOn bool);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream TempDiffStream(roomNo int, tempDiff double);
 
--- Calculates the temperature difference between two regulator events.
-from every( e1=RegulatorStream) -> e2=TempStream[e1.roomNo==roomNo]<1:> -> e3=RegulatorStream[e1.roomNo==roomNo]
+-- Minimum of one event should be present between two regulator events
+from every( e1 = RegulatorStream) -> e2 = TempStream[e1.roomNo == roomNo] < 1: > -> e3 = RegulatorStream[e1.roomNo == roomNo]
 select e1.roomNo, e2[0].temp - e2[last].temp as tempDiff
 insert into TempDiffStream;
-

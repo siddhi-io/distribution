@@ -1,7 +1,8 @@
-@App:name("Caching-rdbms")
+@App:name("CachingRDBMSQueryResults")
 @App:description("Use caching of results for better performance")
 
 /*
+
 Purpose:
     RDBMS store is defined with a cache of size 100 that every minute removes the entries added to the cache
     which are older than 5 minutes. The store connects to the MySQL table named SalaryDetails, that is configured
@@ -17,7 +18,7 @@ Prerequisites:
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
     2) If the Siddhi application starts successfully, the following message is shown on the console
-        * CUD-rdbms.siddhi - Started Successfully!
+        * CachingRDBMSQueryResults.siddhi - Started Successfully!
 
     Note:
     If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
@@ -25,7 +26,7 @@ Executing the Sample:
 Testing the Sample:
     1) Simulate single events:
         a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
-        b) Select 'Caching-rdbms' as 'Siddhi App Name' and select 'InputStream' as 'Stream Name' and enter he attribute values.
+        b) Select 'CachingRDBMSQueryResults' as 'Siddhi App Name' and select 'InputStream' as 'Stream Name' and enter he attribute values.
             - username : David
         c) Then click Send.
 
@@ -35,19 +36,19 @@ Viewing the Results:
 
 define stream InputStream(username string);
 
-@sink(type='log')
-define stream LogStream(username string,salary int);
+@sink(type = 'log')
+define stream LogStream(username string, salary int);
 
-@store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/Employees?useSSL=false",
-       username="your_username", password="your_password",
-       jdbc.driver.name="com.mysql.jdbc.Driver",
-       @cache(size= "100", retention.period="5 min", purge.interval="1 min"))
+@store(type = "rdbms", jdbc.url = "jdbc:mysql://localhost:3306/Employees?useSSL=false",
+	username = "your_username", password = "your_password",
+	jdbc.driver.name = "com.mysql.jdbc.Driver",
+	@cache(size = "100", retention.period = "5 min", purge.interval = "1 min"))
 @primaryKey('username')
 @index('salary')
 define table SalaryDetails(username string, salary int);
 
 -- If InputStream username matches with SalaryDetails username in the cached table, then select username and salary for that particular match.
-from InputStream as input join SalaryDetails as tbl on tbl.username == input.username
+from InputStream as input join SalaryDetails as tbl
+	on tbl.username == input.username
 select tbl.username as username, tbl.salary as salary
 insert into LogStream;
-

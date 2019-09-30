@@ -1,7 +1,8 @@
-@App:name("CUD-rdbms")
-@App:description('This function performs SQL CUD (INSERT, UPDATE, DELETE) queries')
+@App:name("PerformNativeRDBMSCUDOperation")
+@App:description('This function performs SQL CUD (INSERT, UPDATE, DELETE) queries on datasources')
 
 /*
+
 Purpose:
     This application demonstrates how to perform RDBMS CUD against tables in a datasource using Siddhi.
     The sample depicts a scenario related to customer database.
@@ -19,7 +20,7 @@ Prerequisites:
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
     2) If the Siddhi application starts successfully, the following message is shown on the console
-        * CUD-rdbms.siddhi - Started Successfully!
+        * PerformNativeRDBMSCUDOperation.siddhi - Started Successfully!
 
     Note:
     If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
@@ -27,47 +28,48 @@ Executing the Sample:
 Testing the Sample:
     1) Simulate single events:
         a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
-        b) Select 'CUD-rdbms' as 'Siddhi App Name' and select 'CreateStream' as 'Stream Name' to create new records.
+        b) Select 'PerformNativeRDBMSCUDOperation' as 'Siddhi App Name' and select 'CreateStream' as 'Stream Name' to create new records.
             - name : michael
             - age : 30
         c) Select 'UpdateStream' as 'Stream Name' to update name attribute of the existing records.
             - name : michael
-            - updtedName : Michael
+            - updatedName : Michael
         d) Select 'DeleteStream' as 'Stream Name' to delete existing records.
             - name : Michael
         c) Provide attribute values as above and then click Send.
 
 Viewing the Results:
-    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogCreateStream : Event{timestamp=1568873700373, data=[michael, 30], isExpired=false}
-    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogUpdateStream : Event{timestamp=1568873757805, data=[Michael], isExpired=false}
-    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogDeleteStream : Event{timestamp=1568873778823, data=[Michael], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformNativeRDBMSCUDOperation : LogCreateStream : Event{timestamp=1568873700373, data=[michael, 30], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformNativeRDBMSCUDOperation : LogUpdateStream : Event{timestamp=1568873757805, data=[Michael], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformNativeRDBMSCUDOperation : LogDeleteStream : Event{timestamp=1568873778823, data=[Michael], isExpired=false}
 */
 
 define stream CreateStream (name string, age int);
+
 define stream UpdateStream (name string, updatedName string);
+
 define stream DeleteStream (name string);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream LogUpdateStream(updatedName string);
 
-@sink(type='log')
-define stream LogCreateStream(name string,age int);
+@sink(type = 'log')
+define stream LogCreateStream(name string, age int);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream LogDeleteStream(name string);
 
-@info(name='Create new records')
+@info(name = 'Create new records')
 from CreateStream#rdbms:cud("Customers", "INSERT INTO CustomerTable(name,age) VALUES(?,?)", name , age)
-select name,age
-insert into  LogCreateStream;
+select name, age
+insert into LogCreateStream;
 
-@info(name='Update existing records')
+@info(name = 'Update existing records')
 from UpdateStream#rdbms:cud("Customers", "UPDATE CustomerTable SET name=? where name=?", updatedName , name)
 select updatedName
-insert into  LogUpdateStream;
+insert into LogUpdateStream;
 
-@info(name='Delete existing records')
+@info(name = 'Delete existing records')
 from DeleteStream#rdbms:cud("Customers", "DELETE FROM CustomerTable WHERE name=?", name)
 select name
-insert into  LogDeleteStream;
-
+insert into LogDeleteStream;

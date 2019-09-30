@@ -1,6 +1,6 @@
-@App:name("TimeExtensionSample")
+@App:name("UsefulTimeOperations")
 
-@App:description("Returns the current system date, time and extract the year from the date when a sweet item is added.")
+@App:description("Time operations can be done in Siddhi using siddhi-execution-time extensions.")
 
 /*
 
@@ -8,33 +8,33 @@ Purpose:
 	Returns the current system date in the yyyy-MM-dd format, time in the HH:mm:ss format and extract the year from the date.
 
 Prerequisites:
-    * Save this sample. If there is no syntax error, the following messages would be shown on the console
-	     * - Siddhi App TimeExtensionSample successfully deployed.
+    * Save this sample. The following messages would be shown on the console
+	     * - Siddhi App UsefulTimeOperations successfully deployed.
 
 Executing the Sample:
 	1) Start the Siddhi application by clicking on 'Run'
 	2) If the Siddhi application starts successfully, the following messages would be shown on the console
-            * TimeExtensionSample.siddhi - Started Successfully!
+            * UsefulTimeOperations.siddhi - Started Successfully!
 
 Testing the Sample:
     You can publish data event to the file, through event simulator
         a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
     	b) In the Single Simulation tab of the panel, select values as follows:
-                * Siddhi App Name  : TimeExtensionSample
+                * Siddhi App Name  : UsefulTimeOperations
                 * Stream Name      : TimeStream
         c) Enter following values in the fields and send
                 item: Cake
 
 Viewing the Results:
-   INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - TimeExtensionSample : OutputStream : Event{timestamp=1568634197317, data=[cake, 2019-09-16, 17:13:17, 2019], isExpired=false}
+   INFO {io.siddhi.core.stream.output.sink.LogSink} - UsefulTimeOperations : OutputStream : Event{timestamp=1568634197317, data=[cake, 2019-09-16, 17:13:17, 2019], isExpired=false}
 
 */
 
 define stream TimeStream (item string);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream OutputStream(item string, date string, time string, year int);
 
-from  TimeStream
-select item, time:currentDate ( ) as date, time:currentTime() as time, time:extract('year', time: currentTimestamp ( ), 'yyyy-MM-dd hh:mm:ss') as year
+from TimeStream
+select item, time:currentDate() as date, time:currentTime() as time, time:extract('year', time: currentTimestamp ( ), 'yyyy-MM-dd hh:mm:ss') as year
 insert into OutputStream;

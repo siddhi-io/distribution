@@ -38,7 +38,7 @@ Testing the Sample:
     14) Send event
 
 Viewing the Results:
-    See the input and respective output on the console similar to the following (timestamp will be different).
+    See the input and respective output on the console similar to the following (timestamp will be different). It can be seen that 2 events are picked from the buffer to be processed
         INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569501841953, data=[S1, 50], isExpired=false}, Event{timestamp=1569501851183, data=[S2, 100], isExpired=false}]
         INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569501857936, data=[S3, 80], isExpired=false}, Event{timestamp=1569501865491, data=[S4, 70], isExpired=false}]
         INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569501872409, data=[S5, 120], isExpired=false}]

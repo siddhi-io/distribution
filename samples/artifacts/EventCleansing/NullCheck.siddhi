@@ -2,35 +2,36 @@
 @App:description("Demonstrates how to check null values using Siddhi")
 
 /*
+
 Purpose:
     This application demonstrates how to check null values using siddhi.
     The sample depicts a scenario for checking INT roomNum, FLOAT temp, STRING roomName
 
-    xecuting the Sample:
-    1) Start the Siddhi application by clicking on 'Run'
-    2) If the Siddhi application starts successfully, the following messages would be shown on the console
-        * NullCheck.siddhi - Started Successfully!.
+    Executing the Sample:
+        1) Start the Siddhi application by clicking on 'Run'
+        2) If the Siddhi application starts successfully, the following messages would be shown on the console
+            * NullCheck.siddhi - Started Successfully!.
 
-    Testing the Sample:
-    1) Click on 'Event Simulator' (double arrows on left tab)
-    2) Click 'Single Simulation' (this will be already selected)
-    3) Select 'NullCheck' as Siddhi App Name
-    4) Select 'TempStream' as StreamName
-    5) Provide attribute values
-        - roomNo: 10
-        - temp: 40
-        - roomName: ServerRoom
-    6) Send event
-    7) Provide attribute values
-        - roomNo: (tick 'Is Null' check box)
-        - temp: (tick 'Is Null' check box)
-        - roomName: (tick 'Is Null' check box)
-    8) Send event
-    9) Provide attribute values
-        - roomNo: 35
-        - temp: 46
-        - roomName: (tick 'Is Null' check box)
-    10) Send event
+        Testing the Sample:
+        1) Click on 'Event Simulator' (double arrows on left tab)
+        2) Click 'Single Simulation' (this will be already selected)
+        3) Select 'NullCheck' as Siddhi App Name
+        4) Select 'TempStream' as StreamName
+        5) Provide attribute values
+            - roomNo: 10
+            - temp: 40
+            - roomName: ServerRoom
+        6) Send event
+        7) Provide attribute values
+            - roomNo: (tick 'Is Null' check box)
+            - temp: (tick 'Is Null' check box)
+            - roomName: (tick 'Is Null' check box)
+        8) Send event
+        9) Provide attribute values
+            - roomNo: 35
+            - temp: 46
+            - roomName: (tick 'Is Null' check box)
+        10) Send event
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
@@ -39,13 +40,12 @@ Viewing the Results:
         INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568274109248, data=[true, true, false], isExpired=false}
 */
 
-define stream TempStream (roomNum int,temp float,roomName string);
+define stream TempStream (roomNum int, temp float, roomName string);
 
-@sink(type ='log',prefix='LOGGER')
-define stream NullCheckStream(roomNum bool,temp bool,roomName bool);
+@sink(type = 'log', prefix = 'LOGGER')
+define stream NullCheckStream(roomNum bool, temp bool, roomName bool);
 
 -- Check whether attributes are null
 from TempStream
-select instanceOfInteger(roomNum) as roomNum, instanceOfFloat(temp) as temp,instanceOfString(roomName) as roomName
+select instanceOfInteger(roomNum) as roomNum, instanceOfFloat(temp) as temp, instanceOfString(roomName) as roomName
 insert into NullCheckStream;
-

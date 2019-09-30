@@ -2,8 +2,9 @@
 @APP:description("Demonstrates how to calculate the average of events by using a Siddhi lengthbatch window.")
 
 /*
+
 Purpose:
-    This application demonstrates how to simulate random events via Feed Simulation and calculate the average of events. The aggregation is executed on events within a length batch window. 
+    This application demonstrates how calculate the average of events for specific number of events. The aggregation is executed on events within a length batch window.
 
 Prerequisites:
     1) Save this sample
@@ -36,10 +37,10 @@ See the output on the console similar to the following (timestamp will be differ
 
 define stream TradesStream(itemId string, price float, volume int);
 
-@sink(type="log")
+@sink(type = "log")
 define stream AveragePriceStream(itemId string, averagePrice double);
 
 @info(name = 'avgPrice')
 from TradesStream#window.lengthBatch(10)
-select itemId,avg(price)as averagePrice
+select itemId, avg(price)as averagePrice
 insert into AveragePriceStream;

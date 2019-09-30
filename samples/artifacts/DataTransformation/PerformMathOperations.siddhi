@@ -1,22 +1,23 @@
-@App:name("InlineMath")
-@App:description("Use of inline math in Siddhi")
+@App:name("PerformMathOperations")
+@App:description("Use of inline math functions in Siddhi")
 
 /*
+
 Purpose:
-    This sample demonstrate how to convert Celcius into Farenheit.
+    This sample demonstrate how to convert Celsius into Fahrenheit.
 Prerequisites:
     1) Save this sample.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
     2) If the Siddhi application starts successfully, the following messages would be shown on the console.
-          InlineMath.siddhi - Started Successfully!
+          PerformMathOperations.siddhi - Started Successfully!
 
 Testing the Sample:
     1) To open event simulator by clicking on the second icon or press Ctrl+Shift+I.
     2) In the Single Simulation tab of the panel, select values as follows:
-        Siddhi App Name : InlineMath
-        Stream Name     : CelciusTempStream
+        Siddhi App Name : PerformMathOperations
+        Stream Name     : CelsiusTempStream
     3) In the temp field enter 35 and then click Send to send the event.
     4) Send some more events.
 
@@ -28,13 +29,12 @@ Notes:
     If you need to edit this application while it is running, then Save -> Start.
 */
 
-define stream CelciusTempStream (temp double);
+define stream CelsiusTempStream (temp double);
 
-@sink(type='log')
-define stream FarenheitTempStream (temp double);
+@sink(type = 'log')
+define stream FahrenheitTempStream (temp double);
 
--- Converts Celcius value into Farenheit.
-from CelciusTempStream
-select (temp*9/5)+32 as temp
-insert into FarenheitTempStream;
-
+-- Converts Celsius value into Fahrenheit.
+from CelsiusTempStream
+select (temp*9 / 5)+32 as temp
+insert into FahrenheitTempStream;
