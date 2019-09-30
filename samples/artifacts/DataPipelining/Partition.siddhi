@@ -21,7 +21,7 @@ Testing the Sample:
             Stream Name      : TempStream
         c) In the deviceId and temp fields, enter the following and then click Send to send the event.
             deviceId: 1         deviceId: 1         deviceId: 1
-            temp    : 20            temp: 50            temp: 10
+            temp    : 20        temp: 50            temp: 10
         d) Send some more events.
 
     Note:

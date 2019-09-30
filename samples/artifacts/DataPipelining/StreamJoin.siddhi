@@ -33,7 +33,7 @@ Viewing the Results:
     INFO {io.siddhi.core.stream.output.sink.LogSink} - StreamJoin : OutputStream : Event{timestamp=1569409936295, data=[10, Hello, 500.0], isExpired=false}
 
     Notes:
-    * The combination of stockId from the StockStream, tweet from the TweetStream and price from the Stockstream is displayed on the output console as a result.
+    * The combination of stockId from the StockStream, tweet from the TweetStream and price from the StockStream is displayed on the output console as a result.
 
 */
 

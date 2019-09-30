@@ -61,7 +61,7 @@ define stream ResponseStream(name string, amount double);
 	@map(type = 'json'))
 @sink(type = 'log')
 
-@info(name = 'passThrough')
+@info(name='EventPassThrough')
 from SweetProductionStream
 select *
 insert into LowProductionAlertStream;

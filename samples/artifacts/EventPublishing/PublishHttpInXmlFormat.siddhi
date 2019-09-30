@@ -15,7 +15,7 @@ Executing the Sample:
 	1) Start the Siddhi application by clicking on 'Run'.
 	2) If the Siddhi application starts successfully, the following messages are shown on the console:
             * PublishHttpInXmlFormat.siddhi - Started Successfully!
-            * 'Http' sink at 'LowProductionAlertStream' stream successfully connected to 'localhost:8080/abc'. 
+            * 'Http' sink at 'OutputStream' stream successfully connected to 'localhost:8080/abc'.
 
 Testing the Sample:
    1) Open a terminal and navigate to {SiddhiHome}/samples/sample-clients/http-server and run "ant" command without any arguments.
@@ -32,7 +32,7 @@ Viewing the Results:
     See the output on the terminal.
 
 Notes:
-    If the message "LowProductionAlertStream' stream could not connect to 'localhost:8080", it could be due to port 8080
+    If the message "OutputStream' stream could not connect to 'localhost:8080", it could be due to port 8080
     defined in the Siddhi application is already being used by a different program. To resolve this issue, do the following:
         1) Stop this Siddhi application (Click 'Run' on menu bar -> 'Stop').
         2) Change the port from 8080 to an unused port in this Siddhi application's source configuration and in the http-server file.
@@ -45,9 +45,9 @@ define stream SweetProductionStream (name string, amount double);
 @sink(type = 'http',
 	publisher.url = 'http://localhost:8080/abc',
 	@map(type = 'xml'))
-define stream LowProductionAlertStream (name string, amount double);
+define stream OutputStream (name string, amount double);
 
-@info(name = 'query1')
+@info(name='EventPassThrough')
 from SweetProductionStream
 select *
-insert into LowProductionAlertStream;
+insert into OutputStream;
