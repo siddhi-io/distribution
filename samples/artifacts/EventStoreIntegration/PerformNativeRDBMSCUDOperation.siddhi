@@ -37,7 +37,7 @@ Prerequisites:
                       namespace: rdbms
                       properties:
                         'perform.CUD.operations': true
-            6) Save the file and restart the server.
+    5) Save the file and restart the server.
     6) Save this sample.
 
 Executing the Sample:

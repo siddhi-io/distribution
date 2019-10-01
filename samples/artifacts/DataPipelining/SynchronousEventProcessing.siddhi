@@ -1,5 +1,5 @@
 @App:name("SynchronousEventProcessing")
-@App:description("Synchronuos event processing flow.")
+@App:description("Synchronous event processing flow.")
 
 /*
 Purpose:
