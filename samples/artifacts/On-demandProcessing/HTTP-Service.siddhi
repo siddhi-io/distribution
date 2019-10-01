@@ -63,7 +63,7 @@ define stream AddStream (messageId string, value1 long, value2 long);
 	@map(type = 'json'))
 define stream ResultStream (messageId string, results long);
 
-@info(name = 'query1')
+@info(name = 'EventPassThrough')
 from AddStream 
 select messageId, value1 + value2 as results 
 insert into ResultStream;
