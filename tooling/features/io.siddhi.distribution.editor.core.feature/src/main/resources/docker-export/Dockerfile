@@ -17,7 +17,7 @@
 # ------------------------------------------------------------------------
 
 # use siddhi-runner-base
-FROM siddhiio/siddhi-runner-base-alpine:{{PRODUCT_VERSION}}
+FROM {{SIDDHI_RUNNER_BASE_IMAGE}}
 MAINTAINER Siddhi IO Docker Maintainers "siddhi-dev@googlegroups.com"
 
 ARG HOST_BUNDLES_DIR=./bundles
@@ -38,7 +38,7 @@ ARG CONFIG_FILE_PATH=${HOME}/configurations.yaml
 {{ENV_BLOCK}}
 
 # expose ports
-EXPOSE 9090 9443 9712 9612 7711 7611 7070 7443
+{{EXPORT_PORTS_BLOCK}}
 
 STOPSIGNAL SIGINT
 
