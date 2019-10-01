@@ -2,44 +2,67 @@
 @APP:description("Demonstrates how to calculate the average of events by using a Siddhi lengthbatch window.")
 
 /*
+
 Purpose:
+
     This application demonstrates how to simulate random events via Feed Simulation and calculate the average of events. The aggregation is executed on events within a length batch window. 
 
 Prerequisites:
+
     1) Save this sample
 
 Executing the Sample:
+
     1) Start the Siddhi application by clicking on 'Run'
+
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
+
         * LengthBatchWindowAvg.siddhi - Started Successfully!
 
 Testing the Sample:
+
     Configure random event simulation as follows
+
     1) Click on 'Event Simulator' (double arrows on left tab)
+
     2) Click 'Feed Simulation' -> 'Create'
+
     3) Give a name (Or the default name in the place holder will be used as its name)
+
     4) Select 'Random' as the 'Simulation Source'
+
     5) Click on 'Add Simulation Source'
+
     6) Select LengthBatchWindowAvg as 'Siddhi App Name'
+
     7) Select TradesStream as 'StreamName'
+
     8) Keep 'Primitive Based' as the config type for itemId,price and volume
+
     9) Save the simulator configuration
+
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
+
     11) Click on the start button (Arrow symbol) next to the newly created simulator
 
 Viewing the Results:
+
 See the output on the console similar to the following (timestamp will be different). The output show average of events on the 10 events that has been collected in a batch manner.
+
 [2019-09-18_11-37-03_507] INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthBatchWindowAvg : AveragePriceStream : Event{timestamp=1568786823503, data=[EyVIM, 493.17199783325196], isExpired=false}
+
 [2019-09-18_11-37-13_511] INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthBatchWindowAvg : AveragePriceStream : Event{timestamp=1568786833503, data=[IrJh1, 471.0820030212402], isExpired=false}
+
 [2019-09-18_11-37-23_516] INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthBatchWindowAvg : AveragePriceStream : Event{timestamp=1568786843503, data=[BjHjs, 642.9380020141601], isExpired=false}
+
 */
 
 define stream TradesStream(itemId string, price float, volume int);
 
-@sink(type="log")
+@sink(type = "log")
 define stream AveragePriceStream(itemId string, averagePrice double);
 
 @info(name = 'avgPrice')
 from TradesStream#window.lengthBatch(10)
-select itemId,avg(price)as averagePrice
+select itemId, avg(price)as averagePrice
 insert into AveragePriceStream;
