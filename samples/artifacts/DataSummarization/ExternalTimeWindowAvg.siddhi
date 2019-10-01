@@ -4,59 +4,37 @@
 /*
 
 Purpose:
-
     This application demonstrates how to simulate random events via Feed Simulation and calculate the average of events. The aggregation is executed on events within a external time window. 
 
 Prerequisites:
-
     1) Save this sample
 
 Executing the Sample:
-
     1) Start the Siddhi application by clicking on 'Run'
-
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
-
         * ExternalTimeWindowAvg.siddhi - Started Successfully!
 
 Testing the Sample:
-
     Configure random event simulation as follows
-
+    
     1) Click on 'Event Simulator' (double arrows on left tab)
-
     2) Click 'Feed Simulation' -> 'Create'
-
     3) Give a name (Or the default name in the place holder will be used as its name)
-
     4) Select 'Random' as the 'Simulation Source'
-
     5) Click on 'Add Simulation Source'
-
     6) Select ExternalTimeWindowAvg as 'Siddhi App Name'
-
     7) Select TradesStream as 'StreamName'
-
     8) Keep 'Primitive Based' as the config type for itemId,price,volume and eventTime
-
     9) Save the simulator configuration
-
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
-
     11) Click on the start button (Arrow symbol) next to the newly created simulator
 
 viewing the Results:
-
 See the output on the console similar to the following (timestamp will be different).The output show the average volume for the events sent within the last 10 seconds from the eventTime.
-
 [2019-09-18_11-18-52_528] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785732528, data=[K1qcV, 429.0], isExpired=false}
-
 [2019-09-18_11-18-53_529] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785733528, data=[8KVU5, 258.0], isExpired=false}
-
 [2019-09-18_11-18-54_530] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785734528, data=[2QRwM, 397.0], isExpired=false}
-
 [2019-09-18_11-18-55_532] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785735528, data=[J1Lzo, 383.0], isExpired=false}
-
 [2019-09-18_11-18-56_533] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785736528, data=[zopeb, 416.4], isExpired=false}
 
 */

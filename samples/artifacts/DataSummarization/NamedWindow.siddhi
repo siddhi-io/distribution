@@ -4,79 +4,49 @@
 /*
 
 Purpose:
-
     This application demonstrates how to create the named window for better query performance.In this example the named window keeps the events for 1 minutes and display those events through the outputstream and count the higher temperature within  last 1 minutes and display them via HighTempCountStream.
 
 Prerequisites:
-
     1) Save this sample
 
 Executing the Sample:
-
     1) Start the Siddhi application by clicking on 'Run'
-
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
-
         * NamedWindow.siddhi - Started Successfully!
 
 Testing the Sample:
-
     Configure random event simulation as follows
 
     1) Click on 'Event Simulator' (double arrows on left tab)
-
     2) Click 'Feed Simulation' -> 'Create'
-
     3) Give a name (Or the default name in the place holder will be used as its name)
-
     4) Select 'Random' as the 'Simulation Source'
-
     5) Click on 'Add Simulation Source'
-
     6) Select NamedWindow as 'Siddhi App Name'
-
     7) Select TempStream as 'StreamName'
-
     8) Keep 'Primitive Based' as the config type for tempId and temp 
-
     9) Save the simulator configuration
-
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
-
     11) Click on the start button (Arrow symbol) next to the newly created simulator
-
+    
     12)Viewing the Results:
-
 See the output on the console similar to the following (timestamp will be different).
-
 [2019-09-24_16-53-19_266] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1569324199265, data=[HuZtC, 706.12], isExpired=false}
-
 [2019-09-24_16-53-20_267] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1569324200265, data=[JyfN5, 582.3], isExpired=false}
-
 [2019-09-24_16-53-21_268] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1569324201265, data=[hCck2, 685.63], isExpired=false}
-
 [2019-09-24_16-53-22_270] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1569324202265, data=[ZRZAs, 712.03], isExpired=false}
-
 [2019-09-24_16-53-23_271] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1569324203265, data=[ymCpy, 183.33], isExpired=false}
-
 [2019-09-24_16-53-24_272] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : OutPutStream : Event{timestamp=1569324204265, data=[PKfhr, 730.16], isExpired=false}
 
     13)  Click on 'Event Simulator' (double arrows on left tab)
-
            a) Click 'Single Simulation' (this will be already selected)
-
            b) Select 'NamedWindow' as Siddhi App Name
-
            c) Select 'CheckStream' as StreamName
-
            d) Provide requestId values
-
               - requestId: 1
-
            e) Send event
 
             See the output on the console similar to the following (timestamp will be different):
-
 [2019-09-24_16-53-29_823] INFO {io.siddhi.core.stream.output.sink.LogSink} - NamedWindow : HighTempCountStream : Event{timestamp=1569324209822, data=[1, 6], isExpired=false}
 
 */
