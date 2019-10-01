@@ -24,6 +24,8 @@ import org.apache.log4j.Logger;
 import org.wso2.grpc.Event;
 import org.wso2.grpc.EventServiceGrpc;
 
+import java.util.Arrays;
+
 /**
  * This is a sample gRpc client to publish events to gRpc endpoint.
  */
@@ -37,14 +39,16 @@ public class GrpcClient {
      */
     public static void main(String[] args) throws InterruptedException {
         String port = args[0];
+        String message = args[1];
+        log.info(Arrays.toString(args));
         ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:" + port).usePlaintext().build();
         Event.Builder requestBuilder = Event.newBuilder();
-        int noOfEventsToSend = !args[1].isEmpty() ? Integer.parseInt(args[1]) : -1;
+        int noOfEventsToSend = !args[2].isEmpty() ? Integer.parseInt(args[2]) : -1;
         boolean sendEventsContinuously = noOfEventsToSend == -1;
         int sentEvents = 0;
 
         while (sendEventsContinuously || sentEvents != noOfEventsToSend) {
-            String json = "{ \"message\": \"Request " + (sentEvents + 1) + "\"}";
+            String json = "{ \"message\": \"" + message + "\" }";
             requestBuilder.setPayload(json);
             requestBuilder.putHeaders("stream.id", "InputStream");
             Event sequenceCallRequest = requestBuilder.build();
