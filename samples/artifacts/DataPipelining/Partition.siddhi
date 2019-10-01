@@ -1,11 +1,11 @@
 @App:name("Partition")
 
-@App:description("Calculate the maximum temperature of each deviceId, among its last 3 instances using partitions.")
+@App:description("Calculate the maximum temperature of each deviceId, among its last 3 instances.")
 
 /*
 
 Purpose:
-    This application demonstrates how to configure a Siddhi application to calculate the maximum temperature of each device among its last 3 instances without interfering with the events of other partition instances.
+    This application demonstrates how to configure a Siddhi application to calculate the maximum temperature of each device among its last 3 instances without interfering with the events of other devices.
 
 Executing the Sample:
     1) Save this sample
@@ -21,7 +21,7 @@ Testing the Sample:
             Stream Name      : TempStream
         c) In the deviceId and temp fields, enter the following and then click Send to send the event.
             deviceId: 1         deviceId: 1         deviceId: 1
-            temp    : 20            temp: 50            temp: 10
+            temp    : 20        temp: 50            temp: 10
         d) Send some more events.
 
     Note:

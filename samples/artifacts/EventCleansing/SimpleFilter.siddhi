@@ -2,6 +2,7 @@
 @App:description("Filters provide a way of filtering input stream events based on a specified condition")
 
 /*
+
 Purpose:
     This application demonstrates how to filter using siddhi.
     The sample depicts a scenario for high temperature.
@@ -38,14 +39,13 @@ Viewing the Results:
         INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568267724796, data=[140, 45.0], isExpired=false}
 */
 
-define stream TempStream(roomNo int,temp double);
+define stream TempStream(roomNo int, temp double);
 
-@sink(type ='log', prefix='LOGGER')
+@sink(type = 'log', prefix = 'LOGGER')
 define stream HighTempStream(roomNo int, temp double);
 
--- Filter the events with roomNo between 100 to 210 and temp greater than 40
-@info(name='filterHighTempRooms')
-from TempStream[(roomNo >= 100 and roomNo < 210) and temp > 40]
+-- Filter the events with roomNo between 100 to 210
+@info(name = 'filterHighTempRooms')
+from TempStream[(roomNo >= 100 and roomNo < 210)]
 select roomNo, temp
 insert into HighTempStream;
-

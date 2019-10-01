@@ -22,7 +22,7 @@ Testing the Sample:
     2) Follow the same steps to observe error handling at stream by selecting 'MessageInStream' as 'Stream Name' and checking 'is Null' on the upper right of attributes box to send a null event.
 
 Viewing the Results:
-    View the printed message on console. You should get something simillar to following for the two scenarios at sink and stream respectively.
+    View the printed message on console. You should get something similar to following for the two scenarios at sink and stream respectively.
     - INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - ErrorHandling: Error Occurred!, StreamEvent{ timestamp=1569565435919, beforeWindowData=null, onAfterWindowData=null, outputData=[2, 2, 2.0, io.siddhi.core.exception.ConnectionUnavailableException: Siddhi App ErrorHandling failed to publish events to HTTP endpoint: http://localhost:5000/temperature], type=CURRENT, next=null}
 
     -INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - ErrorHandling: Error Occurred!, StreamEvent{ timestamp=1569565992444, beforeWindowData=null, onAfterWindowData=null, outputData=[null, io.siddhi.core.exception.SiddhiAppRuntimeException: Invalid input given to str:upper() function. The argument cannot be null. Exception on class 'io.siddhi.extension.execution.string.UpperFunctionExtension'], type=CURRENT, next=null}
@@ -34,13 +34,13 @@ Viewing the Results:
 
 define stream TempInStream (deviceID long, roomNo int, temp double);
 
-@OnError(action='STREAM')
+@OnError(action = 'STREAM')
 define stream MessageInStream (message string);
 
 --Error handling at sink
-@OnError(action='STREAM')
-@sink(type = 'http', on.error='STREAM', publisher.url = "http://localhost:5000/temperature",
-    @map(type = 'json'))
+@OnError(action = 'STREAM')
+@sink(type = 'http', on.error = 'STREAM', publisher.url = "http://localhost:5000/temperature",
+	@map(type = 'json'))
 define stream TempOutStream (deviceID long, roomNo int, temp double);
 
 @info(name = 'Error-generation-sink')
@@ -52,7 +52,6 @@ insert into TempOutStream;
 from !TempOutStream#log("Error Occurred!")
 select *
 insert into TempIgnoreStream;
-
 
 --Error handling at stream
 @info(name = 'Error-generation-stream')

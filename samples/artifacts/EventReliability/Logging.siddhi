@@ -2,6 +2,7 @@
 @App:description("The logger logs the message on the given priority with or without processed event.")
 
 /*
+
 Purpose:
     This application demonstrates how to use logging in siddhi.
 
@@ -30,7 +31,7 @@ Viewing the Results:
         INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
 */
 
-define stream EventStream(symbol string,price float);
+define stream EventStream(symbol string, price float);
 
 -- This will log as INFO with the message "Sample Event :" + EventStream:events.
 from EventStream#log("INFO", "Sample Event :", true)
@@ -56,4 +57,3 @@ insert into OutputStream;
 from EventStream#log("Sample Event :")
 select *
 insert into OutputStream;
-
