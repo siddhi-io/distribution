@@ -184,7 +184,7 @@ public class SiddhiStoreAPITestcase {
 
     @Test(dependsOnMethods = "testStoreApiBundle")
     public void testSelectAllWithSuccessResponse() throws InterruptedException {
-        Thread.sleep(15000);
+        Thread.sleep(20000);
         Event[] events = new Event[]{
                 new Event(System.currentTimeMillis(), new Object[]{
                         "recordId1", 10.34f, false, 1200, 300, 400, "2017-11-22"}),
