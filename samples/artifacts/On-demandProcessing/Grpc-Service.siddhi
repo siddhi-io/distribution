@@ -27,13 +27,13 @@ Testing the Sample:
 
                 ant -Dport="5545" -Dmessage="Message"  (Change "Message" to any value that you want)
 
-        Note:
-
-            -"5545" is the port that use in this sample, if you change the port number in this sample change the "5545" to that port number.
-
         If you want to publish custom number of events, you need to run "ant" command as follows
 
                 ant -Dport="5545" -Dmessage="Message" -DnoOfEventsToSend="5"
+
+        Notes:
+
+            -"5545" is the port that use in this sample, if you change the port number in this sample change the "5545" to that port number.
 
 Viewing the Results:
 
