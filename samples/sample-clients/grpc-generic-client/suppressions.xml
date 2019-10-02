@@ -44,6 +44,6 @@
 
     <!-- do not check protoc generated files -->
     <suppress checks=".*" files=".*[\\/]src[\\/]main[\\/]java[\\/]org[\\/]wso2[\\/]grpc[\\/].*" />
-    <suppress checks=".*" files=".*[\\/]src[\\/]main[\\/]java[\\/]io[\\/]siddhi[\\/]extension[\\/]io[\\/]grpc[\\/]proto[\\/].*" />
+    <suppress checks=".*" files=".*[\\/]src[\\/]main[\\/]java[\\/]io[\\/]siddhi[\\/]distribution[\\/]sample[\\/]grpc[\\/].*" />
 
 </suppressions>

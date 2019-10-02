@@ -3,7 +3,7 @@
 
 /*
 Purpose:
-    This application triggers to generate events at 2.56 PM on every weekdays.
+    This application triggers to generate events at 12.27 PM on every weekdays.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
@@ -12,15 +12,15 @@ Executing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console (you can change the cron job in line number 21) similar to the following.
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - CronBasedTrigger : LogStream : Event{timestamp=1568798760023, data=[new event triggered], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - CronBasedTrigger : LogStream : Event{timestamp=1569913020014, data=[new event triggered, 1569913020014], isExpired=false}
 */
 
 @sink(type='log')
-define stream LogStream (event string);
+define stream LogStream (event string, eventTimestamp long);
 
-define trigger TimeTriggerStream at '0 56 14 ? * MON-FRI';
+define trigger TimeTriggerStream at '0 27 12 ? * MON-FRI';
 
 from TimeTriggerStream
-select 'new event triggered' as event
+select 'new event triggered' as event, eventTimestamp() as eventTimestamp
 insert into LogStream;
 
