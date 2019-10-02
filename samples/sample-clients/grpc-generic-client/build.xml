@@ -24,7 +24,7 @@
     <property name="class.dir" value="${temp.dir}/classes"/>
     <property name="main-class" value="io.siddhi.distribution.sample.grpc.generic.client.GrpcGenericClient"/>
     <property name="lib.dir" value="${carbon.home}/lib"/>
-    <property name="port" value="5546"/>
+    <property name="port" value=""/>
     <property name="noOfEventsToSend" value=""/>
 
     <path id="javac.classpath">

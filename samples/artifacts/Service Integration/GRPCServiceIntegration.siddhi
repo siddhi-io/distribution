@@ -1,54 +1,56 @@
 @App:name("GRPCServiceIntegration")
-@App:description("Publish grpc requests using default service, receive their responses and logs them")
+@App:description("Publish grpc requests using defualt service, receive their responses and process them")
 
 /*
 
 Purpose:
-    This application demonstrates how to publish grpc requests with default grpc service(EventService) and receive their response and logs them.
+    This application demonstrates how to publish grpc requests with default grpc service(EventService) and receive their response and process them.
 
 Prerequisites:
     1) Save this sample
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
+
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
         * GRPCServiceIntegration.siddhi - Started Successfully!
 
     Notes:
     Do not change the value of the port(8889), because the sample server that runs in this example uses the port 8889.
 
+
 Testing the Sample:
     Publish grpc requests to the grpc service defined by 'publisher.url' in Sink configuration. You may starts a server with ant command as follows,
-        1) Navigate to {SiddhiDistribution_Home}/samples/sample-clients/grpc-server and run "ant" command as follows:
-                Run "ant" command in the terminal
-                If you want to stop the server press "Ctrl+C" in the terminal anytime
-        2) Navigate to Event Simulator (Ctrl+Shift+I)
-        3) Select this sample from "Siddhi App Name"
-        4) Select "CallStream" and give relevant values to all attributes
-        5) Press send to send an event to the server
+    1) Navigate to {SiddhiDistribution_Home}/samples/sample-clients/grpc-server and run "ant" command as follows:
+            Run "ant" command in the terminal
+            If you want to stop the server press "Ctrl+C" in the terminal anytime
+    2) Navigate to Event Simulator (Ctrl+Shift+I)
+    3) Select this sample from "Siddhi App Name"
+    4) Select "ProductionStream" and give relevant values to all attributes
+            Ex :-  name: "Toffee"
+                   price: 12.00
+    5) Press send to send an event to the server
+
 
 Viewing the Results:
     See the output on the console.
-        GRPCServiceIntegration : OutputStream : Event{timestamp=1569616293114, data=[Hello from Server!], isExpired=false}
+        OutputStream : Event{timestamp=1569925540600, data=[Toffee, 12.0, 10.8], isExpired=false}
     you will see a similar output like this.
 
 */
 
-@sink(type = 'grpc-call',
-	publisher.url = 'grpc://localhost:8889/org.wso2.grpc.EventService/process/mySeq',
-	sink.id = '1',
-	@map(type = 'json'))
-define stream CallStream (message String);
+@sink(type='grpc-call',
+    publisher.url = 'grpc://localhost:8889/org.wso2.grpc.EventService/process/mySeq',
+    sink.id= '1', @map(type='json'))
+    define stream ProductionStream (name String, price double);
 
-@source(type = 'grpc-call-response', sink.id = '1',
-	@map(type = 'json',
-		@attributes(message = 'trp:message')))
-define stream ResponseStream (message String);
+@source(type='grpc-call-response', sink.id= '1', @map(type='json',
+@attributes(name='trp:name', originalPrice = 'trp:price', discountPrice = 'price'))) -- gives 10% discount
+    define stream DiscountStream (name string, originalPrice double, discountPrice double);
 
-@sink(type = 'log')
-define stream OutputStream (message String);
+@sink(type='log') --to print output in the console
+    define stream OutputStream (name string, originalPrice double, discountPrice double);
 
 @info(name = 'query')
-from ResponseStream
-select *
-insert into OutputStream;
+    from DiscountStream select * insert into OutputStream;
+
