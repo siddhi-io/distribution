@@ -44,5 +44,5 @@ define stream TotalItemsStream (symbol string, totalVolume long);
 @info(name = 'sumVolume')
 from TradesStream#window.timeBatch(10 sec)
 select symbol, sum(volume) as totalVolume
-	group by symbol
+ 	group by symbol
 insert into TotalItemsStream;

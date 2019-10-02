@@ -40,14 +40,21 @@ define function assignPrice[javascript] return double{
  var price = 0.00;
 
  if (item == "Android") {
+
  price = 450.45;
+
  } else if (item == "Windows8") {
+
  price = 650.45;
+
  }
  else {
+
  price = 780.456;
+
  }
  return price;
+
 };
 
 define stream DataStream(items string);
