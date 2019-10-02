@@ -39,9 +39,9 @@ See the output on the console similar to the following (timestamp will be differ
 define stream TradesStream (symbol string, price float, volume int, eventTime long);
 
 @sink(type = "log")
-define stream stdDevStream (symbol string, stdPrice double);
+define stream StdDevStream (symbol string, stdPrice double);
 
 @info(name = 'stdDevPrice')
 from TradesStream#window.externalTimeBatch(eventTime, 2 sec)
 select symbol, stdDev(price) as stdPrice
-insert into stdDevStream;
+insert into StdDevStream;

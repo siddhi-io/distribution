@@ -26,7 +26,7 @@ Testing the Sample:
        b) $ go run $GOPATH/src/github.com/nats-io/stan.go/examples/stan-pub/main.go -s localhost:4222 -c test-cluster SweetProduction "name:cakes,price:45.5675784757,volume:10" 
 
   Viewing the Results in console similar to the following (timestamp will be different):
-  [2019-09-27_14-50-36_266] INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveNatsinTextFormat : ProductiontStream : Event{timestamp=1569576036266, data=[cakes, 45.5675784757, 10], isExpired=false}
+  [2019-09-27_14-50-36_266] INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveNatsinTextFormat : OutputStream : Event{timestamp=1569576036266, data=[cakes, 45.5675784757, 10], isExpired=false}
 
 */
 
@@ -40,9 +40,9 @@ Testing the Sample:
 define stream SweetProductionStream(name string, price double, volume int);
 
 @sink(type = 'log')
-define stream ProductiontStream(name string, price double, volume int);
+define stream OutputStream (name string, price double, volume int);
 
--- Passthrough data in the SweetProductionStream into ProductiontStream
+-- Passthrough data in the SweetProductionStream into OutputStream
 from SweetProductionStream
 select name, price, volume
-insert into ProductiontStream;
+insert into OutputStream;
