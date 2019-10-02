@@ -45,25 +45,23 @@ Viewing the Results:
     You will get a output like this as a response.
         {
             "event": {
-                "messageId": "dba91410-8247-4317-ace1-d42fdbed9e61",    //auto-generated message id (messageId can be different since it is auto generated)
+                "messageId": "dba91410-8247-4317-ace1-d42fdbed9e61",    //auto-generated message id (messageId can be defferent since it is auto generated)
                 "results": 32   // sum of the value1 and value2
             }
         }
 
 */
 
-@source(type = 'http-service', receiver.url = 'http://localhost:5005/add',
-	source.id = 'adder',
-	@map(type = 'json',
-		@attributes(messageId = 'trp:messageId', value1 = '$.event.value1', value2 = '$.event.value2')))
-define stream AddStream (messageId string, value1 long, value2 long);
+@source(type='http-service', receiver.url='http://localhost:5005/add',
+        source.id='adder',
+        @map(type='json', @attributes(messageId='trp:messageId',value1='$.event.value1',value2='$.event.value2')))
+define stream ReceivedRequestStream (messageId string, value1 long, value2 long);
 
-@sink(type = 'http-service-response', source.id = 'adder',
-	message.id = '{{messageId}}',
-	@map(type = 'json'))
+@sink(type='http-service-response', source.id='adder',
+      message.id='{{messageId}}', @map(type = 'json'))
 define stream ResultStream (messageId string, results long);
 
 @info(name = 'query1')
-from AddStream 
+from ReceivedRequestStream
 select messageId, value1 + value2 as results 
 insert into ResultStream;

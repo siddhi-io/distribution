@@ -10,12 +10,35 @@ Purpose:
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
     2) Create a database named 'Customers' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Customers' url.
-    3) Create a table named 'CustomerTable': CREATE TABLE CustomerTable (name VARCHAR(20),age int));
+    3) Create 2 tables named 'CustomerTable' and 'SalesTable':
+             CREATE TABLE CustomerTable (name VARCHAR(20),age int));
+             CREATE TABLE SalesTable (id int,item VARCHAR(20),sales double);
     4) Go to {SIDDI-HOME/conf/tooling} and open deployment.yaml
-    5) Change the 'Datasource configurations' according to the database that you have created.
-    6) Add the CUD extension in the same file.
-    7) Save the file.
-    8) Save this sample.
+        4.1) Change the 'Datasource configurations' according to the database that you have created. (provide your username and password in line 25 and 26)
+                 dataSources:
+                   - name: Customers
+                     description: The datasource used for registry and user manager
+                     definition:
+                       type: RDBMS
+                       configuration:
+                         jdbcUrl: 'jdbc:mysql://localhost:3306/Customers?useSSL=false'
+                         username:
+                         password:
+                         driverClassName: com.mysql.jdbc.Driver
+                         maxPoolSize: 10
+                         idleTimeout: 60000
+                         connectionTestQuery: SELECT 1
+                         validationTimeout: 30000
+                         isAutoCommit: false
+        4.2) Add the CUD extension in the same file.
+                extensions:
+                  - extension:
+                      name: cud
+                      namespace: rdbms
+                      properties:
+                        'perform.CUD.operations': true
+    5) Save the file and restart the server.
+    6) Save this sample.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
@@ -26,50 +49,95 @@ Executing the Sample:
     If you want to edit this application while it's running, stop the application, make your edits and save the application, and then start it again.
 
 Testing the Sample:
-    1) Simulate single events:
+    1) Simulate single events for CustomerTable in datasource:
         a) Click on 'Event Simulator' (double arrows on left tab) and click 'Single Simulation'
-        b) Select 'PerformNativeRDBMSCUDOperation' as 'Siddhi App Name' and select 'CreateStream' as 'Stream Name' to create new records.
+        b) Select 'PerformNativeRDBMSCUDOperation' as 'Siddhi App Name' and select 'CustomerDetailsStream' as 'Stream Name' to create new records.
             - name : michael
             - age : 30
-        c) Select 'UpdateStream' as 'Stream Name' to update name attribute of the existing records.
+        c) Select 'UpdateCustomerStream' as 'Stream Name' to update name attribute of the existing records.
             - name : michael
-            - updatedName : Michael
-        d) Select 'DeleteStream' as 'Stream Name' to delete existing records.
+            - updtedName : Michael
+        d) Select 'DeleteCustomerStream' as 'Stream Name' to delete existing records.
             - name : Michael
         c) Provide attribute values as above and then click Send.
+    2) Simulate single events for SalesTable in datasource:
+         a) Select 'PerformNativeRDBMSCUDOperation' as 'Siddhi App Name' and select 'SalesDetailsStream' as 'Stream Name' to create new records.
+             - id : 1
+             - item : chocolate
+             - sales : 100.00
+         b) Select 'UpdateSalesStream' as 'Stream Name' to update name attribute of the existing records.
+             - id : 1
+             - updatedItemName : chocolate
+             - updateSales : 150.00
+         c) Select 'DeleteSalesStream' as 'Stream Name' to delete existing records.
+             - id : 1
+         d) Provide attribute values as above and then click Send.
 
 Viewing the Results:
-    INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformNativeRDBMSCUDOperation : LogCreateStream : Event{timestamp=1568873700373, data=[michael, 30], isExpired=false}
-    INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformNativeRDBMSCUDOperation : LogUpdateStream : Event{timestamp=1568873757805, data=[Michael], isExpired=false}
-    INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformNativeRDBMSCUDOperation : LogDeleteStream : Event{timestamp=1568873778823, data=[Michael], isExpired=false}
-*/
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogCreateCustomerStream : Event{timestamp=1569908148204, data=[michael, 30], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogUpdateCustomerStream : Event{timestamp=1569908243111, data=[Michael], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogDeleteCustomerStream : Event{timestamp=1569908268706, data=[Michael], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogCreateSalesStream : Event{timestamp=1569908293724, data=[1, chocolate, 100.0], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogUpdateSalesStream : Event{timestamp=1569908348552, data=[Chocolate, 150.0], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - CUD-rdbms : LogDeleteSalesStream : Event{timestamp=1569908374416, data=[1], isExpired=false}*/
 
-define stream CreateStream (name string, age int);
+define stream CustomerDetailsStream (name string, age int);
 
-define stream UpdateStream (name string, updatedName string);
+define stream UpdateCustomerStream (name string, updatedName string);
 
-define stream DeleteStream (name string);
+define stream DeleteCustomerStream (name string);
+
+define stream SalesDetailsStream (id int, item string,sales double);
+
+define stream UpdateSalesStream (id int, updatedItemName string, updateSales double);
+
+define stream DeleteSalesStream (id int);
 
 @sink(type = 'log')
-define stream LogUpdateStream(updatedName string);
+define stream LogCreateCustomerStream(name string,age int);
 
 @sink(type = 'log')
-define stream LogCreateStream(name string, age int);
+define stream LogUpdateCustomerStream(updatedName string);
 
 @sink(type = 'log')
-define stream LogDeleteStream(name string);
+define stream LogDeleteCustomerStream(name string);
 
-@info(name = 'Create new records')
-from CreateStream#rdbms:cud("Customers", "INSERT INTO CustomerTable(name,age) VALUES(?,?)", name , age)
-select name, age
-insert into LogCreateStream;
+@sink(type = 'log')
+define stream LogCreateSalesStream(id int, item string, sales double);
 
-@info(name = 'Update existing records')
-from UpdateStream#rdbms:cud("Customers", "UPDATE CustomerTable SET name=? where name=?", updatedName , name)
+@sink(type = 'log')
+define stream LogUpdateSalesStream(updatedItemName string, updateSales double);
+
+@sink(type = 'log')
+define stream LogDeleteSalesStream(id int);
+
+@info(name='Create new records for customers')
+from CustomerDetailsStream#rdbms:cud("Customers", "INSERT INTO CustomerTable(name,age) VALUES(?,?)", name , age)
+select name,age
+insert into  LogCreateCustomerStream;
+
+@info(name='Update existing records of customers')
+from UpdateCustomerStream#rdbms:cud("Customers", "UPDATE CustomerTable SET name=? where name=?", updatedName , name)
 select updatedName
-insert into LogUpdateStream;
+insert into  LogUpdateCustomerStream;
 
-@info(name = 'Delete existing records')
-from DeleteStream#rdbms:cud("Customers", "DELETE FROM CustomerTable WHERE name=?", name)
+@info(name='Delete existing records of customers')
+from DeleteCustomerStream#rdbms:cud("Customers", "DELETE FROM CustomerTable WHERE name=?", name)
 select name
-insert into LogDeleteStream;
+insert into  LogDeleteCustomerStream;
+
+@info(name='Create new records for sales')
+from SalesDetailsStream#rdbms:cud("Customers", "INSERT INTO SalesTable(id,item,sales) VALUES(?,?,?)", id , item , sales)
+select id , item , sales
+insert into  LogCreateSalesStream;
+
+@info(name='Update existing records of sales')
+from UpdateSalesStream#rdbms:cud("Customers", "UPDATE SalesTable SET item=? , sales=? where id=?", updatedItemName , updateSales , id)
+select updatedItemName , updateSales
+insert into  LogUpdateSalesStream;
+
+@info(name='Delete existing records of sales')
+from DeleteSalesStream#rdbms:cud("Customers", "DELETE FROM SalesTable WHERE id=?", id)
+select id
+insert into  LogDeleteSalesStream;
+

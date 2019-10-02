@@ -17,15 +17,16 @@
  */
 package io.siddhi.distribution.sample.grpc.server;
 
-import com.google.protobuf.Empty;
 import io.grpc.BindableService;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.wso2.grpc.Event;
 import org.wso2.grpc.EventServiceGrpc;
 
 import java.io.IOException;
+
 /**
  * GRPC service class
  */
@@ -42,36 +43,20 @@ public class Server {
                 logger.debug("Server process hit with payload = " + request.getPayload() + " and Headers = {"
                         + request.getHeadersMap().toString() + "}");
             }
+            double price = 0;
+            try {
+                JSONObject obj = new JSONObject(request.getPayload());
+                price = obj.getJSONObject("event").getDouble("price");
+            } catch (Exception e) {
+                logger.error(e);
+            }
+            price *= 0.9;
             Event.Builder responseBuilder = Event.newBuilder();
-            String json = "{ \"message\": \"Hello from Server!\"}";
+            String json = "{ \"price\": " + price + "}";
             responseBuilder.setPayload(json);
             Event response = responseBuilder.build();
             responseObserver.onNext(response);
             responseObserver.onCompleted();
-        }
-
-        @Override
-        public StreamObserver<Event> consume(StreamObserver<Empty> responseObserver) {
-            return new StreamObserver<Event>() {
-                @Override
-                public void onNext(Event request) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("Server consume hit with payload = " + request.getPayload() + " and Headers = {"
-                                + request.getHeadersMap().toString() + "}");
-                    }
-                }
-
-                @Override
-                public void onError(Throwable t) {
-
-                }
-
-                @Override
-                public void onCompleted() {
-                    responseObserver.onNext(Empty.getDefaultInstance());
-                    responseObserver.onCompleted();
-                }
-            };
         }
     };
 

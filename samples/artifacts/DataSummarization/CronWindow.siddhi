@@ -14,7 +14,7 @@ Testing the Sample:
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Single Simulation' (this will be already selected)
     3) Select 'CronWindow' as Siddhi App Name
-    4) Select 'StockEventStream' as StreamName
+    4) Select 'SweetProductionStream' as StreamName
     5) Provide attribute values
         - symbol : chocolate
         - price : 40
@@ -42,13 +42,13 @@ Viewing the Results:
         INFO {io.siddhi.core.stream.output.sink.LogSink} - CronWindow : OutputStream : [Event{timestamp=1568711148731, data=[chocolate, 30.0], isExpired=false}, Event{timestamp=1568711152768, data=[chocolate, 35.0], isExpired=false}]
 */
 
-define stream StockEventStream (symbol string, price float);
+define stream SweetProductionStream (symbol string, price float);
 
 @sink(type='log')
 define stream OutputStream(symbol string, maxPrice float);
 
 -- Select the symbol and maximum price for every 20 seconds
-from StockEventStream#window.cron('*/20 * * * * ?')
+from SweetProductionStream#window.cron('*/20 * * * * ?')
 select symbol, max(price) as maxPrice
 insert into OutputStream;
 

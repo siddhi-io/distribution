@@ -1,5 +1,5 @@
 @App:name("SynchronousEventProcessing")
-@App:description("Synchronuos event processing flow.")
+@App:description("Synchronous event processing flow.")
 
 /*
 Purpose:
@@ -13,7 +13,7 @@ Prerequisites:
     3) Create a table named 'StockTable': CREATE TABLE StockTable (symbol VARCHAR(20),noOfStocks INT);
     4) Enter some records into the table : INSERT INTO StockTable(symbol,noOfStocks) values('S1',10);
                                            INSERT INTO StockTable(symbol,noOfStocks) values('S2',15);
-    5) Provide your mysql server username and password in line 59.
+    5) Provide your mysql server username and password in line 54.
     6) Save this sample.
 
 Executing the Sample:
@@ -39,11 +39,11 @@ Viewing the Results:
     After sending the events you will be able to observe the datasource has been changed.
     And als you can see the respective output on the console similar to the following (timestamp will be different).
     Result for first event :
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBUpdateStream : Event{timestamp=-1, data=[S1, 10, 5], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBUpdateStream : Event{timestamp=-1, data=[S1, 15], isExpired=false}
         INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBStream : Event{timestamp=-1, data=[S1, 10, 5], isExpired=false}
     Result for second event :
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBInsertStream : Event{timestamp=1569498956919, data=[S3, null, 5], isExpired=false}
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBStream : Event{timestamp=1569498956919, data=[S3, null, 5], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBInsertStream : Event{timestamp=1569918077262, data=[S3, null, 10], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBStream : Event{timestamp=1569918077262, data=[S3, null, 10], isExpired=false}
 */
 
 -- Execution flow begin from StockStream, will be executed synchronously by a single thread.
