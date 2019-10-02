@@ -176,8 +176,8 @@ public class SiddhiStoreAPITestcase {
             } else if (expectedResponseCode == Response.Status.NOT_FOUND.getStatusCode()
                     || expectedResponseCode == Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()
                     || expectedResponseCode == Response.Status.BAD_REQUEST.getStatusCode()) {
-                Assert.assertEquals(httpResponseMessage.getResponseCode(), expectedResponseCode);
-                if (httpResponseMessage.getErrorContent() != null) {
+                if (httpResponseMessage.getResponseCode() == expectedResponseCode
+                        && httpResponseMessage.getErrorContent() != null) {
                     ApiResponseMessage response =
                             gson.fromJson(httpResponseMessage.getErrorContent().toString(), ApiResponseMessage.class);
                     Assert.assertEquals(response.getMessage(), expectedResponse);
@@ -212,8 +212,7 @@ public class SiddhiStoreAPITestcase {
                 events, Response.Status.OK, null);
     }
 
-    @Test
-            //(dependsOnMethods = "testConditionalSelectWithSuccessResponse")
+    @Test(dependsOnMethods = "testConditionalSelectWithSuccessResponse")
     public void testNonExistentSiddhiApp() throws InterruptedException {
         testStoreAPI("SomeOtherStupidApp", "from " + TABLENAME + " select *", new Event[]{},
                 Response.Status.NOT_FOUND, "Cannot find an active SiddhiApp with name: SomeOtherStupidApp");
@@ -225,8 +224,7 @@ public class SiddhiStoreAPITestcase {
                 "Cannot query: SomeOtherTable is neither a table, aggregation or window");
     }
 
-    @Test
-            //(dependsOnMethods = "testNonExistentTable")
+    @Test(dependsOnMethods = "testNonExistentTable")
     public void testEmptyAppName() throws InterruptedException {
         testStoreAPI("", "from " + TABLENAME + " select *", new Event[]{}, Response.Status.BAD_REQUEST,
                 "Siddhi app name cannot be empty or null");
