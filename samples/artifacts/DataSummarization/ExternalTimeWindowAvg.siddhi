@@ -16,6 +16,7 @@ Executing the Sample:
 
 Testing the Sample:
     Configure random event simulation as follows
+    
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Feed Simulation' -> 'Create'
     3) Give a name (Or the default name in the place holder will be used as its name)
@@ -35,11 +36,12 @@ See the output on the console similar to the following (timestamp will be differ
 [2019-09-18_11-18-54_530] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785734528, data=[2QRwM, 397.0], isExpired=false}
 [2019-09-18_11-18-55_532] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785735528, data=[J1Lzo, 383.0], isExpired=false}
 [2019-09-18_11-18-56_533] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeWindowAvg : AverageItemStream : Event{timestamp=1568785736528, data=[zopeb, 416.4], isExpired=false}
+
 */
 
-define stream TradesStream(itemId string, price float, volume int,eventTime long);
+define stream TradesStream(itemId string, price float, volume int, eventTime long);
 
-@sink(type="log")
+@sink(type = "log")
 define stream AverageItemStream(itemId string, avgVolume double);
 
 @info(name = 'avgVolume')

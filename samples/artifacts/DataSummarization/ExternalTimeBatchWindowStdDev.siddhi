@@ -16,6 +16,7 @@ Executing the Sample:
 
 Testing the Sample:
     Configure random event simulation as follows
+    
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Feed Simulation' -> 'Create'
     3) Give a name (Or the default name in the place holder will be used as its name)
@@ -23,7 +24,7 @@ Testing the Sample:
     5) Click on 'Add Simulation Source'
     6) Select ExternalTimeBatchWindowStdDev as 'Siddhi App Name'
     7) Select TradesStream as 'StreamName'
-    8) Keep 'Primitive Based' as the config type for symbol,price,volume and eventTime moreover set the range from 0 to 9999999999 for eventTime and leave others attribute's range  as defalut.
+    8) Keep 'Primitive Based' as the config type for symbol,price,volume and eventTime moreover set the range from 0 to 9999999999 for eventTime and leave others attribute's range  as default.
     9) Save the simulator configuration
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
     11) Click on the start button (Arrow symbol) next to the newly created simulator
@@ -38,9 +39,9 @@ See the output on the console similar to the following (timestamp will be differ
 define stream TradesStream (symbol string, price float, volume int, eventTime long);
 
 @sink(type = "log")
-define stream StdDevStream (symbol string, stdPrice double);
+define stream stdDevStream (symbol string, stdPrice double);
 
 @info(name = 'stdDevPrice')
 from TradesStream#window.externalTimeBatch(eventTime, 2 sec)
 select symbol, stdDev(price) as stdPrice
-insert into StdDevStream;
+insert into stdDevStream;
