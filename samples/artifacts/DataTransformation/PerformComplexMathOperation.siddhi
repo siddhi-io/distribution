@@ -1,0 +1,50 @@
+@App:name("PerformComplexMathOperation")
+
+@App:description('Returns round up, natural logarithm and unbiased exponent of the sweets amount')
+
+/*
+
+Purpose:
+	This Siddhi Application returns: 
+	    1) The round up which is the smallest (closest to negative infinity) double value that is greater than or equal to the
+	    p1 argument, and is equal to a mathematical integer. This function wraps the java.lang.Math.ceil() method.
+	    2) The natural logarithm (base e) of  p1.
+	    3) The unbiased exponent used in the representation of p1. This function wraps the java.lang.Math.getExponent() function.
+
+Prerequisites:
+    * Save this sample. The following messages would be shown on the console
+	    * - Siddhi App PerformComplexMathOperation successfully deployed.
+
+Executing the Sample:
+	1) Start the Siddhi application by clicking on 'Run'
+	2) If the Siddhi application starts successfully, the following messages would be shown on the console
+            * PerformComplexMathOperation.siddhi - Started Successfully!
+
+Testing the Sample:
+    You can publish data event to the file, through event simulator
+        a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
+    	b) In the Single Simulation tab of the panel, select values as follows:
+                * Siddhi App Name  : PerformComplexMathOperation
+                * Stream Name      : SweetProductionStream
+        c) Enter following values in the fields and send
+                name: chocolate cake
+                amount: 50.50
+        d) Enter following values in the fields and send
+                name: coffee cake
+                amount: 50.30
+
+Viewing the Results:
+    Messages similar to the following would be shown on the console.
+    [2019-09-16_11-48-14_323] INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformComplexMathOperation : AmountCorrectionStream : Event{timestamp=1568614694322, data=[chocolate cake, 51.0, 3.9219733362813143, 5], isExpired=false}
+    [2019-09-16_11-48-34_108] INFO {io.siddhi.core.stream.output.sink.LogSink} - PerformComplexMathOperation : AmountCorrectionStream : Event{timestamp=1568614714107, data=[coffee cake, 51.0, 3.9180050771056933, 5], isExpired=false}
+
+*/
+
+define stream SweetProductionStream (name string, amount double);
+
+@sink(type = 'log')
+define stream AmountCorrectionStream(name string, ceilAmount double, lnAmount double, expoAmount int);
+
+from SweetProductionStream
+select name, math:ceil(amount) as ceilAmount, math:ln(amount) as lnAmount, math:getExponent(amount) as expoAmount
+insert into AmountCorrectionStream;

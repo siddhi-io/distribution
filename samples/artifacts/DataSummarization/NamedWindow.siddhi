@@ -24,7 +24,7 @@ Testing the Sample:
     5) Click on 'Add Simulation Source'
     6) Select NamedWindow as 'Siddhi App Name'
     7) Select TempStream as 'StreamName'
-    8) Keep 'Primitive Based' as the config type for tempId and temp 
+    8) Keep 'Primitive Based' as the config type for tempId and temp
     9) Save the simulator configuration
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
     11) Click on the start button (Arrow symbol) next to the newly created simulator
@@ -77,5 +77,5 @@ insert into OutPutStream;
 from CheckStream as c join OneMinTempWindow as t
  	on t.temp > 40
 select requestId, count(t.temp) as counts
-	group by requestId
+ 	group by requestId
 insert into HighTempCountStream;

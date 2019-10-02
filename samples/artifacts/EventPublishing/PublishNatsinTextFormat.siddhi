@@ -6,19 +6,23 @@
 Purpose:
     This application demonstrates how to configure siddhi applications to publish events to the NatsSweetProductionStream via NATS transport in text default format.
 Prerequisites:
-    1)Install the NATS Streaming server from "https://nats-io.github.io/docs/nats_streaming/gettingstarted/install.html"
-    2)The Siddhi app run time will need the following JARs to connect to the NATS streaming server. Download those JARs using the following links and add those JARs to "{SiddhiHome}/jars" directory.
-        a)Java NATS streaming :-"https://mvnrepository.com/artifact/io.nats/java-nats-streaming/2.1.2"
-        b)JNATS:-"https://mvnrepository.com/artifact/io.nats/jnats/2.3.0"
-    3)It also needs the Protobuf bundle. Download the Protobuf bundle using the following link and add the bundle to "{SiddhiHome}/bundles" directory.
+
+    1) Install the NATS Streaming server from "https://nats-io.github.io/docs/nats_streaming/gettingstarted/install.html"
+    2) The Siddhi app runtime will need the following JARs to connect to the NATS streaming server.
+        a)java-nats-streaming-*.jar :- "https://mvnrepository.com/artifact/io.nats/java-nats-streaming/2.1.2"
+        b)jnats-*.jar               :- "https://mvnrepository.com/artifact/io.nats/jnats/2.3.0"
+       Download the above JARs and add the JARs to "{SiddhiHome}/jars" directory.
+    3) It also needs the Protobuf bundle. Download the Protobuf bundle using the following link and add the bundle to "{SiddhiHome}/bundles" directory.
         a)Protobuf:-"https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java/3.6.1"
-        
+    4. Restart the Siddhi server.
+
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
     2) If the Siddhi application starts successfully, the following messages would be shown on the console.
        * PublishNatsinTextFormat.siddhi - Started Successfully!
 
 Testing the Sample:
+
     1)Save this sample.
     2)To see the out put via the nats streaming server you need start the nats streaming server and  have to install Go lang in your machine. Or else you can use other clients like (Java:-"https://github.com/nats-io/stan.java", JS:-"https://github.com/nats-io/stan.js", Python:-"https://github.com/nats-io/stan.py", or Ruby:-"https://github.com/nats-io/stan.rb" etc).type the below commands in the terminal.
                  a) $ go get github.com/nats-io/stan.go/

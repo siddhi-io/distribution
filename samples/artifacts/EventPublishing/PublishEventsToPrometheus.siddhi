@@ -3,16 +3,14 @@
 
 /*
 Purpose:
-    This application demonstrates how to use prometheus-sink to pusblish events to prometheus.
+    This application demonstrates how to use prometheus-sink to publish events to Prometheus. Here, the server url configured is used to exposed an API to Prometheus from which Prometheus can scrape metrics.
 
 Pre-requisites:
-    1) The following steps must be executed to enable WSO2 SP to publish and retrieve events via Prometheus.
-        a) Download and copy the prometheus client jars to the {Siddhi_Distribution_Home}/bundles directory as follows.
-              i) Download the following jars from https://mvnrepository.com/artifact/io.prometheus and copy them to {Siddhi_Distribution_Home}/bundles directory.
-                 * simpleclient_common-0.5.0.jar
-                 * simpleclient-0.5.0.jar
-		         * simpleclient_httpserver-0.5.0.jar
-		         * simpleclient_pushgateway-0.5.0.jar
+    1) Download the following jars from https://mvnrepository.com/artifact/io.prometheus and copy them to {Siddhi_Distribution_Home}/bundles directory.
+         * simpleclient_common-0.5.0.jar
+         * simpleclient-0.5.0.jar
+         * simpleclient_httpserver-0.5.0.jar
+         * simpleclient_pushgateway-0.5.0.jar
     2) Start the Siddhi_Distribution
     3) Save this sample
         "Siddhi App PublishEventsToPrometheus successfully deployed" message would be shown in the console
@@ -48,7 +46,6 @@ define stream InputStream (deviceID string, roomID string,power int);
       metric.name= 'total_device_power_consumption_WATTS',
       metric.help= 'Total Power consumption of each devices in Watts',
       @map(type = 'keyvalue'))
-
 Define stream SinkStream (deviceID string, roomID string, power int);
 
 @info(name = 'publishQuery')

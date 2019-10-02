@@ -53,10 +53,15 @@ Viewing the Results:
 */
 
 define stream insertSweetProductionStream (name string, amount double);
+
 define stream deleteSweetProductionStream (name string);
+
 define stream searchSweetProductionStream (name string);
+
 define stream updateSweetProductionStream (name string, amount double);
+
 define stream updateOrInsertSweetProductionStream (name string, amount double);
+
 define stream containsSweetProductionStream (name string, amount double);
 
 @sink(type = 'log')
@@ -71,31 +76,41 @@ define stream logStream(name string, amount double);
 @index("amount")
 define table SweetProductionTable (name string, amount double);
 
-/*Inserting event into the mysql database */
+/*
+Inserting event into the mysql database */
+
 @info(name = 'query1')
 from insertSweetProductionStream
 insert into SweetProductionTable;
 
-/* Deleting event from mysql database */
+/*
+ Deleting event from mysql database */
+
 @info(name = 'query2')
 from deleteSweetProductionStream
 delete SweetProductionTable
-	on SweetProductionTable.name == name ;
+ 	on SweetProductionTable.name == name ;
 
-/*Updating event from mysql database */
+/*
+Updating event from mysql database */
+
 @info(name = 'query3')
 from updateSweetProductionStream
 update SweetProductionTable
-	on SweetProductionTable.name == name ;
+ 	on SweetProductionTable.name == name ;
 
-/*Updating or inserting event from mysql database */
+/*
+Updating or inserting event from mysql database */
+
 @info(name = 'query4')
 from updateOrInsertSweetProductionStream
 update or 
 insert into SweetProductionTable
-	on SweetProductionTable.name == name;
+ 	on SweetProductionTable.name == name;
 
-/*Siddhi In in mysql database */
+/*
+Siddhi In in mysql database */
+
 @info(name = 'query5')
 from containsSweetProductionStream
 [(SweetProductionTable.name == name and SweetProductionTable.amount == amount) in SweetProductionTable]

@@ -26,16 +26,15 @@ Testing the Sample:
         d) Send some more events.
 
 Viewing the Results:
-    INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568282141766, data=[Number is greater than 35], isExpired=false}
-
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - IfElseApp : OutputStream : Event{timestamp=1569842705172, data=[Number is greater than 35], isExpired=false}
 */
 
 define stream CheckNumberStream (num int);
 
-@sink(type='log')
-define stream OutputStream(result string);
+@sink(type = 'log')
+define stream ResultStream(result string);
 
-@info(name='IfElseQuery')
+@info(name = 'IfElseQuery')
 from CheckNumberStream
-select ifThenElse(num > 35,'Number is greater than 35','Number is less than 35') as result
-insert into OutputStream;
+select ifThenElse(num > 35, 'Number is greater than 35', 'Number is less than 35') as result
+insert into ResultStream;

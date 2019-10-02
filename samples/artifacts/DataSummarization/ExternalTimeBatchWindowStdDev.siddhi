@@ -4,7 +4,7 @@
 /*
 
 Purpose:
-    This application demonstrates how to simulate random events via Feed Simulation and calculate the standard deviation of events. The aggregation is executed on events within a external batch window.In this example it will processing the events that arrive every 2 sec from event time.
+    This application demonstrates calculate the standard deviation of events. The aggregation is executed on events within a external batch window. In this example it will processing the events that arrive every 2 sec from event time.
     
 Prerequisites:
     1) Save this sample
@@ -31,8 +31,8 @@ Testing the Sample:
 
 Viewing the Results:
 See the output on the console similar to the following (timestamp will be different). The output show the standard deviation for the events sent during last 2 sec from event time.
-[2019-09-19_16-22-32_657] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeBatchWindowStdDev : stdDevStream : Event{timestamp=1568890351655, data=[Hm45H, 191.72444671761863], isExpired=false}
-[2019-09-19_16-22-37_659] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeBatchWindowStdDev : stdDevStream : Event{timestamp=1568890356655, data=[FzLxm, 110.01660517890893], isExpired=false}
+[2019-09-19_16-22-32_657] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeBatchWindowStdDev : StdDevStream : Event{timestamp=1568890351655, data=[Hm45H, 191.72444671761863], isExpired=false}
+[2019-09-19_16-22-37_659] INFO {io.siddhi.core.stream.output.sink.LogSink} - ExternalTimeBatchWindowStdDev : StdDevStream : Event{timestamp=1568890356655, data=[FzLxm, 110.01660517890893], isExpired=false}
 
 */
 

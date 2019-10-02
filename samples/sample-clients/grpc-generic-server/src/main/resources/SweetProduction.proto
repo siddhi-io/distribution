@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+
+option java_package = "io.siddhi.distribution.sample.grpc";
+
+message Sweet {
+    string name = 1;
+    double price = 2;
+}
+
+service SweetService {
+    rpc getDiscount(Sweet) returns(Sweet);
+}

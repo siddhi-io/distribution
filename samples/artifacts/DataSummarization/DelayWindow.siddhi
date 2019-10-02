@@ -30,7 +30,7 @@ Testing the Sample:
 
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - DelayWindow : OutputStream : Event{timestamp=1568619092537, data=[chocolate], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - DelayWindow : OutputStream : Event{timestamp=1568619092537, data=[chocolate], isExpired=false}
 */
 
 define stream PurchaseStream(symbol string, volume int);

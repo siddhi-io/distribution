@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>5.1.0-SNAPSHOT</version>
+        <version>5.1.1-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
@@ -186,7 +186,7 @@
             *;resolution:=optional
         </import.package>
         <carbon.component>
-            osgi.service; objectClass="org.wso2.msf4j.Microservice"; serviceCount="1"
+            osgi.service; objectClass="org.wso2.msf4j.Microservice"; serviceCount="2"
         </carbon.component>
     </properties>
 </project>

@@ -42,7 +42,7 @@ define stream TradesStream (symbol string, price float, volume int);
 define stream TotalItemsStream (symbol string, totalVolume long);
 
 @info(name = 'sumVolume')
-from TradesStream #window.timeBatch(10 sec)
+from TradesStream#window.timeBatch(10 sec)
 select symbol, sum(volume) as totalVolume
 	group by symbol
 insert into TotalItemsStream;

@@ -51,6 +51,7 @@ import javax.ws.rs.core.Response;
         service = Microservice.class,
         immediate = true
 )
+@Deprecated
 @Path("/stores")
 @RequestInterceptor(AuthenticationInterceptor.class)
 @io.swagger.annotations.Api(description = "The stores API")

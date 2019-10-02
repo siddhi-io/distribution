@@ -4,7 +4,7 @@
 /*
 
 Purpose:
-    This application demonstrates how to simulate random events via Feed Simulation and calculate the average of events. The aggregation is executed on events within a length batch window. 
+    This application demonstrates how calculate the average of events for specific number of events. The aggregation is executed on events within a length batch window.
 
 Prerequisites:
     1) Save this sample
