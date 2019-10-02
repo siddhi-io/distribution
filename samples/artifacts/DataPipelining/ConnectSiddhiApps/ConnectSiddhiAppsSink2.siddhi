@@ -1,0 +1,31 @@
+@App:name("ConnectSiddhiAppsSink2")
+@App:description("Connecting Siddhi apps using In-Memory transport and view the output on the console.")
+
+/*
+
+Purpose:
+    This application demonstrates how to configure a Siddhi application to connect multiple Siddhi Apps deployed under the same Siddhi Manager and log the events in OutputStream to the output console. The application consumes events which are published by ConnectSiddhiAppsSink1 app.
+
+Prerequisites:
+    1) Save this sample
+
+Executing the Sample:
+    1) Start the Siddhi applications "ConnectSiddhiAppsSink1" and "ConnectSiddhiAppsSink2" by clicking on 'Run'.
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console.
+        ConnectSiddhiAppsSink1.siddhi - Stopped Successfully!
+        ConnectSiddhiAppsSink2.siddhi - Started Successfully!
+
+Testing the Sample:
+    Refer the ConnectSiddhiAppsSink1 for the instructions.
+
+*/
+
+@source(type='inMemory', topic='SweetProductionStream', @map(type='passThrough'))
+define stream SweetProductionStream (name string, amount double);
+
+@sink(type='log')
+define stream OutputStream (name string, amount double);
+
+from SweetProductionStream
+select *
+insert into OutputStream;
