@@ -16,6 +16,7 @@ Executing the Sample:
 
 Testing the Sample:
     Configure random event simulation as follows
+    
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Feed Simulation' -> 'Create'
     3) Give a name (Or the default name in the place holder will be used as its name)
@@ -33,6 +34,7 @@ See the output on the console similar to the following (timestamp will be differ
 [2019-09-18_11-37-03_507] INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthBatchWindowAvg : AveragePriceStream : Event{timestamp=1568786823503, data=[EyVIM, 493.17199783325196], isExpired=false}
 [2019-09-18_11-37-13_511] INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthBatchWindowAvg : AveragePriceStream : Event{timestamp=1568786833503, data=[IrJh1, 471.0820030212402], isExpired=false}
 [2019-09-18_11-37-23_516] INFO {io.siddhi.core.stream.output.sink.LogSink} - LengthBatchWindowAvg : AveragePriceStream : Event{timestamp=1568786843503, data=[BjHjs, 642.9380020141601], isExpired=false}
+
 */
 
 define stream TradesStream(itemId string, price float, volume int);
