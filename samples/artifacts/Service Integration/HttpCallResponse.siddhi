@@ -63,6 +63,7 @@ define stream ResponseStream(name string, amount double);
 @source(type='http-call-response' , sink.id='production-request', http.status.code='500',
 @map(type='json'))
 @sink(type='log')
+define stream ErrorStream(error string);
 
 @info(name='PassThrough')
 from SweetProductionStream
