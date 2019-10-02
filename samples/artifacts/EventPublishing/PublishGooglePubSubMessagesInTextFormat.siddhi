@@ -10,13 +10,15 @@ Purpose:
 Prerequisites:
    1.Create a Google Cloud Platform account.
    2.Sign in to Google Account and set up a GCP Console project and enable the Cloud Pub/Sub API.
-   3.Provide the project id for the project.id in the below sink.
-   3.Create a service account and download a private key as JSON.
-   4.Place your json file in any system folder and provide the path for the credential.path in the below sink.
-   5.Create a topic and provide the topic id for the topic.id in the below sink. (Link: https://console.cloud.google.com/cloudpubsub/topic)
-   6.Create a subscription and provide the subscription id for the subscription.id in the below sink. (Link: https://console.cloud.google.com/cloudpubsub/subscription)
-   7.Save the sample.
-   8.If there is no syntax error, the following message is shown on the console:
+   3.Provide the project id for the project.id
+   4.Create a service account, give access to the Google Pub/Sub API using "Grant this service account access to project" and download a private key as JSON.
+        Note:
+            Select "Owner" or "Pub/Sub Admin" option in Service account permissions to grant service access.
+   5.Place your json file in any system folder and provide the path for the credential.path in the below sink.
+   6.Create a topic and provide the topic id for the topic.id in the below sink. (Link: https://console.cloud.google.com/cloudpubsub/topic)
+   7.Create a subscription and provide the subscription id for the subscription.id in the below sink. (Link: https://console.cloud.google.com/cloudpubsub/subscription)
+   8.Save the sample.
+   9.If there is no syntax error, the following message is shown on the console:
 	        * PublishGooglePubSubMessagesInTextFormat successfully deployed.
 
 Executing the Sample:
@@ -37,12 +39,14 @@ Testing the Sample:
 
 Viewing the Results:
     See the output on the terminal:
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - PublishGooglePubSubMessagesInTextFormat : OutputStream : Event{timestamp=1552548021825, data=[Hello], isExpired=false}
+        Siddhi Tooling Console:
+            INFO {io.siddhi.core.stream.output.sink.LogSink} - PublishGooglePubSubMessagesInTextFormat : OutputStream : Event{timestamp=1552548021825, data=[Hello], isExpired=false}
+        APIs & Services Dashboard:
+            The request count and other attribute values for Google Pub/Sub API change when you publish data using the Google Pub/Sub API.
 
 Notes:
 	Make sure the the credential file is correct and user have write access to make api calls.
-        Stop this Siddhi application.
-        
+
 */
 
 @sink(type='googlepubsub', 
