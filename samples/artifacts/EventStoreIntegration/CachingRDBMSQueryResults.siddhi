@@ -50,7 +50,7 @@ define stream InputStream(username string);
 define stream LogStream(username string, salary int);
 
 @store(type = "rdbms", jdbc.url = "jdbc:mysql://localhost:3306/Employees?useSSL=false",
-	username = "testuser", password = "test",
+	username = "your_username", password = "your_password",
 	jdbc.driver.name = "com.mysql.jdbc.Driver",
 	@cache(size = "100", retention.period = "5 min", purge.interval = "1 min"))
 @primaryKey('username')
