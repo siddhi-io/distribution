@@ -32,10 +32,10 @@
     <property name="type" value="json"/>
     <property name="factoryType" value="topic"/>
     <property name="jndiName" value="TopicConnectionFactory"/>
-    <property name="customMapping" value=""/>
-    <property name="filePath" value=""/>
-    <property name="noOfEvents" value=""/>
-    <property name="eventDefinition" value=""/>
+    <property name="customMapping" value="EMPTY"/>
+    <property name="filePath" value="EMPTY"/>
+    <property name="noOfEvents" value="EMPTY"/>
+    <property name="eventDefinition" value="EMPTY"/>
     <property name="delay" value="1000"/>
 
 

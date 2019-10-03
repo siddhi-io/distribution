@@ -35,6 +35,7 @@ import java.util.Scanner;
  */
 public class TCPClient {
     private static final Logger log = Logger.getLogger(TCPClient.class);
+    private static final String EMPTY_STRING = "EMPTY";
 
     /**
      * Main method to start the test client.
@@ -47,9 +48,9 @@ public class TCPClient {
         SiddhiManager siddhiManager = new SiddhiManager();
         String publisherUrl = args[0];
         String type = Arrays.asList(types).contains(args[1]) ? args[1] : "json";
-        int noOfEventsToSend = !args[6].isEmpty() ? Integer.parseInt(args[6]) : -1;
-        int delay = !args[4].isEmpty() ? Integer.parseInt(args[4]) : 1000;
-        boolean continuouslyReadFile = !args[7].isEmpty() && Boolean.parseBoolean(args[7]);
+        int noOfEventsToSend = !args[6].equals(EMPTY_STRING) ? Integer.parseInt(args[6]) : -1;
+        int delay = !args[4].equals(EMPTY_STRING) ? Integer.parseInt(args[4]) : 1000;
+        boolean continuouslyReadFile = !args[7].equals(EMPTY_STRING) && Boolean.parseBoolean(args[7]);
         List<String[]> fileEntriesList = null;
         boolean isBinaryMessage = false;
         if ("binary".equalsIgnoreCase(type)) {
@@ -60,15 +61,15 @@ public class TCPClient {
         if (noOfEventsToSend != -1) {
             sendEventsContinuously = false;
         }
-        if (!args[2].equals("")) {
+        if (!args[2].equals(EMPTY_STRING)) {
             String filePath = args[2];
             fileEntriesList = readFile(filePath);
         }
         String eventDefinition;
-        if (!args[3].equals("")) {
+        if (!args[3].equals(EMPTY_STRING)) {
             eventDefinition = args[3];
         } else {
-            if (!args[5].equals("")) {
+            if (!args[5].equals(EMPTY_STRING)) {
                 if (type.equals("json")) {
                     eventDefinition = "{\"item\": {\"id\":\"{0}\",\"amount\": {1}}}";
                 } else if (type.equals("xml")) {

@@ -28,19 +28,19 @@
 
     <property name="bootstrapServerList" value="localhost:9092"/>
     <property name="topicName" value="kafka_sample_topic"/>
-    <property name="partitionNo" value=""/>
-    <property name="sequenceId" value=""/>
-    <property name="key" value=""/>
-    <property name="schemaDefinition" value=""/>
-    <property name="optionalConfiguration" value=""/>
+    <property name="partitionNo" value="EMPTY"/>
+    <property name="sequenceId" value="EMPTY"/>
+    <property name="key" value="EMPTY"/>
+    <property name="schemaDefinition" value="EMPTY"/>
+    <property name="optionalConfiguration" value="EMPTY"/>
     <property name="isBinaryMessage" value="false"/>
     <!-- common for all transports -->
     <property name="type" value="json"/>
     <property name="delay" value="1000"/>
     <property name="customMapping" value="false"/>
-    <property name="filePath" value=""/>
-    <property name="eventDefinition" value=""/>
-    <property name="noOfEventsToSend" value=""/>
+    <property name="filePath" value="EMPTY"/>
+    <property name="eventDefinition" value="EMPTY"/>
+    <property name="noOfEventsToSend" value="EMPTY"/>
     <property name="continuouslyReadFile" value="false"/>
 
     <path id="javac.classpath">
