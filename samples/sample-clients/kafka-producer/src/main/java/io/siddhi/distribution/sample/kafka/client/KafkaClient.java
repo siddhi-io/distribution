@@ -157,9 +157,6 @@ public class KafkaClient {
             builder.append("@map(type='").append(type).append("'))\n");
             builder.append("define stream SweetProductionStream(name string, amount double);\n");
         } else if ("avro".equalsIgnoreCase(type)) {
-            siddhiManager.setExtension("sink:kafka", KafkaSink.class);
-            siddhiManager.setExtension("sinkMapper:avro", AvroSinkMapper.class);
-            builder.append("is.binary.message='true',\n");
             builder.append("@map(type='").append(type).append("',schema.def=").append(schemaDefinition).append("))\n");
             builder.append("define stream SweetProductionStream(name string, amount double);\n");
         } else {
