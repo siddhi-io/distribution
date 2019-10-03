@@ -46,6 +46,7 @@ rem %~sdp0 is expanded pathname of the current script under NT with spaces in th
 set CARBON_HOME=%~sdp0..
 echo "%CARBON_HOME%\bin\version.txt"
 SET curDrive=%cd:~0,1%
+SET currentDirectory=%cd%
 SET wsasDrive=%CARBON_HOME:~0,1%
 if not "%curDrive%" == "%wsasDrive%" %wsasDrive%:
 
@@ -64,7 +65,7 @@ echo %CARBON_HOME%
 goto end
 
 :startServer
-%CARBON_HOME%\wso2\runner\bin\carbon.bat %*
+%CARBON_HOME%\wso2\runner\bin\carbon.bat -DcurrentDirectory=%currentDirectory% %*
 
 :end
 goto endlocal
