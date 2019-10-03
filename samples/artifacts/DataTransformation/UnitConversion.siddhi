@@ -1,4 +1,4 @@
-@App:name("DataTypeConversion")
+@App:name("UnitConversion")
 @App:description("Converts the input parameter type into another data type.")
 
 /*
