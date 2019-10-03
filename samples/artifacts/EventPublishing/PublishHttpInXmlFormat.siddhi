@@ -6,16 +6,15 @@
 
 Purpose:
 	This application demonstrates how to configure a siddhi application to send sweet production events via HTTP transport in XML default format.
-    
+
 Prerequisites:
 	* Save this sample.
-	     * - Siddhi App PublishHttpInXmlFormat successfully deployed. 
-    
+	     * Siddhi App PublishHttpInXmlFormat successfully deployed.
+
 Executing the Sample:
 	1) Start the Siddhi application by clicking on 'Run'.
 	2) If the Siddhi application starts successfully, the following messages are shown on the console:
-            * PublishHttpInXmlFormat.siddhi - Started Successfully!
-            * 'Http' sink at 'OutputStream' stream successfully connected to 'localhost:8080/abc'.
+        * PublishHttpInXmlFormat.siddhi - Started Successfully!
 
 Testing the Sample:
    1) Open a terminal and navigate to {SiddhiHome}/samples/sample-clients/http-server and run "ant" command without any arguments.
@@ -25,21 +24,23 @@ Testing the Sample:
     	b) In the Single Simulation tab of the panel, specify the values as follows:
                 * Siddhi App Name  : PublishHttpInXmlFormat
                 * Stream Name      : SweetProductionStream
-        c) In the name and amount fields, enter 'toffees' and '75.6' respectively and then click Send to send the event. 
+        c) In the name and amount fields, enter 'toffees' and '75.6' respectively and then click Send to send the event.
         d) Send more events as desired.
 
 Viewing the Results:
-    See the output on the terminal.
+    See the output on the terminals.
+       Http-server Terminal:
+            [io.siddhi.distribution.sample.http.server.HttpServerListener] : Received Events: <events><event><name>toffees</name><amount>75.6</amount></event></events>
+
 
 Notes:
     If the message "OutputStream' stream could not connect to 'localhost:8080", it could be due to port 8080
     defined in the Siddhi application is already being used by a different program. To resolve this issue, do the following:
         1) Stop this Siddhi application (Click 'Run' on menu bar -> 'Stop').
         2) Change the port from 8080 to an unused port in this Siddhi application's source configuration and in the http-server file.
-        3) Start the application and check whether the expected output appears on the console. 
-            
-*/
+        3) Start the application and check whether the expected output appears on the console.
 
+*/
 define stream SweetProductionStream (name string, amount double);
 
 @sink(type = 'http',
@@ -47,7 +48,7 @@ define stream SweetProductionStream (name string, amount double);
 	@map(type = 'xml'))
 define stream OutputStream (name string, amount double);
 
-@info(name='EventPassThrough')
+@info(name='EventPassThrough')	
 from SweetProductionStream
-select *
+select  * 
 insert into OutputStream;
