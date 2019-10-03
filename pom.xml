@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.siddhi.distribution</groupId>
     <artifactId>io.siddhi.distribution.parent</artifactId>
-    <version>5.1.1-SNAPSHOT</version>
+    <version>5.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
