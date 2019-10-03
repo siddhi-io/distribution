@@ -1284,7 +1284,7 @@
         <siddhi.map.protobuf.version>1.0.0</siddhi.map.protobuf.version>
 
         <siddhi.store.rdbms.version>7.0.0-SNAPSHOT</siddhi.store.rdbms.version>
-        <siddhi.store.mongodb.version>2.0.2</siddhi.store.mongodb.version>
+        <siddhi.store.mongodb.version>2.0.3-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.1</siddhi.store.redis.version>
 
         <siddhi.script.js.version>5.0.2</siddhi.script.js.version>
