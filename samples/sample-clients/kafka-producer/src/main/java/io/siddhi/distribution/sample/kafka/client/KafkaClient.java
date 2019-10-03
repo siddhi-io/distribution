@@ -20,8 +20,6 @@ package io.siddhi.distribution.sample.kafka.client;
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.stream.input.InputHandler;
-import io.siddhi.extension.io.kafka.sink.KafkaSink;
-import io.siddhi.extension.map.avro.sinkmapper.AvroSinkMapper;
 import org.apache.log4j.Logger;
 
 import java.io.File;
