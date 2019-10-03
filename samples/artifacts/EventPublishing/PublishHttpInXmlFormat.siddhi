@@ -44,9 +44,9 @@ Notes:
 define stream SweetProductionStream (name string, amount double);
 
 @sink(type = 'http',
-	publisher.url = 'http://localhost:8080/abc',		publisher.url = 'http://localhost:8080/abc',
-	@map(type = 'xml'))		@map(type = 'xml')
-define stream OutputStream (name string, amount double);	define stream OutputStream (name string, amount double);
+	publisher.url = 'http://localhost:8080/abc',
+	@map(type = 'xml'))
+define stream OutputStream (name string, amount double);
 
 @info(name='EventPassThrough')	
 from SweetProductionStream
