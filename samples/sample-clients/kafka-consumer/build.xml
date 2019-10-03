@@ -28,11 +28,11 @@
 
     <property name="bootstrapServers" value="localhost:9092"/>
     <property name="topicList" value="kafka_result_topic"/>
-    <property name="partitionList" value=""/>
+    <property name="partitionList" value="EMPTY"/>
     <property name="groupId" value="test"/>
     <property name="threadingOption" value="single.thread"/>
     <property name="isBinaryMessage" value="false"/>
-    <property name="optionalConfiguration" value=""/>
+    <property name="optionalConfiguration" value="EMPTY"/>
     <property name="type" value="json"/>
 
     <path id="javac.classpath">
@@ -56,6 +56,7 @@
             <include name="commons-pool_*.jar"/>
             <include name="org.apache.ws.commons.axiom.axiom-api_*.jar"/>
             <include name="jaxen_*.jar"/>
+            <include name="com.fasterxml.jackson.*.jar"/>
         </fileset>
     </path>
 

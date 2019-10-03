@@ -42,7 +42,7 @@ public class GrpcGenericClient {
     public static void main(String[] args) throws InterruptedException {
         String port = args[0];
         ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:" + port).usePlaintext().build();
-        int noOfEventsToSend = !args[1].isEmpty() ? Integer.parseInt(args[1]) : -1;
+        int noOfEventsToSend = !args[1].equals("EMPTY") ? Integer.parseInt(args[1]) : -1;
         boolean sendEventsContinuously = noOfEventsToSend == -1;
         int sentEvents = 0;
         addSweets();
