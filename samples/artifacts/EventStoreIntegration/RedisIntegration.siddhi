@@ -15,7 +15,7 @@ Prerequisites:
     1) Ensure that Redis is installed on your machine and redis server is started.
     2) Add jedis-2.9.0.jar into {Siddhi_Distribution_Home}/libs as follows:
            a) Download jedis-2.9.0.jar  from: https://repo1.maven.org/maven2/redis/clients/jedis/2.9.0/jedis-2.9.0.jar
-           c) Copy jedis-2.9.0.jar to {Siddhi_Distribution_Home}/libs directory.
+           c) Copy jedis-2.9.0.jar to {Siddhi_Distribution_Home}/lib directory.
     3) Save this sample.
     4) Restart the tooling
 
