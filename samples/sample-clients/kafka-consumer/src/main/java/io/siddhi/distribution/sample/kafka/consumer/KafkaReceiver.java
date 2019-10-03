@@ -46,13 +46,13 @@ public class KafkaReceiver {
         String isBinaryMessage = args[5];
         String optionalConfigs = args[6];
         String type = args[7];
-        if (!partitions.isEmpty()) {
+        if (!partitions.equals("EMPTY")) {
             partitions = "partition.no.list='" + partitions + "', ";
         }
         if (Boolean.parseBoolean(isBinaryMessage)) {
             type = "binary";
         }
-        if (!optionalConfigs.isEmpty()) {
+        if (!optionalConfigs.equals("EMPTY")) {
             optionalConfigs = "optional.configuration='" + optionalConfigs + "', ";
         }
 

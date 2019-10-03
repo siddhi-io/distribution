@@ -37,6 +37,7 @@ import java.util.Scanner;
 public class KafkaClient {
 
     private static Logger log = Logger.getLogger(KafkaClient.class);
+    private static final String EMPTY_STRING = "EMPTY";
 
     /**
      * Main method to start the test client.
@@ -48,41 +49,41 @@ public class KafkaClient {
         final String[] types = new String[]{"json", "xml", "text", "binary", "avro"};
         String bootstrapServers = args[0];
         String topic = args[1];
-        String partitionNo = !args[2].isEmpty() ? args[2] : null;
-        String sequenceId = !args[3].isEmpty() ? args[3] : null;
-        String key = !args[4].isEmpty() ? args[4] : null;
+        String partitionNo = !args[2].equals(EMPTY_STRING) ? args[2] : null;
+        String sequenceId = !args[3].equals(EMPTY_STRING) ? args[3] : null;
+        String key = !args[4].equals(EMPTY_STRING) ? args[4] : null;
         String schemaDefinition = args[5];
-        String optionalConfiguration = !args[6].isEmpty() ? args[6] : null;
-        Boolean isBinaryMessage = !args[7].isEmpty() && Boolean.parseBoolean(args[7]);
+        String optionalConfiguration = !args[6].equals(EMPTY_STRING) ? args[6] : null;
+        Boolean isBinaryMessage = !args[7].equals(EMPTY_STRING) && Boolean.parseBoolean(args[7]);
         String type = Arrays.asList(types).contains(args[8]) ? args[8] : "json";
         if (isBinaryMessage) {
             if (!"avro".equals(type)) {
                 type = "binary";
             }
         }
-        int delay = !args[9].isEmpty() ? Integer.parseInt(args[9]) : 1000;
+        int delay = !args[9].equals(EMPTY_STRING) ? Integer.parseInt(args[9]) : 1000;
         String customMapping = args[10];
         String filePath = args[11];
         String eventDefinition = args[12];
-        int noOfEventsToSend = !args[13].isEmpty() ? Integer.parseInt(args[13]) : -1;
-        boolean continuouslyReadFile = !args[14].isEmpty() && Boolean.parseBoolean(args[14]);
+        int noOfEventsToSend = !args[13].equals(EMPTY_STRING) ? Integer.parseInt(args[13]) : -1;
+        boolean continuouslyReadFile = !args[14].equals(EMPTY_STRING) && Boolean.parseBoolean(args[14]);
 
         boolean sendEventsContinuously = true;
         if (noOfEventsToSend != -1) {
             sendEventsContinuously = false;
         }
         List<String[]> fileEntriesList = null;
-        if (!filePath.isEmpty()) {
+        if (!filePath.equals(EMPTY_STRING)) {
             fileEntriesList = readFile(filePath);
         }
-        if (eventDefinition.isEmpty()) {
+        if (eventDefinition.equals(EMPTY_STRING)) {
             if (Boolean.parseBoolean(customMapping)) {
                 if (type.equals("json")) {
                     eventDefinition = "{\"item\": {\"id\":\"{0}\",\"amount\": {1}}}";
                 } else if (type.equals("xml")) {
                     eventDefinition = "<events><item><id>{0}</id><amount>{1}</amount></item></events>";
                 } else if (type.equals("avro")) {
-                    if (schemaDefinition.isEmpty()) {
+                    if (schemaDefinition.equals(EMPTY_STRING)) {
                         schemaDefinition = "\"\"\"\n" +
                                 "            {\n" +
                                 "\t            \"type\": \"record\",\n" +
@@ -107,7 +108,7 @@ public class KafkaClient {
                 } else if (type.equals("xml")) {
                     eventDefinition = "<events><event><name>{0}</name><amount>{1}</amount></event></events>";
                 } else if (type.equals("avro")) {
-                    if (schemaDefinition.isEmpty()) {
+                    if (schemaDefinition.equals(EMPTY_STRING)) {
                         schemaDefinition = "\"\"\"\n" +
                                 "            {\n" +
                                 "\t            \"type\": \"record\",\n" +
