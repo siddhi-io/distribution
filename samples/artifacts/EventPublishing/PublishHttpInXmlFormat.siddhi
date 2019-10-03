@@ -29,10 +29,7 @@ Testing the Sample:
 
 Viewing the Results:
     See the output on the terminals.
-        Siddhi Console:
-            INFO {io.siddhi.core.stream.output.sink.LogSink} - PublishHttpInXmlFormat : OutputStream : Event{timestamp=1570039740967, data=[toffees, 75.6], isExpired=false}
-
-        Http-server Terminal:
+       Http-server Terminal:
             [io.siddhi.distribution.sample.http.server.HttpServerListener] : Received Events: <events><event><name>toffees</name><amount>75.6</amount></event></events>
 
 
@@ -44,27 +41,14 @@ Notes:
         3) Start the application and check whether the expected output appears on the console.
 
 */
-
-@sink(type = 'http',
-	publisher.url = 'http://localhost:8080/abc',
-	@map(type = 'xml'))
-define stream SweetProductionStream (name string, amount double);
-
-@sink(type='log')
-define stream OutputStream (name string, amount double);
-
-@info(name='EventPublishThrough')
-from SweetProductionStream
-
 define stream SweetProductionStream (name string, amount double);
 
 @sink(type = 'http',
 	publisher.url = 'http://localhost:8080/abc',		publisher.url = 'http://localhost:8080/abc',
-	@map(type = 'xml'))		@map(type = 'xml'))
+	@map(type = 'xml'))		@map(type = 'xml')
 define stream OutputStream (name string, amount double);	define stream OutputStream (name string, amount double);
 
 @info(name='EventPassThrough')	
 from SweetProductionStream
 select  * 
-insert into OutputStream```
 insert into OutputStream;

@@ -21,7 +21,7 @@ Testing the Sample:
     2) Send events using one or more of the following methods.
     * Send events with http server through the event simulator:
         a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
-    	b) In the Single Simulation tab of the panel, specifiy the values as follows:
+    	b) In the Single Simulation tab of the panel, specify the values as follows:
                 * Siddhi App Name  : HttpCallResponse
                 * Stream Name     : SweetProductionStream
         c) In the name and amount fields, enter 'toffees' and '75.6' respectively and then click Send to send the event.
@@ -34,11 +34,8 @@ Testing the Sample:
        - Received response will be converted to a siddhi event using json default mapping and pushed to the ResponseStream.
 
 Viewing the Results:
-    The received responses will be logged in the terminal/editor console as following.
-        Siddhi console:
-            INFO {io.siddhi.core.stream.output.sink.LogSink} - HttpCallResponse : ResponseStream : Event{timestamp=1569992039855, data=[toffees, 75.6], isExpired=false}
-        Http-server console:
-            [io.siddhi.distribution.sample.http.server.HttpServerListener] : Received Events: {"event":{"name":"toffees","amount":75.6}}
+    The received responses will be logged in the Http-server console as following.
+        [io.siddhi.distribution.sample.http.server.HttpServerListener] : Received Events: {"event":{"name":"toffees","amount":75.6}}
 
 Notes:
     If the message "CallStream' stream could not connect to 'localhost:8080", it could be due to port 8080
@@ -57,13 +54,8 @@ define stream CallStream (name string, amount double);
 
 @sink(type='log')
 @source(type='http-call-response' , sink.id='production-request', http.status.code='200',
-@map(type='json'))
+@map(type='json', @attributes(name='trp:name', amount='trp:amount')))
 define stream ResponseStream(name string, amount double);
-
-@source(type='http-call-response' , sink.id='production-request', http.status.code='500',
-@map(type='json'))
-@sink(type='log')
-define stream ErrorStream(error string);
 
 @info(name='PassThrough')
 from SweetProductionStream
