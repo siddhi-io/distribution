@@ -37,6 +37,12 @@ define(['require', 'lodash', 'jquery'],
 
         FillTemplateValueDialog.prototype.render = function () {
             var self = this;
+            var variableMap = {};
+            var localVarObj = JSON.parse(localStorage.getItem("templatedAttributeList"))
+            Object.keys(localVarObj).forEach((key , index)=>{
+                var name = extractPlaceHolderName(key);
+                variableMap[name] = localVarObj[key];
+            });
 
             _.forEach(self.templatedApps, function(element, i) {
                 self.findTemplatedKeys(element.appContent);
@@ -46,35 +52,46 @@ define(['require', 'lodash', 'jquery'],
             self.findTemplatedKeys(self.deploymentConfig);
 
             var allTemplatedKeysHTMLContent = '<div class="clearfix">' +
-                '<div class="fill-template-value-container template-values-div nano">' +
+                '<div class="template-values-div nano">' +
                 '<div class = "template-value-elements nano-content" id="template-value-elements-div">';
-            var dynamicKeyHTMLContent = "";
+            var dynamicKeyHTMLContent = '<div id="fillTemplateValueError" ' +
+                'class="alert" style="display: none">' +
+                'Please provide values for all empty fields' +
+                '</div>';
 
             if (self.templatedKeyList.length == 0) {
-                dynamicKeyHTMLContent = dynamicKeyHTMLContent + '<div id="fillTemplateValueError" class="alert alert-danger">' +
+                dynamicKeyHTMLContent = dynamicKeyHTMLContent + '<div id="fillTemplateValueError" class="alert">' +
                     'No values are templated to fill.' +
                     '</div>';
             } else {
                 _.forEach(self.templatedKeyList, function(key) {
+                    let value = variableMap[key] || "";
                     dynamicKeyHTMLContent = dynamicKeyHTMLContent + '<div id="template-value-element-id" class="template-element" style="width: 50%;float: left">' +
                         '<div class="sub-template-value-element-div">' +
                         '<div class="option">' +
                         '<div class="clearfix">' + '<label class="option-name optional-option">' +
                         key +
                         '</label>' + '</div>' + '<div class="clearfix">' +
-                        '<input class="option-value" type="text" data-toggle="popover" data-placement="bottom" data-original-title="" title="">' +
+                        '<input class="option-value" type="text" data-toggle="popover" data-placement="bottom" data-original-title="" title=""'
+                        +' value="'+ value + '"'+ '>' +
                         '</div>' + ' <label class="error-message"></label>' + '</div> </div> </div>'
 
                 });
             }
 
             allTemplatedKeysHTMLContent = allTemplatedKeysHTMLContent + dynamicKeyHTMLContent + '</div></div>';
-            self.container.append(allTemplatedKeysHTMLContent).append('<div id="fillTemplateValueError" ' +
-                'class="alert alert-danger" style="display: none">' +
-                'Please provide values for all empty fields' +
-                '</div>');
+            self.container.append(allTemplatedKeysHTMLContent);
             $(".nano").nanoScroller();
         };
+
+        function extractPlaceHolderName(name) {
+            var textMatch = name.match("\\$\\{(.*?)\\}");
+            if (textMatch) {
+                return textMatch[1];
+            } else {
+                return '';
+            }
+        }
 
 
         FillTemplateValueDialog.prototype.validateTemplatedValues = function (keyValueList) {
@@ -96,7 +113,10 @@ define(['require', 'lodash', 'jquery'],
             while (match != null) {
                 if (match[0].trim() !== constants.KEY_CARBON_HOME && match[0].trim() !== constants.KEY_SYS_CARBON_HOME
                     && match[0].trim() !== constants.KEY_RUNTIME) {
-                    self.templatedKeyList.push(match[0].trim().substring(1).replace("{","").replace("}",""));
+                    var templatedKey = match[0].trim().substring(1).replace("{","").replace("}","")
+                    if (!self.templatedKeyList.includes(templatedKey)) {
+                        self.templatedKeyList.push(match[0].trim().substring(1).replace("{","").replace("}",""));
+                    }
                 }
                 match = constants.TEMPLATED_ELEMENT_REGEX.exec(text);
             }

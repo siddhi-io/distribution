@@ -50,6 +50,8 @@ define(['require', 'lodash', 'jquery', 'log', 'backbone', '../../../js/event-sim
                     this._storeQueryModal = storeQueryModal;
                     var errorBox = storeQueryModal.find('#error-box');
                     var resultBox = storeQueryModal.find('#simulator_output');
+                    var queryTextArea = storeQueryModal.find("textarea[id='curlEditor']");
+                    var appNameSelector = storeQueryModal.find("select[name='siddhi-app-name']");
 
                     var showError = function (message) {
                         errorBox.text(message).show();
@@ -59,23 +61,60 @@ define(['require', 'lodash', 'jquery', 'log', 'backbone', '../../../js/event-sim
                         errorBox.hide();
                     };
 
-                    SimulatorRestClient.retrieveSiddhiAppNames(
-                        function (data) {
-                            var template = '<option value="{{dataName}}">{{dataName}}</option>';
-                            var options =
-                                '<option selected="selected" value = "-1" disabled>-- Please Select a Siddhi App --</option>';
-                            if (data) {
-                                data.sort();
-                                for (var i = 0; i < data.length; i++) {
-                                    options += template.replaceAll('{{dataName}}', data[i].siddhiAppName);
-                                }
+                    var tabList = app.tabController.getTabList();
+                    var runningFileList = [];
+                    _.each(tabList, function (tab) {
+                        if(tab._title != "welcome-page"){
+                            var file = tab.getFile();
+                            if(file.getRunStatus()){
+                                runningFileList.push(file.getName().substring(0, file.getName().lastIndexOf(".siddhi")));
                             }
-                            storeQueryModal.find("select[name='siddhi-app-name']").html(options);
-                        },
-                        function (data) {
-                            showError("Error when retrieving siddhi apps. Reason: " + data);
                         }
-                    );
+                    });
+
+                    if (runningFileList.length !== 0) {
+                        const template = '<option value="{{dataName}}">{{dataName}}</option>';
+                        var options =
+                            '<option selected="selected" value = "-1" disabled>-- Please Select a Siddhi App --</option>';
+                        runningFileList.sort();
+                        for (var i = 0; i < runningFileList.length; i++) {
+                            options += template.replaceAll('{{dataName}}', runningFileList[i]);
+                        }
+                        storeQueryModal.find("select[name='siddhi-app-name']").html(options);
+
+                    } else {
+                        errorBox.text("No siddhi apps are running in the workspace. Start a siddhi app to " +
+                            "execute an on-demand query.").show();
+                    }
+
+                    appNameSelector.on('change', function (event) {
+                        var siddhiAppName = storeQueryModal.find("select[name='siddhi-app-name']").val();
+                        if (siddhiAppName != 'undefined' && sessionStorage.getItem("onDemandTempStore") != null) {
+                            var onDemandTempStore = JSON.parse(sessionStorage.getItem("onDemandTempStore"));
+                            if (onDemandTempStore[siddhiAppName] != null) {
+                                queryTextArea.val(onDemandTempStore[siddhiAppName]);
+                            } else {
+                                queryTextArea.val('');
+                            }
+                        }
+                    });
+
+                    queryTextArea.on('input change keyup', function (event) {
+                        var siddhiAppName = storeQueryModal.find("select[name='siddhi-app-name']").val();
+                        var onDemandQuery = storeQueryModal.find("textarea[id='curlEditor']").val();
+                        if (sessionStorage.getItem("onDemandTempStore") !== null) {
+                            if (siddhiAppName !== 'undefined' && onDemandQuery !== 'undefined') {
+                                var onDemandTempStore = JSON.parse(sessionStorage.getItem("onDemandTempStore"));
+                                onDemandTempStore[siddhiAppName] = onDemandQuery;
+                                sessionStorage.setItem("onDemandTempStore", JSON.stringify(onDemandTempStore));
+                            }
+                        } else {
+                            var onDemandTempStore = {};
+                            onDemandTempStore[siddhiAppName] = onDemandQuery;
+                            sessionStorage.setItem("onDemandTempStore", JSON.stringify(onDemandTempStore));
+                        }
+                        event.preventDefault();
+                    });
 
                     storeQueryModal.submit(function (event) {
                         QueryStoreRestClient.retrieveStoresQuery(

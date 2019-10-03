@@ -1,0 +1,93 @@
+@App:name("SynchronousEventProcessing")
+@App:description("Synchronous event processing flow.")
+
+/*
+Purpose:
+    This application demonstrates how to remove the effect of race conditions using synchronous event
+    processing in Siddhi. Here, StockStream first looks up at the DB to get the present number of sales,
+    and increments the value based on the input
+
+Prerequisites:
+    1) Ensure that MySQL is installed on your machine.
+    2) Create a database named 'StockDB' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/StockDB' url.
+    3) Create a table named 'StockTable': CREATE TABLE StockTable (symbol VARCHAR(20),noOfStocks INT);
+    4) Enter some records into the table : INSERT INTO StockTable(symbol,noOfStocks) values('S1',10);
+                                           INSERT INTO StockTable(symbol,noOfStocks) values('S2',15);
+    5) Provide your mysql server username and password in line 54.
+    6) Save this sample.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * SynchronousEventProcessing.siddhi - Started Successfully!.
+
+Testing the Sample
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'SynchronousEventProcessing' as Siddhi App Name
+    4) Select 'StockStream' as StreamName
+    5) Provide attribute values
+        - symbol : S1
+        - noOfSales : 5
+    6) Send event
+    7) Provide attribute values
+        - symbol : S3
+        - noOfSales : 10
+    8) Send event
+
+Viewing the Results:
+    After sending the events you will be able to observe the datasource has been changed.
+    And als you can see the respective output on the console similar to the following (timestamp will be different).
+    Result for first event :
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBUpdateStream : Event{timestamp=-1, data=[S1, 15], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBStream : Event{timestamp=-1, data=[S1, 10, 5], isExpired=false}
+    Result for second event :
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBInsertStream : Event{timestamp=1569918077262, data=[S3, null, 10], isExpired=false}
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - SynchronousEventProcessing : DBStream : Event{timestamp=1569918077262, data=[S3, null, 10], isExpired=false}
+*/
+
+-- Execution flow begin from StockStream, will be executed synchronously by a single thread.
+@async(buffer.size='64')
+define stream StockStream(symbol string, noOfSales int);
+
+@store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/StockDB?useSSL=false",
+       username="your_username", password="your_password",
+       jdbc.driver.name="com.mysql.jdbc.Driver")
+define table StockTable(symbol string, noOfStocks int);
+
+@sink(type='log')
+define stream DBStream(symbol string, previousStocks int, noOfSales int);
+
+@sink(type='log')
+define stream DBUpdateStream(symbol string, totalStocks int);
+
+@sink(type='log')
+define stream DBInsertStream(symbol string, previousStocks int, noOfSales int);
+
+from StockStream as s left outer join StockTable as t
+on s.symbol == t.symbol
+select s.symbol as symbol , t.noOfStocks as previousStocks , s.noOfSales as noOfSales
+insert into DBStream;
+
+@info(name='check whether previousStock value is not null')
+from DBStream[not(previousStocks is null)]
+select symbol, previousStocks + noOfSales as totalStocks
+insert into DBUpdateStream;
+
+@info(name='check whether previousStock value is null')
+from DBStream[previousStocks is null]
+select *
+insert into DBInsertStream;
+
+@info(name='update existing records in datasource')
+from DBUpdateStream
+select *
+update StockTable
+set StockTable.noOfStocks = totalStocks
+on symbol == StockTable.symbol;
+
+@info(name='insert new records to datasource')
+from DBInsertStream
+select symbol, noOfSales as noOfStocks
+insert into StockTable;
+

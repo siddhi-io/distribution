@@ -1,0 +1,78 @@
+@App:name("AsyncBatching&Processing")
+@App:description("Improve performance using parallel processing and event chunking")
+
+/*
+Purpose:
+    This application defines a maximum number of events that will be fetched from the event buffer
+    to be processed together by worker threads, at a given time.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * AsyncBatching&Processing.siddhi - Started Successfully!.
+
+Testing the Sample:
+    1) Click on 'Event Simulator' (double arrows on left tab)
+    2) Click 'Single Simulation' (this will be already selected)
+    3) Select 'AsyncBatching&Processing' as Siddhi App Name
+    4) Select 'StockStream' as StreamName
+    5) Provide attribute values
+        - symbol : S1
+        - noOfStocks : 5
+    6) Send event
+    7) Provide attribute values
+        - symbol : S2
+        - noOfStocks : 10
+    8) Send event
+    9) Provide attribute values
+        - symbol : S3
+        - noOfStocks : 15
+    10) Send event
+    11) Provide attribute values
+        - symbol : S4
+        - noOfStocks : 20
+    12) Send event
+    13) Provide attribute values
+        - symbol : S5
+        - noOfStocks : 25
+    14) Send event
+    15) Provide attribute values
+        - symbol : S6
+        - noOfStocks : 30
+    16) Send event
+    17) Provide attribute values
+        - symbol : S7
+        - noOfStocks : 35
+    18) Send event
+    19) Provide attribute values
+        - symbol : S8
+        - noOfStocks : 40
+    20) Send event
+    21) Provide attribute values
+        - symbol : S9
+        - noOfStocks : 45
+    22) Send event
+
+Viewing the Results:
+    See the input and respective output on the console similar to the following (timestamp will be different). It can be seen that 2 events are picked from the buffer to be processed
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569915460198, data=[S1, 50], isExpired=false}, Event{timestamp=1569915466143, data=[S2, 100], isExpired=false}] (Encoded)
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569915471489, data=[S3, 150], isExpired=false}, Event{timestamp=1569915477201, data=[S4, 200], isExpired=false}, Event{timestamp=1569915482494, data=[S5, 250], isExpired=false}] (Encoded)
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569915489380, data=[S6, 300], isExpired=false}, Event{timestamp=1569915497104, data=[S7, 350], isExpired=false}, Event{timestamp=1569915504571, data=[S8, 400], isExpired=false}] (Encoded)
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - AsyncBatching&Processing : TotalPriceStream : [Event{timestamp=1569915510464, data=[S9, 450], isExpired=false}] (Encoded)
+*/
+
+
+-- 'buffer.size' defines the size of the event buffer that holds the events until they are picked by worker threads for processing.
+-- 'workers' defines the number of worker threads that process the buffered events.
+-- 'batch.size.max' defines the maximum number of events that will be fetched from the event buffer to be processed together by a worker thread
+@sink(type='log')
+@async(buffer.size='1024', workers='2', batch.size.max='3')
+define stream TotalPriceStream(symbol string, totalPrice int);
+
+define stream StockStream(symbol string, noOfStocks int);
+
+-- A window to hold incoming events as a batch of 9 and process the events.
+from StockStream#window.lengthBatch(9)
+select symbol,noOfStocks*10 as totalPrice
+insert into TotalPriceStream;
+

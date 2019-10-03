@@ -68,7 +68,7 @@ public class SiddhiStoreAPITestcase {
     private static final String STORE_API_BUNDLE_NAME = "io.siddhi.distribution.store.api.rest";
     private static final int HTTP_PORT = 9090;
     private static final String HOSTNAME = TestConstants.HOSTNAME_LOCALHOST;
-    private static final String API_CONTEXT_PATH = "/stores/query";
+    private static final String API_CONTEXT_PATH = "/query";
     private static final String CONTENT_TYPE_JSON = TestConstants.CONTENT_TYPE_JSON;
     private static final String HTTP_METHOD_POST = TestConstants.HTTP_METHOD_POST;
     private static final String TABLENAME = "SmartHomeTable";
@@ -163,20 +163,26 @@ public class SiddhiStoreAPITestcase {
                     sendHRequest(body, baseURI, API_CONTEXT_PATH, CONTENT_TYPE_JSON, HTTP_METHOD_POST,
                             true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
             if (expectedResponseCode == Response.Status.OK.getStatusCode()) {
-                ModelApiResponse response =
-                        gson.fromJson(httpResponseMessage.getSuccessContent().toString(), ModelApiResponse.class);
-                if (httpResponseMessage.getResponseCode() == expectedResponseCode &&
-                        httpResponseMessage.getContentType().equalsIgnoreCase(CONTENT_TYPE_JSON) &&
-                        response.getRecords().size() == inputEvents.length) {
-                    Assert.assertEquals(response.getRecords().size(), inputEvents.length);
+                if (httpResponseMessage.getContentType().equalsIgnoreCase(CONTENT_TYPE_JSON)
+                        && httpResponseMessage.getSuccessContent() != null) {
+                    ModelApiResponse response =
+                            gson.fromJson(httpResponseMessage.getSuccessContent().toString(), ModelApiResponse.class);
+                    if (httpResponseMessage.getResponseCode() == expectedResponseCode &&
+                            response.getRecords().size() == inputEvents.length) {
+                        Assert.assertEquals(response.getRecords().size(), inputEvents.length);
+                        return true;
+                    }
+                }
+            } else if (expectedResponseCode == Response.Status.NOT_FOUND.getStatusCode()
+                    || expectedResponseCode == Response.Status.INTERNAL_SERVER_ERROR.getStatusCode()
+                    || expectedResponseCode == Response.Status.BAD_REQUEST.getStatusCode()) {
+                if (httpResponseMessage.getResponseCode() == expectedResponseCode
+                        && httpResponseMessage.getErrorContent() != null) {
+                    ApiResponseMessage response =
+                            gson.fromJson(httpResponseMessage.getErrorContent().toString(), ApiResponseMessage.class);
+                    Assert.assertEquals(response.getMessage(), expectedResponse);
                     return true;
                 }
-            } else {
-                Assert.assertEquals(httpResponseMessage.getResponseCode(), expectedResponseCode);
-                ApiResponseMessage response =
-                        gson.fromJson(httpResponseMessage.getErrorContent().toString(), ApiResponseMessage.class);
-                Assert.assertEquals(response.getMessage(), expectedResponse);
-                return true;
             }
             return false;
         });
@@ -184,7 +190,7 @@ public class SiddhiStoreAPITestcase {
 
     @Test(dependsOnMethods = "testStoreApiBundle")
     public void testSelectAllWithSuccessResponse() throws InterruptedException {
-        Thread.sleep(15000);
+        Thread.sleep(20000);
         Event[] events = new Event[]{
                 new Event(System.currentTimeMillis(), new Object[]{
                         "recordId1", 10.34f, false, 1200, 300, 400, "2017-11-22"}),

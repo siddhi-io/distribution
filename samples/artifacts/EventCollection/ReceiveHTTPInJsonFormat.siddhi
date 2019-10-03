@@ -3,6 +3,7 @@
 @App:description('Receive events via HTTP transport in JSON format with default mapping and view the output on the console.')
 
 /*
+
 Purpose:
     This application demonstrates how to configure Siddhi application to receive events to the SweetProductionStream via HTTP transport in JSON format using default mapping and log the events in LowProductionAlertStream to the  output  console.
 
@@ -10,14 +11,14 @@ Prerequisites:
     1) Save this sample
 
 Executing the Sample:
-    1) Start the Siddhi application by clicking on 'Run'.
+    1) Start the Siddhi application by clicking 'Run'.
     2) If the Siddhi application starts successfully, the following messages would be shown on the console.
         * Source Listener has created for url http://localhost:8006/productionStream
         * ReceiveHTTPInJsonFormat.siddhi - Started Successfully!
 
 Testing the Sample:
     Option1: Publish events with http sample client:
-    1) Navigate to {WSO2SPHome}/samples/sample-clients/http-client and run "ant" command as follows:
+    1) Navigate to {SiddhiHome}/samples/sample-clients/http-client and run "ant" command as follows:
         Run "ant" command in the terminal
         If you want to publish custom number of events, you need to run "ant" command as follows
             ant -DnoOfEventsToSend=5
@@ -46,19 +47,18 @@ Notes:
 
 Viewing the Results:
     See the output. Following message would be shown on the console.
-    ReceiveHTTPInJsonFormat : LowProductionAlertStream : Event{timestamp=1511938781887, data=[sugar, 300.0], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveHTTPInJsonFormat : OutputStream : Event{timestamp=1569859662596, data=[sugar, 300.0], isExpired=false}
 
 */
 
-@Source(type = 'http', receiver.url='http://localhost:8006/productionStream', basic.auth.enabled='false',
-    @map(type='json'))
+@Source(type = 'http', receiver.url = 'http://localhost:8006/productionStream', basic.auth.enabled = 'false',
+	@map(type = 'json'))
 define stream SweetProductionStream (name string, amount double);
 
-@sink(type='log')
-define stream LowProductionAlertStream (name string, amount double);
+@sink(type = 'log')
+define stream OutputStream (name string, amount double);
 
--- Passthrough data from the SweetProductionStream into LowProductionAlertStream
-@info(name='query1')
+@info(name = 'EventPassThrough')
 from SweetProductionStream
 select *
-insert into LowProductionAlertStream;
+insert into OutputStream;

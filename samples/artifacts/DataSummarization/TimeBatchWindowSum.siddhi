@@ -16,6 +16,7 @@ Executing the Sample:
 
 Testing the Sample:
     Configure random event simulation as follows
+    
     1) Click on 'Event Simulator' (double arrows on left tab)
     2) Click 'Feed Simulation' -> 'Create'
     3) Give a name (Or the default name in the place holder will be used as its name)
@@ -32,15 +33,16 @@ Viewing the Results:
 See the output on the console similar to the following (timestamp will be different). The output show the total volume for the events sent during last 10 seconds in batch manner.
 [2019-09-18_11-26-12_128] INFO {io.siddhi.core.stream.output.sink.LogSink} - TimeBatchWindowSum : TotalItemsStream : [Event{timestamp=1568786171019, data=[4x6ib, 933], isExpired=false}, Event{timestamp=1568786172019, data=[lxPVL, 521], isExpired=false}]
 [2019-09-18_11-26-22_128] INFO {io.siddhi.core.stream.output.sink.LogSink} - TimeBatchWindowSum : TotalItemsStream : [Event{timestamp=1568786173019, data=[hvgcG, 60], isExpired=false}, Event{timestamp=1568786174019, data=[WvLCx, 621], isExpired=false}, Event{timestamp=1568786175019, data=[VnxaO, 873], isExpired=false}, Event{timestamp=1568786176019, data=[NKswj, 737], isExpired=false}, Event{timestamp=1568786177019, data=[9jfn7, 577], isExpired=false}, Event{timestamp=1568786178019, data=[jhNvy, 724], isExpired=false}, Event{timestamp=1568786179019, data=[xMJgc, 122], isExpired=false}, Event{timestamp=1568786180019, data=[2tjBx, 93], isExpired=false}, Event{timestamp=1568786181019, data=[0KNqW, 339], isExpired=false}, Event{timestamp=1568786182019, data=[sGQqc, 440], isExpired=false}]
+
 */
 
 define stream TradesStream (symbol string, price float, volume int);
 
-@sink(type="log")
+@sink(type = "log")
 define stream TotalItemsStream (symbol string, totalVolume long);
 
 @info(name = 'sumVolume')
-from TradesStream #window.timeBatch(10 sec)
+from TradesStream#window.timeBatch(10 sec)
 select symbol, sum(volume) as totalVolume
-group by symbol
+ 	group by symbol
 insert into TotalItemsStream;

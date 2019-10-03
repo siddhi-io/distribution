@@ -1,38 +1,40 @@
 @App:name("CDCWithPollingMode")
-@App:description("Capture MySQL Inserts and Updates using cdc source polling mode.")
+@App:description("Capture MySQL Inserts and Updates using CDC source polling mode.")
 
 /*
 Purpose:
-    This sample demonstrates how to use polling mode of cdc source.
+    This sample demonstrates how to use polling mode of CDC source.
     A MySQL table's INSERTS are captured.
-    By changing the database type, following databases will also be supported.
+    CDC source supports following databases as well.
         * Oracle
         * H2
         * MS SQL Server
-        * Postgresql
+        * Postgres
 
 Pre-requisites:
     1) Ensure that MySQL is installed on your computer.
     2) Add the MySQL JDBC driver into {SIDDHI_HOME}/lib as follows:
             2.1) Download the JDBC driver from: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz
             2.2) Unzip the archive.
-            2.3) Copy mysql-connector-java-5.1.45-bin.jar to {SIDDHI_Home}/lib directory.
-    3) Create a database "production".
-            >> CREATE SCHEMA production;
-    4) Change the database.
-            >> use production;
-    5) Create table "SweetProductionTable".
-            >> CREATE TABLE SweetProductionTable (last_update TIMESTAMP, name VARCHAR(20),amount double(10,2));
-    6) Save this sample.
+            2.3) Copy mysql-connector-java-5.1.45-bin.jar to {SIDDHI_Home}/bundles directory.
+    3) Execute the following commands in the MySQL DB.
+            3.1) Create a database "production".
+                    >> CREATE SCHEMA production;
+            3.2) Change the database.
+                    >> use production;
+            3.3) Create table "SweetProductionTable".
+                    >> CREATE TABLE SweetProductionTable (last_update TIMESTAMP, name VARCHAR(20),amount double(10,2));
+    4) Enter mysql server username in line 62 and password in line 63. Then save this sample.
 
 Optional pre-requisites:
     1) Enable state persistence in siddhi apps.
-       This will enable the cdc polling mode capturing changes from the last point it stopped.
+       This will enable the CDC polling mode captures changes from the last point in time, when it stopped.
        If not enabled, polling mode will only capture changes after start of the app.
-            1.1) Change state.persistence enabled=true in deployment.yaml file.
+            1.1) Change statePersistence enabled=true in deployment.yaml file.
+            1.2) Then restart the server.
 
 Executing the Sample:
-    1) Start the Siddhi application by clicking on 'Run'.
+    1) Start the Siddhi application by clicking 'Run'.
     2) If the Siddhi application starts successfully, the following message is shown on the console
         * CDCWithPollingMode.siddhi - Started Successfully!
 
@@ -48,7 +50,6 @@ Testing the Sample:
     Optional: Update existing row and obverse the change data events
 
     Note: For updates, the previous values of the row are not returned with the event. Use listening mode to obtain such details.
-          Polling mode is can also be used with Oracle, MS-SQL server, Postgres, H2.
 
 */
 
@@ -58,17 +59,17 @@ Testing the Sample:
 	jdbc.driver.name = 'com.mysql.jdbc.Driver',
 	polling.column = 'last_update',
 	polling.interval = '1',
-	username = '',
-	password = '',
+	username = 'your_username',
+	password = 'your_password',
 	table.name = 'SweetProductionTable',
 	@map(type = 'keyvalue' ))
-define stream InsertSweetProductionStream (name string, amount double);
+define stream CaptureSweetProductionStream (name string, amount double);
 
 @sink(type = 'log')
 define stream LogStream (name string, amount double);
 
 @info(name = 'Insert selected attributes into LogStream')
-from InsertSweetProductionStream
+from CaptureSweetProductionStream
 select name, amount
 insert into LogStream;
 

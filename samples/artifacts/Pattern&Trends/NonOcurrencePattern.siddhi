@@ -1,0 +1,46 @@
+@App:name("NonOccurrencePattern")
+
+@App:description("Generate an alert if no temperature events having less than 12 degrees arrived in the TempStream for 10 seconds time period after starting the regulator.")
+
+/*
+
+Purpose:
+    This application demonstrates how to configure a Siddhi application to generate an alert if no temperature events having less than 12 arrived in the TempStream for 10 seconds time period after starting the regulator.
+
+Executing the Sample:
+    1) Save this sample
+    2) Start the Siddhi application by clicking on 'Run'.
+    3) If the Siddhi application starts successfully, the following messages would be shown on the console.
+        * NonOccurrencePattern.siddhi - Started Successfully!
+
+Testing the Sample:
+     You may send events via event simulator
+        a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
+        b) In the Single Simulation tab of the panel, specify the values as follows:
+            Siddhi App Name  : NonOccurrencePattern
+            Stream Name      : RegulatorStateChangeStream
+            action           : start
+        c) Similarly, send another event by specifying the following values.
+            Siddhi App Name  : NonOccurrencePattern
+            Stream Name      : TempStream
+            temp             : 100
+
+    Note:
+        The query alerts the action of the regulator via AlertStream stream, when no temperature events having less than 12 arrived in the TempStream for 10 seconds time period after the regulator is started.
+
+Viewing the Results:
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - NonOccurrencePattern : AlertStream : Event{timestamp=1569558505987, data=[start], isExpired=false}
+
+*/
+
+define stream RegulatorStateChangeStream(action string);
+
+define stream TempStream (temp double);
+
+@sink(type = 'log')
+define stream AlertStream(roomNo string);
+
+-- detects non occurrence of events in TempStream after an event arrives in RegulatorStream
+from every e1 = RegulatorStateChangeStream[action == 'start'] -> not TempStream[temp <= 12] for 10 seconds
+select e1.action as roomNo
+insert into AlertStream;

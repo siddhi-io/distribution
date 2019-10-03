@@ -212,13 +212,40 @@ define(['log', 'jquery', 'lodash', 'output_console_list', 'workspace', 'service_
                         console.println(message);
                     };
                     ws.onerror = function (error) {
-                        console.log(error);
+                        console.error('Editor console service encountered an error, ', error, 'Hence, ' +
+                            'closing connection.');
+                        // ws.close();
                     };
-                    ws.onclose = function () {
-
+                    ws.onclose = function (error) {
+                        var console = opts.application.outputController.getGlobalConsole();
+                        if (console == undefined) {
+                            var consoleOptions = {};
+                            var options = {};
+                            _.set(options, '_type', "CONSOLE");
+                            _.set(options, 'title', "Console");
+                            _.set(options, 'statusForCurrentFocusedFile', "LOGGER");
+                            _.set(options, 'currentFocusedFile', undefined);
+                            _.set(consoleOptions, 'consoleOptions', options);
+                            console = opts.application.outputController.newConsole(consoleOptions);
+                            // opts.application.outputController.toggleOutputConsole();
+                            opts.application.outputController.hideAllConsoles();
+                        }
+                        var logMessage = "Connection closed, backend is unavailable! " +
+                            "Refresh to reconnect the console.";
+                        var message = {
+                            "type": "ERROR",
+                            "message": logMessage
+                        };
+                        console.println(message);
+                        // not retrying
+                        // console.log('Editor console service has terminated. Reconnect will be attempted in 1 second.',
+                        //     error.reason);
+                        // setTimeout(function () {
+                        //     opts.application.outputController.initiateLogReader(opts);
+                        // }, 1000);
                     };
                 }
-            });
 
+            });
         return OutputConsoleList;
     });

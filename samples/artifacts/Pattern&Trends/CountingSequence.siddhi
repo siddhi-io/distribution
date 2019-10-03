@@ -36,9 +36,9 @@ Viewing the Results:
 
 define stream TempStream(roomId int, temp double);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream AlertStream(initialTemp double, finalTemp double);
 
-from every e1=TempStream, e2=TempStream[temp > e1.temp + 1]
+from every e1 = TempStream, e2 = TempStream[temp > e1.temp + 1]
 select e1.temp as initialTemp, e2.temp as finalTemp
 insert into AlertStream;

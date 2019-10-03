@@ -5,6 +5,7 @@
 
 Purpose:
     This application demonstrates how to perform RDBMS operations using Siddhi queries. The sample depicts a scenario in a sweet production factory. The sweet production details, such as the name of the raw material and amount used for production, can be stored using insertSweetProductionStream. The following streams can be used to search, delete, update, or upsert (update or insert) the existing data in the store:
+
     Search - searchSweetProductionStream
     insert - insertSweetProductionStream
     delete - deleteSweetProductionStream
@@ -40,7 +41,7 @@ Testing the Sample:
         c) Provide attribute values, and then click Send.
     2) Send at least one event where the name matches a name value in the data you previously inserted into the SweetProductionTable. This will satisfy the 'on' condition of the join query.
     3) Optionally, send events to the other corresponding streams to add, delete, update, insert, and search events.
-   
+    
     Notes:
     - After a change in the store, you can use the search stream to see whether the operation is successful.
     - The Primary Key constraint in SweetProductionTable is disabled, because the name cannot be used as a PrimaryKey in a ProductionTable.
@@ -52,56 +53,72 @@ Viewing the Results:
 */
 
 define stream insertSweetProductionStream (name string, amount double);
+
 define stream deleteSweetProductionStream (name string);
+
 define stream searchSweetProductionStream (name string);
+
 define stream updateSweetProductionStream (name string, amount double);
+
 define stream updateOrInsertSweetProductionStream (name string, amount double);
+
 define stream containsSweetProductionStream (name string, amount double);
 
-@sink(type='log')
+@sink(type = 'log')
 define stream logStream(name string, amount double);
 
-@Store(type="rdbms",
-       jdbc.url="jdbc:mysql://localhost:3306/production?useSSL=false",
-       username="wso2",
-       password="123" ,
-       jdbc.driver.name="com.mysql.jdbc.Driver")
+@Store(type = "rdbms",
+	jdbc.url = "jdbc:mysql://localhost:3306/production?useSSL=false",
+	username = "wso2",
+	password = "123" ,
+	jdbc.driver.name = "com.mysql.jdbc.Driver")
 --@PrimaryKey("name")
 @index("amount")
 define table SweetProductionTable (name string, amount double);
 
-/* Inserting event into the mysql database */
-@info(name='query1')
+/*
+Inserting event into the mysql database */
+
+@info(name = 'query1')
 from insertSweetProductionStream
 insert into SweetProductionTable;
 
-/* Deleting event from mysql database */
+/*
+ Deleting event from mysql database */
+
 @info(name = 'query2')
 from deleteSweetProductionStream
 delete SweetProductionTable
-on SweetProductionTable.name == name ;
+ 	on SweetProductionTable.name == name ;
 
-/* Updating event from mysql database */
+/*
+Updating event from mysql database */
+
 @info(name = 'query3')
 from updateSweetProductionStream
 update SweetProductionTable
-on SweetProductionTable.name == name ;
+ 	on SweetProductionTable.name == name ;
 
-/* Updating or inserting event from mysql database */
+/*
+Updating or inserting event from mysql database */
+
 @info(name = 'query4')
 from updateOrInsertSweetProductionStream
-update or insert into SweetProductionTable
-on SweetProductionTable.name == name;
+update or 
+insert into SweetProductionTable
+ 	on SweetProductionTable.name == name;
 
-/* Siddhi In in mysql database */
+/*
+Siddhi In in mysql database */
+
 @info(name = 'query5')
 from containsSweetProductionStream
 [(SweetProductionTable.name == name and SweetProductionTable.amount == amount) in SweetProductionTable]
 insert into logStream;
 
 --Perform a join on raw material name so that the data in the store can be viewed
-@info(name='query6')
+@info(name = 'query6')
 from searchSweetProductionStream as s join SweetProductionTable as sp
-    on s.name == sp.name
+ 	on s.name == sp.name
 select sp.name, sp.amount
 insert into logStream;

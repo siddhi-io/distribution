@@ -20,7 +20,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>5.1.0-SNAPSHOT</version>
+        <version>5.1.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
@@ -42,5 +42,9 @@
         <module>websocket-receiver</module>
         <module>kafka-avro-consumer</module>
         <module>prometheus-client</module>
+        <module>grpc-client</module>
+        <module>grpc-generic-client</module>
+        <module>grpc-generic-server</module>
+        <module>grpc-server</module>
     </modules>
 </project>

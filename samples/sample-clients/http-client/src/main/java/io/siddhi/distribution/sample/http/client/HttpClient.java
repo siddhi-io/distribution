@@ -35,6 +35,7 @@ import java.util.Scanner;
  */
 public class HttpClient {
     private static final Logger log = Logger.getLogger(HttpClient.class);
+    private static final String EMPTY_STRING = "EMPTY";
 
     /**
      * Main method to start the test client.
@@ -48,8 +49,8 @@ public class HttpClient {
         String publisherUrl = args[0];
         String method = args[1];
         String type = Arrays.asList(types).contains(args[2]) ? args[2] : "json";
-        int noOfEventsToSend = !args[7].isEmpty() ? Integer.parseInt(args[7]) : -1;
-        boolean continuouslyReadFile = !args[8].isEmpty() && Boolean.parseBoolean(args[8]);
+        int noOfEventsToSend = !args[7].equals(EMPTY_STRING) ? Integer.parseInt(args[7]) : -1;
+        boolean continuouslyReadFile = !args[8].equals(EMPTY_STRING) && Boolean.parseBoolean(args[8]);
         List<String[]> fileEntriesList = null;
 
         boolean sendEventsCountinously = true;
@@ -57,15 +58,15 @@ public class HttpClient {
             sendEventsCountinously = false;
         }
 
-        if (args.length >= 4 && !args[3].equals("")) {
+        if (args.length >= 4 && !args[3].equals(EMPTY_STRING)) {
             String filePath = args[3];
             fileEntriesList = readFile(filePath);
         }
         String eventDefinition;
-        if (args.length >= 5 && !args[4].equals("")) {
+        if (args.length >= 5 && !args[4].equals(EMPTY_STRING)) {
             eventDefinition = args[4];
         } else {
-            if (!args[6].equals("")) {
+            if (!args[6].equals(EMPTY_STRING)) {
                 if (type.equals("json")) {
                     eventDefinition = "{\"item\": {\"id\":\"{0}\",\"amount\": {1}}}";
                 } else if (type.equals("xml")) {

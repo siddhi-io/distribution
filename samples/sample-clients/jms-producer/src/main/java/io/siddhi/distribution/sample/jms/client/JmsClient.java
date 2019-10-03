@@ -36,6 +36,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class JmsClient {
     private static final Logger log = Logger.getLogger(JmsClient.class);
+    private static final String EMPTY_STRING = "EMPTY";
 
     public static void main(String[] args) throws IOException, InterruptedException {
         log.info("Initialize jms client.");
@@ -48,22 +49,22 @@ public class JmsClient {
         int delay = Integer.parseInt(args[9]);
         boolean sendContinuously = false;
         int noOfEvents = 0;
-        if (args[7].equals("")) {
+        if (args[7].equals(EMPTY_STRING)) {
             sendContinuously = true;
         } else {
             noOfEvents = Integer.parseInt(args[7]);
         }
 
         List<String[]> fileEntriesList = null;
-        if (!args[6].equals("")) {
+        if (!args[6].equals(EMPTY_STRING)) {
             String filePath = args[6];
             fileEntriesList = readFile(filePath);
         }
         String eventDefinition = null;
-        if (!args[8].equals("")) {
+        if (!args[8].equals(EMPTY_STRING)) {
             eventDefinition = args[8];
         } else {
-            if (!args[6].equals("")) { //for non custom mappings
+            if (!args[6].equals(EMPTY_STRING)) { //for non custom mappings
                 if (type.equals("json")) {
                     eventDefinition = "{\"item\": {\"id\":\"{0}\",\"amount\": {1}}}";
                 } else if (type.equals("xml")) {

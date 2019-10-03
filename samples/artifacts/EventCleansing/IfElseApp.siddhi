@@ -17,7 +17,7 @@ Executing the Sample:
         * IfElseApp - Started Successfully!
 
 Testing the Sample:
-    You may send events to jms sink, via event simulator
+    You may send events via event simulator
         a) Open the event simulator by clicking on the second icon on the left or pressing Ctrl+Shift+I.
         b) In the Single Simulation tab of the panel, specify the values as follows:
             * Siddhi App Name  : IfElseApp
@@ -26,17 +26,15 @@ Testing the Sample:
         d) Send some more events.
 
 Viewing the Results:
-    [2019-09-12 15:25:41,768]  INFO {org.wso2.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568282141766, data=[Number is greater than 35], isExpired=false}
-
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - IfElseApp : OutputStream : Event{timestamp=1569842705172, data=[Number is greater than 35], isExpired=false}
 */
 
-@source(type = 'http', receiver.url = "http://0.0.0.0:8006/number", @map(type = 'json'))
 define stream CheckNumberStream (num int);
 
-@sink(type='log', prefix='LOGGER')
-define stream OutputStream(result string);
+@sink(type = 'log')
+define stream ResultStream(result string);
 
-@info(name='IfElseQuery')
+@info(name = 'IfElseQuery')
 from CheckNumberStream
-select ifThenElse(num > 35,'Number is greater than 35','Number is less than 35') as result
-insert into OutputStream;
+select ifThenElse(num > 35, 'Number is greater than 35', 'Number is less than 35') as result
+insert into ResultStream;

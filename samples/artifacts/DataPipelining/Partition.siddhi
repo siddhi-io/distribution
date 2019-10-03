@@ -1,0 +1,47 @@
+@App:name("Partition")
+
+@App:description("Calculate the maximum temperature of each deviceId, among its last 3 instances.")
+
+/*
+
+Purpose:
+    This application demonstrates how to configure a Siddhi application to calculate the maximum temperature of each device among its last 3 instances without interfering with the events of other devices.
+
+Executing the Sample:
+    1) Save this sample
+    2) Start the Siddhi application by clicking on 'Run'.
+    3) If the Siddhi application starts successfully, the following messages would be shown on the console.
+        * Partition.siddhi - Started Successfully!
+
+Testing the Sample:
+    You may send events via event simulator
+        a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
+        b) In the Single Simulation tab of the panel, specify the values as follows:
+            Siddhi App Name  : Partition
+            Stream Name      : TempStream
+        c) In the deviceId and temp fields, enter the following and then click Send to send the event.
+            deviceId: 1         deviceId: 1         deviceId: 1
+            temp    : 20        temp: 50            temp: 10
+        d) Send some more events.
+
+    Note:
+        The query calculates the maximum temperature of each deviceId among its last 3 instances without interfering with the events of other partition instances.
+
+Viewing the Results:
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - Partition : DeviceTempStream : Event{timestamp=1569561511789, data=[1, 20.0], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - Partition : DeviceTempStream : Event{timestamp=1569561520542, data=[1, 50.0], isExpired=false}
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - Partition : DeviceTempStream : Event{timestamp=1569561525657, data=[1, 50.0], isExpired=false}
+
+*/
+
+define stream TempStream (deviceId int, temp double);
+
+@sink(type='log')
+define stream DeviceTempStream(deviceId int, maxTemp double);
+
+partition with ( deviceId of TempStream )
+begin
+    from TempStream#window.length(3)
+    select deviceId, max(temp) as maxTemp
+    insert into DeviceTempStream;
+end;

@@ -2,6 +2,7 @@
 @App:description("The logger logs the message on the given priority with or without processed event.")
 
 /*
+
 Purpose:
     This application demonstrates how to use logging in siddhi.
 
@@ -23,37 +24,28 @@ Testing the Sample:
 Viewing the Results:
     See the input and respective output on the console similar to the following (timestamp will be different).
 
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
-        INFO {org.wso2.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Sample Event :, StreamEvent{ timestamp=1568624229375, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Logging at info level :, StreamEvent{ timestamp=1569916681779, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
+        INFO {io.siddhi.core.query.processor.stream.LogStreamProcessor} - Logging: Logging at warn level :, StreamEvent{ timestamp=1569916681779, beforeWindowData=null, onAfterWindowData=null, outputData=[item1, 10.0], type=CURRENT, next=null}
+
+Note:
+    You can change the user specified priority to change the log level. Accepted values are INFO, DEBUG, WARN, FATAL, ERROR, OFF, TRACE.
+    DEBUG level will not print any message in this example.
 */
 
-define stream EventStream(symbol string,price float);
+define stream EventStream(symbol string, price float);
 
--- This will log as INFO with the message "Sample Event :" + EventStream:events.
-from EventStream#log("INFO", "Sample Event :", true)
+-- This will log the output events with a priority of "INFO" and prefix "Logging at info level :"
+from EventStream#log("INFO", "Logging at info level :", true)
 select *
 insert into OutputStream;
 
--- This will logs with default log level as INFO.
-from EventStream#log("Sample Event :", true)
+-- This will log the output events with a priority of "INFO" and prefix "Logging at debug level :"
+from EventStream#log("DEBUG", "Logging at debug level :", true)
 select *
 insert into OutputStream;
 
--- This will only log message.
-from EventStream#log("Sample Event :", false)
-select *
-insert into OutputStream;
-
--- This will only log EventStream:events.
-from EventStream#log(true)
-select *
-insert into OutputStream;
-
--- This will log message and EventStream:events.
-from EventStream#log("Sample Event :")
+-- This will log the output events with a priority of "WARN" and prefix "Logging at warn level :"
+from EventStream#log("WARN", "Logging at warn level :")
 select *
 insert into OutputStream;
 

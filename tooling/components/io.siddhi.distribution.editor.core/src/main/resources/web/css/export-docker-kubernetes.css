@@ -22,6 +22,10 @@ hr.style1 {
     width: 93%;
 }
 
+.form-group {
+    margin: 10px 0;
+}
+
 .export-dialog .modal-body {
 }
 
@@ -73,7 +77,7 @@ hr.export-dialog-hr {
 }
 
 .export-dialog-form-scrollable-block-list {
-    padding: 20px;
+    padding: 0px 10px;
     overflow: auto;
     max-height: 200px;
     width: 100%;
@@ -115,6 +119,12 @@ hr.export-dialog-hr {
 .kubernetes-configuration-step {
 
 }
+
+.template-value-elements {
+    margin: 10px;
+    padding: 15px;
+}
+
 .sub-template-value-element-div .option {
     align-items: center;
     padding: 5px;
@@ -125,7 +135,7 @@ hr.export-dialog-hr {
 .sub-template-value-element-div .option input {
     color: #fff !important;
     width: 75%;
-    background-color: #2C2C2C;
+    background-color: #222222;
     border-style: none;
     height: 35px;
     padding-left: 10px;
@@ -133,9 +143,17 @@ hr.export-dialog-hr {
 }
 
 .step-description {
-    padding: 10px;
+    padding: 5px;
     background-color: transparent;
-    transition: background-color 500ms linear;
+}
+
+.step-description-text {
+    padding: 0px 5px 5px 5px;
+    background-color: transparent;
+}
+
+div#step-6 {
+    height: fit-content !important;
 }
 
 .export-siddhi-app-list {
@@ -151,10 +169,100 @@ hr.export-dialog-hr {
     height: 98% !important;
 }
 
-.sw-theme-default > ul.step-anchor.k8_export_header_item li {
-    width: 16%;
+.docker_export_header {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.sw-theme-default > ul.step-anchor.docker_export_header li {
+    max-width: 16.65%;
 }
 
 .link-disabled {
     pointer-events: none;
+}
+
+.docker-config-container {
+    padding-top: 30px;
+    padding-left: 30px;
+}
+
+.sw-theme-default > ul.step-anchor > li > a, .sw-theme-default > ul.step-anchor > li > a:hover {
+    height: initial;
+}
+
+.sw-theme-default > ul.step-anchor > li > a::after {
+    bottom: auto;
+    top: 0px;
+}
+
+.label-description {
+    padding-top: 2px;
+    padding-left: 8px;
+}
+
+.docker-config-container input {
+    margin: 0 0 0 !important;
+}
+
+.docker-details-form {
+    margin-left: 20px;
+}
+
+.docker-details-row {
+    padding: 5px;
+}
+
+.export-form-input {
+    padding-top: 2px;
+}
+
+.docker-details-row input {
+    height: 30px !important;
+    width: 80% !important;
+    background-color: #222222 !important;
+}
+
+.export-kube-config-container {
+    display: block;
+    overflow: auto;
+    width: 100%;
+    background-color: #2C2C2C !important;
+    padding: 10px;
+}
+
+.kube-config-form {
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow: auto;
+    width: 100%;
+    background-color: transparent;
+    margin: auto;
+}
+
+.kube-config-row {
+    padding-bottom: 10px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+.kube-config-sub-row {
+    padding: 10px 10px 5px;
+}
+
+.kube-input-group {
+    padding: 5px 5px 5px 10px;
+}
+
+.siddhi-process-name-input {
+    height: 30px !important;
+    background-color: #222222 !important;
+    margin-top: 2px;
+    width: 80%;
+}
+
+.kubernetes-config-editor {
+    height: 150px !important;
+    width: 80%; !important;
+    margin-top: 10px !important;
 }
