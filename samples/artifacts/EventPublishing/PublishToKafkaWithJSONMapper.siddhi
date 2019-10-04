@@ -7,7 +7,7 @@ Purpose:
     This application demonstrates how to use the Kafka transport and JSONMapper to publish events. Events which are sent from the simulation are consumed and written to a kafka topic in json format.
 
 Prerequisites:
-    1) The following steps must be executed to enable tooling distribution to receive events via the Kafka transport. Since you need to shut down the server to execute these steps, get a copy of these instructions prior to proceeding.
+    1) The following steps must be executed to enable tooling distribution to publish events via the Kafka transport. Since you need to shut down the server to execute these steps, get a copy of these instructions prior to proceeding.
          a) Download the Kafka broker from here: https://www.apache.org/dyn/closer.cgi?path=/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz
          b) Convert and copy the Kafka client jars from the {KafkaHome}/libs directory to the {Siddhi_Distribution_Home}/libs directory as follows.
             i)  Create a directory named {Source} in a preferred location in your machine and copy the following JARs to it from the {KafkaHome}/libs directory.
