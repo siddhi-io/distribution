@@ -4,12 +4,12 @@
 /*
 
 Purpose:
-    This application demonstrates how to filter using siddhi.
-    The sample depicts a scenario for high temperature.
+    This application demonstrates how to filter out events from a stream using siddhi.
+    The sample depicts a scenario for events with high temperature.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
-    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+    2) If the Siddhi application starts successfully, the following message would be shown on the console
         * SimpleFilter.siddhi - Started Successfully!.
 
 Testing the Sample:
@@ -18,25 +18,25 @@ Testing the Sample:
     3) Select 'SimpleFilter' as Siddhi App Name
     4) Select 'TempStream' as StreamName
     5) Provide attribute values
-        - roomNo: 140
-        - amount: 35
+        - roomNo: 001
+        - temp: 50.0
     6) Send event
     7) Provide attribute values
-        - roomNo: 140
-        - amount: 45
+        - roomNo: 002
+        - temp: 35.0
     8) Send event
     9) Provide attribute values
-        - roomNo: 230
-        - amount: 20
+        - roomNo: 003
+        - temp: 40.0
     10) Send event
     11) Provide attribute values
-        - roomNo: 230
-        - amount: 50
+        - roomNo: 004
+        - temp: 39.0
     12) Send event
 
 Viewing the Results:
-    See the input and respective output on the console similar to the following (timestamp will be different).
-        INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568267724796, data=[140, 45.0], isExpired=false}
+    See the input and respective output on the console similar to the following (timestamp will be different).It can be observed that the events which do not satisfy the given condition are ignored.
+    INFO {io.siddhi.core.stream.output.sink.LogSink} - LOGGER : Event{timestamp=1568267724796, data=[140, 45.0], isExpired=false}
 */
 
 define stream TempStream(roomNo int, temp double);
@@ -44,8 +44,8 @@ define stream TempStream(roomNo int, temp double);
 @sink(type = 'log', prefix = 'LOGGER')
 define stream HighTempStream(roomNo int, temp double);
 
--- Filter the events with roomNo between 100 to 210
+-- Filter the events with temperature greater than 40.0
 @info(name = 'filterHighTempRooms')
-from TempStream[(roomNo >= 100 and roomNo < 210)]
+from TempStream[(temp >= 40)]
 select roomNo, temp
 insert into HighTempStream;

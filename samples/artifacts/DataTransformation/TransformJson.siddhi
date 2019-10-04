@@ -15,8 +15,8 @@ Testing the Sample:
     2) Click 'Single Simulation' (this will be already selected)
     3) Select 'TransformJson' as Siddhi App Name
     4) Select 'InputStream' as StreamName
-    5) Provide attribute values
-        - data : {'name' : 'John', 'age' : 25 , 'married' : true , 'address' : {'city' : 'NY', 'country' : 'USA'}}
+    5) Copy and  paste the following in to attributes
+        {'name' : 'John', 'age' : 25 , 'married' : true , 'address' : {'city' : 'NY', 'country' : 'USA'}}
     6) Send event
 
 Viewing the Results:

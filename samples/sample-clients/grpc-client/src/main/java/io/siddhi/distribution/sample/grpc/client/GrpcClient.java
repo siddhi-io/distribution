@@ -43,7 +43,7 @@ public class GrpcClient {
         log.info(Arrays.toString(args));
         ManagedChannel channel = ManagedChannelBuilder.forTarget("localhost:" + port).usePlaintext().build();
         Event.Builder requestBuilder = Event.newBuilder();
-        int noOfEventsToSend = !args[2].isEmpty() ? Integer.parseInt(args[2]) : -1;
+        int noOfEventsToSend = !args[2].equals("EMPTY") ? Integer.parseInt(args[2]) : -1;
         boolean sendEventsContinuously = noOfEventsToSend == -1;
         int sentEvents = 0;
 

@@ -35,6 +35,7 @@ import java.util.Scanner;
  */
 public class WebSocketProducer {
     private static final Logger log = Logger.getLogger(WebSocketProducer.class);
+    private static final String EMPTY_STRING = "EMPTY";
 
     /**
      * Main method to start the test server.
@@ -48,9 +49,9 @@ public class WebSocketProducer {
         String host = args[0];
         String port = args[1];
         String type = Arrays.asList(types).contains(args[2]) ? args[2] : "json";
-        int noOfEventsToSend = !args[5].isEmpty() ? Integer.parseInt(args[5]) : -1;
-        int delay = !args[9].isEmpty() ? Integer.parseInt(args[9]) : -1;
-        boolean continuouslyReadFile = !args[6].isEmpty() && Boolean.parseBoolean(args[6]);
+        int noOfEventsToSend = !args[5].equals(EMPTY_STRING) ? Integer.parseInt(args[5]) : -1;
+        int delay = !args[9].equals(EMPTY_STRING) ? Integer.parseInt(args[9]) : -1;
+        boolean continuouslyReadFile = !args[6].equals(EMPTY_STRING) && Boolean.parseBoolean(args[6]);
         List<String[]> fileEntriesList = null;
 
         boolean sendEventsCountinously = true;
@@ -58,15 +59,15 @@ public class WebSocketProducer {
             sendEventsCountinously = false;
         }
 
-        if (!args[7].equals("")) {
+        if (!args[7].equals(EMPTY_STRING)) {
             String filePath = args[2];
             fileEntriesList = readFile(filePath);
         }
         String eventDefinition;
-        if (!args[10].equals("")) {
+        if (!args[10].equals(EMPTY_STRING)) {
             eventDefinition = args[10];
         } else {
-            if (!args[8].equals("")) {
+            if (!args[8].equals(EMPTY_STRING)) {
                 if (type.equals("json")) {
                     eventDefinition = "{\"item\": {\"id\":\"{0}\",\"amount\": {1}}}";
                 } else if (type.equals("xml")) {

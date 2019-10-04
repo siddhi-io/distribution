@@ -6,15 +6,25 @@
 Purpose:
     This application demonstrates how to perform RDBMS CUD against tables in a datasource using Siddhi.
     The sample depicts a scenario related to customer database.
-
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
-    2) Create a database named 'Customers' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Customers' url.
-    3) Create 2 tables named 'CustomerTable' and 'SalesTable':
+    2) Add the MySQL JDBC driver in as follows:
+           a) Download the JDBC driver from: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz
+           b) Unzip the archive.
+        *Windows:
+            i) Create a directory named {Source} in a preferred location in your machine and copy mysql-connector-java-5.1.45-bin.jar in to it.
+           ii) Create another directory named {Destination} in a preferred location in your machine.
+          iii) {Siddhi_Distribution_Home}/bin/jartobundle.bat <{Source} Directory Path> <{Destination} Directory Path>
+           iv) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Distribution_Home}/lib directory.
+        *Linux:
+            i) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Distribution_Home}/bundle directory.
+
+    3) Create a database named 'Customers' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Customers' url.
+    4) Create 2 tables named 'CustomerTable' and 'SalesTable':
              CREATE TABLE CustomerTable (name VARCHAR(20),age int));
              CREATE TABLE SalesTable (id int,item VARCHAR(20),sales double);
-    4) Go to {SIDDI-HOME/conf/tooling} and open deployment.yaml
-        4.1) Change the 'Datasource configurations' according to the database that you have created. (provide your username and password in line 25 and 26)
+    5) Go to {Siddhi_Distribution_Home/conf/tooling} and open deployment.yaml
+        5.1) Change the 'Datasource configurations' according to the database that you have created. (provide your username and password in line 35 and 36)
                  dataSources:
                    - name: Customers
                      description: The datasource used for registry and user manager
@@ -22,23 +32,23 @@ Prerequisites:
                        type: RDBMS
                        configuration:
                          jdbcUrl: 'jdbc:mysql://localhost:3306/Customers?useSSL=false'
-                         username:
-                         password:
+                         username:user
+                         password:password
                          driverClassName: com.mysql.jdbc.Driver
                          maxPoolSize: 10
                          idleTimeout: 60000
                          connectionTestQuery: SELECT 1
                          validationTimeout: 30000
                          isAutoCommit: false
-        4.2) Add the CUD extension in the same file.
+        5.2) Add the CUD extension in the same file.
                 extensions:
                   - extension:
                       name: cud
                       namespace: rdbms
                       properties:
-                        'perform.CUD.operations': true
-    5) Save the file and restart the server.
-    6) Save this sample.
+                        perform.CUD.operations: true
+    6) Save the file and restart the server.
+    7) Save this sample.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
@@ -140,4 +150,5 @@ insert into  LogUpdateSalesStream;
 from DeleteSalesStream#rdbms:cud("Customers", "DELETE FROM SalesTable WHERE id=?", id)
 select id
 insert into  LogDeleteSalesStream;
+
 

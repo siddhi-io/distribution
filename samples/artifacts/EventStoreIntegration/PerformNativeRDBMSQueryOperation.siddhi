@@ -8,14 +8,48 @@ Purpose:
 
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
-    2) Create a database named 'Customers' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Customers' url.
-    3) Create a table named 'CustomerTable': CREATE TABLE CustomerTable (name VARCHAR(20),amount int));
-    4) Insert some values into the table: INSERT INTO CustomerTable VALUES ('David',5000);
-    5) Create a table named 'CustomerDetails': CREATE TABLE CustomerDetails (name VARCHAR(20),address VARCHAR(20)));
-    6) Insert some values into the table: INSERT INTO CustomerDetails VALUES ('David','LONDON');
-    7) Go to {SIDDI-HOME/conf/tooling} and open deployment.yaml
-    8) Change the 'Datasource configurations' according to the database that you have created.
-    9) Save this sample.
+    2) Add the MySQL JDBC driver in as follows:
+           a) Download the JDBC driver from: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz
+           b) Unzip the archive.
+        *Windows:
+            i) Create a directory named {Source} in a preferred location in your machine and copy mysql-connector-java-5.1.45-bin.jar in to it.
+           ii) Create another directory named {Destination} in a preferred location in your machine.
+          iii) {Siddhi_Distribution_Home}/bin/jartobundle.bat <{Source} Directory Path> <{Destination} Directory Path>
+           iv) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Distribution_Home}/lib directory.
+        *Linux:
+            i) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Distribution_Home}/bundle directory.
+
+    3) Create a database named 'Customers' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/Customers' url.
+    4) Create a table named 'CustomerTable': CREATE TABLE CustomerTable (name VARCHAR(20),amount int));
+    5) Insert some values into the table: INSERT INTO CustomerTable VALUES ('David',5000);
+    6) Create a table named 'CustomerDetails': CREATE TABLE CustomerDetails (name VARCHAR(20),address VARCHAR(20)));
+    7) Insert some values into the table: INSERT INTO CustomerDetails VALUES ('David','LONDON');
+    8) Go to {Siddhi_Distribution_Home/conf/tooling} and open deployment.yaml
+        8.1) Change the 'Datasource configurations' according to the database that you have created. (provide your username and password in line 29 and 30)
+                 dataSources:
+                   - name: Customers
+                     description: The datasource used for registry and user manager
+                     definition:
+                       type: RDBMS
+                       configuration:
+                         jdbcUrl: 'jdbc:mysql://localhost:3306/Customers?useSSL=false'
+                         username:
+                         password:
+                         driverClassName: com.mysql.jdbc.Driver
+                         maxPoolSize: 10
+                         idleTimeout: 60000
+                         connectionTestQuery: SELECT 1
+                         validationTimeout: 30000
+                         isAutoCommit: false
+        8.2) Add the Query extension in the same file.
+                extensions:
+                  - extension:
+                      name: query
+                      namespace: rdbms
+                      properties:
+                        perform.CUD.operations: true
+    9)  Save the file and restart the server.
+    10) Save this sample.
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'.
@@ -43,6 +77,6 @@ define stream DataStream (name string);
 define stream RecordStream(selectName string, amount int, address string);
 
 @info(name = 'Retrieve data')
-from DataStream#rdbms:query('Customers', 'select CustomerTable.name, CustomerTable.amount, CustomerDetails.address from CustomerTable inner join CustomerDetails on CustomerDetails.name = CustomerTable.name where CustomerDetails.name=?', name, 'selectName string, amount int, address string')
+from DataStream#rdbms:query('Customers', 'selectName string, amount int, address string', 'select CustomerTable.name, CustomerTable.amount, CustomerDetails.address from CustomerTable inner join CustomerDetails on CustomerDetails.name = CustomerTable.name where CustomerDetails.name=?', name)
 select selectName, amount, address
 insert into RecordStream;

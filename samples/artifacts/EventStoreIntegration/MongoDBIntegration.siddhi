@@ -62,7 +62,7 @@ define stream ContainsSweetProductionStream (name string, amount double);
 define stream LogStream(name string, amount double);
 
 @Store(type = "mongodb", mongodb.uri = 'mongodb://localhost/production')
-@IndexBy("amount {background:true}")
+@Index("amount", "{background:true}")
 define table SweetProductionTable (name string, amount double);
 
 --Inserting event into mongo store
