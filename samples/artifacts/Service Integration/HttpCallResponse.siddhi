@@ -1,0 +1,63 @@
+@App:name("HttpCallResponse")
+
+@App:description("Publish http calls, receive their responses and process them")
+
+/*
+
+Purpose:
+	This application demonstrates how to configure a Siddhi application to send sweet production events via HTTP transport in JSON default format, Receive response from the http server and process the response using siddhi.
+
+Prerequisites:
+	1) Save this sample. If the Siddhi application saves successfully, the following message is shown on the console:
+        * Siddhi App HttpCallResponse successfully deployed.
+
+Executing the Sample:
+	1) Start the Siddhi application by clicking on 'Run'.
+	2) If the Siddhi application starts successfully, the following messages are shown on the console:
+        * HttpCallResponse.siddhi - Started Successfully!
+
+Testing the Sample:
+    1) Open a terminal and navigate to {SiddhiHome}/samples/sample-clients/http-server and run "ant" command without any arguments.
+    2) Send events using one or more of the following methods.
+    * Send events with http server through the event simulator:
+        a) Open the event simulator by clicking on the second icon or pressing Ctrl+Shift+I.
+    	b) In the Single Simulation tab of the panel, specify the values as follows:
+                * Siddhi App Name  : HttpCallResponse
+                * Stream Name     : SweetProductionStream
+        c) In the name and amount fields, enter 'toffees' and '75.6' respectively and then click Send to send the event.
+        d) Send more events as desired.
+
+    3) When publishing the events,
+       http-call sink will send the request to the http server and the server will echo the received request as the response with a 200 http status code.
+       Then,
+       - That successful response will be received by the defined http-call-response source which has the relevant http status code.
+       - Received response will be converted to a siddhi event using json default mapping and pushed to the ResponseStream.
+
+Viewing the Results:
+    The received responses will be logged in the Http-server console as following.
+        [io.siddhi.distribution.sample.http.server.HttpServerListener] : Received Events: {"event":{"name":"toffees","amount":75.6}}
+
+Notes:
+    If the message "CallStream' stream could not connect to 'localhost:8080", it could be due to port 8080
+    defined in the Siddhi application is already being used by a different program. To resolve this issue, do the following:
+        1) Stop this Siddhi application (Click 'Run' on menu bar -> 'Stop').
+        2) Change the port from 8080 to an unused port in this Siddhi application's source configuration and in the http-server file.
+        3) Start the application and check whether the expected output appears on the console.
+
+*/
+
+define stream SweetProductionStream (name string, amount double);
+
+@sink(type='http-call', sink.id='production-request', publisher.url='http://localhost:8080/abc',
+@map(type='json'))
+define stream CallStream (name string, amount double);
+
+@sink(type='log')
+@source(type='http-call-response' , sink.id='production-request', http.status.code='200',
+@map(type='json', @attributes(name='trp:name', amount='trp:amount')))
+define stream ResponseStream(name string, amount double);
+
+@info(name='PassThrough')
+from SweetProductionStream
+select *
+insert into CallStream;

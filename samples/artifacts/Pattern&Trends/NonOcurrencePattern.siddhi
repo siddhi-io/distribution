@@ -40,7 +40,6 @@ define stream TempStream (temp double);
 @sink(type = 'log')
 define stream AlertStream(roomNo string);
 
--- detects non occurrence of events in TempStream after an event arrives in RegulatorStream
 from every e1 = RegulatorStateChangeStream[action == 'start'] -> not TempStream[temp <= 12] for 10 seconds
 select e1.action as roomNo
 insert into AlertStream;

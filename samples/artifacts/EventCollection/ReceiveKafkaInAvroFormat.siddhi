@@ -24,9 +24,15 @@ Prerequisites:
                  * For Linux: sh {Siddhi_Distribution_Home}/bin/jartobundle.sh <{Source} Directory Path> <{Destination} Directory Path>
              iv) Add the OSGI converted kafka libs from {Destination} directory to {Siddhi_Distribution_Home}/lib
               v) Add the original Kafka libs from {Source} to {Siddhi_Distribution_Home}/samples/sample-clients/lib
-             vi) Navigate to {KafkaHome} and start zookeeper node using "sh bin/zookeeper-server-start.sh config/zookeeper.properties" command
-            vii) Navigate to {KafkaHome} and start Kafka server node using "sh bin/kafka-server-start.sh config/server.properties" command
-           viii) Navigate to {Siddhi_Distribution_Home} and start the tooling: sh bin/tooling.sh
+             vi) start zookeeper node using following command
+                 * For Windows: Navigate to {KafkaHome/bin/windows} and run 'zookeeper-server-start.bat {KafkaHome}/config/zookeeper.properties'
+                 * For Linux:  Navigate to {KafkaHome} and issue 'sh bin/zookeeper-server-start.sh config/zookeeper.properties'
+            vii) start Kafka server node using following command
+                 * For Windows: Navigate to {KafkaHome/bin/windows} and run 'kafka-server-start.bat {KafkaHome}/config/server.properties'
+                 * For Linux:  Navigate to {KafkaHome} and issue 'sh bin/kafka-server-start.sh config/server.properties'
+            viii) Navigate to {Siddhi_Distribution_Home/bin} and start the tooling:
+                 * For Windows:tooling.bat
+                 * For Linux: ./tooling.sh
     2) Save this sample
 
 Executing the Sample:
@@ -40,12 +46,11 @@ Executing the Sample:
 Testing the Sample:
     1) kafka-avro-producer client is used to publish Avro records in to Kafka.
        Navigate to {Siddhi_Distribution_Home}/samples/sample-clients/kafka-producer and run "ant" command as follows:
-        ant -DnoOfEventsToSend=5 -DtopicName='sample_kafka_avro_topic' -Dtype=avro -DisBinaryMessage=true
+         ant -DnoOfEventsToSend=5 -DtopicName=sample_kafka_avro_topic -Dtype=avro -DisBinaryMessage=true
 
 Viewing the Results:
     Messages similar to the following would be shown on the console.
-
-    [2019-09-23_21-07-06_170] INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveKafkaInAvroFormat : LowProductionAlertStream : Event{timestamp=1569253026170, data=[Cream Sandwich, 5821.74], isExpired=false}
+      INFO {io.siddhi.core.stream.output.sink.LogSink} - ReceiveKafkaInAvroFormat : LowProductionAlertStream : Event{timestamp=1569253026170, data=[Cream Sandwich, 5821.74], isExpired=false}
 
     Note:
     Stop this Siddhi application, once you are done with the execution.
