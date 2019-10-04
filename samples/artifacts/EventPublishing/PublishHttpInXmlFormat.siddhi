@@ -32,7 +32,6 @@ Viewing the Results:
        Http-server Terminal:
             [io.siddhi.distribution.sample.http.server.HttpServerListener] : Received Events: <events><event><name>toffees</name><amount>75.6</amount></event></events>
 
-
 Notes:
     If the message "OutputStream' stream could not connect to 'localhost:8080", it could be due to port 8080
     defined in the Siddhi application is already being used by a different program. To resolve this issue, do the following:
@@ -41,6 +40,7 @@ Notes:
         3) Start the application and check whether the expected output appears on the console.
 
 */
+
 define stream SweetProductionStream (name string, amount double);
 
 @sink(type = 'http',
