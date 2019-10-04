@@ -1,0 +1,52 @@
+@App:name("LogicalPattern")
+
+@App:description("Identify the logical pattern and send a 'stop' action on Regulator, if the room key is 'removed' from the room.")
+
+/*
+
+Purpose:
+    This application sends a "stop" action on regulator, if a "removed" action is triggered in the RoomKeyStream stream.
+
+Executing the Sample:
+    1) Start the Siddhi application by clicking on 'Run'
+    2) If the Siddhi application starts successfully, the following messages would be shown on the console
+        * LogicalPattern.siddhi -  Started Successfully!
+
+Testing the Sample:
+    You can publish data event to the file, through event simulator
+        a) Open event simulator by clicking on the second icon or press Ctrl+Shift+I.
+    	b) In the Single Simulation tab of the panel, select values as follows:
+                * Siddhi App Name  : LogicalPattern
+                * Stream Name      : RegulatorStateChangeStream
+            Enter following values in the fields and send
+                deviceID    : 10
+                roomNo      : 5
+                tempSet     : 30
+                action      : on
+        c) Send more events using the following values.
+                * Siddhi App Name  : LogicalPattern
+                * Stream Name      : RegulatorStateChangeStream
+            Enter following values in the fields and send
+                deviceID    : 10
+                roomNo      : 5
+                action      : removed
+
+Viewing the Results:
+    Messages similar to the following would be shown on the console.
+        INFO {io.siddhi.core.stream.output.sink.LogSink} - LogicalPattern : RegulatorActionStream : Event{timestamp=1570199838085, data=[5, stop], isExpired=false}
+
+*/
+
+define stream RegulatorStateChangeStream(deviceID long, roomNo int, tempSet double, action string);
+
+define stream RoomKeyStream(deviceID long, roomNo int, action string);
+
+@sink(type='log')
+define stream RegulatorActionStream(roomNo int, action string);
+
+from every e1=RegulatorStateChangeStream[ action == 'on' ]
+     -> e2=RoomKeyStream[ e1.roomNo == roomNo and action == 'removed' ]
+        or e3=RegulatorStateChangeStream[ e1.roomNo == roomNo and action == 'off']
+select e1.roomNo, ifThenElse( e2 is null, 'none', 'stop' ) as action
+having action != 'none'
+insert into RegulatorActionStream;
