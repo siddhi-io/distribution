@@ -1,4 +1,4 @@
-@App:name("ReceiveThroughHttp.siddhi")
+@App:name("ReceiveThroughHttp")
 @App:description('Receive events via HTTP transport and view the output on the console')
 
 /*
