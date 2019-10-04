@@ -1251,11 +1251,11 @@
         <assertj.version>3.13.2</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.7-SNAPSHOT</siddhi.execution.string.version>
+        <siddhi.execution.string.version>5.0.7</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.4</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.5</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.4</siddhi.execution.time.version>
-        <siddhi.execution.json.version>2.0.4-SNAPSHOT</siddhi.execution.json.version>
+        <siddhi.execution.json.version>2.0.4</siddhi.execution.json.version>
         <siddhi.execution.map.version>5.0.4</siddhi.execution.map.version>
         <siddhi.execution.list.version>1.0.0</siddhi.execution.list.version>
         <siddhi.execution.unitconversion.version>2.0.2</siddhi.execution.unitconversion.version>
@@ -1283,8 +1283,8 @@
         <siddhi.map.csv.version>2.0.3</siddhi.map.csv.version>
         <siddhi.map.protobuf.version>1.0.0</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.0-SNAPSHOT</siddhi.store.rdbms.version>
-        <siddhi.store.mongodb.version>2.0.3-SNAPSHOT</siddhi.store.mongodb.version>
+        <siddhi.store.rdbms.version>7.0.0</siddhi.store.rdbms.version>
+        <siddhi.store.mongodb.version>2.0.3</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.1</siddhi.store.redis.version>
 
         <siddhi.script.js.version>5.0.2</siddhi.script.js.version>
