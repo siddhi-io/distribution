@@ -4,50 +4,32 @@
 /*
 
 Purpose:
-
     This application demonstrates how to use grpc as a service with default grpc service (EventService)
 
 Prerequisites:
-
     1) Save this sample
 
 Executing the Sample:
-
     1) Start the Siddhi application by clicking on 'Run'
-
     2) If the Siddhi application starts successfully, the following messages would be shown on the console
-
         * Grpc-Service.siddhi - Started Successfully!
 
 Testing the Sample:
-
     Receive requests from the grpc method that defined by 'receiver.url' in Source configuration and send response back to the client. You may start the client as follows,
-
     1) Navigate to {SiddhiDistribution_Home}/samples/sample-clients/grpc-client and run "ant" command as follows:
-
                 ant -Dport="5545" -Dmessage="Message"  (Change "Message" to any value that you want)
-
         If you want to publish custom number of events, you need to run "ant" command as follows
-
                 ant -Dport="5545" -Dmessage="Message" -DnoOfEventsToSend="5"
 
         Notes:
-
             -"5545" is the port that use in this sample, if you change the port number in this sample change the "5545" to that port number.
 
 Viewing the Results:
-
     See the output on the console.
-
         you will see a similar output like this in the siddhi console.
-
             Grpc-Service : OutputStream : Event{timestamp=1569912517725, data=[73148037-9b43-48ea-885f-52d9b2bc7a08, MESSAGE], isExpired=false}
-
         you will see a similar output like this in the "ant" terminal
-
             payload: "{\"event\":{\"messageId\":\"73148037-9b43-48ea-885f-52d9b2bc7a08\",\"message\":\"MESSAGE\"}}"
-
-
 
 */
 
