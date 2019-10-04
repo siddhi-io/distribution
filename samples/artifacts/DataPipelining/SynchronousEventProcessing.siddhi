@@ -17,7 +17,7 @@ Prerequisites:
     4) Create a table named 'StockTable': CREATE TABLE StockTable (symbol VARCHAR(20),noOfStocks INT);
     5) Enter some records into the table : INSERT INTO StockTable(symbol,noOfStocks) values('S1',10);
                                            INSERT INTO StockTable(symbol,noOfStocks) values('S2',15);
-    6) Provide your mysql server username and password in line 54.
+    6) Provide your mysql server username and password in line 59.
     7) Save this sample.
     8) Restart the tooling server
 
@@ -56,7 +56,7 @@ Viewing the Results:
 define stream StockStream(symbol string, noOfSales int);
 
 @store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/StockDB?useSSL=false",
-       username="root", password="147s89d635SD",
+       username="your_username", password="your_password",
        jdbc.driver.name="com.mysql.jdbc.Driver")
 define table StockTable(symbol string, noOfStocks int);
 
