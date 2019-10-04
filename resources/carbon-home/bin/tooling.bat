@@ -54,7 +54,7 @@ rem by the user or the %0 problem on Windows 9x
 if not exist "%CARBON_HOME%\bin\version.txt" goto noServerHome
 
 REM Installing jars
-java -cp ".\*;%CARBON_HOME%\bin\tools\*" -Dwso2.carbon.tool="install-jars" org.wso2.carbon.tools.CarbonToolExecutor "%CURRENT_DIR%"
+java -cp ".\*;%CARBON_HOME%\bin\tools\*" -Dwso2.carbon.tool="install-jars" org.wso2.carbon.tools.CarbonToolExecutor "%CARBON_HOME%"
 
 goto startServer
 
