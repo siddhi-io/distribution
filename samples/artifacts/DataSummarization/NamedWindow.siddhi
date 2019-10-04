@@ -23,7 +23,7 @@ Testing the Sample:
     4) Select 'Random' as the 'Simulation Source'
     5) Click on 'Add Simulation Source'
     6) Select NamedWindow as 'Siddhi App Name'
-    7) Select TempStream as 'StreamName'
+    7) Select SensorStream as 'StreamName'
     8) Keep 'Primitive Based' as the config type for tempId and temp
     9) Save the simulator configuration
     10) The newly created simulator would be listed under 'Active Feed Simulations' of 'Feed Simulation' tab
@@ -51,7 +51,7 @@ See the output on the console similar to the following (timestamp will be differ
 
 */
 
-define stream SenserStream(tempId string, temp double);
+define stream SensorStream(tempId string, temp double);
 
 define window OneMinTempWindow(tempId string, temp double) time(1 min);
 
@@ -64,7 +64,7 @@ define stream OutPutStream(tempId string, temp double);
 define stream HighTempCountStream(requestId string, counts long);
 
 @info(name = 'insertEventsToWindow') 
-from SenserStream
+from SensorStream
 select *
 insert into OneMinTempWindow;
 
@@ -73,7 +73,7 @@ from OneMinTempWindow
 select *
 insert into OutPutStream;
 
-@info(name = 'heighTempCount') 
+@info(name = 'highTempCount')
 from CheckStream as c join OneMinTempWindow as t
  	on t.temp > 40
 select requestId, count(t.temp) as counts

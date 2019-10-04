@@ -55,6 +55,8 @@ PRGDIR=`dirname "$PRG"`
 
 [ -z "$RUNTIME_HOME" ] && RUNTIME_HOME=`cd "$PRGDIR/../wso2/runner" ; pwd`
 
+CURRENT_DIRECTORY=`pwd`
+
 # Installing jars
 java -cp "$CARBON_HOME/bin/tools/*" -Dwso2.carbon.tool="install-jars" org.wso2.carbon.tools.CarbonToolExecutor "$CARBON_HOME"
 
@@ -65,5 +67,5 @@ NAME=start-runner
 RUNNER_INIT_SCRIPT="$CARBON_HOME/wso2/runner/bin/carbon.sh"
 
 # If the daemon is not there, then exit.
-$RUNNER_INIT_SCRIPT $*
+$RUNNER_INIT_SCRIPT -DcurrentDirectory="$CURRENT_DIRECTORY" $*
 exit;

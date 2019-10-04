@@ -14,11 +14,11 @@ Purpose:
 
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
-    2) Add the MySQL JDBC driver into {Siddhi_Distribution_Home}/bundles as follows:
+    2) Add the MySQL JDBC driver in as follows:
            a) Download the JDBC driver from: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz
            b) Unzip the archive.
-           c) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Distribution_Home}/bundles directory.
-    3) Create a database named 'production' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/production' url.
+           c) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Distribution_Home}/bundled directory.
+    3) Create a database named 'Production' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/production' url.
     4) Create a table named 'SweetProductionTable': CREATE TABLE SweetProductionTable (name VARCHAR(20),amount double(10,2));
     5) Insert some values into the table: INSERT INTO SweetProductionTable VALUES ('Sugar',23.50);
        Note: You can also use insertSweetProductionStream for this when testing the sample.
@@ -68,7 +68,7 @@ define stream LogStream(name string, amount double);
 @Store(type = "rdbms",
 	jdbc.url = "jdbc:mysql://localhost:3306/production?useSSL=false",
 	username = "user",
-	password = "user" ,
+	password = "password" ,
 	jdbc.driver.name = "com.mysql.jdbc.Driver")
 @index("amount")
 define table SweetProductionTable (name string, amount double);
@@ -109,3 +109,5 @@ from SearchSweetProductionStream as materialName join SweetProductionTable as sw
  	on materialName.name == sweetProductionTable.name
 select sweetProductionTable.name, sweetProductionTable.amount
 insert into LogStream;
+
+

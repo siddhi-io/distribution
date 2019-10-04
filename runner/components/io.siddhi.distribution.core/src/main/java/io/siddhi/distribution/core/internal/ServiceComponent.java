@@ -52,6 +52,8 @@ import org.wso2.carbon.kernel.CarbonRuntime;
 import org.wso2.carbon.kernel.config.model.CarbonConfiguration;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -93,7 +95,7 @@ public class ServiceComponent {
         ConfigProvider configProvider = StreamProcessorDataHolder.getInstance().getConfigProvider();
         // Create Stream Processor Service
         StreamProcessorDataHolder.setStreamProcessorService(new StreamProcessorService());
-        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiManager siddhiManager = StreamProcessorDataHolder.getSiddhiManager();
         FileConfigManager fileConfigManager = new FileConfigManager(configProvider);
         siddhiManager.setConfigManager(fileConfigManager);
 
@@ -166,6 +168,22 @@ public class ServiceComponent {
                 log.error("Error: Can't get target file to run. System property {} is not set.",
                         SiddhiAppProcessorConstants.SYSTEM_PROP_RUN_SIDDHI_APPS);
             } else {
+                // Change relative paths to absolute
+                Path siddhiAppsGivenPath = Paths.get(siddhiAppsReference);
+                if (!siddhiAppsGivenPath.isAbsolute()) {
+                    if (System.getProperty(
+                            SiddhiAppProcessorConstants.SYSTEM_PROP_CURRENT_DIRECTORY
+                    ) != null) {
+                        Path currentWorkingDirectory = Paths.get(
+                                System.getProperty(
+                                        SiddhiAppProcessorConstants.SYSTEM_PROP_CURRENT_DIRECTORY
+                                )
+                        ).toAbsolutePath();
+                        siddhiAppsReference = currentWorkingDirectory.resolve(
+                                siddhiAppsGivenPath.toString()
+                        ).normalize().toString();
+                    }
+                }
                 siddhiAppFileReference = new File(siddhiAppsReference);
 
                 if (!siddhiAppFileReference.exists()) {
@@ -237,6 +255,21 @@ public class ServiceComponent {
 
         streamServiceRegistration.unregister();
         siddhiAppRuntimeServiceRegistration.unregister();
+    }
+
+    @Reference(
+            name = "siddhi-manager-service",
+            service = SiddhiManager.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unsetSiddhiManager"
+    )
+    protected void setSiddhiManager(SiddhiManager siddhiManager) {
+        StreamProcessorDataHolder.setSiddhiManager(siddhiManager);
+    }
+
+    protected void unsetSiddhiManager(SiddhiManager siddhiManager) {
+        StreamProcessorDataHolder.setSiddhiManager(null);
     }
 
     /**

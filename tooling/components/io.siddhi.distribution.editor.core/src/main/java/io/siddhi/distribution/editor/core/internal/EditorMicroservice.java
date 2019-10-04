@@ -48,6 +48,7 @@ import io.siddhi.distribution.editor.core.commons.response.MetaDataResponse;
 import io.siddhi.distribution.editor.core.commons.response.Status;
 import io.siddhi.distribution.editor.core.commons.response.ValidationSuccessResponse;
 import io.siddhi.distribution.editor.core.exception.DockerGenerationException;
+import io.siddhi.distribution.editor.core.exception.InvalidExecutionStateException;
 import io.siddhi.distribution.editor.core.exception.KubernetesGenerationException;
 import io.siddhi.distribution.editor.core.exception.SiddhiAppDeployerServiceStubException;
 import io.siddhi.distribution.editor.core.exception.SiddhiStoreQueryHelperException;
@@ -224,32 +225,41 @@ public class EditorMicroservice implements Microservice {
     public Response validateSiddhiApp(String validationRequestString) {
 
         ValidationRequest validationRequest = new Gson().fromJson(validationRequestString, ValidationRequest.class);
-        String jsonString;
+        String jsonString = "";
         try {
             String siddhiApp = validationRequest.getSiddhiApp();
             if (validationRequest.getVariables().size() != 0) {
                 siddhiApp = SourceEditorUtils.populateSiddhiAppWithVars(validationRequest.getVariables(), siddhiApp);
             }
-            SiddhiAppRuntime siddhiAppRuntime =
-                    EditorDataHolder.getSiddhiManager().createSiddhiAppRuntime(siddhiApp);
+            if (EditorDataHolder.getSiddhiManager() != null) {
+                SiddhiAppRuntime siddhiAppRuntime =
+                        EditorDataHolder.getSiddhiManager().createSiddhiAppRuntime(siddhiApp);
+                String siddhiAppName = siddhiAppRuntime.getName();
+                DebugRuntime debugRuntime = EditorDataHolder.getSiddhiAppMap().get(siddhiAppName);
+                if (debugRuntime != null) {
+                    debugRuntime.setSiddhiAppRuntime(siddhiAppRuntime);
+                    debugRuntime.setMode(DebugRuntime.Mode.STOP);
+                    EditorDataHolder.getSiddhiAppMap().put(siddhiAppName, debugRuntime);
+                }
 
-            // Status SUCCESS to indicate that the siddhi app is valid
-            ValidationSuccessResponse response = new ValidationSuccessResponse(Status.SUCCESS);
+                // Status SUCCESS to indicate that the siddhi app is valid
+                ValidationSuccessResponse response = new ValidationSuccessResponse(Status.SUCCESS);
 
-            // Getting requested stream definitions
-            if (validationRequest.getMissingStreams() != null) {
-                response.setStreams(SourceEditorUtils.getStreamDefinitions(
-                        siddhiAppRuntime, validationRequest.getMissingStreams()
-                ));
+                // Getting requested stream definitions
+                if (validationRequest.getMissingStreams() != null) {
+                    response.setStreams(SourceEditorUtils.getStreamDefinitions(
+                            siddhiAppRuntime, validationRequest.getMissingStreams()
+                    ));
+                }
+
+                // Getting requested aggregation definitions
+                if (validationRequest.getMissingAggregationDefinitions() != null) {
+                    response.setAggregationDefinitions(SourceEditorUtils.getAggregationDefinitions(
+                            siddhiAppRuntime, validationRequest.getMissingAggregationDefinitions()
+                    ));
+                }
+                jsonString = new Gson().toJson(response);
             }
-
-            // Getting requested aggregation definitions
-            if (validationRequest.getMissingAggregationDefinitions() != null) {
-                response.setAggregationDefinitions(SourceEditorUtils.getAggregationDefinitions(
-                        siddhiAppRuntime, validationRequest.getMissingAggregationDefinitions()
-                ));
-            }
-            jsonString = new Gson().toJson(response);
         } catch (Throwable t) {
             // If the exception is a SiddhiAppCreationException and its message is null, append the stacktrace as the
             // message.
@@ -297,8 +307,7 @@ public class EditorMicroservice implements Microservice {
         }
 
         try {
-            feign.Response response = storeQueryAPIHelper
-                    .executeStoreQuery(request.getProperty("LOCAL_ADDRESS").toString(), element.toString());
+            feign.Response response = storeQueryAPIHelper.executeStoreQuery(element.toString());
             String payload = response.body().toString();
             // If the response HTTP status code is OK, return the response.
             if (response.status() == 200) {
@@ -739,14 +748,19 @@ public class EditorMicroservice implements Microservice {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{siddhiAppName}/start")
     public Response start(@PathParam("siddhiAppName") String siddhiAppName) {
-        List<String> streams = EditorDataHolder
-                .getDebugProcessorService()
-                .getSiddhiAppRuntimeHolder(siddhiAppName)
-                .getStreams();
-        List<String> queries = EditorDataHolder
-                .getDebugProcessorService()
-                .getSiddhiAppRuntimeHolder(siddhiAppName)
-                .getQueries();
+        List<String> streams = new ArrayList<>();
+        List<String> queries = new ArrayList<>();
+        try {
+            streams = EditorDataHolder
+                    .getDebugProcessorService()
+                    .getSiddhiAppRuntimeHolder(siddhiAppName)
+                    .getStreams();
+            queries = EditorDataHolder
+                    .getDebugProcessorService()
+                    .getSiddhiAppRuntimeHolder(siddhiAppName)
+                    .getQueries();
+        } catch (InvalidExecutionStateException ignored) {
+        }
         EditorDataHolder
                 .getDebugProcessorService()
                 .start(siddhiAppName);
@@ -1046,7 +1060,7 @@ public class EditorMicroservice implements Microservice {
 
         try {
             FileConfigManager fileConfigManager = new FileConfigManager(configProvider);
-            SiddhiManager siddhiManager = new SiddhiManager();
+            SiddhiManager siddhiManager = EditorDataHolder.getSiddhiManager();
             siddhiManager.setConfigManager(fileConfigManager);
             DesignGenerator designGenerator = new DesignGenerator();
             designGenerator.setSiddhiManager(siddhiManager);
@@ -1372,7 +1386,7 @@ public class EditorMicroservice implements Microservice {
     protected void start(BundleContext bundleContext) throws Exception {
         // Create Stream Processor Service
         EditorDataHolder.setDebugProcessorService(new DebugProcessorService());
-        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiManager siddhiManager = EditorDataHolder.getSiddhiManager();
         FileConfigManager fileConfigManager = new FileConfigManager(configProvider);
         siddhiManager.setConfigManager(fileConfigManager);
         EditorDataHolder.setSiddhiManager(siddhiManager);
@@ -1490,5 +1504,20 @@ public class EditorMicroservice implements Microservice {
     protected void unregisterAnalyticsHttpClient(AnalyticsHttpClientBuilderService service) {
 
         EditorDataHolder.getInstance().setClientBuilderService(null);
+    }
+
+    @Reference(
+            name = "siddhi-manager-service",
+            service = SiddhiManager.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unsetSiddhiManager"
+    )
+    protected void setSiddhiManager(SiddhiManager siddhiManager) {
+        EditorDataHolder.setSiddhiManager(siddhiManager);
+    }
+
+    protected void unsetSiddhiManager(SiddhiManager siddhiManager) {
+        EditorDataHolder.setSiddhiManager(null);
     }
 }

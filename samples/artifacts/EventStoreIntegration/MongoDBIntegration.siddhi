@@ -15,19 +15,27 @@ This application demonstrates how to perform CRUD operations using Siddhi querie
 
 Prerequisites:
     1) Ensure that MongoDB is installed on your machine. (https://docs.mongodb.com/manual/administration/install-community/).
-    2) If auth is not enabled in the MongoDB instance, skip steps 3 and 4.
-    3) Create a data store named 'production' in MongoDB with relevant access privileges.
-    4) Create a collection named 'SweetProductionTable'and insert values into 'SweetProductionTable'.
-    5) Save this sample.
+    2) Add the MongoDB JDBC driver in as follows:
+          a) Download the JDBC driver from: https://repo1.maven.org/maven2/org/mongodb/mongo-java-driver/3.4.2/mongo-java-driver-3.4.2.jar
+             Note:
+             * mongo-java-driver-3.4.2.jar consists of all the dependencies required.
+             * If you want to use a higher version of the jdbc driver you have to include all the jars the driver depend on to the {Siddhi_Distribution_Home}/bundles as we have removed them from Siddhi_Distribution.
+             * further information on:https://mongodb.github.io/mongo-java-driver
+          b) Unzip the archive.
+          c) Copy mongo-java-driver-3.11.0.jar to {Siddhi_Distribution_Home}/bundles directory.
+    3) If auth is not enabled in the MongoDB instance, skip steps 4 and 5.
+                           4) Create a data store named 'production' in MongoDB with relevant access privileges.
+                           5) Create a collection named 'SweetProductionTable'and insert values into 'SweetProductionTable'.
+                           6) Save this sample.
 
-Executing the Sample:
-    1) Start the Siddhi application by clicking on 'Run'.
-    2) If the Siddhi application starts successfully, the following message is shown on the console:
-        * MongoDBIntegration.siddhi - Started Successfully!
+                       Executing the Sample:
+                           1) Start the Siddhi application by clicking on 'Run'.
+                           2) If the Siddhi application starts successfully, the following message is shown on the console:
+                               * MongoDBIntegration.siddhi - Started Successfully!
 
-    Note:
-    If you want to edit this application, stop the application, make your edits and save, and then start the application again.
-
+                           Note:
+                           If you want to edit this application, stop the application, make your edits and save, and then start the application again.
+na
 Testing the Sample:
     1) Simulate single events as follows:
         a) Click on Event Simulator (double arrows on left tab) and then 'Single Simulation'.
@@ -62,7 +70,7 @@ define stream ContainsSweetProductionStream (name string, amount double);
 define stream LogStream(name string, amount double);
 
 @Store(type = "mongodb", mongodb.uri = 'mongodb://localhost/production')
-@IndexBy("amount {background:true}")
+@Index("amount", "{background:true}")
 define table SweetProductionTable (name string, amount double);
 
 --Inserting event into mongo store
