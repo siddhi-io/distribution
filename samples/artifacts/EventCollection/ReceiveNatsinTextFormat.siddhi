@@ -9,8 +9,8 @@ Purpose:
 Prerequisites:
     1)Install the NATS Streaming server from "https://nats-io.github.io/docs/nats_streaming/gettingstarted/install.html"
     2)The Siddhi app run time will need the following JARs to connect to the NATS streaming server. Download those JARs using the following links and add those JARs to "{SiddhiHome}/jars" directory.
-        a)Java NATS streaming :-"https://mvnrepository.com/artifact/io.nats/java-nats-streaming/2.1.2"
-        b)JNATS:-"https://mvnrepository.com/artifact/io.nats/jnats/2.3.0"
+        a)java-nats-streaming-*.jar :- "https://mvnrepository.com/artifact/io.nats/java-nats-streaming/2.2.3"
+        b)jnats-*.jar               :- "https://mvnrepository.com/artifact/io.nats/jnats/2.6.0"
     3)It also needs the Protobuf bundle. Download the Protobuf bundle using the following link and add the bundle to "s{SiddhiHome}/bundles" directory.
         a)Protobuf:-"https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java/3.6.1"
 
