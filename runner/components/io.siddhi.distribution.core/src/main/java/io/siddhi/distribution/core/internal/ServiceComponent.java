@@ -95,7 +95,7 @@ public class ServiceComponent {
         ConfigProvider configProvider = StreamProcessorDataHolder.getInstance().getConfigProvider();
         // Create Stream Processor Service
         StreamProcessorDataHolder.setStreamProcessorService(new StreamProcessorService());
-        SiddhiManager siddhiManager = new SiddhiManager();
+        SiddhiManager siddhiManager = StreamProcessorDataHolder.getSiddhiManager();
         FileConfigManager fileConfigManager = new FileConfigManager(configProvider);
         siddhiManager.setConfigManager(fileConfigManager);
 
@@ -255,6 +255,21 @@ public class ServiceComponent {
 
         streamServiceRegistration.unregister();
         siddhiAppRuntimeServiceRegistration.unregister();
+    }
+
+    @Reference(
+            name = "siddhi-manager-service",
+            service = SiddhiManager.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unsetSiddhiManager"
+    )
+    protected void setSiddhiManager(SiddhiManager siddhiManager) {
+        StreamProcessorDataHolder.setSiddhiManager(siddhiManager);
+    }
+
+    protected void unsetSiddhiManager(SiddhiManager siddhiManager) {
+        StreamProcessorDataHolder.setSiddhiManager(null);
     }
 
     /**
