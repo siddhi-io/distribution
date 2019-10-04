@@ -1,6 +1,6 @@
 @App:name("LogicalPattern")
 
-@App:description("Identify the logical pattern and send a 'stop' action on Regulator, if the room key is 'removed' from the room.")
+@App:description("Identify the logical pattern and send a 'stop' action to the Regulator, if the room key is 'removed' from the holder.")
 
 /*
 
