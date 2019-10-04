@@ -18,7 +18,6 @@ package io.siddhi.distribution.core.impl;
 
 import com.google.gson.Gson;
 import io.siddhi.core.SiddhiAppRuntime;
-import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.stream.input.source.Source;
 import io.siddhi.core.stream.output.sink.Sink;
 import io.siddhi.core.util.snapshot.PersistenceReference;
@@ -542,7 +541,8 @@ public class SiddhiAppsApiServiceImpl extends SiddhiAppsApiService {
         if (siddhiAppDataMap.containsKey(appName)) {
             String siddhiAppString = siddhiAppDataMap.get(appName).getSiddhiApp();
             SiddhiApp siddhiApp = SiddhiCompiler.parse(String.valueOf(siddhiAppString));
-            SiddhiAppRuntime siddhiAppRuntime = new SiddhiManager().createSiddhiAppRuntime(siddhiApp);
+            SiddhiAppRuntime siddhiAppRuntime = StreamProcessorDataHolder.getSiddhiManager()
+                    .createSiddhiAppRuntime(siddhiApp);
             List<SiddhiAppElements> listOfSiddhiAppElements = new ArrayList<>();
 
             for (int i = 0; i < siddhiApp.getExecutionElementList().size(); i++) {

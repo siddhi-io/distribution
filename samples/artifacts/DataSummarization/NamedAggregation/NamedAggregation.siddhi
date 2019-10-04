@@ -4,17 +4,17 @@
 /*
 
 Purpose:
-    This application demonstrates how to calculate aggregates for various time granularity.In this example two queries are demonstrate such as find the average, total of price and find the max price items within a last certain hours.
+    This application demonstrates how to calculate aggregates for various time granularity.The two queries in this sample demonstrate how to find the average, total price and items with the highest price  within a given time period
 
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
-    2) Add the MySQL JDBC driver into {Siddhi_HOME}/lib as follows:
+    2) Add the MySQL JDBC driver into {Siddhi_Distribution_Home}/bundles as follows:
            a) Download the JDBC driver from: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz
            b) Unzip the archive.
-           c) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Home}/lib directory.
+           c) Copy mysql-connector-java-5.1.45-bin.jar to {Siddhi_Distribution_Home}/bundles directory.
 
     3) Create a database named 'production' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/production' url.
-    4)In the store configuration of this application, replace 'username' and 'password' values with your MySQL credentials.
+    4) In the store configuration of this application, replace 'username' and 'password' values with your MySQL credentials.
     5) Save this sample
 
 Executing the Sample:
@@ -23,7 +23,7 @@ Executing the Sample:
         * NamedAggregation.siddhi - Started Successfully!
 
 Testing the Sample:
-     1) The '{SiddhiDistribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file is used to provide the sample data for TradeStream. To simulate the events in this CSV file, execute the following steps,
+     1) The '{Siddhi_Distribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file is used to provide the sample data for TradeStream. To simulate the events in this CSV file, execute the following steps,
         a) Click on 'Event Simulator' (double arrows on left tab)
         b) Click 'Feed Simulation' -> 'Create'
         c) Give a name, description and time interval
@@ -31,11 +31,11 @@ Testing the Sample:
         e) Click on 'Add Simulation Source'
         f) Select 'NamedAggregation' as 'Siddhi App Name'
         g) Select 'TradeStream' as 'StreamName'
-        h) Click on 'Upload' button under 'CSV file' section and upload the '{SiddhiDistribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file
+        h) Click on 'Upload' button under 'CSV file' section and upload the '{Siddhi_Distribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file
         i) Give ',' as the delimiter
         j) Save the configuration.
 
-    2) Click on the start button (Arrow symbol) next to the newly created simulator, and wait few seconds to complete the  events sending from the '{SiddhiDistribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file to TradeStream.
+    2) Click on the start button (Arrow symbol) next to the newly created simulator, and wait few seconds to complete the  events sending from the '{Siddhi_Distribution_Home}/samples/artifacts/DataSummarization/NamedAggregation/example.csv' file to TradeStream.
 
     3)  Click on 'Event Simulator' (double arrows on left tab)
            a) Click 'Single Simulation' (this will be already selected)
@@ -73,8 +73,8 @@ define stream MaxStockStream(symbol string, maxPrice double);
 
 @Store(type = "rdbms",
 	jdbc.url = "jdbc:mysql://localhost:3306/production?useSSL=false",
-	username = "username",
-	password = "password",
+	username = "testuser",
+	password = "test",
 	jdbc.driver.name = "com.mysql.jdbc.Driver")
 define aggregation TradeAggregation
 from TradeStream
@@ -82,7 +82,7 @@ select symbol, avg(price) as avgPrice, sum(price) as totalPrice, max(price) as m
  	group by symbol
  	aggregate by timestamp every sec...year;
 
-@info(name = 'AggregationQuery') 
+@info(name = 'AggregationQuery')
 from DashboardTriggerStream as s join TradeAggregation as t
  	on s.symbol == t.symbol
 within "2016-06-06 12:00:00 +05:30", "2020-06-06 12:00:00 +05:30"
@@ -90,9 +90,9 @@ per 'hours'
 select t.symbol, t.totalPrice, t.avgPrice
 insert into AggregateStockStream;
 
--- There must be events for last 5 hours to execute this query otherwise it won't work.
+-- There must be events which were stored with in last five hours, for this query to work properly.
 
-@info(name = 'MaxItemQuery') 
+@info(name = 'MaxItemQuery')
 from QueryTriggerStream as s join TradeAggregation as t
 within currentTimeMillis()-1800000000, currentTimeMillis()
 per 'hours'
@@ -100,3 +100,5 @@ select t.symbol, t.maxPrice
  	group by symbol
  	order by maxPrice desc
 insert into MaxStockStream;
+
+

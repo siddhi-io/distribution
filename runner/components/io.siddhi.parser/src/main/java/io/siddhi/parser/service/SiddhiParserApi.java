@@ -78,16 +78,12 @@ public class SiddhiParserApi {
     private static final String TRANSPORT_ROOT_CONFIG_ELEMENT = "wso2.transport.http";
     private static final String SIDDHI_PARSER_ACTIVATION_SYS_PROPERTY = "siddhi-parser";
     private static TransportsConfiguration transportsConfiguration;
-    private static MicroservicesRunner microservicesRunner;
-    private static volatile boolean microserviceActive;
+    private MicroservicesRunner microservicesRunner;
+    private volatile boolean microserviceActive;
     private static SiddhiAppCreator appCreator = new NatsSiddhiAppCreator();
     private static SiddhiTopologyCreator siddhiTopologyCreator = new SiddhiTopologyCreatorImpl();
 
     public SiddhiParserApi() {
-        SiddhiManager siddhiManager = new SiddhiManager();
-        FileConfigManager fileConfigManager = new FileConfigManager(SiddhiParserDataHolder.getConfigProvider());
-        siddhiManager.setConfigManager(fileConfigManager);
-        SiddhiParserDataHolder.setSiddhiManager(siddhiManager);
     }
 
     @GET
@@ -159,10 +155,12 @@ public class SiddhiParserApi {
                         Matcher matcher = expr.matcher(siddhiApp);
                         while (matcher.find()) {
                             for (int i = 1; i <= matcher.groupCount(); i++) {
-                                String envValue = envMap.getOrDefault(matcher.group(i), "");
-                                envValue = envValue.replace("\\", "\\\\");
-                                Pattern subexpr = Pattern.compile("\\$\\{" + matcher.group(i) + "\\}");
-                                siddhiApp = subexpr.matcher(siddhiApp).replaceAll(envValue);
+                                if (envMap.get(matcher.group(i)) != null) {
+                                    String envValue = envMap.get(matcher.group(i));
+                                    envValue = envValue.replace("\\", "\\\\");
+                                    Pattern subexpr = Pattern.compile("\\$\\{" + matcher.group(i) + "\\}");
+                                    siddhiApp = subexpr.matcher(siddhiApp).replaceAll(envValue);
+                                }
                             }
                         }
                     }
@@ -209,7 +207,7 @@ public class SiddhiParserApi {
         String toolIdentifier = System.getProperty(SIDDHI_PARSER_ACTIVATION_SYS_PROPERTY);
         Optional.ofNullable(toolIdentifier)
                 .ifPresent(identifier -> {
-                    startStoresApiMicroservice();
+                    startParserApiMicroservice();
                 });
     }
 
@@ -222,13 +220,17 @@ public class SiddhiParserApi {
     @Deactivate
     protected void stop() throws Exception {
         log.debug("Siddhi Parser API deactivated.");
-        stopStoresApiMicroservice();
+        stopParserApiMicroservice();
     }
 
     /**
      * This is the activation method of Parser Api Microservice.
      */
-    public static void startStoresApiMicroservice() {
+    public void startParserApiMicroservice() {
+        SiddhiManager siddhiManager = SiddhiParserDataHolder.getSiddhiManager();
+        FileConfigManager fileConfigManager = new FileConfigManager(SiddhiParserDataHolder.getConfigProvider());
+        siddhiManager.setConfigManager(fileConfigManager);
+        SiddhiParserDataHolder.setSiddhiManager(siddhiManager);
         if (microservicesRunner != null && !microserviceActive) {
             microservicesRunner.deploy(new SiddhiParserApi());
             microservicesRunner.start();
@@ -240,7 +242,7 @@ public class SiddhiParserApi {
     /**
      * This is the deactivate method of Parser Api Microservice.
      */
-    public static void stopStoresApiMicroservice() {
+    public void stopParserApiMicroservice() {
         if (microservicesRunner != null && microserviceActive) {
             microservicesRunner.stop();
             microserviceActive = false;
@@ -283,5 +285,20 @@ public class SiddhiParserApi {
     }
 
     protected void unsetSiddhiAppRuntimeService(SiddhiAppRuntimeService siddhiAppRuntimeService) {
+    }
+
+    @Reference(
+            name = "siddhi-manager-service",
+            service = SiddhiManager.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unsetSiddhiManager"
+    )
+    protected void setSiddhiManager(SiddhiManager siddhiManager) {
+        SiddhiParserDataHolder.setSiddhiManager(siddhiManager);
+    }
+
+    protected void unsetSiddhiManager(SiddhiManager siddhiManager) {
+        SiddhiParserDataHolder.setSiddhiManager(null);
     }
 }

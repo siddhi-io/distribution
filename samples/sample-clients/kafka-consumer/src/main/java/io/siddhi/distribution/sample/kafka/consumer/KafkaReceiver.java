@@ -37,7 +37,6 @@ public class KafkaReceiver {
     public static void main(String[] args) throws InterruptedException {
         log.info("Initialize Kafka receiver.");
         SiddhiManager siddhiManager = new SiddhiManager();
-
         String bootstrapServers = args[0];
         String topics = args[1];
         String partitions = args[2];
@@ -54,8 +53,10 @@ public class KafkaReceiver {
         }
         if (!optionalConfigs.equals("EMPTY")) {
             optionalConfigs = "optional.configuration='" + optionalConfigs + "', ";
+        } else {
+            optionalConfigs = "";
+            optionalConfigs = "optional.configuration='" + optionalConfigs + "', ";
         }
-
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime(
                 "@App:name('KafkaSample') " +
                         "@sink(type='log')" +
@@ -74,9 +75,11 @@ public class KafkaReceiver {
                         "from LowProducitonAlertStream\n" +
                         "select * \n" +
                         "insert into logStream;");
+
         siddhiAppRuntime.start();
         Thread.sleep(2000);
         while (true) {
         }
     }
 }
+
