@@ -6,7 +6,7 @@ Purpose:
     This application demonstrates how to use prometheus-sink to publish events to Prometheus. Here, the server url configured is used to exposed an API to Prometheus from which Prometheus can scrape metrics.
 
 Pre-requisites:
-    1) Download the following jars from https://mvnrepository.com/artifact/io.prometheus and copy them to {Siddhi_Distribution_Home}/bundles directory.
+    1) Download the following jars from https://mvnrepository.com/artifact/io.prometheus and copy them to {Siddhi_Distribution_Home}/jars directory.
          * simpleclient_common-0.5.0.jar
          * simpleclient-0.5.0.jar
          * simpleclient_httpserver-0.5.0.jar
