@@ -9,12 +9,17 @@ Purpose:
 
 Prerequisites:
     1) Ensure that MySQL is installed on your machine.
-    2) Create a database named 'StockDB' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/StockDB' url.
-    3) Create a table named 'StockTable': CREATE TABLE StockTable (symbol VARCHAR(20),noOfStocks INT);
-    4) Enter some records into the table : INSERT INTO StockTable(symbol,noOfStocks) values('S1',10);
+    2)Add MySQL JDBC driver into into {Siddhi_Distribution_Home}/lib as follows
+        a) Download the JDBC from : "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.45.tar.gz"
+        b) Unzip the archive
+        c) Copy "com.mysql.jdbc_5.1.5.jar" to {Siddhi_Distribution_Home}/lib
+    3) Create a database named 'StockDB' in MySQL. This database is referred to with the 'jdbc:mysql://localhost:3306/StockDB' url.
+    4) Create a table named 'StockTable': CREATE TABLE StockTable (symbol VARCHAR(20),noOfStocks INT);
+    5) Enter some records into the table : INSERT INTO StockTable(symbol,noOfStocks) values('S1',10);
                                            INSERT INTO StockTable(symbol,noOfStocks) values('S2',15);
-    5) Provide your mysql server username and password in line 54.
-    6) Save this sample.
+    6) Provide your mysql server username and password in line 54.
+    7) Save this sample.
+    8) Restart the tooling server
 
 Executing the Sample:
     1) Start the Siddhi application by clicking on 'Run'
@@ -51,7 +56,7 @@ Viewing the Results:
 define stream StockStream(symbol string, noOfSales int);
 
 @store(type="rdbms", jdbc.url="jdbc:mysql://localhost:3306/StockDB?useSSL=false",
-       username="your_username", password="your_password",
+       username="root", password="147s89d635SD",
        jdbc.driver.name="com.mysql.jdbc.Driver")
 define table StockTable(symbol string, noOfStocks int);
 
