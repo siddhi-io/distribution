@@ -71,4 +71,4 @@ authentication:
 
 #Export Docker/Kubernetes Artifacts Configurations
 #exportConfigs:
-#   dockerBaseImage: '"siddhiio/siddhi-runner-base-alpine":latest'
+#   dockerBaseImage: 'siddhiio/siddhi-runner-base-alpine:latest'
