@@ -70,5 +70,5 @@ authentication:
     authEnable: false
 
 #Export Docker/Kubernetes Artifacts Configurations
-#export.properties:
+#exportConfigs:
 #   dockerBaseImage: '"siddhiio/siddhi-runner-base-alpine":latest'
