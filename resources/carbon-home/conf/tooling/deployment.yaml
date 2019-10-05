@@ -68,3 +68,7 @@ dataSources:
 authentication:
   restAPIAuthConfigs:
     authEnable: false
+
+#Export Docker/Kubernetes Artifacts Configurations
+#exportConfigs:
+#   dockerBaseImage: '"siddhiio/siddhi-runner-base-alpine":latest'
