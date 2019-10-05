@@ -355,7 +355,6 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         boolean passthroughQueriesAvailable = false;
         List<SiddhiQueryGroup> siddhiQueryGroupsList =
                 new ArrayList<>(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
-        List<SiddhiQueryGroup> passthroughQueries = new ArrayList<>();
 
         for (SiddhiQueryGroup siddhiQueryGroup : siddhiQueryGroupsList) {
             for (Entry<String, InputStreamDataHolder> entry : siddhiQueryGroup.getInputStreams().entrySet()) {
@@ -469,8 +468,8 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                         new SubscriptionStrategyDataHolder(
                                 SiddhiTopologyCreatorConstants.DEFAULT_PARALLEL,
                                 TransportStrategy.ALL, null)));
-        passThroughSiddhiQueryGroup.getOutputStreams().put(streamId, new OutputStreamDataHolder(streamId, outputStreamDefinition,
-                EventHolder.STREAM, false));
+        passThroughSiddhiQueryGroup.getOutputStreams().put(streamId, new OutputStreamDataHolder(streamId,
+                outputStreamDefinition, EventHolder.STREAM, false));
     }
 
     /**
