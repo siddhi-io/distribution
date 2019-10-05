@@ -245,7 +245,7 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
 
                     if (this._exportType == "docker") {
                         if (!this._dockerConfigModel.validateDockerConfig()) {
-                           return;
+                            return;
                         }
                         if (this._payload.dockerConfiguration.pushDocker && this._payload.dockerConfiguration.downloadDocker) {
                             requestType = "downloadAndBuild";
@@ -253,34 +253,37 @@ define(['require', 'jquery', 'log', 'backbone', 'smart_wizard', 'siddhiAppSelect
                             this._btnExportForm.append(payloadInputField);
                             $(document.body).append(this._btnExportForm);
                             requestType = "buildOnly";
-                            exportUrl = exportUrl + "&requestType=" + requestType;
-                            $.ajax({
-                                type: "POST",
-                                url: exportUrl,
-                                headers: {
-                                    "Content-Type": "application/x-www-form-urlencoded"
-                                 },
-                                data: {"payload": JSON.stringify(this._payload)},
-                                async: false,
-                                success: function (response) {
-                                    alerts.info("Docker image push process is in-progress. " +
-                                        "Please check editor console for the progress.");
-                                    result = {status: "success"};
-                                },
-                                error: function (error) {
-                                    alerts.error("Docker image push process failed.");
-                                    if (error.responseText) {
-                                        result = {status: "fail", errorMessage: error.responseText};
-                                    } else {
-                                        result = {status: "fail", errorMessage: "Error Occurred while processing your request"};
-                                    }
-                                }
-                            });
-                            this._exportContainer.modal('hide');
-                            return;
                         } else {
                             requestType = "downloadOnly";
                         }
+                        exportUrl = exportUrl + "&requestType=" + requestType;
+                        $.ajax({
+                            type: "POST",
+                            url: exportUrl,
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            },
+                            data: {"payload": JSON.stringify(this._payload)},
+                            async: false,
+                            success: function (response) {
+                                alerts.info("Docker image push process is in-progress. " +
+                                    "Please check editor console for the progress.");
+                                result = {status: "success"};
+                            },
+                            error: function (error) {
+                                alerts.error("Docker image push process failed.");
+                                if (error.responseText) {
+                                    result = {status: "fail", errorMessage: error.responseText};
+                                } else {
+                                    result = {
+                                        status: "fail",
+                                        errorMessage: "Error Occurred while processing your request"
+                                    };
+                                }
+                            }
+                        });
+                        this._exportContainer.modal('hide');
+                        return;
                     } else if (this._exportType == "kubernetes") {
                         if (this._payload.dockerConfiguration.pushDocker) {
                             requestType = "downloadAndBuild";
