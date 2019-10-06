@@ -173,21 +173,14 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                     .entrySet().removeIf(
                     stringOutputStreamDataHolderEntry -> stringOutputStreamDataHolderEntry.getValue()
                             .isInnerGroupStream());
+            //remove duplicate definitions
             for (Entry<String, InputStreamDataHolder> inputStreamDataHolder :
                     siddhiQueryGroup.getInputStreams().entrySet()) {
-                String streamName = inputStreamDataHolder.getValue().getStreamName();
-                List<String> duplicateStreamDefinitions = new ArrayList();
-                for (Entry<String, OutputStreamDataHolder> outputStreamDataHolder :
-                        siddhiQueryGroup.getOutputStreams().entrySet()) {
-                    if (outputStreamDataHolder.getValue().getStreamName().equalsIgnoreCase(streamName)) {
-                        duplicateStreamDefinitions.add(streamName);
-                    }
-                }
-                for (String name : duplicateStreamDefinitions) {
-                    siddhiQueryGroup.getOutputStreams().remove(name);
+                String inputStreamName = inputStreamDataHolder.getKey();
+                if (siddhiQueryGroup.getOutputStreams().containsKey(inputStreamName)) {
+                    siddhiQueryGroup.getOutputStreams().remove(inputStreamName);
                 }
             }
-
         }
     }
 
