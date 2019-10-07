@@ -26,4 +26,5 @@ public enum EventHolder {
     INMEMORYTABLE,
     TABLE,
     WINDOW,
+    AGGREGATION
 }

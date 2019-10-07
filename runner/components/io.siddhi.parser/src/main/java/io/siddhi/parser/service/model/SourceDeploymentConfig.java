@@ -17,6 +17,7 @@ package io.siddhi.parser.service.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Source Deployment Configuration Model.
@@ -78,5 +79,26 @@ public class SourceDeploymentConfig {
     public SourceDeploymentConfig setDeploymentProperties(Map<String, String> deploymentProperties) {
         this.deploymentProperties = deploymentProperties;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SourceDeploymentConfig sourceDeploymentConfig = (SourceDeploymentConfig) o;
+        return Objects.equals(this.port, sourceDeploymentConfig.port) &&
+                Objects.equals(this.secured, sourceDeploymentConfig.secured)
+                && Objects.equals(this.serviceProtocol, sourceDeploymentConfig.serviceProtocol)
+                && Objects.equals(this.isPulling, sourceDeploymentConfig.isPulling)
+                && Objects.equals(this.deploymentProperties, sourceDeploymentConfig.deploymentProperties);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(port, secured, serviceProtocol, isPulling, deploymentProperties);
     }
 }

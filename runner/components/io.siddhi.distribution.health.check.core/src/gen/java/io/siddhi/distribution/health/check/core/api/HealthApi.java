@@ -17,9 +17,9 @@
  */
 package io.siddhi.distribution.health.check.core.api;
 
+import io.siddhi.distribution.health.check.core.factories.HealthApiServiceFactory;
 import io.siddhi.distribution.health.check.core.model.ServerStatus;
 import org.osgi.service.component.annotations.Component;
-import io.siddhi.distribution.health.check.core.factories.HealthApiServiceFactory;
 import org.wso2.msf4j.Microservice;
 
 import javax.ws.rs.GET;
