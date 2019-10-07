@@ -17,7 +17,7 @@
  */
 package io.siddhi.parser.service.model;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Represents a deployable partial Siddhi App.
@@ -26,9 +26,9 @@ public class DeployableSiddhiApp {
     private boolean persistenceEnabled = false;
     int replicas = 1;
     private String siddhiApp;
-    private List<SourceDeploymentConfig> sourceDeploymentConfigs = null;
+    private Set<SourceDeploymentConfig> sourceDeploymentConfigs = null;
 
-    public void setSourceDeploymentConfigs(List<SourceDeploymentConfig> sourceDeploymentConfigs) {
+    public void setSourceDeploymentConfigs(Set<SourceDeploymentConfig> sourceDeploymentConfigs) {
         this.sourceDeploymentConfigs = sourceDeploymentConfigs;
     }
 
@@ -36,7 +36,7 @@ public class DeployableSiddhiApp {
         this.siddhiApp = siddhiApp;
     }
 
-    public DeployableSiddhiApp(String siddhiApp, List<SourceDeploymentConfig> sourceList, boolean persistenceEnabled) {
+    public DeployableSiddhiApp(String siddhiApp, Set<SourceDeploymentConfig> sourceList, boolean persistenceEnabled) {
         this.siddhiApp = siddhiApp;
         this.sourceDeploymentConfigs = sourceList;
         this.persistenceEnabled = persistenceEnabled;
@@ -59,7 +59,7 @@ public class DeployableSiddhiApp {
         return siddhiApp;
     }
 
-    public List<SourceDeploymentConfig> getSourceDeploymentConfigs() {
+    public Set<SourceDeploymentConfig> getSourceDeploymentConfigs() {
         return sourceDeploymentConfigs;
     }
 }
