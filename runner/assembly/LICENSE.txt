@@ -177,6 +177,8 @@ xml-resolver-1.2.jar                                                            
 
 The license types used by the above libraries and their information is given below:
 
+bsd2           BSD 2-clause
+               https://opensource.org/licenses/BSD-2-Clause
 bsd            Berkeley License
                http://www.opensource.org/licenses/bsd-license.php
 apache2        Apache License Version 2.0
