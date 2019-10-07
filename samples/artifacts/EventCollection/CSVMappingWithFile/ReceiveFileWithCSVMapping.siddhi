@@ -8,7 +8,7 @@ Purpose:
 	This application demonstrates how to configure a Siddhi application to convert the data in CSV file to Siddhi events and display the output on the console.
 
 Prerequisites:
-    * Edit the uri '{SiddhiHome}/samples/artifacts/CSVMappingWithFile/sample.csv' in Line 32 by replacing {SiddhiHome} with the absolute path of your Siddhi home directory.
+    * Edit the uri '{SiddhiHome}/samples/artifacts/EventCollection/CSVMappingWithFile/sample.csv' in Line 32 by replacing {SiddhiHome} with the absolute path of your Siddhi home directory.
 	* Save this sample. If the step 1 is followed correctly, the following messages would be shown on the console:
 	    * ReceiveFileWithCSVMapping successfully deployed.
 
@@ -18,7 +18,7 @@ Executing & testing the Sample:
         * ReceiveFileWithCSVMapping.siddhi - Started Successfully!
 
 Viewing the Results:
-	Source takes input from the '{SiddhiHome}/samples/artifacts/CSVMappingWithFile/sample.csv' then produce the event.
+	Source takes input from the '{SiddhiHome}/samples/artifacts/EventCollection/CSVMappingWithFile/sample.csv' then produce the event.
 	sample.csv has data in below format
 			1,WSO2,23.5
 			2,IBM,2.5
@@ -29,7 +29,7 @@ Viewing the Results:
 */
 
 @source(type = 'file',
-	file.uri = 'file://{SiddhiHome}/samples/artifacts/CSVMappingWithFile/sample.csv',
+	file.uri = 'file://{SiddhiHome}/samples/artifacts/EventCollection/CSVMappingWithFile/sample.csv',
 	action.after.process = 'NONE',
 	@map(type = 'csv'))
 define stream InputStream(id string, name string, amount double);

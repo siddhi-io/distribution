@@ -8,7 +8,7 @@ Purpose:
     This application demonstrates state transition based on an existing Markov matrix, when the transition probability is less than or equal to the alert threshold probability, notify state is changed to 'true' in the event.
 
 Prerequisites:
-    Please find the below resource files in {SiddhiHome}/samples/artifacts/MarkovChainSample directory.
+    Please find the below resource files in {SiddhiHome}/samples/artifacts/MachineLearning/MarkovChainSample directory.
         1) Copy MarkovChainSimulator.json file to {SiddhiHome}/wso2/tooling/deployment/simulation-configs
         2) Copy MarkovChainTest.csv file to {SiddhiHome}/wso2/tooling/deployment/csv-files
         3) Copy MarkovChainMatrix.csv file to {SiddhiHome}/wso2/tooling/deployment/csv-files
