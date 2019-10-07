@@ -1283,7 +1283,7 @@
         <siddhi.map.csv.version>2.0.3</siddhi.map.csv.version>
         <siddhi.map.protobuf.version>1.0.1</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.0</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>7.0.1</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.3</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.1</siddhi.store.redis.version>
 

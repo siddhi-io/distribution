@@ -161,7 +161,7 @@ siddhi-map-text-2.0.0.jar                                                       
 siddhi-map-xml-5.0.0.jar                                                        bundle         apache2   3687
 siddhi-query-api_5.0.0.jar                                                      bundle         apache2   3669
 siddhi-query-compiler_5.0.0.jar                                                 bundle         apache2   3670
-siddhi-store-rdbms-6.0.0.jar                                                    bundle         apache2   3693
+siddhi-store-rdbms-7.0.1.jar                                                    bundle         apache2   3693
 slf4j.api_1.7.12.jar                                                            bundle         mit       1289
 slf4j.log4j12_1.7.12.jar                                                        bundle         mit       1288
 snakeyaml_1.16.0.wso2v1.jar                                                     bundle         apache2   6274
