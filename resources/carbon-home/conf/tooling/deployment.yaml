@@ -23,7 +23,7 @@ wso2.carbon:
     # ports used by this server
   ports:
       # port offset
-    offset: 3
+    offset: 0
 
 transports:
   http:
@@ -31,11 +31,11 @@ transports:
       -
         id: "default"
         host: "0.0.0.0"
-        port: 9387
+        port: 9390
       -
         id: "msf4j-https"
         host: "0.0.0.0"
-        port: 9740
+        port: 9743
         scheme: https
         sslConfig:
           keyStore: "${carbon.home}/resources/security/wso2carbon.jks"
