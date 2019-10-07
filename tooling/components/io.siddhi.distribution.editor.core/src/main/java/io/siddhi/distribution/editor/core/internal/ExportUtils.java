@@ -54,8 +54,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -114,7 +116,7 @@ public class ExportUtils {
     private ExportAppsRequest exportAppsRequest;
     private String exportType;
     Path tempDockerDirectoryPath;
-    private List<Integer> exposePorts = new ArrayList<>();
+    private Set<Integer> exposePorts = new HashSet<>();
 
     ExportUtils(
             ConfigProvider configProvider,
@@ -483,7 +485,11 @@ public class ExportUtils {
         }
         data = Files.readAllBytes(dockerFilePath);
         String content = new String(data, StandardCharsets.UTF_8);
-        String dockerBaseImgName = Constants.DEFAULT_SI_DOCKER_BASE_IMAGE;
+        String dockerBaseImgName = Constants.DEFAULT_SIDDHI_DOCKER_BASE_IMAGE_NAME;
+        String version = EditorDataHolder.getBundleContext().getBundle().getVersion().toString();
+        if (version != null && !version.isEmpty()) {
+            dockerBaseImgName = dockerBaseImgName.concat(":").concat(version.toLowerCase());
+        }
         if (configProvider.getConfigurationObject(Constants.EXPORT_PROPERTIES_NAMESPACE) != null) {
             dockerBaseImgName = (String) ((Map) configProvider
                     .getConfigurationObject(Constants.EXPORT_PROPERTIES_NAMESPACE))
@@ -606,7 +612,8 @@ public class ExportUtils {
                 ArrayList<SiddhiProcessApp> siddhiProcessApps = new ArrayList<SiddhiProcessApp>();
                 for (Map<String, String> app : exportAppsRequest.getTemplatedSiddhiApps()) {
                     String escapedApp = app.get(SIDDHI_APP_CONTENT_ENTRY)
-                            .replaceAll("( |\\t)*\\n", "\n");
+                            .replaceAll("( |\\t)*\\n", "\n")
+                            .replaceAll("(\t)+", "");
                     SiddhiProcessApp siddhiProcessApp = new SiddhiProcessApp(escapedApp);
                     siddhiProcessApps.add(siddhiProcessApp);
                 }

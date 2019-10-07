@@ -79,7 +79,6 @@ hr.export-dialog-hr {
 .export-dialog-form-scrollable-block-list {
     padding: 0px 10px;
     overflow: auto;
-    max-height: 200px;
     width: 100%;
     background-color: #2C2C2C;
 }
@@ -184,8 +183,12 @@ div#step-6 {
 }
 
 .docker-config-container {
-    padding-top: 30px;
-    padding-left: 30px;
+    padding: 10px;
+}
+
+.docker-config-form {
+    padding-top: 20px;
+    padding-left: 20px;
 }
 
 .sw-theme-default > ul.step-anchor > li > a, .sw-theme-default > ul.step-anchor > li > a:hover {
