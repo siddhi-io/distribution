@@ -161,7 +161,7 @@ siddhi-map-json-5.0.4.jar                                                       
 siddhi-map-keyvalue-2.0.4.jar                                                   bundle         apache2   4510
 siddhi-map-protobuf-1.0.1.jar                                                   bundle         apache2   4715
 siddhi-map-text-2.0.4.jar                                                       bundle         apache2   4419
-siddhi-map-xml-5.0.3.jar                                           pd             bundle         apache2   4425
+siddhi-map-xml-5.0.3.jar                                                        bundle         apache2   4425
 siddhi-query-api_5.1.7.jar                                                      bundle         apache2   4500
 siddhi-query-compiler_5.1.7.jar                                                 bundle         apache2   4495
 siddhi-script-js-5.0.2.jar                                                      bundle         apache2   4507
