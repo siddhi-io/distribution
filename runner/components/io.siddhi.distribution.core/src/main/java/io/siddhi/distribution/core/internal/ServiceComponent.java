@@ -406,6 +406,7 @@ public class ServiceComponent {
                             try {
                                 StreamProcessorDataHolder.getStreamProcessorService().deploySiddhiApp(siddhiApp,
                                         siddhiAppName);
+                                StreamProcessorDataHolder.getWaitingForDependencyApps().remove(siddhiAppFileName);
                             } catch (SiddhiAppAlreadyExistException e) {
                                 log.error("Siddhi App " + siddhiAppFileName + " is already exists.", e);
                             } catch (Exception e) {
