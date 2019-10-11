@@ -163,8 +163,19 @@ public class SiddhiStoreAPITestcase {
                     sendHRequest(body, baseURI, API_CONTEXT_PATH, CONTENT_TYPE_JSON, HTTP_METHOD_POST,
                             true, DEFAULT_USER_NAME, DEFAULT_PASSWORD);
             if (expectedResponseCode == Response.Status.OK.getStatusCode()) {
-                if (httpResponseMessage.getContentType().equalsIgnoreCase(CONTENT_TYPE_JSON)
-                        && httpResponseMessage.getSuccessContent() != null) {
+                if (httpResponseMessage.getResponseCode() == 0) {
+                    // IO error in processing HTTP response
+                    return false;
+                }
+
+                if (httpResponseMessage.getResponseCode() != Response.Status.OK.getStatusCode()) {
+                    // Response is not 200 OK
+                    return false;
+                }
+
+                if (httpResponseMessage.getContentType() != null &&
+                        httpResponseMessage.getContentType().equalsIgnoreCase(CONTENT_TYPE_JSON) &&
+                            httpResponseMessage.getSuccessContent() != null) {
                     ModelApiResponse response =
                             gson.fromJson(httpResponseMessage.getSuccessContent().toString(), ModelApiResponse.class);
                     if (httpResponseMessage.getResponseCode() == expectedResponseCode &&
