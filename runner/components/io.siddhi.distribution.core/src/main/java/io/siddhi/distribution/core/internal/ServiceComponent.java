@@ -406,8 +406,10 @@ public class ServiceComponent {
                             try {
                                 StreamProcessorDataHolder.getStreamProcessorService().deploySiddhiApp(siddhiApp,
                                         siddhiAppName);
+                                StreamProcessorDataHolder.getWaitingForDependencyApps().remove(siddhiAppFileName);
                             } catch (SiddhiAppAlreadyExistException e) {
                                 log.error("Siddhi App " + siddhiAppFileName + " is already exists.", e);
+                                StreamProcessorDataHolder.getWaitingForDependencyApps().remove(siddhiAppFileName);
                             } catch (Exception e) {
                                 if (e instanceof SiddhiAppCreationException &&
                                         e.getMessage().contains("No extension exist for") && i < 3) {
@@ -416,6 +418,7 @@ public class ServiceComponent {
                                     SiddhiAppData siddhiAppData = new SiddhiAppData(siddhiApp, false);
                                     StreamProcessorDataHolder.getStreamProcessorService().
                                             addSiddhiAppFile(siddhiAppName, siddhiAppData);
+                                    StreamProcessorDataHolder.getWaitingForDependencyApps().remove(siddhiAppFileName);
                                     iter.remove();
                                     log.error("Error occurred in the retry app deployment task for Siddhi App "
                                             + siddhiAppFileName, e);
