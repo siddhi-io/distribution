@@ -1197,7 +1197,7 @@
         <org.jacoco.ant.version>0.8.4</org.jacoco.ant.version>
         <maven.src.version>1.26.2</maven.src.version>
         <apache.commons.text.version>1.7</apache.commons.text.version>
-        <org.jacoco.version>0.8.4</org.jacoco.version>
+        <org.jacoco.version>0.8.5</org.jacoco.version>
         <findbugs.version>1.0.0</findbugs.version>
 
         <!-- json dependencies -->
