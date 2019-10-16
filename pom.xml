@@ -1243,7 +1243,7 @@
         <org.apache.commons.version>1.3.2</org.apache.commons.version>
         <osgi.test.util.version>5.1.2</osgi.test.util.version>
         <swagger.codegen.version>2.3.1.wso2v2</swagger.codegen.version>
-        <swagger.models.version>1.5.23</swagger.models.version>
+        <swagger.models.version>1.5.24</swagger.models.version>
 
         <!-- nats test dependencies -->
         <io.nats.version>2.2.3</io.nats.version>
