@@ -56,6 +56,6 @@ define stream InputStream (x string);
 define stream OutputStream (outputPoint0 double, outputPoint1 double);
 
 @info(name = 'Tensorflow')
-from InputStream#tensorFlow:predict('/{SiddhiHome}/samples/artifacts/TensorflowSample/Regression', 'inputPoint', 'outputPoint', x)
+from InputStream#tensorFlow:predict('/{SiddhiHome}/samples/artifacts/MachineLearning/TensorflowSample/Regression', 'inputPoint', 'outputPoint', x)
 select outputPoint0, outputPoint1
 insert into OutputStream;

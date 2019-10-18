@@ -51,9 +51,11 @@ import org.wso2.transport.http.netty.contract.config.TransportsConfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.ws.rs.Consumes;
@@ -101,7 +103,7 @@ public class SiddhiParserApi {
             List<DeployableSiddhiApp> deployableSiddhiApps = new ArrayList<>();
             List<String> userGivenApps = populateAppWithEnvs(request.getPropertyMap(), request.getSiddhiApps());
             for (String app : userGivenApps) {
-                List<SourceDeploymentConfig> sourceDeploymentConfigs = getSourceDeploymentConfigs(app);
+                Set<SourceDeploymentConfig> sourceDeploymentConfigs = getSourceDeploymentConfigs(app);
                 SiddhiTopology topology = siddhiTopologyCreator.createTopology(app);
                 boolean isAppStateful = topology.isStatefulApp();
                 MessagingSystem messagingSystemConfig = request.getMessagingSystem();
@@ -171,8 +173,8 @@ public class SiddhiParserApi {
         return populatedApps;
     }
 
-    private List<SourceDeploymentConfig> getSourceDeploymentConfigs(String siddhiApp) {
-        List<SourceDeploymentConfig> sourceDeploymentConfigs = new ArrayList<>();
+    private Set<SourceDeploymentConfig> getSourceDeploymentConfigs(String siddhiApp) {
+        Set<SourceDeploymentConfig> sourceDeploymentConfigs = new HashSet<>();
         SiddhiAppRuntime siddhiAppRuntime = SiddhiParserDataHolder.getSiddhiManager().createSiddhiAppRuntime(siddhiApp);
         Collection<List<Source>> sources = siddhiAppRuntime.getSources();
         for (List<Source> sourceList : sources) {

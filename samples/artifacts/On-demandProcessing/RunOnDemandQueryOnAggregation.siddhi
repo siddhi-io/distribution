@@ -31,7 +31,7 @@ Testing the Sample:
         - symbol : T12
         - price :150
     10) Send event
-    11) Go to Tools -> Siddhi store query and select Siddhi App Name as 'RunOnDemandQueryOnAggregation'.
+    11) Go to Tools and select 'On-Demand Query' from the drop down. Then select Siddhi App Name as 'RunOnDemandQueryOnAggregation'.
     12) In the textbox below 'Query', enter the following query.
             from TradeAggregation
               within "2019-02-15 00:00:00 +05:30", "2020-03-16 00:00:00 +05:30"

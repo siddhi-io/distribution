@@ -55,10 +55,12 @@ public class TestUtil {
     private OutputStream outputStream = null;
     private PrintWriter writer = null;
     private String boundary = null;
+    private String path;
 
     public TestUtil(URI baseURI, String path, Boolean auth, Boolean keepAlive, String methodType,
                     String contentType, String userName, String password) {
         try {
+            this.path = path;
             URL url = baseURI.resolve(path).toURL();
             boundary = "---------------------------" + currentTimeMillis();
 
@@ -187,7 +189,8 @@ public class TestUtil {
             return new HTTPResponseMessage(connection.getResponseCode(),
                     connection.getContentType(), connection.getResponseMessage(), successContent, errorContent);
         } catch (IOException e) {
-            handleException("IOException occurred while running the HttpsSourceTestCaseForSSL", e);
+            handleException("IOException occurred while running the OSGi testcase when read HTTP content , for API " +
+                    "'" + this.path + "'.", e);
         } finally {
             connection.disconnect();
         }

@@ -34,6 +34,7 @@ import io.siddhi.query.api.SiddhiApp;
 import io.siddhi.query.api.annotation.Annotation;
 import io.siddhi.query.api.annotation.Element;
 import io.siddhi.query.api.definition.AbstractDefinition;
+import io.siddhi.query.api.definition.AggregationDefinition;
 import io.siddhi.query.api.definition.StreamDefinition;
 import io.siddhi.query.api.exception.SiddhiAppValidationException;
 import io.siddhi.query.api.execution.ExecutionElement;
@@ -166,6 +167,24 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
      */
     private void cleanInnerGroupStreams(Collection<SiddhiQueryGroup> siddhiQueryGroups) {
         for (SiddhiQueryGroup siddhiQueryGroup : siddhiQueryGroups) {
+            for (Entry<String, InputStreamDataHolder> inputStreamDataHolder :
+                    siddhiQueryGroup.getInputStreams().entrySet()) {
+                String inputStreamName = inputStreamDataHolder.getKey();
+                if (inputStreamDataHolder.getValue().getEventHolderType().equals(EventHolder.AGGREGATION)) {
+                    AggregationDefinition aggDef = siddhiApp.getAggregationDefinitionMap().get(inputStreamName);
+                    String inputStreamId = aggDef.getBasicSingleInputStream().getStreamId();
+                    String defaultStreamDef = siddhiApp.getStreamDefinitionMap().get(inputStreamId).toString();
+                    if (!isUserGivenTransport(defaultStreamDef)) {
+                        siddhiQueryGroup.getInputStreams().get(inputStreamId)
+                                .setStreamDefinition(defaultStreamDef.toString());
+                        siddhiQueryGroup.getInputStreams().get(inputStreamId).setInnerGroupStream(false);
+                    }
+                }
+                //remove duplicate definitions
+                if (siddhiQueryGroup.getOutputStreams().containsKey(inputStreamName)) {
+                    siddhiQueryGroup.getOutputStreams().remove(inputStreamName);
+                }
+            }
             siddhiQueryGroup.getInputStreams()
                     .entrySet().removeIf(stringInputStreamDataHolderEntry -> stringInputStreamDataHolderEntry.getValue()
                     .isInnerGroupStream());
@@ -173,14 +192,6 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                     .entrySet().removeIf(
                     stringOutputStreamDataHolderEntry -> stringOutputStreamDataHolderEntry.getValue()
                             .isInnerGroupStream());
-            //remove duplicate definitions
-            for (Entry<String, InputStreamDataHolder> inputStreamDataHolder :
-                    siddhiQueryGroup.getInputStreams().entrySet()) {
-                String inputStreamName = inputStreamDataHolder.getKey();
-                if (siddhiQueryGroup.getOutputStreams().containsKey(inputStreamName)) {
-                    siddhiQueryGroup.getOutputStreams().remove(inputStreamName);
-                }
-            }
         }
     }
 
@@ -338,6 +349,21 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
             if (!siddhiTopologyDataHolder.getInMemoryMap().containsKey(streamId)) {
                 siddhiTopologyDataHolder.getInMemoryMap().put(streamId, groupName);
             }
+        } else if (siddhiApp.getAggregationDefinitionMap().containsKey(streamId)) {
+            AggregationDefinition aggregationDefinition = siddhiApp.getAggregationDefinitionMap().get(streamId);
+            siddhiTopologyDataHolder.setStatefulApp(true);
+            queryContextStartIndex = aggregationDefinition.getQueryContextStartIndex();
+            queryContextEndIndex = aggregationDefinition.getQueryContextEndIndex();
+            streamDataHolder.setStreamDefinition(ExceptionUtil.getContext(queryContextStartIndex,
+                    queryContextEndIndex, siddhiTopologyDataHolder.getUserDefinedSiddhiApp()));
+            String outputStreamId = aggregationDefinition.getBasicSingleInputStream().getStreamId();
+            streamDataHolder.setEventHolderType(EventHolder.AGGREGATION);
+            if (!siddhiTopologyDataHolder.getInMemoryMap().containsKey(streamId)) {
+                siddhiTopologyDataHolder.getInMemoryMap().put(streamId, groupName);
+            }
+            if (!siddhiTopologyDataHolder.getInMemoryMap().containsKey(outputStreamId)) {
+                siddhiTopologyDataHolder.getInMemoryMap().put(outputStreamId, groupName);
+            }
             //if stream definition is an inferred definition
         } else if (streamDataHolder.getStreamDefinition() == null) {
             if (siddhiAppRuntime.getStreamDefinitionMap().containsKey(streamId)) {
@@ -374,6 +400,9 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                     String runtimeDefinition = removeMetaInfoStream(streamId,
                             inputStreamDataHolder.getStreamDefinition(), SiddhiTopologyCreatorConstants
                                     .SOURCE_IDENTIFIER);
+                    runtimeDefinition = removeMetaInfoStream(streamId,
+                            runtimeDefinition, SiddhiTopologyCreatorConstants
+                                    .SINK_IDENTIFIER);
                     StreamDefinition streamDefinition = siddhiAppRuntime.getStreamDefinitionMap()
                             .get(inputStreamDataHolder.getStreamName());
                     int nonMessagingSources = 0;

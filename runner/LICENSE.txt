@@ -131,8 +131,8 @@ osgi.core_6.0.0.201403061837.jar                                                
 quartz_2.1.1.wso2v1.jar                                                         bundle         apache2   975
 reflections_0.9.11.wso2v1.jar                                                   bundle         bsd       14599
 Saxon-HE_9.7.0.wso2v1.jar                                                       bundle         mpl10     14598
-siddhi-annotations_5.1.6.jar                                                    bundle         apache2   4491
-siddhi-core_5.1.6.jar                                                           bundle         apache2   4502
+siddhi-annotations_5.1.7.jar                                                    bundle         apache2   4491
+siddhi-core_5.1.7.jar                                                           bundle         apache2   4502
 siddhi-execution-json-2.0.4.jar                                                 bundle         apache2   4716
 siddhi-execution-list-1.0.0.jar                                                 bundle         apache2   4517
 siddhi-execution-map-5.0.4.jar                                                  bundle         apache2   4438
@@ -159,11 +159,11 @@ siddhi-map-binary-2.0.4.jar                                                     
 siddhi-map-csv-2.0.3.jar                                                        bundle         apache2   4504
 siddhi-map-json-5.0.4.jar                                                       bundle         apache2   4427
 siddhi-map-keyvalue-2.0.4.jar                                                   bundle         apache2   4510
-siddhi-map-protobuf-1.0.0.jar                                                   bundle         apache2   4715
+siddhi-map-protobuf-1.0.1.jar                                                   bundle         apache2   4715
 siddhi-map-text-2.0.4.jar                                                       bundle         apache2   4419
 siddhi-map-xml-5.0.3.jar                                                        bundle         apache2   4425
-siddhi-query-api_5.1.6.jar                                                      bundle         apache2   4500
-siddhi-query-compiler_5.1.6.jar                                                 bundle         apache2   4495
+siddhi-query-api_5.1.7.jar                                                      bundle         apache2   4500
+siddhi-query-compiler_5.1.7.jar                                                 bundle         apache2   4495
 siddhi-script-js-5.0.2.jar                                                      bundle         apache2   4507
 siddhi-store-mongodb-2.0.3.jar                                                  bundle         apache2   4511
 siddhi-store-rdbms-7.0.0.jar                                                    bundle         apache2   4519
