@@ -1159,7 +1159,7 @@
         <!-- WSO2 Dependencies -->
         <wso2.slf4j.version>1.5.10.wso2v1</wso2.slf4j.version>
         <carbon.kernel.version>5.2.11</carbon.kernel.version>
-        <org.wso2.transport.http.netty.version>6.2.28</org.wso2.transport.http.netty.version>
+        <org.wso2.transport.http.netty.version>6.2.30</org.wso2.transport.http.netty.version>
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
         <carbon.deployment.version>5.2.2</carbon.deployment.version>
         <carbon.datasources.version>1.1.8</carbon.datasources.version>
