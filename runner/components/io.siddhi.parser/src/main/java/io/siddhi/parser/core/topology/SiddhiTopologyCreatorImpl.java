@@ -117,6 +117,12 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                 transportChannelCreationEnabled, isStatefulApp(), isUserGiveSourceStateful);
     }
 
+    @Override
+    public boolean isAppStateful(String userDefinedSiddhiApp) {
+        this.siddhiAppRuntime = SiddhiParserDataHolder.getSiddhiManager().createSiddhiAppRuntime(userDefinedSiddhiApp);
+        return isStatefulApp();
+    }
+
     private boolean isStatefulApp() {
         for (List<Source> sourceList : siddhiAppRuntime.getSources()) {
             for (Source source : sourceList) {
@@ -166,6 +172,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
      * @param siddhiQueryGroups Collection of Siddhi Query Groups
      */
     private void cleanInnerGroupStreams(Collection<SiddhiQueryGroup> siddhiQueryGroups) {
+        Map<String, String> dependentStreams = new HashMap<>();
         for (SiddhiQueryGroup siddhiQueryGroup : siddhiQueryGroups) {
             for (Entry<String, InputStreamDataHolder> inputStreamDataHolder :
                     siddhiQueryGroup.getInputStreams().entrySet()) {
@@ -175,15 +182,29 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                     String inputStreamId = aggDef.getBasicSingleInputStream().getStreamId();
                     String defaultStreamDef = siddhiApp.getStreamDefinitionMap().get(inputStreamId).toString();
                     if (!isUserGivenTransport(defaultStreamDef)) {
-                        siddhiQueryGroup.getInputStreams().get(inputStreamId)
-                                .setStreamDefinition(defaultStreamDef.toString());
-                        siddhiQueryGroup.getInputStreams().get(inputStreamId).setInnerGroupStream(false);
+                        if (siddhiQueryGroup.getInputStreams().get(inputStreamId) != null) {
+                            siddhiQueryGroup.getInputStreams().get(inputStreamId)
+                                    .setStreamDefinition(defaultStreamDef);
+                            siddhiQueryGroup.getInputStreams().get(inputStreamId).setInnerGroupStream(false);
+                        } else {
+                            dependentStreams.put(inputStreamId, defaultStreamDef);
+                        }
+
                     }
                 }
                 //remove duplicate definitions
                 if (siddhiQueryGroup.getOutputStreams().containsKey(inputStreamName)) {
                     siddhiQueryGroup.getOutputStreams().remove(inputStreamName);
                 }
+            }
+            for (Entry<String, String> dependentStream : dependentStreams.entrySet()) {
+                InputStreamDataHolder dependentInputStreamHolder =
+                        new InputStreamDataHolder(dependentStream.getKey(), dependentStream.getValue(),
+                                EventHolder.STREAM, false,
+                                new SubscriptionStrategyDataHolder(1,
+                                        TransportStrategy.ALL, null));
+                dependentInputStreamHolder.setInnerGroupStream(false);
+                siddhiQueryGroup.getInputStreams().put(dependentStream.getKey(), dependentInputStreamHolder);
             }
             siddhiQueryGroup.getInputStreams()
                     .entrySet().removeIf(stringInputStreamDataHolderEntry -> stringInputStreamDataHolderEntry.getValue()

@@ -33,4 +33,12 @@ public interface SiddhiTopologyCreator {
      * @return {@link SiddhiTopology} representing the given siddhi app
      */
     SiddhiTopology createTopology(String userDefinedSiddhiApp);
+
+    /**
+     * consume a Siddhi App and return whether the app is stateful.
+     *
+     * @param userDefinedSiddhiApp Siddhi app deployed by the user
+     * @return boolean whether app is stateful
+     */
+    boolean isAppStateful (String userDefinedSiddhiApp);
 }
