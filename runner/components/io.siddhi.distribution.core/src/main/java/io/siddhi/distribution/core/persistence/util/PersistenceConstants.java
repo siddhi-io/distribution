@@ -42,6 +42,10 @@ public class PersistenceConstants {
     public static final String DELETE_OLD_REVISIONS = "DELETE_OLD_REVISIONS";
     public static final String COUNT_NUMBER_REVISIONS = "COUNT_NUMBER_REVISIONS";
     public static final String DELETE_ALL_REVISIONS = "DELETE_ALL_REVISIONS";
+    public static final String ACCESS_KEY = "accessKey";
+    public static final String SECRET_KEY = "secretKey";
+    public static final String BUCKET_NAME = "bucketName";
+    public static final String REGION = "region";
 
     private PersistenceConstants() {
     }
