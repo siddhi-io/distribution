@@ -1336,7 +1336,7 @@
 
 
         <!-- grpc dependency version-->
-        <grpc.version>1.24.0</grpc.version>
+        <grpc.version>1.24.1</grpc.version>
 
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>
