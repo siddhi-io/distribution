@@ -180,24 +180,23 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                 String streamId = entry.getKey();
                 StreamDefinition streamDefinition = siddhiApp.getStreamDefinitionMap().get(streamId);
 
-                if (outputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM)) {
-                    if (outputStreamDataHolder.isUserGiven() && streamDefinition != null) {
-                        for (Annotation annotation : streamDefinition.getAnnotations()) {
-                            if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SINK_IDENTIFIER
-                                    .replace("@", ""))) {
-                                if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
-                                    String runtimeStreamDefinition = removeMetaInfoStream(streamId,
-                                            outputStreamDataHolder.getStreamDefinition(),
-                                            SiddhiTopologyCreatorConstants.SINK_IDENTIFIER);
+                if (outputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM) &&
+                        outputStreamDataHolder.isUserGiven() && streamDefinition != null) {
+                    for (Annotation annotation : streamDefinition.getAnnotations()) {
+                        if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SINK_IDENTIFIER
+                                .replace("@", ""))) {
+                            if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String runtimeStreamDefinition = removeMetaInfoStream(streamId,
+                                        outputStreamDataHolder.getStreamDefinition(),
+                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER);
 
-                                    String outputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
-                                    OutputStreamDataHolder streamDataHolder = new OutputStreamDataHolder(streamId,
-                                            outputStreamDefinition, EventHolder.STREAM, false);
-                                    streamDataHolder.addPublishingStrategy(
-                                            new PublishingStrategyDataHolder(TransportStrategy.ALL,
-                                                    DEFAULT_PARALLEL));
-                                    entry.setValue(streamDataHolder);
-                                }
+                                String outputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
+                                OutputStreamDataHolder streamDataHolder = new OutputStreamDataHolder(streamId,
+                                        outputStreamDefinition, EventHolder.STREAM, false);
+                                streamDataHolder.addPublishingStrategy(
+                                        new PublishingStrategyDataHolder(TransportStrategy.ALL,
+                                                DEFAULT_PARALLEL));
+                                entry.setValue(streamDataHolder);
                             }
                         }
                     }
@@ -207,19 +206,18 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                 InputStreamDataHolder inputStreamDataHolder = entry.getValue();
                 String streamId = entry.getKey();
                 StreamDefinition streamDefinition = siddhiApp.getStreamDefinitionMap().get(streamId);
-                if (inputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM)) {
-                    if (inputStreamDataHolder.isUserGiven() && streamDefinition != null) {
-                        for (Annotation annotation : streamDefinition.getAnnotations()) {
-                            if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER
-                                    .replace("@", ""))) {
-                                if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
-                                    String runtimeStreamDefinition = removeMetaInfoStream(streamId,
-                                            inputStreamDataHolder.getStreamDefinition(),
-                                            SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER);
-                                    String inputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
-                                    inputStreamDataHolder.setStreamDefinition(inputStreamDefinition);
-                                    inputStreamDataHolder.setUserGiven(false);
-                                }
+                if (inputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM) &&
+                        inputStreamDataHolder.isUserGiven() && streamDefinition != null) {
+                    for (Annotation annotation : streamDefinition.getAnnotations()) {
+                        if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER
+                                .replace("@", ""))) {
+                            if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String runtimeStreamDefinition = removeMetaInfoStream(streamId,
+                                        inputStreamDataHolder.getStreamDefinition(),
+                                        SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER);
+                                String inputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
+                                inputStreamDataHolder.setStreamDefinition(inputStreamDefinition);
+                                inputStreamDataHolder.setUserGiven(false);
                             }
                         }
                     }
