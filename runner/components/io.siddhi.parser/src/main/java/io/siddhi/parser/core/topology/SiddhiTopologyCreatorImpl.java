@@ -60,6 +60,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.UUID;
 
+import static io.siddhi.parser.core.util.SiddhiTopologyCreatorConstants.DEFAULT_PARALLEL;
+import static io.siddhi.parser.core.util.SiddhiTopologyCreatorConstants.INMEMORY;
+
 /**
  * Consumes a Siddhi App and produce a {@link SiddhiTopology} based on distributed annotations.
  */
@@ -104,6 +107,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
 
         checkUserGivenSourceDistribution();
         assignPublishingStrategyOutputStream();
+        checkForInmemoryBridges();
         cleanInnerGroupStreams(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
         if (log.isDebugEnabled()) {
             log.debug("Topology was created with " + siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values().size
@@ -164,6 +168,62 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
             }
         }
         return false;
+    }
+
+    private void checkForInmemoryBridges() {
+        List<SiddhiQueryGroup> siddhiQueryGroupsList =
+                new ArrayList<>(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
+
+        for (SiddhiQueryGroup siddhiQueryGroup : siddhiQueryGroupsList) {
+            for (Entry<String, OutputStreamDataHolder> entry : siddhiQueryGroup.getOutputStreams().entrySet()) {
+                OutputStreamDataHolder outputStreamDataHolder = entry.getValue();
+                String streamId = entry.getKey();
+                StreamDefinition streamDefinition = siddhiApp.getStreamDefinitionMap().get(streamId);
+
+                if (outputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM) &&
+                        outputStreamDataHolder.isUserGiven() && streamDefinition != null) {
+                    for (Annotation annotation : streamDefinition.getAnnotations()) {
+                        if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SINK_IDENTIFIER
+                                .replace("@", ""))) {
+                            if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String runtimeStreamDefinition = removeMetaInfoStream(streamId,
+                                        outputStreamDataHolder.getStreamDefinition(),
+                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER);
+
+                                String outputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
+                                OutputStreamDataHolder streamDataHolder = new OutputStreamDataHolder(streamId,
+                                        outputStreamDefinition, EventHolder.STREAM, false);
+                                streamDataHolder.addPublishingStrategy(
+                                        new PublishingStrategyDataHolder(TransportStrategy.ALL,
+                                                DEFAULT_PARALLEL));
+                                entry.setValue(streamDataHolder);
+                            }
+                        }
+                    }
+                }
+            }
+            for (Entry<String, InputStreamDataHolder> entry : siddhiQueryGroup.getInputStreams().entrySet()) {
+                InputStreamDataHolder inputStreamDataHolder = entry.getValue();
+                String streamId = entry.getKey();
+                StreamDefinition streamDefinition = siddhiApp.getStreamDefinitionMap().get(streamId);
+                if (inputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM) &&
+                        inputStreamDataHolder.isUserGiven() && streamDefinition != null) {
+                    for (Annotation annotation : streamDefinition.getAnnotations()) {
+                        if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER
+                                .replace("@", ""))) {
+                            if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String runtimeStreamDefinition = removeMetaInfoStream(streamId,
+                                        inputStreamDataHolder.getStreamDefinition(),
+                                        SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER);
+                                String inputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
+                                inputStreamDataHolder.setStreamDefinition(inputStreamDefinition);
+                                inputStreamDataHolder.setUserGiven(false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -408,6 +468,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
 
     private void checkUserGivenSourceDistribution() {
         boolean passthroughQueriesAvailable = false;
+        boolean isInmemoryBridged = false;
         List<SiddhiQueryGroup> siddhiQueryGroupsList =
                 new ArrayList<>(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
 
@@ -432,13 +493,15 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                                 .replace("@", ""))) {
                             if (annotation.getElement("type").equalsIgnoreCase(DEFAULT_MESSAGING_SYSTEM)) {
                                 siddhiQueryGroup.setMessagingSourceAvailable(true);
+                            } else if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                isInmemoryBridged = true;
                             } else {
                                 nonMessagingSources++;
                             }
                         }
                     }
-                    if ((!siddhiQueryGroup.isMessagingSourceAvailable() || nonMessagingSources > 0)
-                            && isStatefulApp()) {
+                    if (((!siddhiQueryGroup.isMessagingSourceAvailable() && !isInmemoryBridged)
+                            || nonMessagingSources > 0) && isStatefulApp()) {
                         passthroughQueriesAvailable = true;
                         generatePassthroughQueryList(inputStreamDataHolder, runtimeDefinition);
                         inputStreamDataHolder.setStreamDefinition(runtimeDefinition);

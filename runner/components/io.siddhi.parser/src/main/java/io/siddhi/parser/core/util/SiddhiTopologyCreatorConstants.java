@@ -59,7 +59,7 @@ public class SiddhiTopologyCreatorConstants {
 
     public static final String AGGREGATION = "aggregation";
 
-    public static final String INMEMORY = "in-memory";
+    public static final String INMEMORY = "inmemory";
 
     public static final String EXECUTION_ELEMENT = "Query/Partition";
 }
