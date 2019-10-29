@@ -97,7 +97,6 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         String execGroupName;
         String defaultExecGroupName = siddhiAppName + "-" + UUID.randomUUID();
 
-
         for (ExecutionElement executionElement : siddhiApp.getExecutionElementList()) {
             //groupName is set to default, since all elements go under a single group
             execGroupName = defaultExecGroupName;
@@ -179,7 +178,6 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                 OutputStreamDataHolder outputStreamDataHolder = entry.getValue();
                 String streamId = entry.getKey();
                 StreamDefinition streamDefinition = siddhiApp.getStreamDefinitionMap().get(streamId);
-
                 if (outputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM) &&
                         outputStreamDataHolder.isUserGiven() && streamDefinition != null) {
                     for (Annotation annotation : streamDefinition.getAnnotations()) {
@@ -188,7 +186,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                             if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
                                 String runtimeStreamDefinition = removeMetaInfoStream(streamId,
                                         outputStreamDataHolder.getStreamDefinition(),
-                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER);
+                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER, INMEMORY);
 
                                 String outputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
                                 OutputStreamDataHolder streamDataHolder = new OutputStreamDataHolder(streamId,
@@ -214,7 +212,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                             if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
                                 String runtimeStreamDefinition = removeMetaInfoStream(streamId,
                                         inputStreamDataHolder.getStreamDefinition(),
-                                        SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER);
+                                        SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER, INMEMORY);
                                 String inputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
                                 inputStreamDataHolder.setStreamDefinition(inputStreamDefinition);
                                 inputStreamDataHolder.setUserGiven(false);
@@ -481,10 +479,10 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                         inputStreamDataHolder.isUserGivenSource()) {
                     String runtimeDefinition = removeMetaInfoStream(streamId,
                             inputStreamDataHolder.getStreamDefinition(), SiddhiTopologyCreatorConstants
-                                    .SOURCE_IDENTIFIER);
+                                    .SOURCE_IDENTIFIER, null);
                     runtimeDefinition = removeMetaInfoStream(streamId,
                             runtimeDefinition, SiddhiTopologyCreatorConstants
-                                    .SINK_IDENTIFIER);
+                                    .SINK_IDENTIFIER, null);
                     StreamDefinition streamDefinition = siddhiAppRuntime.getStreamDefinitionMap()
                             .get(inputStreamDataHolder.getStreamName());
                     int nonMessagingSources = 0;
@@ -508,7 +506,8 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                         inputStreamDataHolder.setUserGiven(false);
                         InputStreamDataHolder holder = siddhiQueryGroup.getInputStreams().get(streamId);
                         String consumingStream = "${" + streamId + "} " + removeMetaInfoStream(streamId,
-                                holder.getStreamDefinition(), SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER);
+                                holder.getStreamDefinition(), SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER,
+                                null);
                         holder.setStreamDefinition(consumingStream);
                         holder.setUserGiven(false);
                     }
@@ -536,11 +535,12 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
      *
      * @return Stream definition String after removing Sink/Source configuration
      */
-    private String removeMetaInfoStream(String streamId, String streamDefinition, String identifier) {
+    private String removeMetaInfoStream(String streamId, String streamDefinition, String identifier, String type) {
         int[] queryContextStartIndex;
         int[] queryContextEndIndex;
         for (Annotation annotation : siddhiApp.getStreamDefinitionMap().get(streamId).getAnnotations()) {
-            if (annotation.getName().toLowerCase().equals(identifier.replace("@", ""))) {
+            if (annotation.getName().toLowerCase().equals(identifier.replace("@", "")) &&
+                    (annotation.getElement("type").equalsIgnoreCase(type) || type == null)) {
                 queryContextStartIndex = annotation.getQueryContextStartIndex();
                 queryContextEndIndex = annotation.getQueryContextEndIndex();
                 streamDefinition = streamDefinition.replace(
@@ -637,7 +637,6 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         siddhiTopologyDataHolder.getSiddhiQueryGroupMap().put(queryGroupName, siddhiQueryGroup);
     }
 
-
     /**
      * Publishing strategies for an OutputStream is assigned if the corresponding outputStream is being used as an
      * InputStream in a separate group.
@@ -670,7 +669,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                             if (outputStreamDataHolder.isUserGiven()) {
                                 String runtimeStreamDefinition = removeMetaInfoStream(streamId,
                                         inputStreamDataHolder.getStreamDefinition(),
-                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER);
+                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER, null);
 
                                 if (!outputStreamDataHolder.isSinkBridgeAdded()) {
                                     String outputStreamDefinition = outputStreamDataHolder.
