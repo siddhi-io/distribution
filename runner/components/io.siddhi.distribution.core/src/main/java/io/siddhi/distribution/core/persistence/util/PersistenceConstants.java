@@ -46,6 +46,9 @@ public class PersistenceConstants {
     public static final String SECRET_KEY = "secretKey";
     public static final String BUCKET_NAME = "bucketName";
     public static final String REGION = "region";
+    public static final String CREDENTIAL_PROVIDER_CLASS = "credentialProvideClass";
+    public static final String DEFAULT_REGION_ID = "us-west-2";
+    public static final int DEFAULT_REVISION_NO = 3;
 
     private PersistenceConstants() {
     }
