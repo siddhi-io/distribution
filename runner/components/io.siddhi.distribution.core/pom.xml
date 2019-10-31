@@ -251,7 +251,6 @@
             org.apache.commons.codec.*,
             software.amazon.awssdk.*,
             org.reactivestreams.*,
-
         </private.package>
         <export.package>
             io.siddhi.distribution.core.*

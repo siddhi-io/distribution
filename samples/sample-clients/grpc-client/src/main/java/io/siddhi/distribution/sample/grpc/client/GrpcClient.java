@@ -27,7 +27,7 @@ import org.wso2.grpc.EventServiceGrpc;
 import java.util.Arrays;
 
 /**
- * This is a sample gRpc client to publish events to gRpc endpoint. makee
+ * This is a sample gRpc client to publish events to gRpc endpoint.
  */
 public class GrpcClient {
     private static final Logger log = Logger.getLogger(GrpcClient.class);
