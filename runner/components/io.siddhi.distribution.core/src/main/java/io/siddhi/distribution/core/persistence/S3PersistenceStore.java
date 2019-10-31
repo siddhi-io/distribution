@@ -30,6 +30,8 @@ import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.core.exception.SdkClientException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.core.sync.ResponseTransformer;
+import software.amazon.awssdk.http.SdkHttpClient;
+import software.amazon.awssdk.http.apache.ApacheHttpClient;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.S3ClientBuilder;
@@ -101,13 +103,14 @@ public class S3PersistenceStore implements PersistenceStore {
                 regionId = String.valueOf(regionObject);
             }
             Region region = Region.of(regionId.toLowerCase());
+            SdkHttpClient httpClient = ApacheHttpClient.builder().build();
             S3ClientBuilder clientBuilder = S3Client.builder()
                     .region(region);
             AwsCredentialsProvider credentialsProvider = getCredentialProvider(configurationMap);
             if (credentialsProvider != null) {
                 clientBuilder.credentialsProvider(credentialsProvider);
             }
-            s3Client = clientBuilder.build();
+            s3Client = clientBuilder.httpClient(httpClient).build();
             List<Bucket> buckets;
             try {
                 buckets = s3Client.listBuckets(ListBucketsRequest.builder().build()).buckets();
