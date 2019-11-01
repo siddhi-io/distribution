@@ -223,10 +223,6 @@
                             </adviceFileContents>
                             <bundles>
                                 <bundle>
-                                    <symbolicName>antlr4-runtime</symbolicName>
-                                    <version>${antlr4.runtime.version}</version>
-                                </bundle>
-                                <bundle>
                                     <symbolicName>com.google.gson</symbolicName>
                                     <version>${gson.version}</version>
                                 </bundle>
