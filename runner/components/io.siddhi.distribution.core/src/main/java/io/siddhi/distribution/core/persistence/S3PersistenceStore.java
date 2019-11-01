@@ -77,7 +77,9 @@ public class S3PersistenceStore implements PersistenceStore {
                 s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(revision)
                         .build(), requestBody);
         cleanOldRevisions();
-        log.debug("object has been uploaded to the bucket successfully, ETag: " + putObjectResponse.eTag());
+        if(log.isDebugEnabled()) {
+            log.debug("object has been uploaded to the bucket successfully, ETag: " + putObjectResponse.eTag());
+        }
     }
 
     @Override
@@ -89,15 +91,13 @@ public class S3PersistenceStore implements PersistenceStore {
         if (!(numberOfRevisionsObject instanceof Integer)) { //it also check if it's Null or not
             numberOfRevisionsToSave = PersistenceConstants.DEFAULT_REVISION_NO;
             log.warn("Number of revisions to keep is not set or invalid. Default value will be used.");
-
         } else {
             numberOfRevisionsToSave = Integer.parseInt(String.valueOf(numberOfRevisionsObject));
         }
-
         if (configurationMap != null) {
             Object regionObject = configurationMap.get(PersistenceConstants.REGION);
             if (!(regionObject instanceof String)) {
-                regionId = PersistenceConstants.DEFAULT_REGION_ID;
+                regionId = PersistenceConstants.DEFAULT_REGION_ID; // us-west-2
                 log.info("No region id provided, Hence setting the region default region");
             } else {
                 regionId = String.valueOf(regionObject);
@@ -115,11 +115,10 @@ public class S3PersistenceStore implements PersistenceStore {
             try {
                 buckets = s3Client.listBuckets(ListBucketsRequest.builder().build()).buckets();
             } catch (SdkClientException e) {
-                throw new S3PersistenceStoreException("Invalid region id provided, given region id: '" +
-                        regionId + "'.", e);
+                throw new S3PersistenceStoreException("The region id you provide is invalid, please provide a valid" +
+                        " region id, given region id: '" + regionId + "'.", e);
             } catch (S3Exception e) {
-                throw new S3PersistenceStoreException("Invalid credential provided, check your user credential class" +
-                        " or access-key and secret-key.", e);
+                throw new S3PersistenceStoreException("An exception occurs while listing out the buckets.", e);
             }
             Object bucketNameObject = configurationMap.get(PersistenceConstants.BUCKET_NAME);
             if (!(bucketNameObject instanceof String)) {
@@ -129,12 +128,13 @@ public class S3PersistenceStore implements PersistenceStore {
                 int i = Collections.binarySearch(buckets, Bucket.builder().name(this.bucketName).build(),
                         Comparator.comparing(Bucket::name));
                 if (i < 0) {
-                    throw new S3PersistenceStoreException("Invalid bucket name provided, given bucket name: " +
-                            bucketName);
+                    throw new S3PersistenceStoreException("The bucket name you provided does not exist, please " +
+                            "re-check the bucket name, given bucket name: " + bucketName);
                 }
             }
         } else {
-            throw new S3PersistenceStoreException("Configuration should be provided.");
+            throw new S3PersistenceStoreException("Please provide 'config' yaml entry under the 'statePersistence' " +
+                    "entry.");
         }
     }
 
@@ -182,8 +182,7 @@ public class S3PersistenceStore implements PersistenceStore {
             try {
                 s3Client.deleteObject(deleteObjectRequest);
             } catch (S3Exception e) {
-                throw new CannotClearSiddhiAppStateException("Persistence state " +
-                        "object is not deleted : " + key);
+                throw new CannotClearSiddhiAppStateException("Persisted state with id :" +key +" cannot be deleted.");
             }
         }
     }
@@ -204,7 +203,9 @@ public class S3PersistenceStore implements PersistenceStore {
     private AwsCredentialsProvider getCredentialProvider(Map configurationMap) {
         Object credentialProviderClassName = configurationMap.get(PersistenceConstants.CREDENTIAL_PROVIDER_CLASS);
         if (credentialProviderClassName instanceof String) {
-            log.debug("Authenticating user via the credential provider class.");
+            if(log.isDebugEnabled()) {
+                log.debug("Authenticating user via the credential provider class.");
+            }
             String className = null;
             try {
                 className = String.valueOf(credentialProviderClassName);
@@ -212,13 +213,16 @@ public class S3PersistenceStore implements PersistenceStore {
                 return (AwsCredentialsProvider) credentialProviderClass.getDeclaredMethod("create")
                         .invoke(credentialProviderClass);
             } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-                throw new S3PersistenceStoreException("Error while authenticating the user.", e);
+                throw new S3PersistenceStoreException("Error while authenticating the user. Please make sure you " +
+                        "have given the access key and the secret key as mentioned in the aws documentation", e);
             } catch (ClassNotFoundException e) {
                 throw new S3PersistenceStoreException("Unable to find the credential provider class " +
-                        className);
+                        className + ", Please provide a valid credential class.", e);
             }
         } else {
-            log.debug("Authenticating user via the access key and the secret key. ");
+            if(log.isDebugEnabled()) {
+                log.debug("Authenticating user via the access key and the secret key. ");
+            }
             if (configurationMap.containsKey(PersistenceConstants.ACCESS_KEY) || configurationMap.containsKey(
                     PersistenceConstants.SECRET_KEY)) {
                 Object accessKeyObject = configurationMap.get(PersistenceConstants.ACCESS_KEY);
