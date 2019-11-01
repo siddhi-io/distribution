@@ -77,7 +77,7 @@ public class S3PersistenceStore implements PersistenceStore {
                 s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(revision)
                         .build(), requestBody);
         cleanOldRevisions();
-        if(log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             log.debug("object has been uploaded to the bucket successfully, ETag: " + putObjectResponse.eTag());
         }
     }
@@ -97,8 +97,8 @@ public class S3PersistenceStore implements PersistenceStore {
         if (configurationMap != null) {
             Object regionObject = configurationMap.get(PersistenceConstants.REGION);
             if (!(regionObject instanceof String)) {
-                regionId = PersistenceConstants.DEFAULT_REGION_ID; // us-west-2
-                log.info("No region id provided, Hence setting the region default region");
+                regionId = PersistenceConstants.DEFAULT_REGION_ID;
+                log.info("No region id provided, Hence setting the region to default region(us-west-2)");
             } else {
                 regionId = String.valueOf(regionObject);
             }
@@ -182,7 +182,7 @@ public class S3PersistenceStore implements PersistenceStore {
             try {
                 s3Client.deleteObject(deleteObjectRequest);
             } catch (S3Exception e) {
-                throw new CannotClearSiddhiAppStateException("Persisted state with id :" +key +" cannot be deleted.");
+                throw new CannotClearSiddhiAppStateException("Persisted state with id :" + key + " cannot be deleted.");
             }
         }
     }
@@ -197,13 +197,12 @@ public class S3PersistenceStore implements PersistenceStore {
                     DeleteObjectRequest.builder().bucket(bucketName).key(key).build();
             s3Client.deleteObject(deleteObjectRequest);
         }
-
     }
 
     private AwsCredentialsProvider getCredentialProvider(Map configurationMap) {
         Object credentialProviderClassName = configurationMap.get(PersistenceConstants.CREDENTIAL_PROVIDER_CLASS);
         if (credentialProviderClassName instanceof String) {
-            if(log.isDebugEnabled()) {
+            if (log.isDebugEnabled()) {
                 log.debug("Authenticating user via the credential provider class.");
             }
             String className = null;
@@ -220,7 +219,7 @@ public class S3PersistenceStore implements PersistenceStore {
                         className + ", Please provide a valid credential class.", e);
             }
         } else {
-            if(log.isDebugEnabled()) {
+            if (log.isDebugEnabled()) {
                 log.debug("Authenticating user via the access key and the secret key. ");
             }
             if (configurationMap.containsKey(PersistenceConstants.ACCESS_KEY) || configurationMap.containsKey(
