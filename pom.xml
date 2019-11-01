@@ -1353,7 +1353,7 @@
         <grpc.version>1.24.1</grpc.version>
 
 <!--        aws sdk version-->
-        <aws.sdk.version>2.10.1</aws.sdk.version>
+        <aws.sdk.version>2.10.6</aws.sdk.version>
 
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>
