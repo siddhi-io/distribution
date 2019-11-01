@@ -129,6 +129,10 @@
             <artifactId>swagger-models</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.wso2.orbit.org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
@@ -173,6 +177,16 @@
             <groupId>findbugs</groupId>
             <artifactId>findbugs</artifactId>
         </dependency>
+<!--        aws sdk-->
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>apache-client</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -233,8 +247,10 @@
         <private.package>
             io.siddhi.distribution.core.internal,
             io.siddhi.distribution.core.internal.*,
-            org.apache.http.*,
-            org.apache.commons.codec.*
+            org.apache.http.*;-split-package:=merge-first,
+            org.apache.commons.codec.*,
+            software.amazon.awssdk.*,
+            org.reactivestreams.*,
         </private.package>
         <export.package>
             io.siddhi.distribution.core.*
@@ -249,6 +265,8 @@
             org.yaml.snakeyaml.*; version="${org.yaml.snakeyaml.version.range}",
             javax.management.*,
             javax.ws.rs.*;version="0.0.0",
+            software.amazon.awssdk.*;version="${aws.sdk.version.range}",
+            software.amazon.awssdk.http.*;version="${aws.sdk.version.range}",
             *;resolution:=optional
         </import.package>
         <carbon.component>

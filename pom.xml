@@ -1134,6 +1134,19 @@
                 <artifactId>junixsocket-core</artifactId>
                 <version>${com.kohlschutter.junixsocket.junixsocket.core.version}</version>
             </dependency>
+
+<!--            AWS sdk-->
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>${aws.sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>apache-client</artifactId>
+                <version>${aws.sdk.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -1333,10 +1346,14 @@
         <javax.ws.rs.version.range>[2.0.0, 3.0.0)</javax.ws.rs.version.range>
         <org.yaml.snakeyaml.version.range>[1.0.0, 2.0.0)</org.yaml.snakeyaml.version.range>
         <slf4j.version.range>[1.7,2)</slf4j.version.range>
+        <aws.sdk.version.range>[2.10.1, 2.11.0)</aws.sdk.version.range>
 
 
         <!-- grpc dependency version-->
         <grpc.version>1.24.1</grpc.version>
+
+<!--        aws sdk version-->
+        <aws.sdk.version>2.10.1</aws.sdk.version>
 
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>
