@@ -1273,7 +1273,7 @@
         <siddhi.execution.list.version>1.0.1-SNAPSHOT</siddhi.execution.list.version>
         <siddhi.execution.unitconversion.version>2.0.3-SNAPSHOT</siddhi.execution.unitconversion.version>
         <siddhi.execution.reorder.version>5.0.4-SNAPSHOT</siddhi.execution.reorder.version>
-        <siddhi.execution.unique.version>5.0.5-SNAPSHOT</siddhi.execution.unique.version>
+        <siddhi.execution.unique.version>5.0.6-SNAPSHOT</siddhi.execution.unique.version>
 
         <siddhi.io.kafka.version>5.0.5-SNAPSHOT</siddhi.io.kafka.version>
         <siddhi.io.http.version>2.1.3-SNAPSHOT</siddhi.io.http.version>
