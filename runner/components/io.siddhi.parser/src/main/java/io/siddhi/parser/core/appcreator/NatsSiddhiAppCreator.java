@@ -215,9 +215,12 @@ public class NatsSiddhiAppCreator extends AbstractSiddhiAppCreator {
                     updateQueryList(queryList, queryValuesMap);
 
                 } else if (subscriptionStrategy.getStrategy() == TransportStrategy.ALL) {
-
-                    sourceValuesMap.put(TOPIC_LIST, getTopicName(siddhiAppName,
-                            inputStream.getStreamName(), null));
+                    if (inputStream.getInMemoryTopic() != null) {
+                        sourceValuesMap.put(TOPIC_LIST, inputStream.getInMemoryTopic());
+                    } else {
+                        sourceValuesMap.put(TOPIC_LIST, getTopicName(siddhiAppName,
+                                inputStream.getStreamName(), null));
+                    }
                     for (SiddhiQuery aQueryList : queryList) {
                         String sourceString = getUpdatedQuery(DEFAULT_NATS_SOURCE_TEMPLATE, sourceValuesMap);
                         Map<String, String> queryValuesMap = new HashMap(1);

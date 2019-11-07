@@ -184,6 +184,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                         if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SINK_IDENTIFIER
                                 .replace("@", ""))) {
                             if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String topic = annotation.getElement("topic");
                                 String runtimeStreamDefinition = removeMetaInfoStream(streamId,
                                         outputStreamDataHolder.getStreamDefinition(),
                                         SiddhiTopologyCreatorConstants.SINK_IDENTIFIER, INMEMORY);
@@ -191,6 +192,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                                 String outputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
                                 OutputStreamDataHolder streamDataHolder = new OutputStreamDataHolder(streamId,
                                         outputStreamDefinition, EventHolder.STREAM, false);
+                                streamDataHolder.setInmemoryTopicName(topic);
                                 streamDataHolder.addPublishingStrategy(
                                         new PublishingStrategyDataHolder(TransportStrategy.ALL,
                                                 DEFAULT_PARALLEL));
@@ -210,11 +212,13 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                         if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER
                                 .replace("@", ""))) {
                             if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String topic = annotation.getElement("topic");
                                 String runtimeStreamDefinition = removeMetaInfoStream(streamId,
                                         inputStreamDataHolder.getStreamDefinition(),
                                         SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER, INMEMORY);
                                 String inputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
                                 inputStreamDataHolder.setStreamDefinition(inputStreamDefinition);
+                                inputStreamDataHolder.setInMemoryTopic(topic);
                                 inputStreamDataHolder.setUserGiven(false);
                             }
                         }
