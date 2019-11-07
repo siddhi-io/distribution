@@ -31,6 +31,7 @@ public class InputStreamDataHolder {
     private boolean isUserGiven;
     private SubscriptionStrategyDataHolder subscriptionStrategy;
     private boolean isInnerGroupStream;
+    private String inMemoryTopic;
 
     public InputStreamDataHolder(String streamName, String streamDefinition, EventHolder eventHolderType,
                                  boolean isUserGiven, SubscriptionStrategyDataHolder subscriptionStrategy) {
@@ -80,5 +81,13 @@ public class InputStreamDataHolder {
 
     public boolean isUserGivenSource() {
         return streamDefinition.toLowerCase().contains(SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER);
+    }
+
+    public void setInMemoryTopic(String inMemoryTopic) {
+        this.inMemoryTopic = inMemoryTopic;
+    }
+
+    public String getInMemoryTopic() {
+        return inMemoryTopic;
     }
 }

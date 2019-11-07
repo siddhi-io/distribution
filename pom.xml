@@ -1172,7 +1172,7 @@
         <!-- WSO2 Dependencies -->
         <wso2.slf4j.version>1.5.10.wso2v1</wso2.slf4j.version>
         <carbon.kernel.version>5.2.11</carbon.kernel.version>
-        <org.wso2.transport.http.netty.version>6.2.30</org.wso2.transport.http.netty.version>
+        <org.wso2.transport.http.netty.version>6.2.31</org.wso2.transport.http.netty.version>
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
         <carbon.deployment.version>5.2.2</carbon.deployment.version>
         <carbon.datasources.version>1.1.8</carbon.datasources.version>
@@ -1350,10 +1350,10 @@
 
 
         <!-- grpc dependency version-->
-        <grpc.version>1.24.1</grpc.version>
+        <grpc.version>1.25.0</grpc.version>
 
         <!-- aws sdk version-->
-        <aws.sdk.version>2.10.1</aws.sdk.version>
+        <aws.sdk.version>2.10.11</aws.sdk.version>
 
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>
