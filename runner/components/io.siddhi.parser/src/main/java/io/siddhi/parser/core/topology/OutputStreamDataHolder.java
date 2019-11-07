@@ -34,6 +34,7 @@ public class OutputStreamDataHolder {
     private boolean isUserGiven;
     private boolean isInnerGroupStream;
     private boolean isSinkBridgeAdded;
+    private String inmemoryTopicName;
 
     public OutputStreamDataHolder(String streamName, String streamDefinition, EventHolder eventHolderType,
                                   boolean isUserGiven) {
@@ -88,6 +89,14 @@ public class OutputStreamDataHolder {
 
     public void setSinkBridgeAdded(boolean sinkBridgeAdded) {
         isSinkBridgeAdded = sinkBridgeAdded;
+    }
+
+    public String getInmemoryTopicName() {
+        return inmemoryTopicName;
+    }
+
+    public void setInmemoryTopicName(String inmemoryTopicName) {
+        this.inmemoryTopicName = inmemoryTopicName;
     }
 }
 
