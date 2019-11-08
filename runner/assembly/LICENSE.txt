@@ -149,7 +149,7 @@ siddhi-io-file-2.0.3.jar                                                        
 siddhi-io-grpc-1.0.5.jar                                                        bundle         apache2   4717
 siddhi-io-http-2.2.0.jar                                                        bundle         apache2   4522
 siddhi-io-jms-2.0.3.jar                                                         bundle         apache2   4437
-siddhi-io-kafka-5.0.4.jar                                                       bundle         apache2   4516
+siddhi-io-kafka-5.0.5.jar                                                       bundle         apache2   4516
 siddhi-io-nats-2.0.8.jar                                                        bundle         apache2   4506
 siddhi-io-prometheus-2.1.0.jar                                                  bundle         apache2   4515
 siddhi-io-rabbitmq-3.0.2.jar                                                    bundle         apache2   4503
