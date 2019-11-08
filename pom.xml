@@ -386,6 +386,11 @@
                 <version>${siddhi.io.http.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.siddhi.extension.io.s3</groupId>
+                <artifactId>siddhi-io-s3</artifactId>
+                <version>${siddhi.io.s3.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>io.siddhi.extension.io.rabbitmq</groupId>
                 <artifactId>siddhi-io-rabbitmq</artifactId>
                 <version>${siddhi.io.rabbitmq.version}</version>
@@ -1151,8 +1156,8 @@
     </dependencyManagement>
 
     <properties>
-        <siddhi.version>5.1.8-SNAPSHOT</siddhi.version>
-        <siddhi.bundle.version>5.1.8.SNAPSHOT</siddhi.bundle.version>
+        <siddhi.version>5.1.8</siddhi.version>
+        <siddhi.bundle.version>5.1.8</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.1.36</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.1.0, 6.2.0)</carbon.analytics-common.version.range>
@@ -1171,7 +1176,7 @@
 
         <!-- WSO2 Dependencies -->
         <wso2.slf4j.version>1.5.10.wso2v1</wso2.slf4j.version>
-        <carbon.kernel.version>5.2.11</carbon.kernel.version>
+        <carbon.kernel.version>5.2.12</carbon.kernel.version>
         <org.wso2.transport.http.netty.version>6.2.31</org.wso2.transport.http.netty.version>
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
         <carbon.deployment.version>5.2.2</carbon.deployment.version>
@@ -1264,49 +1269,50 @@
         <assertj.version>3.14.0</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.8-SNAPSHOT</siddhi.execution.string.version>
-        <siddhi.execution.math.version>5.0.5-SNAPSHOT</siddhi.execution.math.version>
-        <siddhi.execution.regex.version>5.0.6-SNAPSHOT</siddhi.execution.regex.version>
-        <siddhi.execution.time.version>5.0.5-SNAPSHOT</siddhi.execution.time.version>
-        <siddhi.execution.json.version>2.0.5-SNAPSHOT</siddhi.execution.json.version>
-        <siddhi.execution.map.version>5.0.6-SNAPSHOT</siddhi.execution.map.version>
-        <siddhi.execution.list.version>1.0.1-SNAPSHOT</siddhi.execution.list.version>
-        <siddhi.execution.unitconversion.version>2.0.3-SNAPSHOT</siddhi.execution.unitconversion.version>
-        <siddhi.execution.reorder.version>5.0.4-SNAPSHOT</siddhi.execution.reorder.version>
-        <siddhi.execution.unique.version>5.0.6-SNAPSHOT</siddhi.execution.unique.version>
+        <siddhi.execution.string.version>5.0.7</siddhi.execution.string.version>
+        <siddhi.execution.math.version>5.0.4</siddhi.execution.math.version>
+        <siddhi.execution.regex.version>5.0.5</siddhi.execution.regex.version>
+        <siddhi.execution.time.version>5.0.4</siddhi.execution.time.version>
+        <siddhi.execution.json.version>2.0.4</siddhi.execution.json.version>
+        <siddhi.execution.map.version>5.0.5</siddhi.execution.map.version>
+        <siddhi.execution.list.version>1.0.0</siddhi.execution.list.version>
+        <siddhi.execution.unitconversion.version>2.0.2</siddhi.execution.unitconversion.version>
+        <siddhi.execution.reorder.version>5.0.3</siddhi.execution.reorder.version>
+        <siddhi.execution.unique.version>5.0.5</siddhi.execution.unique.version>
 
-        <siddhi.io.kafka.version>5.0.5-SNAPSHOT</siddhi.io.kafka.version>
-        <siddhi.io.http.version>2.1.3-SNAPSHOT</siddhi.io.http.version>
-        <siddhi.io.file.version>2.0.4-SNAPSHOT</siddhi.io.file.version>
-        <siddhi.io.tcp.version>3.0.5-SNAPSHOT</siddhi.io.tcp.version>
-        <siddhi.io.email.version>2.0.5-SNAPSHOT</siddhi.io.email.version>
-        <siddhi.io.jms.version>2.0.3-SNAPSHOT</siddhi.io.jms.version>
-        <siddhi.io.cdc.version>2.0.4-SNAPSHOT</siddhi.io.cdc.version>
-        <siddhi.io.prometheus.version>2.1.1-SNAPSHOT</siddhi.io.prometheus.version>
-        <siddhi.io.nats.version>2.0.9-SNAPSHOT</siddhi.io.nats.version>
-        <siddhi.io.grpc.version>1.0.5-SNAPSHOT</siddhi.io.grpc.version>
-        <siddhi.io.rabbitmq.version>3.0.3-SNAPSHOT</siddhi.io.rabbitmq.version>
+        <siddhi.io.kafka.version>5.0.5</siddhi.io.kafka.version>
+        <siddhi.io.http.version>2.2.0</siddhi.io.http.version>
+        <siddhi.io.s3.version>1.0.2</siddhi.io.s3.version>
+        <siddhi.io.file.version>2.0.3</siddhi.io.file.version>
+        <siddhi.io.tcp.version>3.0.4</siddhi.io.tcp.version>
+        <siddhi.io.email.version>2.0.5</siddhi.io.email.version>
+        <siddhi.io.jms.version>2.0.3</siddhi.io.jms.version>
+        <siddhi.io.cdc.version>2.0.4</siddhi.io.cdc.version>
+        <siddhi.io.prometheus.version>2.1.0</siddhi.io.prometheus.version>
+        <siddhi.io.nats.version>2.0.8</siddhi.io.nats.version>
+        <siddhi.io.grpc.version>1.0.5</siddhi.io.grpc.version>
+        <siddhi.io.rabbitmq.version>3.0.2</siddhi.io.rabbitmq.version>
 
-        <siddhi.map.json.version>5.0.6-SNAPSHOT</siddhi.map.json.version>
-        <siddhi.map.avro.version>2.0.6-SNAPSHOT</siddhi.map.avro.version>
-        <siddhi.map.binary.version>2.0.5-SNAPSHOT</siddhi.map.binary.version>
-        <siddhi.map.text.version>2.0.5-SNAPSHOT</siddhi.map.text.version>
-        <siddhi.map.xml.version>5.0.4-SNAPSHOT</siddhi.map.xml.version>
-        <siddhi.map.keyvalue.version>2.0.5-SNAPSHOT</siddhi.map.keyvalue.version>
-        <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
-        <siddhi.map.protobuf.version>1.0.3-SNAPSHOT</siddhi.map.protobuf.version>
+        <siddhi.map.json.version>5.0.5</siddhi.map.json.version>
+        <siddhi.map.avro.version>2.0.6</siddhi.map.avro.version>
+        <siddhi.map.binary.version>2.0.4</siddhi.map.binary.version>
+        <siddhi.map.text.version>2.0.4</siddhi.map.text.version>
+        <siddhi.map.xml.version>5.0.3</siddhi.map.xml.version>
+        <siddhi.map.keyvalue.version>2.0.5</siddhi.map.keyvalue.version>
+        <siddhi.map.csv.version>2.0.3</siddhi.map.csv.version>
+        <siddhi.map.protobuf.version>1.0.2</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.2-SNAPSHOT</siddhi.store.rdbms.version>
-        <siddhi.store.mongodb.version>2.0.4-SNAPSHOT</siddhi.store.mongodb.version>
-        <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
+        <siddhi.store.rdbms.version>7.0.2</siddhi.store.rdbms.version>
+        <siddhi.store.mongodb.version>2.0.3</siddhi.store.mongodb.version>
+        <siddhi.store.redis.version>3.1.1</siddhi.store.redis.version>
 
-        <siddhi.script.js.version>5.0.3-SNAPSHOT</siddhi.script.js.version>
+        <siddhi.script.js.version>5.0.2</siddhi.script.js.version>
 
         <!-- Removed due to size constraint -->
-        <!--<siddhi.execution.streamingml.version>2.0.2</siddhi.execution.streamingml.version>-->
+        <!--<siddhi.execution.streamingml.version>2.0.4</siddhi.execution.streamingml.version>-->
         <!--<siddhi.execution.tensorflow.version>2.0.2</siddhi.execution.tensorflow.version>-->
-        <!--<siddhi.store.elasticsearch.version>3.1.1</siddhi.store.elasticsearch.version>-->
-        <!--<siddhi.io.googlepubsub.version>2.0.1</siddhi.io.googlepubsub.version>-->
+        <!--<siddhi.store.elasticsearch.version>3.1.2</siddhi.store.elasticsearch.version>-->
+        <!--<siddhi.io.googlepubsub.version>2.0.2</siddhi.io.googlepubsub.version>-->
 
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
         <maven.bundle.plugin.version>3.2.0</maven.bundle.plugin.version>

@@ -401,6 +401,12 @@
                                     <type>jar</type>
                                 </artifactItem>
                                 <artifactItem>
+                                    <groupId>io.siddhi.extension.io.s3</groupId>
+                                    <artifactId>siddhi-io-s3</artifactId>
+                                    <version>${siddhi.io.s3.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
                                     <groupId>io.siddhi.extension.io.rabbitmq</groupId>
                                     <artifactId>siddhi-io-rabbitmq</artifactId>
                                     <version>${siddhi.io.rabbitmq.version}</version>
