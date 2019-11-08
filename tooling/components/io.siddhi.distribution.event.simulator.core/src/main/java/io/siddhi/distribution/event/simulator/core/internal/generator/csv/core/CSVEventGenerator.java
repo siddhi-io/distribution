@@ -353,12 +353,11 @@ public class CSVEventGenerator implements EventGenerator {
                         sourceConfig.getString(EventSimulatorConstants.STREAM_NAME));
             } catch (ResourceNotFoundException e) {
                 throw new SimulationValidationException(
-                        e.getResourceName(), e.getResourceType(),
                         e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for CSV " +
                                 "simulation does not exist. Invalid source configuration in '" + simulationName +
                                 "' simulation.\n" +
                                 SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig),
-                        e);
+                        e.getResourceType(), e.getResourceName(), e);
             }
             if (!checkAvailability(sourceConfig, EventSimulatorConstants.FILE_NAME)) {
                 throw new InvalidConfigException(
@@ -490,9 +489,10 @@ public class CSVEventGenerator implements EventGenerator {
                         sourceConfig.getString(EventSimulatorConstants.STREAM_NAME));
             } catch (ResourceNotFoundException e) {
                 throw new SimulationValidationException(
-                        e.getResourceName(), e.getResourceType(), e.getResourceTypeString() + " '" +
-                        e.getResourceName() + "' specified for CSV simulation does not exist. Invalid source " +
-                        "configuration in '" + simulationName + "' simulation", e);
+                        e.getResourceTypeString() + " '" + e.getResourceName() +
+                        "' specified for CSV simulation does not exist. Invalid source " +
+                        "configuration in '" + simulationName + "' simulation",  e.getResourceType(),
+                        e.getResourceName(), e);
             }
             /*
              * either a timestamp attribute must be specified or the timeInterval between timestamps of 2 consecutive

@@ -116,12 +116,11 @@ public class DatabaseEventGenerator implements EventGenerator {
             databaseConnection.closeConnection();
         } catch (PoolInitializationException e) {
             throw new SimulationValidationException(
-                    dbSimulationConfig.getDataSourceLocation(),
-                    ResourceNotFoundException.ResourceType.DATABASE,
                     "Error occurred when creating connection to database ' " +
-                            dbSimulationConfig.getDataSourceLocation() +
-                            "' to simulate to simulate stream '" + dbSimulationConfig.getStreamName() +
-                            "'. Please check connection and config settings. ", e);
+                    dbSimulationConfig.getDataSourceLocation() +
+                    "' to simulate to simulate stream '" + dbSimulationConfig.getStreamName() +
+                    "'. Please check connection and config settings. ",
+                    ResourceNotFoundException.ResourceType.DATABASE, dbSimulationConfig.getDataSourceLocation(), e);
         }
     }
 
@@ -386,7 +385,8 @@ public class DatabaseEventGenerator implements EventGenerator {
                         e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for database " +
                                 "simulation does not exist. Invalid source configuration in '" +
                                 simulationName + "' simulation.\n" +
-                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig), e);
+                                SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig),
+                        e.getResourceType(), e.getResourceName(), e);
             }
             if (!checkAvailability(sourceConfig, EventSimulatorConstants.DRIVER)) {
                 throw new InvalidConfigException(

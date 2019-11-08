@@ -80,7 +80,8 @@ public class RandomEventGenerator implements EventGenerator {
             throw new SimulationValidationException(
                     e.getResourceTypeString() + " '" + e.getResourceName() + "' "
                             + "specified for random simulation \"" + simulationName + "\" does not exist. Invalid "
-                            + "source configuration : " + sourceConfig.toString(), e);
+                            + "source configuration : " + sourceConfig.toString(), e.getResourceType(),
+                    e.getResourceName(), e);
         }
         randomSimulationConfig = createRandomConfiguration(sourceConfig, simulationName);
         //set timestamp boundary for event generation
@@ -267,7 +268,8 @@ public class RandomEventGenerator implements EventGenerator {
                 throw new SimulationValidationException(
                         e.getResourceTypeString() + " '" + e.getResourceName() + "' specified for random " +
                                 "simulation does not exist. Invalid source configuration in '" + simulationName +
-                                "' simulation.\n" + SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig), e);
+                                "' simulation.\n" + SourceConfigLogger.getLoggedEnabledSourceConfig(sourceConfig),
+                        e.getResourceType(), e.getResourceName(), e);
             }
             if (checkAvailabilityOfArray(sourceConfig, EventSimulatorConstants.ATTRIBUTE_CONFIGURATION)) {
                 if (streamAttributes.size() ==
