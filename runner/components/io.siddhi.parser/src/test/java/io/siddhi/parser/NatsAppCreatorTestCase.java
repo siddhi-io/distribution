@@ -152,7 +152,7 @@ public class NatsAppCreatorTestCase {
         Assert.assertFalse(processApp.contains("@sink(type='inMemory', topic='takingOverTopic', " +
                 "@map(type='passThrough'))"));
         Assert.assertTrue(processApp.contains("@sink(type='nats',cluster.id='test-cluster'," +
-                "destination = 'InmemoryTransportTestApp_takingOverStream'"));
+                "destination = 'takingOverTopic'"));
     }
 
     /** Test partial app creation for a user given app with in-memory sink & source.
@@ -190,8 +190,8 @@ public class NatsAppCreatorTestCase {
         Assert.assertFalse(app.contains("@sink(type='inMemory', topic='takingOverTopic', " +
                 "@map(type='passThrough'))"));
         Assert.assertTrue(app.contains("@source(type='nats',cluster.id='test-cluster'," +
-                "destination = 'InmemoryTransportTestApp_stockStream'"));
+                "destination = 'stockStream'"));
         Assert.assertTrue(app.contains("@sink(type='nats',cluster.id='test-cluster'," +
-                "destination = 'InmemoryTransportTestApp_takingOverStream'"));
+                "destination = 'takingOverTopic'"));
     }
 }
