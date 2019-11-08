@@ -155,6 +155,7 @@ siddhi-io-kafka-5.0.5.jar                                                       
 siddhi-io-nats-2.0.8.jar                                                        bundle         apache2   4506
 siddhi-io-prometheus-2.1.0.jar                                                  bundle         apache2   4515
 siddhi-io-rabbitmq-3.0.2.jar                                                    bundle         apache2   4503
+siddhi-io-s3-1.0.2.jar                                                          bundle         apache2   4513
 siddhi-io-tcp-3.0.4.jar                                                         bundle         apache2   4512
 siddhi-map-avro-2.0.6.jar                                                       bundle         apache2   4615
 siddhi-map-binary-2.0.4.jar                                                     bundle         apache2   4508
