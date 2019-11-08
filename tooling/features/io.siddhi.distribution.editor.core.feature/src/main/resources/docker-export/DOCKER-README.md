@@ -45,7 +45,7 @@ Let the extracted directory be referred as `<DOCKER_BUILD_HOME>` within this doc
 2. Run the following command to build the Docker image.
 
 ```
-docker build . -t siddhi-runner:custom-1.0.0
+docker build -t siddhi-runner-alpine:latest .
 ```
 
 3. Run the following command to run the Docker image.(
@@ -53,7 +53,7 @@ docker build . -t siddhi-runner:custom-1.0.0
 Note: Container ports are forwarded to its specific ports in the host machine assuming those ports are not in use.
    
 ```
-docker run -it {{BIND_PORTS}} siddhi-runner:custom-1.0.0
+docker run -it {{BIND_PORTS}} siddhi-runner-alpine:latest
 ```
 
 
