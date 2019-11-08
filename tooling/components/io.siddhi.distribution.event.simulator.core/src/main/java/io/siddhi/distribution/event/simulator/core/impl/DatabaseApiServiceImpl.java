@@ -25,9 +25,6 @@ import io.siddhi.distribution.event.simulator.core.api.DatabaseApiService;
 import io.siddhi.distribution.event.simulator.core.api.NotFoundException;
 import io.siddhi.distribution.event.simulator.core.internal.generator.database.util.DatabaseConnector;
 import io.siddhi.distribution.event.simulator.core.model.DBConnectionModel;
-import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
-import org.wso2.carbon.analytics.permissions.PermissionProvider;
-import org.wso2.carbon.analytics.permissions.bean.Permission;
 import org.wso2.msf4j.Request;
 
 import java.sql.Connection;
@@ -41,15 +38,6 @@ import javax.ws.rs.core.Response;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-07-20T09:30:14.336Z")
 public class DatabaseApiServiceImpl extends DatabaseApiService {
-
-    private static final String PERMISSION_APP_NAME = "SIM";
-    private static final String MANAGE_SIMULATOR_PERMISSION_STRING = "simulator.manage";
-    private static final String VIEW_SIMULATOR_PERMISSION_STRING = "simulator.view";
-
-    private static String getUserName(Request request) {
-        Object username = request.getProperty("username");
-        return username != null ? username.toString() : null;
-    }
 
     public Response getDatabaseTableColumns(DBConnectionModel connectionDetails,
                                             String tableName) throws NotFoundException {
@@ -111,38 +99,16 @@ public class DatabaseApiServiceImpl extends DatabaseApiService {
     @Override
     public Response getDatabaseTableColumns(DBConnectionModel body, String tableName, Request request)
             throws NotFoundException {
-        if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
-                (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
-                (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return getDatabaseTableColumns(body, tableName);
     }
 
     @Override
     public Response getDatabaseTables(DBConnectionModel body, Request request) throws NotFoundException {
-        if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
-                (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
-                (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return getDatabaseTables(body);
     }
 
     @Override
     public Response testDBConnection(DBConnectionModel body, Request request) throws NotFoundException {
-        if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
-                (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
-                (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return testDBConnection(body);
-    }
-
-    private PermissionProvider getPermissionProvider() {
-        return EventSimulatorDataHolder.getPermissionProvider();
     }
 }

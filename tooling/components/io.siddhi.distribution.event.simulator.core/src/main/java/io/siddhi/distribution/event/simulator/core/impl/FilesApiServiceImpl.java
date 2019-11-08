@@ -9,10 +9,7 @@ import io.siddhi.distribution.event.simulator.core.exception.InvalidFileExceptio
 import io.siddhi.distribution.event.simulator.core.internal.generator.csv.util.FileUploader;
 import io.siddhi.distribution.event.simulator.core.internal.util.CommonOperations;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
-import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import org.apache.commons.io.FilenameUtils;
-import org.wso2.carbon.analytics.permissions.PermissionProvider;
-import org.wso2.carbon.analytics.permissions.bean.Permission;
 import org.wso2.carbon.utils.Utils;
 import org.wso2.msf4j.Request;
 import org.wso2.msf4j.formparam.FileInfo;
@@ -28,16 +25,8 @@ import javax.ws.rs.core.Response;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaMSF4JServerCodegen",
         date = "2017-07-20T09:30:14.336Z")
 public class FilesApiServiceImpl extends FilesApiService {
-    private static final String PERMISSION_APP_NAME = "SIM";
-    private static final String MANAGE_SIMULATOR_PERMISSION_STRING = "simulator.manage";
-    private static final String VIEW_SIMULATOR_PERMISSION_STRING = "simulator.view";
     private static final Path CSV_BASE_PATH = Paths.get(Utils.getRuntimePath().toString(),
             EventSimulatorConstants.DIRECTORY_DEPLOYMENT, EventSimulatorConstants.DIRECTORY_CSV_FILES);
-
-    private static String getUserName(Request request) {
-        Object username = request.getProperty("username");
-        return username != null ? username.toString() : null;
-    }
 
     public Response deleteFile(String fileName) throws NotFoundException, FileOperationsException {
         FileUploader fileUploader = FileUploader.getFileUploaderInstance();
@@ -171,48 +160,23 @@ public class FilesApiServiceImpl extends FilesApiService {
 
     @Override
     public Response deleteFile(String fileName, Request request) throws NotFoundException, FileOperationsException {
-        if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return deleteFile(fileName);
     }
 
     @Override
     public Response getFileNames(Request request) throws NotFoundException {
-        if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
-                (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
-                (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return getFileNames();
     }
 
     @Override
     public Response updateFile(String fileName, InputStream fileInputStream, FileInfo fileDetail, Request request)
             throws NotFoundException, FileOperationsException {
-        if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return updateFile(fileName, fileInputStream, fileDetail);
     }
 
     @Override
     public Response uploadFile(InputStream fileInputStream, FileInfo fileDetail, Request request)
             throws NotFoundException, FileOperationsException {
-        if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return uploadFile(fileInputStream, fileDetail);
-    }
-
-    private PermissionProvider getPermissionProvider() {
-        return EventSimulatorDataHolder.getPermissionProvider();
     }
 }
