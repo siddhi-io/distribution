@@ -20,6 +20,7 @@ package io.siddhi.distribution.event.simulator.core.service;
 
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SimulationDependencyListener;
+import io.siddhi.distribution.common.common.exception.ResourceNotFoundException;
 import io.siddhi.distribution.event.simulator.core.exception.SimulationValidationException;
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.internal.util.SimulationConfigUploader;
@@ -93,8 +94,16 @@ public class SimulationConfigDeployer implements Deployer, SimulationDependencyL
                             log.error("Updated inactive simulation '" + simulationName + "'.", e);
                         }
                     } else {
+                        // Initial deployment
+                        if (e.getResourceType() != null &&
+                                !e.getResourceType().equals(ResourceNotFoundException.ResourceType.SIDDHI_APP_NAME)) {
+                            log.error("Deployed inactive simulation '" + simulationName + "'.", e);
+                        } else {
+                            // This may be due to siddhi apps not being deployed, which will then be checked when
+                            // getFeedSimulationApi is called.
+                            log.debug("Deployed inactive simulation '" + simulationName + "'.", e);
+                        }
                         eventSimulatorMap.getInActiveSimulatorMap().put(simulationName, newResourceDependency);
-                        log.error("Deployed inactive simulation '" + simulationName + "'.", e);
                     }
                 }
             } else {
