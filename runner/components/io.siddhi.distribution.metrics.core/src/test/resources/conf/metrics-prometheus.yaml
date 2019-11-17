@@ -1,0 +1,9 @@
+# Configuration file to test metrics with prometheus reporter
+
+# Carbon Metrics Configuration Parameters
+wso2.metrics.prometheus:
+  reporting:
+    prometheus:
+      - name: Prometheus
+        enabled: true
+        pollingPeriod: 600
