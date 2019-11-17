@@ -1,16 +1,15 @@
 package io.siddhi.distribution.metrics.prometheus.reporter.reporter.impl;
 
-import com.codahale.metrics.ScheduledReporter;
-import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.Clock;
-import com.codahale.metrics.Histogram;
-import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Counter;
+import com.codahale.metrics.Gauge;
+import com.codahale.metrics.Histogram;
 import com.codahale.metrics.Meter;
+import com.codahale.metrics.MetricFilter;
+import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.ScheduledReporter;
 
 import java.io.PrintStream;
-
 import java.text.DateFormat;
 import java.util.Locale;
 import java.util.SortedMap;

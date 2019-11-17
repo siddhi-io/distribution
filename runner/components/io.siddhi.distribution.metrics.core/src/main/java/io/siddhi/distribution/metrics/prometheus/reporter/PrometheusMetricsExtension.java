@@ -1,5 +1,7 @@
 package io.siddhi.distribution.metrics.prometheus.reporter;
 
+import io.siddhi.distribution.metrics.prometheus.reporter.config.model.MetricsConfig;
+import io.siddhi.distribution.metrics.prometheus.reporter.config.model.PrometheusReporterConfig;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -12,8 +14,6 @@ import org.wso2.carbon.metrics.core.MetricManagementService;
 import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.reporter.ReporterBuildException;
 import org.wso2.carbon.metrics.core.spi.MetricsExtension;
-import io.siddhi.distribution.metrics.prometheus.reporter.config.model.MetricsConfig;
-import io.siddhi.distribution.metrics.prometheus.reporter.config.model.PrometheusReporterConfig;
 
 import java.util.Arrays;
 import java.util.Set;
