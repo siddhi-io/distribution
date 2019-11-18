@@ -27,8 +27,8 @@ import org.wso2.carbon.metrics.core.MetricManagementService;
 import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.Metrics;
 
-import javax.management.MBeanServer;
 import java.lang.management.ManagementFactory;
+import javax.management.MBeanServer;
 
 /**
  * Base Class for all Reporter Based Test Cases.
@@ -50,8 +50,8 @@ public abstract class BaseReporterTest {
         if (logger.isInfoEnabled()) {
             logger.info("Creating Metrics");
         }
-//        System.setProperty("metrics.target", "target");
-        metrics = new Metrics(TestUtils.getConfigProvider("metrics-prometheus.yaml"));
+        System.setProperty("metrics.target", "target");
+        metrics = new Metrics(TestUtils.getConfigProvider("metrics.yaml"));
         metrics.activate();
         metricService = metrics.getMetricService();
         metricManagementService = metrics.getMetricManagementService();

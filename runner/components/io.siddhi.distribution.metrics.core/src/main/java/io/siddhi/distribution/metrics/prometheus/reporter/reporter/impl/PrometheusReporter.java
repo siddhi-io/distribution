@@ -20,20 +20,21 @@ package io.siddhi.distribution.metrics.prometheus.reporter.reporter.impl;
 
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
+import io.prometheus.client.CollectorRegistry;
+import io.prometheus.client.dropwizard.DropwizardExports;
 import org.wso2.carbon.metrics.core.reporter.ScheduledReporter;
 import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
+import org.wso2.msf4j.MicroservicesRunner;
 
 import java.util.concurrent.TimeUnit;
 
-//import io.prometheus.client.CollectorRegistry;
-//import io.prometheus.client.dropwizard.DropwizardExports;
-//import io.prometheus.client.exporter.HTTPServer;
-//import io.prometheus.client.exporter.MetricsServlet;
 //import org.eclipse.jetty.server.Server;
 //import org.eclipse.jetty.servlet.ServletContextHandler;
 //import org.eclipse.jetty.servlet.ServletHolder;
-//import org.wso2.msf4j.MicroservicesRunner;
 
+/**
+ * A reporter which outputs measurements to prometheus
+ */
 public class PrometheusReporter extends AbstractReporter implements ScheduledReporter {
 
     private final MetricRegistry metricRegistry;
@@ -46,7 +47,8 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
 
 //    Server server = new Server(1234);
 
-    public PrometheusReporter(String name, MetricRegistry metricRegistry, MetricFilter metricFilter, long pollingPeriod) {
+    public PrometheusReporter(String name, MetricRegistry metricRegistry,
+                              MetricFilter metricFilter, long pollingPeriod) {
         super(name);
         this.metricRegistry = metricRegistry;
         this.metricFilter = metricFilter;
@@ -67,29 +69,23 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
                 .convertRatesTo(TimeUnit.SECONDS).convertDurationsTo(TimeUnit.MILLISECONDS).build();
         prometheusReporter.start(pollingPeriod, TimeUnit.SECONDS);
 
-//        CollectorRegistry defaultRegistry = CollectorRegistry.defaultRegistry;
-//        defaultRegistry.clear();
-//        defaultRegistry.register(new DropwizardExports(metricRegistry));
+        CollectorRegistry defaultRegistry = CollectorRegistry.defaultRegistry;
+        defaultRegistry.clear();
+        defaultRegistry.register(new DropwizardExports(metricRegistry));
 //        ServletContextHandler handler = new ServletContextHandler();
 //        handler.setContextPath("/");
 //        server.setHandler(handler);
 //        handler.addServlet(new ServletHolder(new MetricsServlet()), "/metrics");
-//
-//        try {
-//
+
+        try {
+
 //            server.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            server.join();
-//                new MicroservicesRunner()
-////                        .deploy(new HelloService())
-//                        .start();
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//
+            new MicroservicesRunner()
+//                        .deploy(new HelloService())
+                    .start();
+        } catch (Exception e) {
+        }
+
     }
 
     @Override
@@ -98,7 +94,6 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
 //            try {
 //                server.stop();
 //            } catch (Exception e) {
-//                e.printStackTrace();
 //            }
             prometheusReporter.stop();
             prometheusReporter = null;

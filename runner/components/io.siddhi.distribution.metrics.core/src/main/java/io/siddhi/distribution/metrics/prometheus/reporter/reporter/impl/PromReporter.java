@@ -34,19 +34,36 @@ import java.util.SortedMap;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * A reporter which outputs measurements to Prometheus
+ */
 public class PromReporter extends ScheduledReporter {
-//    protected PromReporter(MetricRegistry registry, String name, MetricFilter filter, TimeUnit rateUnit, TimeUnit durationUnit) {
+//    protected PromReporter(MetricRegistry registry, String name, MetricFilter filter,
+//    TimeUnit rateUnit, TimeUnit durationUnit) {
 //        super(registry, name, filter, rateUnit, durationUnit);
 //    }
+
+    /**
+     * Returns a new {@link Builder} for {@link PrometheusReporter}.
+     *
+     * @param registry the registry to report
+     * @return a {@link Builder} instance for a {@link PrometheusReporter}
+     */
 
     public static Builder forRegistry(MetricRegistry registry) {
         return new Builder(registry);
     }
 
     @Override
-    public void report(SortedMap<String, Gauge> gauges, SortedMap<String, Counter> counters, SortedMap<String, Histogram> histograms, SortedMap<String, Meter> meters, SortedMap<String, com.codahale.metrics.Timer> timers) {
+    public void report(SortedMap<String, Gauge> gauges, SortedMap<String, Counter> counters,
+                       SortedMap<String, Histogram> histograms, SortedMap<String, Meter> meters,
+                       SortedMap<String, com.codahale.metrics.Timer> timers) {
 
     }
+
+    /**
+     * A builder for {@link PrometheusReporter} instances.
+     */
 
     public static class Builder {
         private final MetricRegistry registry;

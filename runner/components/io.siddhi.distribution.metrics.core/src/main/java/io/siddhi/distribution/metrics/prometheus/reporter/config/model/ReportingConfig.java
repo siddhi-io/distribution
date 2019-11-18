@@ -49,7 +49,7 @@ public class ReportingConfig {
     public Set<? extends ReporterBuilder> getReporterBuilders() {
         Set<ReporterBuilder> reporterBuilders = new HashSet<>();
 
-        if (prometheus !=null){
+        if (prometheus != null) {
             reporterBuilders.addAll(prometheus);
         }
         return reporterBuilders;
