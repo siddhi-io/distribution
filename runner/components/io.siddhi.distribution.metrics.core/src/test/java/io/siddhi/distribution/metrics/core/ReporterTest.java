@@ -18,25 +18,16 @@
 
 package io.siddhi.distribution.metrics.core;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.metrics.core.reporter.ReporterBuildException;
-import org.wso2.carbon.metrics.core.reporter.ReporterBuilder;
-
-//import org.wso2.carbon.config.ConfigurationException;
-//import org.wso2.carbon.metrics.core.MetricManagementService;
-//import org.wso2.carbon.metrics.core.MetricService;
-//import org.wso2.carbon.metrics.core.Metrics;
+import org.wso2.carbon.config.annotation.Configuration;
 
 /**
  * Test Cases for Reporters.
  */
+@Configuration(namespace = "wso2.metrics.prometheus", description = "Carbon Metrics Configuration Parameters")
 public class ReporterTest extends BaseReporterTest {
-
-    private static final Logger logger = LoggerFactory.getLogger(ReporterTest.class);
 
     @BeforeClass
     private void stopReporters() {
@@ -54,7 +45,7 @@ public class ReporterTest extends BaseReporterTest {
     }
 
     @Test
-    public void testPrometheusReporter(){
+    public void testPrometheusReporter() {
         metricManagementService.startReporter("Prometheus");
         Assert.assertTrue(metricManagementService.isReporterRunning("Prometheus"));
         metricManagementService.report();
@@ -62,12 +53,4 @@ public class ReporterTest extends BaseReporterTest {
         Assert.assertFalse(metricManagementService.isReporterRunning("Prometheus"));
     }
 
-    private <T extends ReporterBuilder> void addReporter(T reporterBuilder) {
-        try {
-            metricManagementService.addReporter(reporterBuilder);
-            Assert.fail("Add Reporter should fail.");
-        } catch (IllegalArgumentException | ReporterBuildException e) {
-            logger.info("Exception message from Add Reporter: {}", e.getMessage());
-        }
-    }
 }

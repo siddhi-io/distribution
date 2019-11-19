@@ -18,6 +18,9 @@ import org.wso2.carbon.metrics.core.spi.MetricsExtension;
 import java.util.Arrays;
 import java.util.Set;
 
+/**
+ * * Metrics Extension to support Prometheus Reporter.
+ */
 @Component(
         name = "io.siddhi.distribution.metrics.prometheus.reporter.PrometheusMetricsExtension",
         service = MetricsExtension.class
@@ -52,8 +55,8 @@ public class PrometheusMetricsExtension implements MetricsExtension {
                         }
                     }
             );
-            names = prometheusReporterConfigs.stream().map(prometheusReporterConfig -> prometheusReporterConfig.getName()).toArray(size ->
-                    new String[size]);
+            names = prometheusReporterConfigs.stream().map(prometheusReporterConfig ->
+                    prometheusReporterConfig.getName()).toArray(size -> new String[size]);
         }
     }
 

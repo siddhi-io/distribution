@@ -29,6 +29,9 @@ import org.wso2.carbon.metrics.core.reporter.ReporterBuilder;
 
 import java.util.Optional;
 
+/**
+ * Configuration for Prometheus Reporter. Implements {@link ReporterBuilder} to construct a {@link PrometheusReporter}.
+ */
 public class PrometheusReporterConfig extends ScheduledReporterConfig implements ReporterBuilder<PrometheusReporter> {
 
     private static final Logger logger = LoggerFactory.getLogger(PrometheusReporterConfig.class);
@@ -38,15 +41,18 @@ public class PrometheusReporterConfig extends ScheduledReporterConfig implements
     }
 
     @Override
-    public Optional<PrometheusReporter> build(MetricRegistry metricRegistry, MetricFilter metricFilter) throws ReporterBuildException {
+    public Optional<PrometheusReporter> build(MetricRegistry metricRegistry, MetricFilter metricFilter)
+            throws ReporterBuildException {
         if (!isEnabled()) {
             return Optional.empty();
         }
         if (logger.isInfoEnabled()) {
-            logger.info(String.format("Creating Prometheus Reporter for Metrics with %d seconds polling period", getPollingPeriod()));
+            logger.info(String.format("Creating Prometheus Reporter for Metrics with %d seconds polling period",
+                    getPollingPeriod()));
 
         }
 
-        return Optional.of(new PrometheusReporter(getName(), metricRegistry, getFilter(metricFilter), getPollingPeriod()));
+        return Optional.of(new PrometheusReporter(getName(), metricRegistry, getFilter(metricFilter),
+                getPollingPeriod()));
     }
 }
