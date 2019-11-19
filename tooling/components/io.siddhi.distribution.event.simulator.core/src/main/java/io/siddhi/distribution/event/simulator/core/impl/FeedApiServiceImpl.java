@@ -30,14 +30,11 @@ import io.siddhi.distribution.event.simulator.core.internal.util.CommonOperation
 import io.siddhi.distribution.event.simulator.core.internal.util.EventSimulatorConstants;
 import io.siddhi.distribution.event.simulator.core.internal.util.SimulationConfigUploader;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulator;
-import io.siddhi.distribution.event.simulator.core.service.EventSimulatorDataHolder;
 import io.siddhi.distribution.event.simulator.core.service.EventSimulatorMap;
 import io.siddhi.distribution.event.simulator.core.service.bean.ActiveSimulatorData;
 import io.siddhi.distribution.event.simulator.core.service.bean.ResourceDependencyData;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.wso2.carbon.analytics.permissions.PermissionProvider;
-import org.wso2.carbon.analytics.permissions.bean.Permission;
 import org.wso2.carbon.utils.Utils;
 import org.wso2.msf4j.Request;
 
@@ -55,14 +52,6 @@ import javax.ws.rs.core.Response;
         date = "2017-07-20T09:30:14.336Z")
 public class FeedApiServiceImpl extends FeedApiService {
     private static final ExecutorService executorServices = Executors.newFixedThreadPool(10);
-    private static final String PERMISSION_APP_NAME = "SIM";
-    private static final String MANAGE_SIMULATOR_PERMISSION_STRING = "simulator.manage";
-    private static final String VIEW_SIMULATOR_PERMISSION_STRING = "simulator.view";
-
-    private static String getUserName(Request request) {
-        Object username = request.getProperty("username");
-        return username != null ? username.toString() : null;
-    }
 
     public Response addFeedSimulation(String simulationConfiguration) throws NotFoundException {
         SimulationConfigUploader simulationConfigUploader = SimulationConfigUploader.getConfigUploader();
@@ -584,80 +573,38 @@ public class FeedApiServiceImpl extends FeedApiService {
 
     @Override
     public Response getFeedSimulations(Request request) throws NotFoundException {
-        if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
-                (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
-                (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return getFeedSimulations();
     }
 
     @Override
     public Response addFeedSimulation(String body, Request request) throws NotFoundException {
-        if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return addFeedSimulation(body);
     }
 
     @Override
     public Response deleteFeedSimulation(String simulationName, Request request) throws NotFoundException {
-        if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return deleteFeedSimulation(simulationName);
     }
 
     @Override
     public Response getFeedSimulation(String simulationName, Request request) throws NotFoundException {
-        if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
-                (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
-                (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return getFeedSimulation(simulationName);
     }
 
     @Override
     public Response operateFeedSimulation(String action, String simulationName, Request request)
             throws NotFoundException {
-        if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return operateFeedSimulation(action, simulationName);
     }
 
     @Override
     public Response updateFeedSimulation(String simulationName, String body, Request request)
             throws NotFoundException, FileOperationsException {
-        if (getUserName(request) != null && !getPermissionProvider().hasPermission(getUserName(request), new
-                Permission(PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return updateFeedSimulation(simulationName, body);
     }
 
     @Override
     public Response getFeedSimulationStatus(String simulationName, Request request) throws NotFoundException {
-        if (getUserName(request) != null && !(getPermissionProvider().hasPermission(getUserName(request), new Permission
-                (PERMISSION_APP_NAME, MANAGE_SIMULATOR_PERMISSION_STRING)) || getPermissionProvider().hasPermission
-                (getUserName(request), new Permission(PERMISSION_APP_NAME, VIEW_SIMULATOR_PERMISSION_STRING)))) {
-            return Response.status(Response.Status.UNAUTHORIZED).entity("Insufficient permission to perform the action")
-                    .build();
-        }
         return getFeedSimulationStatus(simulationName);
-    }
-
-    private PermissionProvider getPermissionProvider() {
-        return EventSimulatorDataHolder.getPermissionProvider();
     }
 }

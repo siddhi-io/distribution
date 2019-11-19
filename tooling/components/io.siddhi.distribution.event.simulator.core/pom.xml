@@ -21,7 +21,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>5.1.1-SNAPSHOT</version>
+        <version>5.2.0-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
@@ -177,7 +177,7 @@
         </import.package>
         <carbon.component>
             osgi.service; objectClass="org.wso2.msf4j.Microservice"; serviceCount="4",
-            osgi.service; objectClass="javax.ws.rs.ext.ExceptionMapper";serviceCount="2",
+            osgi.service; objectClass="javax.ws.rs.ext.ExceptionMapper";serviceCount="1",
             osgi.service; objectClass="org.wso2.carbon.deployment.engine.Deployer";serviceCount="2"
         </carbon.component>
     </properties>

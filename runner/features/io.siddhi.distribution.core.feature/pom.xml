@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>5.1.1-SNAPSHOT</version>
+        <version>5.2.0-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
@@ -222,10 +222,6 @@
                                 </advice>
                             </adviceFileContents>
                             <bundles>
-                                <bundle>
-                                    <symbolicName>antlr4-runtime</symbolicName>
-                                    <version>${antlr4.runtime.version}</version>
-                                </bundle>
                                 <bundle>
                                     <symbolicName>com.google.gson</symbolicName>
                                     <version>${gson.version}</version>

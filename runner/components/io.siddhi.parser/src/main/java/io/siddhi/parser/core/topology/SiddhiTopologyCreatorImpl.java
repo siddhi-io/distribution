@@ -60,6 +60,9 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.UUID;
 
+import static io.siddhi.parser.core.util.SiddhiTopologyCreatorConstants.DEFAULT_PARALLEL;
+import static io.siddhi.parser.core.util.SiddhiTopologyCreatorConstants.INMEMORY;
+
 /**
  * Consumes a Siddhi App and produce a {@link SiddhiTopology} based on distributed annotations.
  */
@@ -94,7 +97,6 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         String execGroupName;
         String defaultExecGroupName = siddhiAppName + "-" + UUID.randomUUID();
 
-
         for (ExecutionElement executionElement : siddhiApp.getExecutionElementList()) {
             //groupName is set to default, since all elements go under a single group
             execGroupName = defaultExecGroupName;
@@ -104,6 +106,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
 
         checkUserGivenSourceDistribution();
         assignPublishingStrategyOutputStream();
+        checkForInmemoryBridges();
         cleanInnerGroupStreams(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
         if (log.isDebugEnabled()) {
             log.debug("Topology was created with " + siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values().size
@@ -115,6 +118,12 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         return new SiddhiTopology(siddhiTopologyDataHolder.getSiddhiAppName(), new ArrayList<>
                 (siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values()),
                 transportChannelCreationEnabled, isStatefulApp(), isUserGiveSourceStateful);
+    }
+
+    @Override
+    public boolean isAppStateful(String userDefinedSiddhiApp) {
+        this.siddhiAppRuntime = SiddhiParserDataHolder.getSiddhiManager().createSiddhiAppRuntime(userDefinedSiddhiApp);
+        return isStatefulApp();
     }
 
     private boolean isStatefulApp() {
@@ -160,12 +169,72 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         return false;
     }
 
+    private void checkForInmemoryBridges() {
+        List<SiddhiQueryGroup> siddhiQueryGroupsList =
+                new ArrayList<>(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
+
+        for (SiddhiQueryGroup siddhiQueryGroup : siddhiQueryGroupsList) {
+            for (Entry<String, OutputStreamDataHolder> entry : siddhiQueryGroup.getOutputStreams().entrySet()) {
+                OutputStreamDataHolder outputStreamDataHolder = entry.getValue();
+                String streamId = entry.getKey();
+                StreamDefinition streamDefinition = siddhiApp.getStreamDefinitionMap().get(streamId);
+                if (outputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM) &&
+                        outputStreamDataHolder.isUserGiven() && streamDefinition != null) {
+                    for (Annotation annotation : streamDefinition.getAnnotations()) {
+                        if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SINK_IDENTIFIER
+                                .replace("@", ""))) {
+                            if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String topic = annotation.getElement("topic");
+                                String runtimeStreamDefinition = removeMetaInfoStream(streamId,
+                                        outputStreamDataHolder.getStreamDefinition(),
+                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER, INMEMORY);
+
+                                String outputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
+                                OutputStreamDataHolder streamDataHolder = new OutputStreamDataHolder(streamId,
+                                        outputStreamDefinition, EventHolder.STREAM, false);
+                                streamDataHolder.setInmemoryTopicName(topic);
+                                streamDataHolder.addPublishingStrategy(
+                                        new PublishingStrategyDataHolder(TransportStrategy.ALL,
+                                                DEFAULT_PARALLEL));
+                                entry.setValue(streamDataHolder);
+                            }
+                        }
+                    }
+                }
+            }
+            for (Entry<String, InputStreamDataHolder> entry : siddhiQueryGroup.getInputStreams().entrySet()) {
+                InputStreamDataHolder inputStreamDataHolder = entry.getValue();
+                String streamId = entry.getKey();
+                StreamDefinition streamDefinition = siddhiApp.getStreamDefinitionMap().get(streamId);
+                if (inputStreamDataHolder.getEventHolderType().equals(EventHolder.STREAM) &&
+                        inputStreamDataHolder.isUserGiven() && streamDefinition != null) {
+                    for (Annotation annotation : streamDefinition.getAnnotations()) {
+                        if (annotation.getName().equalsIgnoreCase(SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER
+                                .replace("@", ""))) {
+                            if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                String topic = annotation.getElement("topic");
+                                String runtimeStreamDefinition = removeMetaInfoStream(streamId,
+                                        inputStreamDataHolder.getStreamDefinition(),
+                                        SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER, INMEMORY);
+                                String inputStreamDefinition = "${" + streamId + "} " + runtimeStreamDefinition;
+                                inputStreamDataHolder.setStreamDefinition(inputStreamDefinition);
+                                inputStreamDataHolder.setInMemoryTopic(topic);
+                                inputStreamDataHolder.setUserGiven(false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * Clean input and output streams of the group by removing streams that are only used within that group.
      *
      * @param siddhiQueryGroups Collection of Siddhi Query Groups
      */
     private void cleanInnerGroupStreams(Collection<SiddhiQueryGroup> siddhiQueryGroups) {
+        Map<String, String> dependentStreams = new HashMap<>();
         for (SiddhiQueryGroup siddhiQueryGroup : siddhiQueryGroups) {
             for (Entry<String, InputStreamDataHolder> inputStreamDataHolder :
                     siddhiQueryGroup.getInputStreams().entrySet()) {
@@ -175,15 +244,29 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                     String inputStreamId = aggDef.getBasicSingleInputStream().getStreamId();
                     String defaultStreamDef = siddhiApp.getStreamDefinitionMap().get(inputStreamId).toString();
                     if (!isUserGivenTransport(defaultStreamDef)) {
-                        siddhiQueryGroup.getInputStreams().get(inputStreamId)
-                                .setStreamDefinition(defaultStreamDef.toString());
-                        siddhiQueryGroup.getInputStreams().get(inputStreamId).setInnerGroupStream(false);
+                        if (siddhiQueryGroup.getInputStreams().get(inputStreamId) != null) {
+                            siddhiQueryGroup.getInputStreams().get(inputStreamId)
+                                    .setStreamDefinition(defaultStreamDef);
+                            siddhiQueryGroup.getInputStreams().get(inputStreamId).setInnerGroupStream(false);
+                        } else {
+                            dependentStreams.put(inputStreamId, defaultStreamDef);
+                        }
+
                     }
                 }
                 //remove duplicate definitions
                 if (siddhiQueryGroup.getOutputStreams().containsKey(inputStreamName)) {
                     siddhiQueryGroup.getOutputStreams().remove(inputStreamName);
                 }
+            }
+            for (Entry<String, String> dependentStream : dependentStreams.entrySet()) {
+                InputStreamDataHolder dependentInputStreamHolder =
+                        new InputStreamDataHolder(dependentStream.getKey(), dependentStream.getValue(),
+                                EventHolder.STREAM, false,
+                                new SubscriptionStrategyDataHolder(1,
+                                        TransportStrategy.ALL, null));
+                dependentInputStreamHolder.setInnerGroupStream(false);
+                siddhiQueryGroup.getInputStreams().put(dependentStream.getKey(), dependentInputStreamHolder);
             }
             siddhiQueryGroup.getInputStreams()
                     .entrySet().removeIf(stringInputStreamDataHolderEntry -> stringInputStreamDataHolderEntry.getValue()
@@ -387,6 +470,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
 
     private void checkUserGivenSourceDistribution() {
         boolean passthroughQueriesAvailable = false;
+        boolean isInmemoryBridged = false;
         List<SiddhiQueryGroup> siddhiQueryGroupsList =
                 new ArrayList<>(siddhiTopologyDataHolder.getSiddhiQueryGroupMap().values());
 
@@ -399,10 +483,10 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                         inputStreamDataHolder.isUserGivenSource()) {
                     String runtimeDefinition = removeMetaInfoStream(streamId,
                             inputStreamDataHolder.getStreamDefinition(), SiddhiTopologyCreatorConstants
-                                    .SOURCE_IDENTIFIER);
+                                    .SOURCE_IDENTIFIER, null);
                     runtimeDefinition = removeMetaInfoStream(streamId,
                             runtimeDefinition, SiddhiTopologyCreatorConstants
-                                    .SINK_IDENTIFIER);
+                                    .SINK_IDENTIFIER, null);
                     StreamDefinition streamDefinition = siddhiAppRuntime.getStreamDefinitionMap()
                             .get(inputStreamDataHolder.getStreamName());
                     int nonMessagingSources = 0;
@@ -411,20 +495,23 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                                 .replace("@", ""))) {
                             if (annotation.getElement("type").equalsIgnoreCase(DEFAULT_MESSAGING_SYSTEM)) {
                                 siddhiQueryGroup.setMessagingSourceAvailable(true);
+                            } else if (annotation.getElement("type").equalsIgnoreCase(INMEMORY)) {
+                                isInmemoryBridged = true;
                             } else {
                                 nonMessagingSources++;
                             }
                         }
                     }
-                    if ((!siddhiQueryGroup.isMessagingSourceAvailable() || nonMessagingSources > 0)
-                            && isStatefulApp()) {
+                    if (((!siddhiQueryGroup.isMessagingSourceAvailable() && !isInmemoryBridged)
+                            || nonMessagingSources > 0) && isStatefulApp()) {
                         passthroughQueriesAvailable = true;
                         generatePassthroughQueryList(inputStreamDataHolder, runtimeDefinition);
                         inputStreamDataHolder.setStreamDefinition(runtimeDefinition);
                         inputStreamDataHolder.setUserGiven(false);
                         InputStreamDataHolder holder = siddhiQueryGroup.getInputStreams().get(streamId);
                         String consumingStream = "${" + streamId + "} " + removeMetaInfoStream(streamId,
-                                holder.getStreamDefinition(), SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER);
+                                holder.getStreamDefinition(), SiddhiTopologyCreatorConstants.SOURCE_IDENTIFIER,
+                                null);
                         holder.setStreamDefinition(consumingStream);
                         holder.setUserGiven(false);
                     }
@@ -452,11 +539,12 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
      *
      * @return Stream definition String after removing Sink/Source configuration
      */
-    private String removeMetaInfoStream(String streamId, String streamDefinition, String identifier) {
+    private String removeMetaInfoStream(String streamId, String streamDefinition, String identifier, String type) {
         int[] queryContextStartIndex;
         int[] queryContextEndIndex;
         for (Annotation annotation : siddhiApp.getStreamDefinitionMap().get(streamId).getAnnotations()) {
-            if (annotation.getName().toLowerCase().equals(identifier.replace("@", ""))) {
+            if (annotation.getName().toLowerCase().equals(identifier.replace("@", "")) &&
+                    (annotation.getElement("type").equalsIgnoreCase(type) || type == null)) {
                 queryContextStartIndex = annotation.getQueryContextStartIndex();
                 queryContextEndIndex = annotation.getQueryContextEndIndex();
                 streamDefinition = streamDefinition.replace(
@@ -553,7 +641,6 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
         siddhiTopologyDataHolder.getSiddhiQueryGroupMap().put(queryGroupName, siddhiQueryGroup);
     }
 
-
     /**
      * Publishing strategies for an OutputStream is assigned if the corresponding outputStream is being used as an
      * InputStream in a separate group.
@@ -586,7 +673,7 @@ public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
                             if (outputStreamDataHolder.isUserGiven()) {
                                 String runtimeStreamDefinition = removeMetaInfoStream(streamId,
                                         inputStreamDataHolder.getStreamDefinition(),
-                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER);
+                                        SiddhiTopologyCreatorConstants.SINK_IDENTIFIER, null);
 
                                 if (!outputStreamDataHolder.isSinkBridgeAdded()) {
                                     String outputStreamDefinition = outputStreamDataHolder.

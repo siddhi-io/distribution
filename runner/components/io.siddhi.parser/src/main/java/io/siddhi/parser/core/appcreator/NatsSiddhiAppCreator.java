@@ -119,9 +119,13 @@ public class NatsSiddhiAppCreator extends AbstractSiddhiAppCreator {
             Map<String, Integer> partitionKeys = new HashMap();
 
             for (PublishingStrategyDataHolder holder : outputStream.getPublishingStrategyList()) {
-                sinkValuesMap.put("topicList", siddhiAppName + "_" +
-                        outputStream.getStreamName() + (holder.getGroupingField() == null ? "" : ("_" + holder
-                        .getGroupingField())));
+                if (outputStream.getInmemoryTopicName() != null) {
+                    sinkValuesMap.put(TOPIC_LIST, outputStream.getInmemoryTopicName());
+                } else {
+                    sinkValuesMap.put(TOPIC_LIST, siddhiAppName + "_" +
+                            outputStream.getStreamName() + (holder.getGroupingField() == null ? "" : ("_" + holder
+                            .getGroupingField())));
+                }
                 if (holder.getStrategy() == TransportStrategy.FIELD_GROUPING) {
                     if (partitionKeys.get(holder.getGroupingField()) != null &&
                             partitionKeys.get(holder.getGroupingField()) > holder.getParallelism()) {
@@ -215,9 +219,12 @@ public class NatsSiddhiAppCreator extends AbstractSiddhiAppCreator {
                     updateQueryList(queryList, queryValuesMap);
 
                 } else if (subscriptionStrategy.getStrategy() == TransportStrategy.ALL) {
-
-                    sourceValuesMap.put(TOPIC_LIST, getTopicName(siddhiAppName,
-                            inputStream.getStreamName(), null));
+                    if (inputStream.getInMemoryTopic() != null) {
+                        sourceValuesMap.put(TOPIC_LIST, inputStream.getInMemoryTopic());
+                    } else {
+                        sourceValuesMap.put(TOPIC_LIST, getTopicName(siddhiAppName,
+                                inputStream.getStreamName(), null));
+                    }
                     for (SiddhiQuery aQueryList : queryList) {
                         String sourceString = getUpdatedQuery(DEFAULT_NATS_SOURCE_TEMPLATE, sourceValuesMap);
                         Map<String, String> queryValuesMap = new HashMap(1);

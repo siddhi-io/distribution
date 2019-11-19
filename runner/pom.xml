@@ -22,7 +22,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>5.1.1-SNAPSHOT</version>
+        <version>5.2.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -398,6 +398,12 @@
                                     <groupId>io.siddhi.extension.io.grpc</groupId>
                                     <artifactId>siddhi-io-grpc</artifactId>
                                     <version>${siddhi.io.grpc.version}</version>
+                                    <type>jar</type>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>io.siddhi.extension.io.s3</groupId>
+                                    <artifactId>siddhi-io-s3</artifactId>
+                                    <version>${siddhi.io.s3.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
                                 <artifactItem>

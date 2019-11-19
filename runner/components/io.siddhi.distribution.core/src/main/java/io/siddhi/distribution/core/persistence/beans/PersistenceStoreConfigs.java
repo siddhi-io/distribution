@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -32,6 +32,11 @@ public class PersistenceStoreConfigs {
     private String table = "PERSISTENCE_TABLE";
     @Element(description = "Database query map")
     private List<Queries> queries;
+    private String accessKey;
+    private String secretKey;
+    private String region;
+    private String bucketName;
+    private String credentialProvideClass;
 
     public String getLocation() {
         return location;
@@ -63,5 +68,45 @@ public class PersistenceStoreConfigs {
 
     public void setQueries(List<Queries> queries) {
         this.queries = queries;
+    }
+
+    public String getCredentialProvideClass() {
+        return credentialProvideClass;
+    }
+
+    public void setCredentialProvideClass(String credentialProvideClass) {
+        this.credentialProvideClass = credentialProvideClass;
+    }
+
+    public String getAccessKey() {
+        return accessKey;
+    }
+
+    public void setAccessKey(String accessKey) {
+        this.accessKey = accessKey;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 }

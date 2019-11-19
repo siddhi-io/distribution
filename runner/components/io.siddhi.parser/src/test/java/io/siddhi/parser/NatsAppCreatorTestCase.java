@@ -115,4 +115,83 @@ public class NatsAppCreatorTestCase {
 
         Assert.assertEquals(queryGroupList.size(), 2);
     }
+
+    /** Test partial app creation for a user given app with an in-memory sink.
+     */
+    @Test
+    public void testInmemoryBridgedAppParsing1() {
+        String siddhiApp = "@App:name('InmemoryTransportTestApp') " +
+                "@Source(type = 'http', receiver.url = 'http://0.0.0.0:8080/stockStream', " +
+                "basic.auth.enabled = 'false', @map(type = 'json'))\n"
+                + "Define stream stockStream(symbol string, price float, quantity int, tier string);\n"
+                + "@sink(type='inMemory', topic='takingOverTopic', @map(type='passThrough'))\n"
+                + "Define stream takingOverStream(symbol string, overtakingSymbol string, avgPrice double);\n"
+                + "@info(name = 'query1')\n"
+                + "From stockStream[price > 100]\n"
+                + "Select *\n"
+                + "Insert into filteredStockStream;\n"
+                + "@info(name = 'query2')"
+                + "Partition with (symbol of filteredStockStream)\n"
+                + "begin\n"
+                + "From filteredStockStream#window.lengthBatch(2)\n"
+                + "Select symbol, tier as overtakingSymbol,avg(price) as avgPrice  \n"
+                + "Insert into takingOverStream;\n"
+                + "end;\n"
+                + "@info(name ='query3')\n"
+                + "from filteredStockStream [price >250 and price <350]\n"
+                + "Select \"XYZ\" as symbol, tier as overtakingSymbol ,avg(price) as avgPrice  \n"
+                + "Insert into takingOverStream;\n";
+        SiddhiTopologyCreatorImpl siddhiTopologyCreator = new SiddhiTopologyCreatorImpl();
+        SiddhiTopology topology = siddhiTopologyCreator.createTopology(siddhiApp);
+        SiddhiAppCreator appCreator = new NatsSiddhiAppCreator();
+        List<DeployableSiddhiQueryGroup> queryGroupList = appCreator.createApps(topology, messagingSystem);
+
+        Assert.assertEquals(queryGroupList.size(), 2);
+        Assert.assertTrue(queryGroupList.get(0).isReceiverQueryGroup());
+        String processApp = queryGroupList.get(1).getSiddhiQueries().get(0).getApp();
+        Assert.assertFalse(processApp.contains("@sink(type='inMemory', topic='takingOverTopic', " +
+                "@map(type='passThrough'))"));
+        Assert.assertTrue(processApp.contains("@sink(type='nats',cluster.id='test-cluster'," +
+                "destination = 'takingOverTopic'"));
+    }
+
+    /** Test partial app creation for a user given app with in-memory sink & source.
+     */
+    @Test
+    public void testInmemoryBridgedAppParsing2() {
+        String siddhiApp = "@App:name('InmemoryTransportTestApp') " +
+                "@source(type='inMemory', topic='stockStream', @map(type='passThrough'))\n"
+                + "Define stream stockStream(symbol string, price float, quantity int, tier string);\n"
+                + "@sink(type='inMemory', topic='takingOverTopic', @map(type='passThrough'))\n"
+                + "Define stream takingOverStream(symbol string, overtakingSymbol string, avgPrice double);\n"
+                + "@info(name = 'query1')\n"
+                + "From stockStream[price > 100]\n"
+                + "Select *\n"
+                + "Insert into filteredStockStream;\n"
+                + "@info(name = 'query2')"
+                + "Partition with (symbol of filteredStockStream)\n"
+                + "begin\n"
+                + "From filteredStockStream#window.lengthBatch(2)\n"
+                + "Select symbol, tier as overtakingSymbol,avg(price) as avgPrice  \n"
+                + "Insert into takingOverStream;\n"
+                + "end;\n"
+                + "@info(name ='query3')\n"
+                + "from filteredStockStream [price >250 and price <350]\n"
+                + "Select \"XYZ\" as symbol, tier as overtakingSymbol ,avg(price) as avgPrice  \n"
+                + "Insert into takingOverStream;\n";
+        SiddhiTopologyCreatorImpl siddhiTopologyCreator = new SiddhiTopologyCreatorImpl();
+        SiddhiTopology topology = siddhiTopologyCreator.createTopology(siddhiApp);
+        SiddhiAppCreator appCreator = new NatsSiddhiAppCreator();
+        List<DeployableSiddhiQueryGroup> queryGroupList = appCreator.createApps(topology, messagingSystem);
+
+        Assert.assertEquals(queryGroupList.size(), 1);
+        String app = queryGroupList.get(0).getSiddhiQueries().get(0).getApp();
+        Assert.assertFalse(app.contains("@source(type='inMemory', topic='stockStream', @map(type='passThrough'))"));
+        Assert.assertFalse(app.contains("@sink(type='inMemory', topic='takingOverTopic', " +
+                "@map(type='passThrough'))"));
+        Assert.assertTrue(app.contains("@source(type='nats',cluster.id='test-cluster'," +
+                "destination = 'stockStream'"));
+        Assert.assertTrue(app.contains("@sink(type='nats',cluster.id='test-cluster'," +
+                "destination = 'takingOverTopic'"));
+    }
 }

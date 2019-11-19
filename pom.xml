@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.siddhi.distribution</groupId>
     <artifactId>io.siddhi.distribution.parent</artifactId>
-    <version>5.1.1-SNAPSHOT</version>
+    <version>5.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
@@ -384,6 +384,11 @@
                 <groupId>io.siddhi.extension.io.http</groupId>
                 <artifactId>siddhi-io-http</artifactId>
                 <version>${siddhi.io.http.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.siddhi.extension.io.s3</groupId>
+                <artifactId>siddhi-io-s3</artifactId>
+                <version>${siddhi.io.s3.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.siddhi.extension.io.rabbitmq</groupId>
@@ -1134,12 +1139,25 @@
                 <artifactId>junixsocket-core</artifactId>
                 <version>${com.kohlschutter.junixsocket.junixsocket.core.version}</version>
             </dependency>
+
+<!--            AWS sdk-->
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>${aws.sdk.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>apache-client</artifactId>
+                <version>${aws.sdk.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <properties>
-        <siddhi.version>5.1.8-SNAPSHOT</siddhi.version>
-        <siddhi.bundle.version>5.1.8.SNAPSHOT</siddhi.bundle.version>
+        <siddhi.version>5.1.9-SNAPSHOT</siddhi.version>
+        <siddhi.bundle.version>5.1.9.SNAPSHOT</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.1.36</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.1.0, 6.2.0)</carbon.analytics-common.version.range>
@@ -1158,8 +1176,8 @@
 
         <!-- WSO2 Dependencies -->
         <wso2.slf4j.version>1.5.10.wso2v1</wso2.slf4j.version>
-        <carbon.kernel.version>5.2.11</carbon.kernel.version>
-        <org.wso2.transport.http.netty.version>6.2.28</org.wso2.transport.http.netty.version>
+        <carbon.kernel.version>5.2.12</carbon.kernel.version>
+        <org.wso2.transport.http.netty.version>6.2.33</org.wso2.transport.http.netty.version>
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
         <carbon.deployment.version>5.2.2</carbon.deployment.version>
         <carbon.datasources.version>1.1.8</carbon.datasources.version>
@@ -1194,7 +1212,7 @@
         <log4j.wso2.version>1.2.17.wso2v1</log4j.wso2.version>
         <pax.exam.container.native.version>4.13.1</pax.exam.container.native.version>
         <pax.url.aether.version>2.6.1</pax.url.aether.version>
-        <org.jacoco.ant.version>0.8.4</org.jacoco.ant.version>
+        <org.jacoco.ant.version>0.8.5</org.jacoco.ant.version>
         <maven.src.version>1.26.2</maven.src.version>
         <apache.commons.text.version>1.7</apache.commons.text.version>
         <org.jacoco.version>0.8.5</org.jacoco.version>
@@ -1224,7 +1242,7 @@
         <!--MSF4J related-->
         <msf4j.version>2.8.1</msf4j.version>
         <com.fasterxml.jackson.core.version>2.9.10</com.fasterxml.jackson.core.version>
-        <io.swagger.version>1.5.24</io.swagger.version>
+        <io.swagger.version>1.6.0</io.swagger.version>
         <javax.ws.rs-api.version>2.0</javax.ws.rs-api.version>
         <pax.logging.api.version>1.11.2</pax.logging.api.version>
         <javax.servlet.version>4.0.1</javax.servlet.version>
@@ -1243,12 +1261,12 @@
         <org.apache.commons.version>1.3.2</org.apache.commons.version>
         <osgi.test.util.version>5.1.2</osgi.test.util.version>
         <swagger.codegen.version>2.3.1.wso2v2</swagger.codegen.version>
-        <swagger.models.version>1.5.24</swagger.models.version>
+        <swagger.models.version>1.6.0</swagger.models.version>
 
         <!-- nats test dependencies -->
         <io.nats.version>2.2.3</io.nats.version>
-        <org.testcontainers.version>1.12.2</org.testcontainers.version>
-        <assertj.version>3.13.2</assertj.version>
+        <org.testcontainers.version>1.12.3</org.testcontainers.version>
+        <assertj.version>3.14.0</assertj.version>
 
         <!--Siddhi Extension Versions-->
         <siddhi.execution.string.version>5.0.8-SNAPSHOT</siddhi.execution.string.version>
@@ -1260,40 +1278,41 @@
         <siddhi.execution.list.version>1.0.1-SNAPSHOT</siddhi.execution.list.version>
         <siddhi.execution.unitconversion.version>2.0.3-SNAPSHOT</siddhi.execution.unitconversion.version>
         <siddhi.execution.reorder.version>5.0.4-SNAPSHOT</siddhi.execution.reorder.version>
-        <siddhi.execution.unique.version>5.0.5-SNAPSHOT</siddhi.execution.unique.version>
+        <siddhi.execution.unique.version>5.0.6-SNAPSHOT</siddhi.execution.unique.version>
 
-        <siddhi.io.kafka.version>5.0.5-SNAPSHOT</siddhi.io.kafka.version>
-        <siddhi.io.http.version>2.1.3-SNAPSHOT</siddhi.io.http.version>
+        <siddhi.io.kafka.version>5.0.6-SNAPSHOT</siddhi.io.kafka.version>
+        <siddhi.io.http.version>2.2.1-SNAPSHOT</siddhi.io.http.version>
+        <siddhi.io.s3.version>1.0.3-SNAPSHOT</siddhi.io.s3.version>
         <siddhi.io.file.version>2.0.4-SNAPSHOT</siddhi.io.file.version>
         <siddhi.io.tcp.version>3.0.5-SNAPSHOT</siddhi.io.tcp.version>
-        <siddhi.io.email.version>2.0.5-SNAPSHOT</siddhi.io.email.version>
-        <siddhi.io.jms.version>2.0.3-SNAPSHOT</siddhi.io.jms.version>
-        <siddhi.io.cdc.version>2.0.4-SNAPSHOT</siddhi.io.cdc.version>
+        <siddhi.io.email.version>2.0.6-SNAPSHOT</siddhi.io.email.version>
+        <siddhi.io.jms.version>2.0.4-SNAPSHOT</siddhi.io.jms.version>
+        <siddhi.io.cdc.version>2.0.5-SNAPSHOT</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>2.1.1-SNAPSHOT</siddhi.io.prometheus.version>
-        <siddhi.io.nats.version>2.0.7-SNAPSHOT</siddhi.io.nats.version>
-        <siddhi.io.grpc.version>1.0.4-SNAPSHOT</siddhi.io.grpc.version>
+        <siddhi.io.nats.version>2.0.9-SNAPSHOT</siddhi.io.nats.version>
+        <siddhi.io.grpc.version>1.0.6-SNAPSHOT</siddhi.io.grpc.version>
         <siddhi.io.rabbitmq.version>3.0.3-SNAPSHOT</siddhi.io.rabbitmq.version>
 
-        <siddhi.map.json.version>5.0.5-SNAPSHOT</siddhi.map.json.version>
-        <siddhi.map.avro.version>2.0.6-SNAPSHOT</siddhi.map.avro.version>
+        <siddhi.map.json.version>5.0.6-SNAPSHOT</siddhi.map.json.version>
+        <siddhi.map.avro.version>2.0.7-SNAPSHOT</siddhi.map.avro.version>
         <siddhi.map.binary.version>2.0.5-SNAPSHOT</siddhi.map.binary.version>
         <siddhi.map.text.version>2.0.5-SNAPSHOT</siddhi.map.text.version>
         <siddhi.map.xml.version>5.0.4-SNAPSHOT</siddhi.map.xml.version>
-        <siddhi.map.keyvalue.version>2.0.5-SNAPSHOT</siddhi.map.keyvalue.version>
+        <siddhi.map.keyvalue.version>2.0.6-SNAPSHOT</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
-        <siddhi.map.protobuf.version>1.0.2-SNAPSHOT</siddhi.map.protobuf.version>
+        <siddhi.map.protobuf.version>1.0.3-SNAPSHOT</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.2-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>7.0.3-SNAPSHOT</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.4-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
         <siddhi.script.js.version>5.0.3-SNAPSHOT</siddhi.script.js.version>
 
         <!-- Removed due to size constraint -->
-        <!--<siddhi.execution.streamingml.version>2.0.2</siddhi.execution.streamingml.version>-->
+        <!--<siddhi.execution.streamingml.version>2.0.4</siddhi.execution.streamingml.version>-->
         <!--<siddhi.execution.tensorflow.version>2.0.2</siddhi.execution.tensorflow.version>-->
-        <!--<siddhi.store.elasticsearch.version>3.1.1</siddhi.store.elasticsearch.version>-->
-        <!--<siddhi.io.googlepubsub.version>2.0.1</siddhi.io.googlepubsub.version>-->
+        <!--<siddhi.store.elasticsearch.version>3.1.2</siddhi.store.elasticsearch.version>-->
+        <!--<siddhi.io.googlepubsub.version>2.0.2</siddhi.io.googlepubsub.version>-->
 
         <!--Bundle Plugin - Overridden from parent due to a bug in latest version related to capability providers-->
         <maven.bundle.plugin.version>3.2.0</maven.bundle.plugin.version>
@@ -1315,11 +1334,11 @@
         <org.glassfish.hk2.hk2.api.version>2.4.0-b34</org.glassfish.hk2.hk2.api.version>
         <org.glassfish.jersey.bundles.repackaged.jersey.guava.version>2.22.2</org.glassfish.jersey.bundles.repackaged.jersey.guava.version>
         <org.glassfish.hk2.external.javax.inject.version>2.4.0-b34</org.glassfish.hk2.external.javax.inject.version>
-        <com.kohlschutter.junixsocket.junixsocket.core.version>2.2.0</com.kohlschutter.junixsocket.junixsocket.core.version>
+        <com.kohlschutter.junixsocket.junixsocket.core.version>2.2.1</com.kohlschutter.junixsocket.junixsocket.core.version>
 
         <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
-        <swagger.codegen.maven.plugin.version>2.4.9</swagger.codegen.maven.plugin.version>
+        <swagger.codegen.maven.plugin.version>2.4.10</swagger.codegen.maven.plugin.version>
 
         <!-- Dependency version ranges -->
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>
@@ -1333,10 +1352,14 @@
         <javax.ws.rs.version.range>[2.0.0, 3.0.0)</javax.ws.rs.version.range>
         <org.yaml.snakeyaml.version.range>[1.0.0, 2.0.0)</org.yaml.snakeyaml.version.range>
         <slf4j.version.range>[1.7,2)</slf4j.version.range>
+        <aws.sdk.version.range>[2.10.1, 2.11.0)</aws.sdk.version.range>
 
 
         <!-- grpc dependency version-->
-        <grpc.version>1.24.0</grpc.version>
+        <grpc.version>1.25.0</grpc.version>
+
+        <!-- aws sdk version-->
+        <aws.sdk.version>2.10.18</aws.sdk.version>
 
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>
