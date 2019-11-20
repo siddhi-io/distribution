@@ -37,7 +37,7 @@ public class PrometheusReporterConfig extends ScheduledReporterConfig implements
     private static final Logger logger = LoggerFactory.getLogger(PrometheusReporterConfig.class);
 
     public PrometheusReporterConfig() {
-        super("Prometheus");
+        super("prometheus");
     }
 
     @Override

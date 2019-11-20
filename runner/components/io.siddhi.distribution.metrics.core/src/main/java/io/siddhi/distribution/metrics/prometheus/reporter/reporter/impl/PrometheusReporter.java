@@ -36,7 +36,7 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A reporter which outputs measurements to prometheus
+ * A reporter which outputs measurements to prometheus.
  */
 public class PrometheusReporter extends AbstractReporter implements ScheduledReporter {
 
@@ -83,7 +83,7 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
             log.info("Prometheus Server has successfully connected at " + serverURL);
 
         } catch (MalformedURLException | ConnectionUnavailableException e) {
-
+            //TODO handle exception here @Dasuni
         }
     }
 
@@ -105,24 +105,23 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
             server = new HTTPServer(address, collectorRegistry);
         } catch (IOException e) {
             if (!(e instanceof BindException && e.getMessage().equals("Address already in use"))) {
-                log.error("Unable to establish connection for Prometheus  \'\' at " + serverURL);
+                log.error("Unable to establish connection for Prometheus  \'\' at " + serverURL, e);
                 throw new ConnectionUnavailableException("Unable to establish connection for Prometheus \'\' at "
                         + serverURL, e);
             }
         }
     }
 
-    public void disconnect() {
+    private void disconnect() {
         if (server != null) {
             server.stop();
             log.info("Prometheus Server successfully stopped at " + serverURL);
         }
     }
 
-    public void destroy() {
+    private void destroy() {
         if (collectorRegistry != null) {
             collectorRegistry.clear();
         }
     }
-
 }

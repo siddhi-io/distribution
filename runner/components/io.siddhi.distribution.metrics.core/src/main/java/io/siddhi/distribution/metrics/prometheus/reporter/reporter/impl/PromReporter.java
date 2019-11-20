@@ -35,13 +35,9 @@ import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A reporter which outputs measurements to Prometheus
+ * A reporter which outputs measurements to Prometheus.
  */
 public class PromReporter extends ScheduledReporter {
-//    protected PromReporter(MetricRegistry registry, String name, MetricFilter filter,
-//    TimeUnit rateUnit, TimeUnit durationUnit) {
-//        super(registry, name, filter, rateUnit, durationUnit);
-//    }
 
     /**
      * Returns a new {@link Builder} for {@link PrometheusReporter}.
@@ -133,9 +129,6 @@ public class PromReporter extends ScheduledReporter {
         }
     }
 
-    private static final int CONSOLE_WIDTH = 80;
-    private final DateFormat dateFormat;
-
     private PromReporter(MetricRegistry registry,
                          PrintStream output,
                          Locale locale,
@@ -145,7 +138,7 @@ public class PromReporter extends ScheduledReporter {
                          TimeUnit durationUnit,
                          MetricFilter filter) {
         super(registry, "prometheus-reporter", filter, rateUnit, durationUnit);
-        this.dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,
+        DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,
                 DateFormat.MEDIUM,
                 locale);
         dateFormat.setTimeZone(timeZone);

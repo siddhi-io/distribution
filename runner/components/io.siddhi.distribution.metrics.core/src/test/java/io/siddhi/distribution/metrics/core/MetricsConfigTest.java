@@ -25,11 +25,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.config.ConfigurationException;
 
-//import io.siddhi.distribution.metrics.prometheus.reporter.config.model.ReportingConfig;
-
 public class MetricsConfigTest {
 
-    static MetricsConfig metricsConfig;
+    private static MetricsConfig metricsConfig;
 
     @BeforeClass
     private void load() throws ConfigurationException {
@@ -41,9 +39,8 @@ public class MetricsConfigTest {
     @Test
     public void testPrometheusConfigLoad() {
         PrometheusReporterConfig config = metricsConfig.getReporting().getPrometheus().iterator().next();
-        Assert.assertEquals(config.getName(), "Prometheus");
-        Assert.assertEquals(config.isEnabled(), true);
+        Assert.assertEquals(config.getName(), "prometheus");
+        Assert.assertTrue(config.isEnabled());
         Assert.assertEquals(config.getPollingPeriod(), 600L);
     }
-
 }

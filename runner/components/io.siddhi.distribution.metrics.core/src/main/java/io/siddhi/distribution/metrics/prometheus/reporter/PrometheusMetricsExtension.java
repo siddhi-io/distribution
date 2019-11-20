@@ -51,7 +51,7 @@ public class PrometheusMetricsExtension implements MetricsExtension {
                         try {
                             metricManagementService.addReporter(reporterBuilder);
                         } catch (ReporterBuildException e) {
-                            logger.warn("PROMETHEUS Reporter build failed", e);
+                            logger.warn("Prometheus Reporter build failed", e);
                         }
                     }
             );

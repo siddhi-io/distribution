@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Configuration for all reporters in Metrics Core
+ * Configuration for all reporters in Metrics Core.
  */
 
 public class ReportingConfig {
@@ -32,7 +32,6 @@ public class ReportingConfig {
     private Set<PrometheusReporterConfig> prometheus;
 
     public ReportingConfig() {
-
         prometheus = new HashSet<>();
         prometheus.add(new PrometheusReporterConfig());
     }

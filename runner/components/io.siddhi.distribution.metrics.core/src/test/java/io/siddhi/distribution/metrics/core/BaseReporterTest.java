@@ -24,11 +24,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.metrics.core.MetricManagementService;
-import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.Metrics;
-
-import java.lang.management.ManagementFactory;
-import javax.management.MBeanServer;
 
 /**
  * Base Class for all Reporter Based Test Cases.
@@ -36,13 +32,7 @@ import javax.management.MBeanServer;
 public abstract class BaseReporterTest {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseReporterTest.class);
-
-    protected static MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-
     protected static Metrics metrics;
-
-    protected static MetricService metricService;
-
     protected static MetricManagementService metricManagementService;
 
     @BeforeSuite
@@ -53,7 +43,6 @@ public abstract class BaseReporterTest {
         System.setProperty("metrics.target", "target");
         metrics = new Metrics(TestUtils.getConfigProvider("metrics.yaml"));
         metrics.activate();
-        metricService = metrics.getMetricService();
         metricManagementService = metrics.getMetricManagementService();
     }
 

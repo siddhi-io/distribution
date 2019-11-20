@@ -26,7 +26,7 @@ import org.wso2.carbon.config.annotation.Configuration;
 /**
  * Test Cases for Reporters.
  */
-@Configuration(namespace = "wso2.metrics.prometheus", description = "Carbon Metrics Configuration Parameters")
+@Configuration(namespace = "metrics.prometheus", description = "Carbon Metrics Configuration Parameters")
 public class ReporterTest extends BaseReporterTest {
 
     @BeforeClass
@@ -46,12 +46,11 @@ public class ReporterTest extends BaseReporterTest {
 
     @Test
     public void testPrometheusReporter() throws InterruptedException {
-        metricManagementService.startReporter("Prometheus");
-        Assert.assertTrue(metricManagementService.isReporterRunning("Prometheus"));
+        metricManagementService.startReporter("prometheus");
+        Assert.assertTrue(metricManagementService.isReporterRunning("prometheus"));
         metricManagementService.report();
         Thread.sleep(1000);
-        metricManagementService.stopReporter("Prometheus");
-        Assert.assertFalse(metricManagementService.isReporterRunning("Prometheus"));
+        metricManagementService.stopReporter("prometheus");
+        Assert.assertFalse(metricManagementService.isReporterRunning("prometheus"));
     }
-
 }

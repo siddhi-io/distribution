@@ -61,9 +61,9 @@ wso2.metrics:
         pollingPeriod: 6
 
 ## Carbon Metrics Configuration Parameters for Prometheus Reporters
-wso2.metrics.prometheus:
+metrics.prometheus:
   reporting:
     prometheus:
-      - name: Prometheus
+      - name: prometheus
         enabled: true
         pollingPeriod: 600
