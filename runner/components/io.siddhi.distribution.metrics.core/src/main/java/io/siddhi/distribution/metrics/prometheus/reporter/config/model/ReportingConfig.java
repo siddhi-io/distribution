@@ -18,7 +18,6 @@
 
 package io.siddhi.distribution.metrics.prometheus.reporter.config.model;
 
-//import org.wso2.carbon.config.annotation.Configuration;
 import org.wso2.carbon.metrics.core.reporter.ReporterBuilder;
 
 import java.util.HashSet;

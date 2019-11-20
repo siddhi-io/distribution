@@ -44,7 +44,7 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
     private final MetricFilter metricFilter;
     private final long pollingPeriod;
     private PromReporter prometheusReporter;
-    private CollectorRegistry collectorRegistry;
+    private CollectorRegistry collectorRegistry=new CollectorRegistry();
     private HTTPServer server;
     private String serverURL = "http://localhost:1234";
 
@@ -77,9 +77,10 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
         URL target;
         try {
             target = new URL(serverURL);
-            initiateServer(target.getHost(), target.getPort());
-            log.info(" has successfully connected at " + serverURL);
+            initiateServer(target.getHost(), target.getPort(),collectorRegistry);
+            log.info("Prometheus Server has successfully connected at " + serverURL);
         } catch (MalformedURLException | ConnectionUnavailableException e) {
+            System.out.println("MalformedURLException");
         }
 
     }
@@ -87,6 +88,8 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
     @Override
     public void stopReporter() {
         if (prometheusReporter != null) {
+            destroy();
+            disconnect();
             prometheusReporter.stop();
             prometheusReporter = null;
 
@@ -94,7 +97,7 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
 
     }
 
-    private void initiateServer(String host, int port) throws ConnectionUnavailableException {
+    private void initiateServer(String host, int port, CollectorRegistry collectorRegistry) throws ConnectionUnavailableException {
         try {
             InetSocketAddress address = new InetSocketAddress(host, port);
             server = new HTTPServer(address, collectorRegistry);
@@ -104,6 +107,19 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
                 throw new ConnectionUnavailableException("Unable to establish connection for Prometheus \'\' at "
                         + serverURL, e);
             }
+        }
+    }
+
+    public void disconnect() {
+        if (server != null) {
+            server.stop();
+            log.info("Prometheus Server successfully stopped at " + serverURL);
+        }
+    }
+
+    public void destroy() {
+        if (CollectorRegistry.defaultRegistry != null) {
+            CollectorRegistry.defaultRegistry.clear();
         }
     }
 
