@@ -45,10 +45,11 @@ public class ReporterTest extends BaseReporterTest {
     }
 
     @Test
-    public void testPrometheusReporter() {
+    public void testPrometheusReporter() throws InterruptedException {
         metricManagementService.startReporter("Prometheus");
         Assert.assertTrue(metricManagementService.isReporterRunning("Prometheus"));
         metricManagementService.report();
+        Thread.sleep(100000);
         metricManagementService.stopReporter("Prometheus");
         Assert.assertFalse(metricManagementService.isReporterRunning("Prometheus"));
     }
