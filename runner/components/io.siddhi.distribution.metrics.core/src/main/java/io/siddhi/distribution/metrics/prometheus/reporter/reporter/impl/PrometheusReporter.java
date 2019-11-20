@@ -80,7 +80,7 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
             collectorRegistry.register(new DropwizardExports(metricRegistry));
 
             initiateServer(target.getHost(), target.getPort());
-            log.info(" has successfully connected at " + serverURL);
+            log.info("Prometheus Server has successfully connected at " + serverURL);
 
         } catch (MalformedURLException | ConnectionUnavailableException e) {
 
@@ -90,6 +90,8 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
     @Override
     public void stopReporter() {
         if (prometheusReporter != null) {
+            destroy();
+            disconnect();
             prometheusReporter.stop();
             prometheusReporter = null;
 
@@ -107,6 +109,19 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
                 throw new ConnectionUnavailableException("Unable to establish connection for Prometheus \'\' at "
                         + serverURL, e);
             }
+        }
+    }
+
+    public void disconnect() {
+        if (server != null) {
+            server.stop();
+            log.info("Prometheus Server successfully stopped at " + serverURL);
+        }
+    }
+
+    public void destroy() {
+        if (collectorRegistry != null) {
+            collectorRegistry.clear();
         }
     }
 
