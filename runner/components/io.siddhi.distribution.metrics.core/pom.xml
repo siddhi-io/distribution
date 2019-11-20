@@ -52,12 +52,6 @@
             <groupId>org.wso2.carbon.metrics</groupId>
             <artifactId>org.wso2.carbon.metrics.core</artifactId>
         </dependency>
-
-        <dependency>
-            <groupId>io.siddhi.distribution</groupId>
-            <artifactId>io.siddhi.distribution.metrics.prometheus.reporter</artifactId>
-            <version>5.1.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>org.wso2.carbon.config</groupId>
             <artifactId>org.wso2.carbon.config</artifactId>

@@ -69,19 +69,22 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
 
     @Override
     public void startReporter() {
+
         prometheusReporter = PromReporter.forRegistry(metricRegistry).filter(metricFilter)
                 .convertRatesTo(TimeUnit.SECONDS).convertDurationsTo(TimeUnit.MILLISECONDS).build();
         prometheusReporter.start(pollingPeriod, TimeUnit.SECONDS);
 
-        collectorRegistry.defaultRegistry.register(new DropwizardExports(metricRegistry));
-        URL target;
         try {
-            target = new URL(serverURL);
+            URL target = new URL(serverURL);
+            collectorRegistry = new CollectorRegistry();
+            collectorRegistry.register(new DropwizardExports(metricRegistry));
+
             initiateServer(target.getHost(), target.getPort());
             log.info(" has successfully connected at " + serverURL);
-        } catch (MalformedURLException | ConnectionUnavailableException e) {
-        }
 
+        } catch (MalformedURLException | ConnectionUnavailableException e) {
+
+        }
     }
 
     @Override
