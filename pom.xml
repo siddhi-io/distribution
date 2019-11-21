@@ -1290,19 +1290,19 @@
         <siddhi.io.cdc.version>2.0.5-SNAPSHOT</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>2.1.1-SNAPSHOT</siddhi.io.prometheus.version>
         <siddhi.io.nats.version>2.0.9-SNAPSHOT</siddhi.io.nats.version>
-        <siddhi.io.grpc.version>1.0.6-SNAPSHOT</siddhi.io.grpc.version>
-        <siddhi.io.rabbitmq.version>3.0.3-SNAPSHOT</siddhi.io.rabbitmq.version>
+        <siddhi.io.grpc.version>1.0.7-SNAPSHOT</siddhi.io.grpc.version>
+        <siddhi.io.rabbitmq.version>3.0.4-SNAPSHOT</siddhi.io.rabbitmq.version>
 
-        <siddhi.map.json.version>5.0.6-SNAPSHOT</siddhi.map.json.version>
+        <siddhi.map.json.version>5.0.7-SNAPSHOT</siddhi.map.json.version>
         <siddhi.map.avro.version>2.0.7-SNAPSHOT</siddhi.map.avro.version>
         <siddhi.map.binary.version>2.0.5-SNAPSHOT</siddhi.map.binary.version>
         <siddhi.map.text.version>2.0.5-SNAPSHOT</siddhi.map.text.version>
         <siddhi.map.xml.version>5.0.4-SNAPSHOT</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>2.0.6-SNAPSHOT</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
-        <siddhi.map.protobuf.version>1.0.3-SNAPSHOT</siddhi.map.protobuf.version>
+        <siddhi.map.protobuf.version>1.0.4-SNAPSHOT</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.3-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>7.0.4-SNAPSHOT</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.4-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
