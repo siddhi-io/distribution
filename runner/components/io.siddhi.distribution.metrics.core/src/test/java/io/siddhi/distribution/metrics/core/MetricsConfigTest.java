@@ -25,6 +25,9 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.config.ConfigurationException;
 
+/**
+ * Test Cases for {@link MetricsConfig}.
+ */
 public class MetricsConfigTest {
 
     private static MetricsConfig metricsConfig;
