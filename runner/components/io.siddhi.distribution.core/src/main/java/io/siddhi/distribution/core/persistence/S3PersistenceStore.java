@@ -201,8 +201,8 @@ public class S3PersistenceStore implements PersistenceStore {
 
     private AwsCredentialsProvider getCredentialProvider(Map configurationMap) {
         Object credentialProviderClassName = configurationMap.get(PersistenceConstants.CREDENTIAL_PROVIDER_CLASS);
-        if (!(credentialProviderClassName instanceof String)) { /* only to give support to previous
-            'credentialProvideClass' property */
+        if (!(credentialProviderClassName instanceof String)) { // only to give support to previous
+            // 'credentialProvideClass' property
             credentialProviderClassName = configurationMap.get(PersistenceConstants.CREDENTIAL_PROVIDER_CLASS_OLD);
         }
         if (credentialProviderClassName instanceof String) {
