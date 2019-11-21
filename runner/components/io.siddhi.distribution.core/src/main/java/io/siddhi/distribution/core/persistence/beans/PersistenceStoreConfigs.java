@@ -37,6 +37,8 @@ public class PersistenceStoreConfigs {
     private String region;
     private String bucketName;
     private String credentialProvideClass;
+    private String credentialProviderClass; /* give support for both 'credentialProvideClass' and
+    'credentialProviderClass' property */
 
     public String getLocation() {
         return location;
@@ -76,6 +78,16 @@ public class PersistenceStoreConfigs {
 
     public void setCredentialProvideClass(String credentialProvideClass) {
         this.credentialProvideClass = credentialProvideClass;
+    }
+
+    public String getCredentialProviderClass() {
+
+        return credentialProviderClass;
+    }
+
+    public void setCredentialProviderClass(String credentialProviderClass) {
+
+        this.credentialProviderClass = credentialProviderClass;
     }
 
     public String getAccessKey() {
