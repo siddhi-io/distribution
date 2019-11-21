@@ -37,8 +37,8 @@ public class PersistenceStoreConfigs {
     private String region;
     private String bucketName;
     private String credentialProvideClass;
-    private String credentialProviderClass; // give support for both 'credentialProvideClass' and
-    // 'credentialProviderClass' property
+    private String credentialProviderClass;
+    // give support for both 'credentialProvideClass' and 'credentialProviderClass' property
 
     public String getLocation() {
         return location;
