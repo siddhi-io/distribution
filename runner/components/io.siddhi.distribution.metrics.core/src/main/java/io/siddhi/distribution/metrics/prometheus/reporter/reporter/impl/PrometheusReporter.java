@@ -52,11 +52,12 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
     private static final Logger log = Logger.getLogger(PrometheusReporter.class);
 
     public PrometheusReporter(String name, MetricRegistry metricRegistry,
-                              MetricFilter metricFilter, long pollingPeriod) {
+                              MetricFilter metricFilter, long pollingPeriod, String serverURL) {
         super(name);
         this.metricRegistry = metricRegistry;
         this.metricFilter = metricFilter;
         this.pollingPeriod = pollingPeriod;
+        this.serverURL = serverURL;
     }
 
     @Override
@@ -82,8 +83,10 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
             initiateServer(target.getHost(), target.getPort());
             log.info("Prometheus Server has successfully connected at " + serverURL);
 
-        } catch (MalformedURLException | ConnectionUnavailableException e) {
-            //TODO handle exception here @Dasuni
+        } catch (MalformedURLException e) {
+            log.info("The URL " + serverURL + " is a malformed URL");
+        } catch (ConnectionUnavailableException e) {
+            log.info("The connection is unavailable");
         }
     }
 

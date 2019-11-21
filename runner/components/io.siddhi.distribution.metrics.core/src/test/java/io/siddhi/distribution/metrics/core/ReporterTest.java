@@ -49,7 +49,7 @@ public class ReporterTest extends BaseReporterTest {
         metricManagementService.startReporter("prometheus");
         Assert.assertTrue(metricManagementService.isReporterRunning("prometheus"));
         metricManagementService.report();
-        Thread.sleep(1000);
+        Thread.sleep(10000);
         metricManagementService.stopReporter("prometheus");
         Assert.assertFalse(metricManagementService.isReporterRunning("prometheus"));
     }

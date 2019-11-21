@@ -42,5 +42,6 @@ public class MetricsConfigTest {
         Assert.assertEquals(config.getName(), "prometheus");
         Assert.assertTrue(config.isEnabled());
         Assert.assertEquals(config.getPollingPeriod(), 600L);
+        Assert.assertEquals(config.getServerURL(), "http://localhost:2222");
     }
 }

@@ -40,6 +40,16 @@ public class PrometheusReporterConfig extends ScheduledReporterConfig implements
         super("prometheus");
     }
 
+    private String serverURL;
+
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    public void setServerURL(String serverURL) {
+        this.serverURL = serverURL;
+    }
+
     @Override
     public Optional<PrometheusReporter> build(MetricRegistry metricRegistry, MetricFilter metricFilter)
             throws ReporterBuildException {
@@ -53,6 +63,6 @@ public class PrometheusReporterConfig extends ScheduledReporterConfig implements
         }
 
         return Optional.of(new PrometheusReporter(getName(), metricRegistry, getFilter(metricFilter),
-                getPollingPeriod()));
+                getPollingPeriod(), getServerURL()));
     }
 }
