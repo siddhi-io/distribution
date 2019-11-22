@@ -66,5 +66,4 @@ metrics.prometheus:
     prometheus:
       - name: prometheus
         enabled: true
-        pollingPeriod: 600
-        serverURL: "http://localhost:2222"
+        serverURL: "http://localhost:2221"

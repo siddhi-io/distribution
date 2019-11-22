@@ -15,36 +15,34 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package io.siddhi.distribution.metrics.core;
 
-import io.siddhi.distribution.metrics.prometheus.reporter.config.model.MetricsConfig;
-import io.siddhi.distribution.metrics.prometheus.reporter.config.model.PrometheusReporterConfig;
+import io.siddhi.distribution.metrics.prometheus.reporter.config.PrometheusMetricsConfig;
+import io.siddhi.distribution.metrics.prometheus.reporter.config.PrometheusReporterConfig;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.wso2.carbon.config.ConfigurationException;
 
 /**
- * Test Cases for {@link MetricsConfig}.
+ * Test Cases for {@link PrometheusMetricsConfig}.
  */
 public class MetricsConfigTest {
 
-    private static MetricsConfig metricsConfig;
+    private static PrometheusMetricsConfig prometheusMetricsConfig;
 
     @BeforeClass
     private void load() throws ConfigurationException {
-        metricsConfig = TestUtils.getConfigProvider("metrics-prometheus.yaml")
-                .getConfigurationObject(MetricsConfig.class);
+        prometheusMetricsConfig = TestUtils.getConfigProvider("metrics-prometheus.yaml")
+                .getConfigurationObject(PrometheusMetricsConfig.class);
 
     }
 
     @Test
     public void testPrometheusConfigLoad() {
-        PrometheusReporterConfig config = metricsConfig.getReporting().getPrometheus().iterator().next();
+        PrometheusReporterConfig config = prometheusMetricsConfig.getReporting().getPrometheus().iterator().next();
         Assert.assertEquals(config.getName(), "prometheus");
         Assert.assertTrue(config.isEnabled());
-        Assert.assertEquals(config.getPollingPeriod(), 600L);
         Assert.assertEquals(config.getServerURL(), "http://localhost:2222");
     }
 }

@@ -15,7 +15,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package io.siddhi.distribution.metrics.core;
 
 import io.siddhi.core.SiddhiAppRuntime;

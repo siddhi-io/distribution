@@ -15,8 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-package io.siddhi.distribution.metrics.prometheus.reporter.config.model;
+package io.siddhi.distribution.metrics.prometheus.reporter.config;
 
 import org.wso2.carbon.config.annotation.Configuration;
 import org.wso2.carbon.config.annotation.Element;
@@ -25,10 +24,9 @@ import org.wso2.carbon.config.annotation.Element;
  * Configuration for Metrics.
  */
 @Configuration(namespace = "metrics.prometheus", description = "Carbon Metrics Configuration Parameters")
-public class MetricsConfig {
+public class PrometheusMetricsConfig {
 
     @Element(description = "Enable Metrics")
-
     private ReportingConfig reporting = new ReportingConfig();
 
     public ReportingConfig getReporting() {

@@ -15,8 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-package io.siddhi.distribution.metrics.prometheus.reporter.reporter.impl;
+package io.siddhi.distribution.metrics.prometheus.reporter.impl;
 
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
@@ -25,55 +24,41 @@ import io.prometheus.client.dropwizard.DropwizardExports;
 import io.prometheus.client.exporter.HTTPServer;
 import io.siddhi.core.exception.ConnectionUnavailableException;
 import org.apache.log4j.Logger;
-import org.wso2.carbon.metrics.core.reporter.ScheduledReporter;
 import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
 
 import java.io.IOException;
 import java.net.BindException;
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 /**
  * A reporter which outputs measurements to prometheus.
  */
-public class PrometheusReporter extends AbstractReporter implements ScheduledReporter {
+public class PrometheusReporter extends AbstractReporter {
 
     private final MetricRegistry metricRegistry;
     private final MetricFilter metricFilter;
-    private final long pollingPeriod;
-    private PromReporter prometheusReporter;
+    private PrometheusReporter prometheusReporter;
     private CollectorRegistry collectorRegistry;
     private HTTPServer server;
-    private String serverURL = "http://localhost:1234";
-
+    private String serverURL;
 
     private static final Logger log = Logger.getLogger(PrometheusReporter.class);
 
-    public PrometheusReporter(String name, MetricRegistry metricRegistry,
-                              MetricFilter metricFilter, long pollingPeriod, String serverURL) {
+    private PrometheusReporter(String name, MetricRegistry metricRegistry,
+                               MetricFilter metricFilter, String serverURL) {
         super(name);
         this.metricRegistry = metricRegistry;
         this.metricFilter = metricFilter;
-        this.pollingPeriod = pollingPeriod;
         this.serverURL = serverURL;
-    }
-
-    @Override
-    public void report() {
-        if (prometheusReporter != null) {
-            prometheusReporter.report();
-        }
-
     }
 
     @Override
     public void startReporter() {
 
-        prometheusReporter = PromReporter.forRegistry(metricRegistry).filter(metricFilter)
+        prometheusReporter = PrometheusReporter.forRegistry(metricRegistry, serverURL).filter(metricFilter)
                 .convertRatesTo(TimeUnit.SECONDS).convertDurationsTo(TimeUnit.MILLISECONDS).build();
-        prometheusReporter.start(pollingPeriod, TimeUnit.SECONDS);
 
         try {
             URL target = new URL(serverURL);
@@ -83,23 +68,25 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
             initiateServer(target.getHost(), target.getPort());
             log.info("Prometheus Server has successfully connected at " + serverURL);
 
-        } catch (MalformedURLException e) {
-            log.info("The URL " + serverURL + " is a malformed URL");
-        } catch (ConnectionUnavailableException e) {
-            log.info("The connection is unavailable");
+        } catch (IOException | ConnectionUnavailableException e) {
+            log.error("Prometheus Server connection failed at " + serverURL, e);
         }
     }
 
     @Override
     public void stopReporter() {
         if (prometheusReporter != null) {
-            destroy();
             disconnect();
+            destroy();
             prometheusReporter.stop();
             prometheusReporter = null;
 
         }
 
+    }
+
+    public static PrometheusReporter.Builder forRegistry(MetricRegistry registry, String serverURL) {
+        return new PrometheusReporter.Builder(registry, serverURL);
     }
 
     private void initiateServer(String host, int port) throws ConnectionUnavailableException {
@@ -127,4 +114,45 @@ public class PrometheusReporter extends AbstractReporter implements ScheduledRep
             collectorRegistry.clear();
         }
     }
+
+    /**
+     * Builds a {@link PrometheusReporter} with the given properties.
+     *
+     * @return a {@link PrometheusReporter}
+     */
+    public static class Builder {
+        private final MetricRegistry registry;
+        private MetricFilter filter;
+        private String serverURL;
+
+        private Builder(MetricRegistry registry, String serverURL) {
+            this.registry = registry;
+            this.serverURL = serverURL;
+            this.filter = MetricFilter.ALL;
+        }
+
+        public Builder setServerURL(String serverURL) {
+            this.serverURL = serverURL;
+            return this;
+        }
+
+        public Builder filter(MetricFilter filter) {
+            this.filter = filter;
+            return this;
+        }
+
+        public Builder convertDurationsTo(TimeUnit durationUnit) {
+            return this;
+        }
+
+        public Builder convertRatesTo(TimeUnit rateUnit) {
+            return this;
+        }
+
+        public PrometheusReporter build() {
+            return new PrometheusReporter("prometheus", registry, filter, serverURL);
+        }
+
+    }
+
 }

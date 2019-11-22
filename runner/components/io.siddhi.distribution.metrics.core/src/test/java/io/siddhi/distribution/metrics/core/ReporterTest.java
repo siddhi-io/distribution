@@ -15,18 +15,16 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package io.siddhi.distribution.metrics.core;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.wso2.carbon.config.annotation.Configuration;
 
 /**
  * Test Cases for Reporters.
  */
-@Configuration(namespace = "metrics.prometheus", description = "Carbon Metrics Configuration Parameters")
+
 public class ReporterTest extends BaseReporterTest {
 
     @BeforeClass

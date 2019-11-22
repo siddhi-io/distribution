@@ -15,8 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-package io.siddhi.distribution.metrics.prometheus.reporter.config.model;
+package io.siddhi.distribution.metrics.prometheus.reporter.config;
 
 import org.wso2.carbon.metrics.core.reporter.ReporterBuilder;
 
@@ -32,8 +31,8 @@ public class ReportingConfig {
     private Set<PrometheusReporterConfig> prometheus;
 
     public ReportingConfig() {
-        prometheus = new HashSet<>();
-        prometheus.add(new PrometheusReporterConfig());
+        this.prometheus = new HashSet<>();
+        this.prometheus.add(new PrometheusReporterConfig());
     }
 
     public Set<PrometheusReporterConfig> getPrometheus() {

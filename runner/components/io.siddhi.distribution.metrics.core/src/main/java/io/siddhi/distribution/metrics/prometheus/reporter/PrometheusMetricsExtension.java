@@ -1,7 +1,24 @@
+/*
+ * Copyright (c)  2019, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ *
+ * WSO2 Inc. licenses this file to you under the Apache License,
+ * Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
 package io.siddhi.distribution.metrics.prometheus.reporter;
 
-import io.siddhi.distribution.metrics.prometheus.reporter.config.model.MetricsConfig;
-import io.siddhi.distribution.metrics.prometheus.reporter.config.model.PrometheusReporterConfig;
+import io.siddhi.distribution.metrics.prometheus.reporter.config.PrometheusMetricsConfig;
+import io.siddhi.distribution.metrics.prometheus.reporter.config.PrometheusReporterConfig;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -15,8 +32,10 @@ import org.wso2.carbon.metrics.core.MetricService;
 import org.wso2.carbon.metrics.core.reporter.ReporterBuildException;
 import org.wso2.carbon.metrics.core.spi.MetricsExtension;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * * Metrics Extension to support Prometheus Reporter.
@@ -28,24 +47,22 @@ import java.util.Set;
 public class PrometheusMetricsExtension implements MetricsExtension {
 
     private static final Logger logger = LoggerFactory.getLogger(PrometheusMetricsExtension.class);
-    private static final String STREAMLINED_PROMETHEUS_NS = "metrics.prometheus";
-    private String[] names;
+    List<String> reporterNames = new ArrayList<>();
 
     @Override
     public void activate(ConfigProvider configProvider, MetricService metricService,
                          MetricManagementService metricManagementService) {
-        MetricsConfig metricsConfig;
+        PrometheusMetricsConfig prometheusMetricsConfig;
         try {
-            if (configProvider.getConfigurationObject(STREAMLINED_PROMETHEUS_NS) != null) {
-                metricsConfig = configProvider.getConfigurationObject(STREAMLINED_PROMETHEUS_NS, MetricsConfig.class);
-            } else {
-                metricsConfig = configProvider.getConfigurationObject(MetricsConfig.class);
-            }
+            prometheusMetricsConfig = configProvider.getConfigurationObject(PrometheusMetricsConfig.class);
+
         } catch (ConfigurationException e) {
-            logger.error("Error loading Metrics Configuration", e);
-            metricsConfig = new MetricsConfig();
+            logger.error("Error loading Metrics Configuration. Starting Prometheus Reporter with default parameters."
+                    , e);
+            prometheusMetricsConfig = new PrometheusMetricsConfig();
         }
-        Set<PrometheusReporterConfig> prometheusReporterConfigs = metricsConfig.getReporting().getPrometheus();
+        Set<PrometheusReporterConfig> prometheusReporterConfigs = prometheusMetricsConfig.getReporting()
+                .getPrometheus();
         if (prometheusReporterConfigs != null) {
             prometheusReporterConfigs.forEach(reporterBuilder -> {
                         try {
@@ -55,15 +72,15 @@ public class PrometheusMetricsExtension implements MetricsExtension {
                         }
                     }
             );
-            names = prometheusReporterConfigs.stream().map(prometheusReporterConfig ->
-                    prometheusReporterConfig.getName()).toArray(size -> new String[size]);
+            reporterNames = prometheusReporterConfigs.stream().map(prometheusReporterConfig ->
+                    prometheusReporterConfig.getName()).collect(Collectors.toList());
         }
     }
 
     @Override
     public void deactivate(MetricService metricService, MetricManagementService metricManagementService) {
-        if (names != null) {
-            Arrays.stream(names).forEach(metricManagementService::removeReporter);
+        if (reporterNames != null) {
+            reporterNames.forEach(metricManagementService::removeReporter);
         }
     }
 
@@ -77,9 +94,8 @@ public class PrometheusMetricsExtension implements MetricsExtension {
     protected void setMetricService(MetricService metricService) {
         // This extension should be activated only after getting MetricService.
         // Metrics Component will activate this extension.
-        if (logger.isDebugEnabled()) {
-            logger.debug("Metric Service is available as an OSGi service.");
-        }
+        logger.debug("Metric Service is available as an OSGi service.");
+
     }
 
     protected void unsetMetricService(MetricService metricService) {

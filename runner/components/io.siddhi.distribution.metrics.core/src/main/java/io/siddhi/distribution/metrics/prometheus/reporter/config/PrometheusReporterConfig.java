@@ -15,15 +15,14 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
-package io.siddhi.distribution.metrics.prometheus.reporter.config.model;
+package io.siddhi.distribution.metrics.prometheus.reporter.config;
 
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
-import io.siddhi.distribution.metrics.prometheus.reporter.reporter.impl.PrometheusReporter;
+import io.siddhi.distribution.metrics.prometheus.reporter.impl.PrometheusReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wso2.carbon.metrics.core.config.model.ScheduledReporterConfig;
+import org.wso2.carbon.metrics.core.config.model.ReporterConfig;
 import org.wso2.carbon.metrics.core.reporter.ReporterBuildException;
 import org.wso2.carbon.metrics.core.reporter.ReporterBuilder;
 
@@ -32,15 +31,13 @@ import java.util.Optional;
 /**
  * Configuration for Prometheus Reporter. Implements {@link ReporterBuilder} to construct a {@link PrometheusReporter}.
  */
-public class PrometheusReporterConfig extends ScheduledReporterConfig implements ReporterBuilder<PrometheusReporter> {
-
+public class PrometheusReporterConfig extends ReporterConfig implements ReporterBuilder<PrometheusReporter> {
     private static final Logger logger = LoggerFactory.getLogger(PrometheusReporterConfig.class);
+    private String serverURL = "0.0.0.0:8003";
 
     public PrometheusReporterConfig() {
         super("prometheus");
     }
-
-    private String serverURL;
 
     public String getServerURL() {
         return serverURL;
@@ -57,12 +54,11 @@ public class PrometheusReporterConfig extends ScheduledReporterConfig implements
             return Optional.empty();
         }
         if (logger.isInfoEnabled()) {
-            logger.info(String.format("Creating Prometheus Reporter for Metrics with %d seconds polling period",
-                    getPollingPeriod()));
+            logger.info(String.format("Creating Prometheus Reporter for Metrics"));
 
         }
 
-        return Optional.of(new PrometheusReporter(getName(), metricRegistry, getFilter(metricFilter),
-                getPollingPeriod(), getServerURL()));
+        return Optional.of(PrometheusReporter.forRegistry(metricRegistry, serverURL).build());
     }
+
 }
