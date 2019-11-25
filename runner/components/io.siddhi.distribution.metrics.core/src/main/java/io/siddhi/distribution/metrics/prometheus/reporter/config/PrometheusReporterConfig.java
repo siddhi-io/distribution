@@ -33,7 +33,7 @@ import java.util.Optional;
  */
 public class PrometheusReporterConfig extends ReporterConfig implements ReporterBuilder<PrometheusReporter> {
     private static final Logger logger = LoggerFactory.getLogger(PrometheusReporterConfig.class);
-    private String serverURL = "0.0.0.0:8003";
+    private String serverURL = "http://0.0.0.0:9080";
 
     public PrometheusReporterConfig() {
         super("prometheus");

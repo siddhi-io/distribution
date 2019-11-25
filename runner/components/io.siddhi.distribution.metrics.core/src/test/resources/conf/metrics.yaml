@@ -66,4 +66,4 @@ metrics.prometheus:
     prometheus:
       - name: prometheus
         enabled: true
-        serverURL: "http://localhost:2221"
+        serverURL: "http://localhost:9005"
