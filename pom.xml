@@ -1152,6 +1152,29 @@
                 <version>${aws.sdk.version}</version>
             </dependency>
 
+<!--            Prometheus-->
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient</artifactId>
+                <version>${prometheus.simpleclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient_dropwizard</artifactId>
+                <version>${prometheus.simpleclient.dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>${dropwizard.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient_httpserver</artifactId>
+                <version>${prometheus.simpleclient.httpserver.version}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -1360,6 +1383,12 @@
 
         <!-- aws sdk version-->
         <aws.sdk.version>2.10.18</aws.sdk.version>
+
+        <!-- Prometheus dependency version-->
+        <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
+        <prometheus.simpleclient.dropwizard.version>0.8.0</prometheus.simpleclient.dropwizard.version>
+        <dropwizard.metrics.version>3.1.2</dropwizard.metrics.version>
+        <prometheus.simpleclient.httpserver.version>0.8.0</prometheus.simpleclient.httpserver.version>
 
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>

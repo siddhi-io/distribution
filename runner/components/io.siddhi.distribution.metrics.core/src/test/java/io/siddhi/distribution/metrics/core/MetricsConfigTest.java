@@ -43,6 +43,6 @@ public class MetricsConfigTest {
         PrometheusReporterConfig config = prometheusMetricsConfig.getReporting().getPrometheus().iterator().next();
         Assert.assertEquals(config.getName(), "prometheus");
         Assert.assertTrue(config.isEnabled());
-        Assert.assertEquals(config.getServerURL(), "http://localhost:2222");
+        Assert.assertEquals(config.getServerURL(), "http://localhost:9005");
     }
 }

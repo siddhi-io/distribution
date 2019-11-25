@@ -55,9 +55,8 @@ public class PrometheusMetricsExtension implements MetricsExtension {
         PrometheusMetricsConfig prometheusMetricsConfig;
         try {
             prometheusMetricsConfig = configProvider.getConfigurationObject(PrometheusMetricsConfig.class);
-
         } catch (ConfigurationException e) {
-            logger.error("Error loading Metrics Configuration. Starting Prometheus Reporter with default parameters."
+            logger.warn("Error loading Metrics Configuration. Starting Prometheus Reporter with default parameters."
                     , e);
             prometheusMetricsConfig = new PrometheusMetricsConfig();
         }
@@ -67,13 +66,13 @@ public class PrometheusMetricsExtension implements MetricsExtension {
             prometheusReporterConfigs.forEach(reporterBuilder -> {
                         try {
                             metricManagementService.addReporter(reporterBuilder);
+                            reporterNames = prometheusReporterConfigs.stream().map(prometheusReporterConfig ->
+                                    prometheusReporterConfig.getName()).collect(Collectors.toList());
                         } catch (ReporterBuildException e) {
                             logger.warn("Prometheus Reporter build failed", e);
                         }
                     }
             );
-            reporterNames = prometheusReporterConfigs.stream().map(prometheusReporterConfig ->
-                    prometheusReporterConfig.getName()).collect(Collectors.toList());
         }
     }
 
