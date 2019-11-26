@@ -27,6 +27,7 @@ import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -40,13 +41,15 @@ public class PrometheusReporter extends AbstractReporter {
     private PrometheusReporter prometheusReporter;
     private CollectorRegistry collectorRegistry;
     private HTTPServer server;
+    private String reporterName;
     private String serverURL;
 
     private static final Logger log = Logger.getLogger(PrometheusReporter.class);
 
-    private PrometheusReporter(String name, MetricRegistry metricRegistry,
+    private PrometheusReporter(String reporterName, MetricRegistry metricRegistry,
                                MetricFilter metricFilter, String serverURL) {
-        super(name);
+        super(reporterName);
+        this.reporterName = reporterName;
         this.metricRegistry = metricRegistry;
         this.metricFilter = metricFilter;
         this.serverURL = serverURL;
@@ -55,8 +58,11 @@ public class PrometheusReporter extends AbstractReporter {
     @Override
     public void startReporter() {
 
-        prometheusReporter = PrometheusReporter.forRegistry(metricRegistry, serverURL).filter(metricFilter)
-                .convertRatesTo(TimeUnit.SECONDS).convertDurationsTo(TimeUnit.MILLISECONDS).build();
+        prometheusReporter = PrometheusReporter.forRegistry(metricRegistry, serverURL)
+                .filter(metricFilter)
+                .convertRatesTo(TimeUnit.SECONDS)
+                .convertDurationsTo(TimeUnit.MILLISECONDS)
+                .build();
 
         try {
             URL target = new URL(serverURL);
@@ -65,8 +71,10 @@ public class PrometheusReporter extends AbstractReporter {
             InetSocketAddress address = new InetSocketAddress(target.getHost(), target.getPort());
             server = new HTTPServer(address, collectorRegistry);
             log.info("Prometheus Server has successfully connected at " + serverURL);
+        } catch (MalformedURLException e) {
+            log.error("Invalid server url '" + serverURL + "' configured for '" + reporterName + "'.", e);
         } catch (IOException e) {
-            log.error("Prometheus Server connection failed at " + serverURL, e);
+            log.error("Failed to start Prometheus reporter '" + reporterName + "' at '" + serverURL + "'.", e);
         }
     }
 
@@ -77,9 +85,7 @@ public class PrometheusReporter extends AbstractReporter {
             destroy();
             prometheusReporter.stop();
             prometheusReporter = null;
-
         }
-
     }
 
     public static PrometheusReporter.Builder forRegistry(MetricRegistry registry, String serverURL) {

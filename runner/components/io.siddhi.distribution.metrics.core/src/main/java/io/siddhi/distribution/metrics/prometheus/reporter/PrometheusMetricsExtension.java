@@ -35,7 +35,6 @@ import org.wso2.carbon.metrics.core.spi.MetricsExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * * Metrics Extension to support Prometheus Reporter.
@@ -56,20 +55,19 @@ public class PrometheusMetricsExtension implements MetricsExtension {
         try {
             prometheusMetricsConfig = configProvider.getConfigurationObject(PrometheusMetricsConfig.class);
         } catch (ConfigurationException e) {
-            logger.warn("Error loading Metrics Configuration. Starting Prometheus Reporter with default parameters."
-                    , e);
+            logger.warn("Error loading Metrics Configuration. Starting Prometheus Reporter " +
+                    "with default parameters.", e);
             prometheusMetricsConfig = new PrometheusMetricsConfig();
         }
         Set<PrometheusReporterConfig> prometheusReporterConfigs = prometheusMetricsConfig.getReporting()
                 .getPrometheus();
         if (prometheusReporterConfigs != null) {
-            prometheusReporterConfigs.forEach(reporterBuilder -> {
+            prometheusReporterConfigs.forEach(reporterConfig -> {
                         try {
-                            metricManagementService.addReporter(reporterBuilder);
-                            reporterNames = prometheusReporterConfigs.stream().map(prometheusReporterConfig ->
-                                    prometheusReporterConfig.getName()).collect(Collectors.toList());
+                            metricManagementService.addReporter(reporterConfig);
+                            reporterNames.add(reporterConfig.getName());
                         } catch (ReporterBuildException e) {
-                            logger.warn(reporterBuilder.getName() + " Reporter build failed", e);
+                            logger.warn("Failed to start prometheus reporter '" + reporterConfig.getName() + "'.", e);
                         }
                     }
             );
@@ -100,5 +98,4 @@ public class PrometheusMetricsExtension implements MetricsExtension {
     protected void unsetMetricService(MetricService metricService) {
         // Ignore
     }
-
 }
