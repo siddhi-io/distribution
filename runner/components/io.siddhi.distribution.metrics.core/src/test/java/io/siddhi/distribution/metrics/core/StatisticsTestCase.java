@@ -15,6 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
 package io.siddhi.distribution.metrics.core;
 
 import io.siddhi.core.SiddhiAppRuntime;
@@ -46,7 +47,6 @@ import java.util.concurrent.TimeUnit;
  * Test case for carbon metrics inside siddhi.
  */
 public class StatisticsTestCase {
-
     private static final Logger log = Logger.getLogger(StatisticsTestCase.class);
     protected static Metrics metrics;
     protected static MetricService metricService;
@@ -263,7 +263,6 @@ public class StatisticsTestCase {
     }
 
     private class MockMemory {
-
         String name;
 
         public MockMemory(String name) {
