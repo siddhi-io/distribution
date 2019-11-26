@@ -27,6 +27,7 @@ import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 

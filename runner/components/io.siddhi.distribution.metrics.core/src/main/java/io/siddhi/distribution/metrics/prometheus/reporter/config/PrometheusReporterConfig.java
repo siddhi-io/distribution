@@ -43,10 +43,6 @@ public class PrometheusReporterConfig extends ReporterConfig implements Reporter
         return serverURL;
     }
 
-    public void setServerURL(String serverURL) {
-        this.serverURL = serverURL;
-    }
-
     @Override
     public Optional<PrometheusReporter> build(MetricRegistry metricRegistry, MetricFilter metricFilter)
             throws ReporterBuildException {
@@ -54,7 +50,6 @@ public class PrometheusReporterConfig extends ReporterConfig implements Reporter
             return Optional.empty();
         }
         logger.info(String.format("Creating Prometheus Reporter for Metrics"));
-
         return Optional.of(PrometheusReporter.forRegistry(metricRegistry, serverURL).build());
     }
 
