@@ -69,7 +69,7 @@ public class PrometheusMetricsExtension implements MetricsExtension {
                             reporterNames = prometheusReporterConfigs.stream().map(prometheusReporterConfig ->
                                     prometheusReporterConfig.getName()).collect(Collectors.toList());
                         } catch (ReporterBuildException e) {
-                            logger.warn("Prometheus Reporter build failed", e);
+                            logger.warn(reporterBuilder.getName() + " Reporter build failed", e);
                         }
                     }
             );
