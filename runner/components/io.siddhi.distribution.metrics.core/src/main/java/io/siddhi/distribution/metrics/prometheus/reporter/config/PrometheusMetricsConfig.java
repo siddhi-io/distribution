@@ -23,7 +23,7 @@ import org.wso2.carbon.config.annotation.Element;
 /**
  * Configuration for Metrics.
  */
-@Configuration(namespace = "metrics.prometheus", description = "Prometheus reporter configuration")
+@Configuration(namespace = "metrics.prometheus", description = "Prometheus reporter config")
 public class PrometheusMetricsConfig {
 
     @Element(description = "Enable Metrics Configuration")
