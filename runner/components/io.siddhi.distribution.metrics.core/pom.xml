@@ -108,7 +108,8 @@
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Export-Package>
                             io.siddhi.distribution.metrics.core.*,
-                            io.siddhi.distribution.metrics.prometheus.*
+                            io.siddhi.distribution.metrics.prometheus.*,
+                            io.prometheus.client.*
                         </Export-Package>
                         <Import-Package>
                             *;resolution:=optional,
@@ -116,9 +117,6 @@
                         <Include-Resource>
                             META-INF=target/classes/META-INF
                         </Include-Resource>
-                        <Private-Package>
-                            io.prometheus.client.*
-                        </Private-Package>
                         <DynamicImport-Package>*</DynamicImport-Package>
                     </instructions>
                 </configuration>

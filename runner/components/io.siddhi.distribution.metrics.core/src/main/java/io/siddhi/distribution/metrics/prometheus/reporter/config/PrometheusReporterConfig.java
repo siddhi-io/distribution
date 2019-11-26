@@ -53,7 +53,7 @@ public class PrometheusReporterConfig extends ReporterConfig implements Reporter
         if (!isEnabled()) {
             return Optional.empty();
         }
-            logger.info(String.format("Creating Prometheus Reporter for Metrics"));
+        logger.info(String.format("Creating Prometheus Reporter for Metrics"));
 
         return Optional.of(PrometheusReporter.forRegistry(metricRegistry, serverURL).build());
     }

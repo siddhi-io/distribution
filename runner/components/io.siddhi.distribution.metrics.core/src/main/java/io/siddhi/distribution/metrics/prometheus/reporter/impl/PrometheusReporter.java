@@ -22,14 +22,11 @@ import com.codahale.metrics.MetricRegistry;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.dropwizard.DropwizardExports;
 import io.prometheus.client.exporter.HTTPServer;
-import io.siddhi.core.exception.ConnectionUnavailableException;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
 
 import java.io.IOException;
-import java.net.BindException;
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
