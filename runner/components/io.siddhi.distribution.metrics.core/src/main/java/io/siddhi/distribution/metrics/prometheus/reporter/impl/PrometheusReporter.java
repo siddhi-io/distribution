@@ -29,6 +29,7 @@ import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.InetSocketAddress;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -64,11 +65,10 @@ public class PrometheusReporter extends AbstractReporter {
             URL target = new URL(serverURL);
             collectorRegistry = new CollectorRegistry();
             collectorRegistry.register(new DropwizardExports(metricRegistry));
-
-            initiateServer(target.getHost(), target.getPort());
+            InetSocketAddress address = new InetSocketAddress(target.getHost(), target.getPort());
+            server = new HTTPServer(address, collectorRegistry);
             log.info("Prometheus Server has successfully connected at " + serverURL);
-
-        } catch (IOException | ConnectionUnavailableException e) {
+        } catch (IOException e) {
             log.error("Prometheus Server connection failed at " + serverURL, e);
         }
     }
@@ -87,19 +87,6 @@ public class PrometheusReporter extends AbstractReporter {
 
     public static PrometheusReporter.Builder forRegistry(MetricRegistry registry, String serverURL) {
         return new PrometheusReporter.Builder(registry, serverURL);
-    }
-
-    private void initiateServer(String host, int port) throws ConnectionUnavailableException {
-        try {
-            InetSocketAddress address = new InetSocketAddress(host, port);
-            server = new HTTPServer(address, collectorRegistry);
-        } catch (IOException e) {
-            if (!(e instanceof BindException && e.getMessage().equals("Address already in use"))) {
-                log.error("Unable to establish connection for Prometheus  \'\' at " + serverURL, e);
-                throw new ConnectionUnavailableException("Unable to establish connection for Prometheus \'\' at "
-                        + serverURL, e);
-            }
-        }
     }
 
     private void disconnect() {
