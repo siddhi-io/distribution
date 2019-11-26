@@ -23,7 +23,6 @@ import io.siddhi.distribution.metrics.prometheus.reporter.impl.PrometheusReporte
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.wso2.carbon.metrics.core.config.model.ReporterConfig;
-import org.wso2.carbon.metrics.core.reporter.ReporterBuildException;
 import org.wso2.carbon.metrics.core.reporter.ReporterBuilder;
 
 import java.util.Optional;
@@ -44,12 +43,11 @@ public class PrometheusReporterConfig extends ReporterConfig implements Reporter
     }
 
     @Override
-    public Optional<PrometheusReporter> build(MetricRegistry metricRegistry, MetricFilter metricFilter)
-            throws ReporterBuildException {
+    public Optional<PrometheusReporter> build(MetricRegistry metricRegistry, MetricFilter metricFilter) {
         if (!isEnabled()) {
             return Optional.empty();
         }
-        logger.info(String.format("Creating Prometheus Reporter for Metrics"));
+        logger.info("Creating Prometheus Reporter '{}' for Metrics at '{}'", getName(), serverURL);
         return Optional.of(PrometheusReporter.forRegistry(metricRegistry, serverURL).build());
     }
 
