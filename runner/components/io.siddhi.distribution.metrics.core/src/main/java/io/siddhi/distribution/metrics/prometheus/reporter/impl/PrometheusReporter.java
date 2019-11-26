@@ -27,7 +27,6 @@ import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
@@ -114,11 +113,6 @@ public class PrometheusReporter extends AbstractReporter {
             this.registry = registry;
             this.serverURL = serverURL;
             this.filter = MetricFilter.ALL;
-        }
-
-        public Builder setServerURL(String serverURL) {
-            this.serverURL = serverURL;
-            return this;
         }
 
         public Builder filter(MetricFilter filter) {
