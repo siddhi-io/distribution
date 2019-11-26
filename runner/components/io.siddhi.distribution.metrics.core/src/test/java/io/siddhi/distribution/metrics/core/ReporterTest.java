@@ -17,15 +17,41 @@
  */
 package io.siddhi.distribution.metrics.core;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+import org.wso2.carbon.config.ConfigurationException;
+import org.wso2.carbon.metrics.core.MetricManagementService;
+import org.wso2.carbon.metrics.core.Metrics;
 
 /**
  * Test Cases for Reporters.
  */
 
-public class ReporterTest extends BaseReporterTest {
+public class ReporterTest {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReporterTest.class);
+    protected static Metrics metrics;
+    protected static MetricManagementService metricManagementService;
+
+    @BeforeSuite
+    protected static void init() throws ConfigurationException {
+        metrics = new Metrics(TestUtils.getConfigProvider("metrics-prometheus.yaml"));
+        metrics.activate();
+        metricManagementService = metrics.getMetricManagementService();
+    }
+
+    @AfterSuite
+    protected static void destroy() throws Exception {
+        if (logger.isInfoEnabled()) {
+            logger.info("Deactivating Metrics");
+        }
+        metrics.deactivate();
+    }
 
     @BeforeClass
     private void stopReporters() {
