@@ -47,9 +47,7 @@ public class ReporterTest {
 
     @AfterSuite
     protected static void destroy() throws Exception {
-        if (logger.isInfoEnabled()) {
-            logger.info("Deactivating Metrics");
-        }
+        logger.info("Deactivating Metrics");
         metrics.deactivate();
     }
 

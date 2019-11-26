@@ -35,7 +35,6 @@ public class MetricsConfigTest {
     private void load() throws ConfigurationException {
         prometheusMetricsConfig = TestUtils.getConfigProvider("metrics-prometheus.yaml")
                 .getConfigurationObject(PrometheusMetricsConfig.class);
-
     }
 
     @Test
