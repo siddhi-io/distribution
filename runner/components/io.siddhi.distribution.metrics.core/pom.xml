@@ -69,6 +69,27 @@
             <artifactId>awaitility</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--Prometheus-->
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_dropwizard</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_httpserver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.wso2.msf4j</groupId>
+            <artifactId>msf4j-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
@@ -86,12 +107,15 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Export-Package>
-                            io.siddhi.distribution.metrics.core.*
+                            io.siddhi.distribution.metrics.core.*,
+                            io.siddhi.distribution.metrics.prometheus.*,
                         </Export-Package>
                         <Import-Package>
                             *;resolution:=optional,
                         </Import-Package>
-                        <DynamicImport-Package>*</DynamicImport-Package>
+                        <Private-Package>
+                            io.prometheus.client.*
+                        </Private-Package>
                     </instructions>
                 </configuration>
             </plugin>
