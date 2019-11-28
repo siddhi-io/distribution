@@ -109,6 +109,7 @@
                         <Export-Package>
                             io.siddhi.distribution.metrics.core.*,
                             io.siddhi.distribution.metrics.prometheus.*,
+                            io.prometheus.client.*
                         </Export-Package>
                         <Import-Package>
                             *;resolution:=optional,
