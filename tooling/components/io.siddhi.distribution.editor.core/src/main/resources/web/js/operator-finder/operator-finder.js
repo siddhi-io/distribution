@@ -311,14 +311,22 @@ define(['jquery', 'lodash', 'log', 'remarkable', 'handlebar', 'designViewUtils',
                     }
                 });
             }
-            var results = [];
+            var keyResult = [], descriptionResult = [], combineResults;
             this._operators.forEach(function (e, i) {
                 var result = {
                     fqn: hasToken(e.fqn, tokens),
                     description: hasToken(e.description, tokens)
                 };
-                if (result.fqn.status || result.description.status) {
-                    results.push({
+                if (result.fqn.status) {
+                    keyResult.push({
+                        fqn: e.fqn,
+                        htmlFqn: result.fqn.text,
+                        type: e.type,
+                        description: result.description.text,
+                        index: i
+                    });
+                } else if (result.description.status) {
+                    descriptionResult.push({
                         fqn: e.fqn,
                         htmlFqn: result.fqn.text,
                         type: e.type,
@@ -327,9 +335,10 @@ define(['jquery', 'lodash', 'log', 'remarkable', 'handlebar', 'designViewUtils',
                     });
                 }
             });
+            combineResults = keyResult.concat(descriptionResult);
             return {
-                results: results,
-                hasResults: results.length > 0,
+                results: combineResults,
+                hasResults: combineResults.length > 0,
                 hasQuery: tokens.length > 0,
                 namespaces: this._namespaces
             };
