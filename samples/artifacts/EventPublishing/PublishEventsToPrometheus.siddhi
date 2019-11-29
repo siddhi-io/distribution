@@ -1,4 +1,5 @@
 @App:name("PublishEventsToPrometheus")
+
 @App:description("Use siddhi-io-prometheus to publish events to Prometheus")
 
 /*
@@ -6,14 +7,9 @@ Purpose:
     This application demonstrates how to use prometheus-sink to publish events to Prometheus. Here, the server url configured is used to exposed an API to Prometheus from which Prometheus can scrape metrics.
 
 Pre-requisites:
-    1) Download the following jars from https://mvnrepository.com/artifact/io.prometheus and copy them to {Siddhi_Distribution_Home}/jars directory.
-         * simpleclient_common-0.5.0.jar
-         * simpleclient-0.5.0.jar
-         * simpleclient_httpserver-0.5.0.jar
-         * simpleclient_pushgateway-0.5.0.jar
-    2) Start the Siddhi_Distribution
-    3) Save this sample
-        "Siddhi App PublishEventsToPrometheus successfully deployed" message would be shown in the console
+    1) Start the Siddhi_Distribution
+    2) Save this sample
+        "Siddhi App PublishEventsToPrometheus.siddhi successfully deployed." message would be shown in the console
 
 Executing the Sample:
     1) Start the Siddhi app by clicking on 'Run'.
@@ -52,5 +48,3 @@ Define stream SinkStream (deviceID string, roomID string, power int);
 from InputStream
 select *
 insert into SinkStream;
-
-
