@@ -61,7 +61,7 @@ define stream ContainsSweetProductionStream (name string, amount double);
 define stream LogStream(name string, amount double);
 
 @Store(type = "elasticsearch", host = "localhost", index.name = "mystocktable", field.length = "symbol:100", bulk.actions = "5000", bulk.size = "1", concurrent.requests = "2", flush.interval = "1", backoff.policy.retry.no = "3", backoff.policy.wait.time = "1")
-@PrimaryKey("symbol")
+@PrimaryKey("name")
 define table SweetProductionTable (name string, amount double);
 
 --Inserting event into the elastic search store
