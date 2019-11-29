@@ -1292,7 +1292,7 @@
         <assertj.version>3.14.0</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.8-SNAPSHOT</siddhi.execution.string.version>
+        <siddhi.execution.string.version>5.0.9-SNAPSHOT</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.5-SNAPSHOT</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.6-SNAPSHOT</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.5-SNAPSHOT</siddhi.execution.time.version>
@@ -1325,7 +1325,7 @@
         <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
         <siddhi.map.protobuf.version>1.0.4-SNAPSHOT</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.4-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>7.0.5-SNAPSHOT</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.4-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
