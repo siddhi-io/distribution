@@ -1293,11 +1293,11 @@
 
         <!-- nats test dependencies -->
         <io.nats.version>2.2.3</io.nats.version>
-        <org.testcontainers.version>1.12.3</org.testcontainers.version>
+        <org.testcontainers.version>1.12.4</org.testcontainers.version>
         <assertj.version>3.14.0</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.8-SNAPSHOT</siddhi.execution.string.version>
+        <siddhi.execution.string.version>5.0.9-SNAPSHOT</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.5-SNAPSHOT</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.6-SNAPSHOT</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.5-SNAPSHOT</siddhi.execution.time.version>
@@ -1330,7 +1330,7 @@
         <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
         <siddhi.map.protobuf.version>1.0.4-SNAPSHOT</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.4-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>7.0.5-SNAPSHOT</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.4-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
@@ -1388,7 +1388,7 @@
         <grpc.version>1.25.0</grpc.version>
 
         <!-- aws sdk version-->
-        <aws.sdk.version>2.10.23</aws.sdk.version>
+        <aws.sdk.version>2.10.25</aws.sdk.version>
 
         <!-- Prometheus dependency version-->
         <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
