@@ -114,8 +114,8 @@ public class TemperatureAlertAppTest {
         envMap.put("JDBC_DRIVER_NAME", mySQLContainer.getDriverClassName());
         siddhiRunnerContainer = new SiddhiRunnerContainer()
                 .withSiddhiApps(appUrl.getPath())
-                .withJars(extraJarsUrl.getPath())
-                .withJars(jarsFromMaven.toString())
+                .withJars(extraJarsUrl.getPath(), true)
+                .withJars(jarsFromMaven.toString(), false)
                 .withConfig(configUrl.getPath())
                 .withNetwork(network)
                 .withEnv(envMap)
