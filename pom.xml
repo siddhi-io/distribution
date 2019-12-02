@@ -53,6 +53,11 @@
                     <version>${maven.resources.plugin.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>${maven.codehaus.exec.plugin.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.wso2.carbon.maven</groupId>
                     <artifactId>carbon-feature-plugin</artifactId>
                     <version>${carbon.feature.plugin.version}</version>
@@ -1152,6 +1157,29 @@
                 <version>${aws.sdk.version}</version>
             </dependency>
 
+<!--            Prometheus-->
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient</artifactId>
+                <version>${prometheus.simpleclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient_dropwizard</artifactId>
+                <version>${prometheus.simpleclient.dropwizard.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>${dropwizard.metrics.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient_httpserver</artifactId>
+                <version>${prometheus.simpleclient.httpserver.version}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
@@ -1265,11 +1293,11 @@
 
         <!-- nats test dependencies -->
         <io.nats.version>2.2.3</io.nats.version>
-        <org.testcontainers.version>1.12.3</org.testcontainers.version>
+        <org.testcontainers.version>1.12.4</org.testcontainers.version>
         <assertj.version>3.14.0</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.8-SNAPSHOT</siddhi.execution.string.version>
+        <siddhi.execution.string.version>5.0.9-SNAPSHOT</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.5-SNAPSHOT</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.6-SNAPSHOT</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.5-SNAPSHOT</siddhi.execution.time.version>
@@ -1280,7 +1308,7 @@
         <siddhi.execution.reorder.version>5.0.4-SNAPSHOT</siddhi.execution.reorder.version>
         <siddhi.execution.unique.version>5.0.6-SNAPSHOT</siddhi.execution.unique.version>
 
-        <siddhi.io.kafka.version>5.0.6-SNAPSHOT</siddhi.io.kafka.version>
+        <siddhi.io.kafka.version>5.0.7-SNAPSHOT</siddhi.io.kafka.version>
         <siddhi.io.http.version>2.2.1-SNAPSHOT</siddhi.io.http.version>
         <siddhi.io.s3.version>1.0.3-SNAPSHOT</siddhi.io.s3.version>
         <siddhi.io.file.version>2.0.4-SNAPSHOT</siddhi.io.file.version>
@@ -1290,19 +1318,19 @@
         <siddhi.io.cdc.version>2.0.5-SNAPSHOT</siddhi.io.cdc.version>
         <siddhi.io.prometheus.version>2.1.1-SNAPSHOT</siddhi.io.prometheus.version>
         <siddhi.io.nats.version>2.0.9-SNAPSHOT</siddhi.io.nats.version>
-        <siddhi.io.grpc.version>1.0.6-SNAPSHOT</siddhi.io.grpc.version>
-        <siddhi.io.rabbitmq.version>3.0.3-SNAPSHOT</siddhi.io.rabbitmq.version>
+        <siddhi.io.grpc.version>1.0.7-SNAPSHOT</siddhi.io.grpc.version>
+        <siddhi.io.rabbitmq.version>3.0.4-SNAPSHOT</siddhi.io.rabbitmq.version>
 
-        <siddhi.map.json.version>5.0.6-SNAPSHOT</siddhi.map.json.version>
+        <siddhi.map.json.version>5.0.7-SNAPSHOT</siddhi.map.json.version>
         <siddhi.map.avro.version>2.0.7-SNAPSHOT</siddhi.map.avro.version>
         <siddhi.map.binary.version>2.0.5-SNAPSHOT</siddhi.map.binary.version>
         <siddhi.map.text.version>2.0.5-SNAPSHOT</siddhi.map.text.version>
         <siddhi.map.xml.version>5.0.4-SNAPSHOT</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>2.0.6-SNAPSHOT</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
-        <siddhi.map.protobuf.version>1.0.3-SNAPSHOT</siddhi.map.protobuf.version>
+        <siddhi.map.protobuf.version>1.0.4-SNAPSHOT</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.3-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>7.0.5-SNAPSHOT</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.0.4-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
@@ -1324,6 +1352,7 @@
         <carbon.feature.plugin.version>3.1.4</carbon.feature.plugin.version>
         <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
         <com.spotify.docker.plugin.version>1.1.1</com.spotify.docker.plugin.version>
+        <maven.codehaus.exec.plugin.version>1.6.0</maven.codehaus.exec.plugin.version>
         <com.spotify.docker.client.version>8.16.0</com.spotify.docker.client.version>
         <org.glassfish.jersey.connectors.jersey.apache.connector.version>2.22.2</org.glassfish.jersey.connectors.jersey.apache.connector.version>
         <org.apache.httpcomponents.httpclient.version>4.5.10</org.apache.httpcomponents.httpclient.version>
@@ -1359,7 +1388,13 @@
         <grpc.version>1.25.0</grpc.version>
 
         <!-- aws sdk version-->
-        <aws.sdk.version>2.10.20</aws.sdk.version>
+        <aws.sdk.version>2.10.26</aws.sdk.version>
+
+        <!-- Prometheus dependency version-->
+        <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
+        <prometheus.simpleclient.dropwizard.version>0.8.0</prometheus.simpleclient.dropwizard.version>
+        <dropwizard.metrics.version>3.1.2</dropwizard.metrics.version>
+        <prometheus.simpleclient.httpserver.version>0.8.0</prometheus.simpleclient.httpserver.version>
 
         <mavan.findbugsplugin.exclude.file>findbugs-exclude.xml</mavan.findbugsplugin.exclude.file>
         <project.scm.id>my-scm-server</project.scm.id>

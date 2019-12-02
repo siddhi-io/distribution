@@ -59,3 +59,11 @@ wso2.metrics:
         loggerName: metrics.test
         markerName: metrics
         pollingPeriod: 6
+
+## Carbon Metrics Configuration Parameters for Prometheus Reporters
+metrics.prometheus:
+  reporting:
+    prometheus:
+      - name: prometheus
+        enabled: true
+        serverURL: "http://localhost:9005"
