@@ -43,7 +43,7 @@ import static org.rnorth.ducttape.unreliables.Unreliables.retryUntilSuccess;
  */
 public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContainer> {
     private static final String IMAGE = "siddhiio/siddhi-runner-alpine";
-    private static final String SIDDHI_RUNNER_VERSION = "latest";
+    private static final String SIDDHI_RUNNER_VERSION = "latest-dev";
     private static final int DEFAULT_HTTP_PORT = 9090;
     private static final int DEFAULT_HTTPS_PORT = 9443;
     private static final int DEFAULT_THRIFT_TCP_PORT = 7611;
