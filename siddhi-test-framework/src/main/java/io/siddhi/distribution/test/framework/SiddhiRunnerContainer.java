@@ -123,12 +123,11 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         if (!configFile.isDirectory()) {
             withFileSystemBind(confPath, CONF_DIRECTORY, BindMode.READ_ONLY);
             initCommand.append(BLANK_SPACE).append(OVERRIDE_CONF_SYSTEM_PARAMETER).append("=").append(CONF_DIRECTORY);
-            return this;
         } else {
             logger().error("Provided configurations path points to a directory. " +
                     "Hence, configuration merging is skipped.");
-            return this;
         }
+        return this;
     }
 
     /**
