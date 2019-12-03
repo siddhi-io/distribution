@@ -946,7 +946,7 @@
                         <artifactId>docker-maven-plugin</artifactId>
                         <version>${com.spotify.docker.plugin.version}</version>
                         <configuration>
-                            <imageName>${distribution.name}:test</imageName>
+                            <imageName>${docker.image.name}</imageName>
                             <dockerDirectory>${project.basedir}/resources/docker</dockerDirectory>
                             <resources>
                                 <resource>
@@ -975,5 +975,6 @@
     </profiles>
     <properties>
         <distribution.name>siddhi-runner</distribution.name>
+        <docker.image.name>siddhiio/siddhi-runner-alpine:latest-dev</docker.image.name>
     </properties>
 </project>
