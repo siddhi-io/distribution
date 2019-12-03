@@ -103,7 +103,7 @@ public class SiddhiRunnerContainerTest {
 
         SiddhiRunnerContainer siddhiContainer = new SiddhiRunnerContainer()
                 .withSiddhiApps(siddhiAppUrl.getPath())
-                .withJars(extraJarsPath.toString())
+                .withJars(extraJarsPath.toString(), false)
                 .withLogConsumer(new Slf4jLogConsumer(log))
                 .withNetwork(network)
                 .withEnv("DATABASE_URL", mySQLContainer.getNetworkedJdbcUrl())

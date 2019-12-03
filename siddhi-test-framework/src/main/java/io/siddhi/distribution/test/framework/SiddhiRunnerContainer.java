@@ -17,7 +17,6 @@
  */
 package io.siddhi.distribution.test.framework;
 
-import io.siddhi.distribution.test.framework.util.BundleUtil;
 import io.siddhi.distribution.test.framework.util.HTTPClient;
 import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.ContainerLaunchException;
@@ -28,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.URI;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,8 +42,8 @@ import static org.rnorth.ducttape.unreliables.Unreliables.retryUntilSuccess;
  * Siddhi Runner docker container class.
  */
 public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContainer> {
-    private static final String IMAGE = "siddhi-runner";
-    private static final String SIDDHI_RUNNER_VERSION = "test";
+    private static final String IMAGE = "siddhiio/siddhi-runner-alpine";
+    private static final String SIDDHI_RUNNER_VERSION = "latest-dev";
     private static final int DEFAULT_HTTP_PORT = 9090;
     private static final int DEFAULT_HTTPS_PORT = 9443;
     private static final int DEFAULT_THRIFT_TCP_PORT = 7611;
@@ -58,7 +56,8 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private static final String DEFAULT_USER_NAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";
     private static final String DEPLOYMENT_DIRECTORY = "/home/siddhi_user/siddhi-files";
-    private static final String LIB_DIRECTORY = "/home/siddhi_user/extend_lib_volume/";
+    private static final String JARS_DIRECTORY_PATH = "/home/siddhi_user/siddhi-runner/jars/";
+    private static final String BUNDLES_DIRECTORY_PATH = "/home/siddhi_user/siddhi-runner/bundles/";
     private static final String CONF_DIRECTORY = "/home/siddhi_user/conf";
     private static final String HEALTH_ENDPOINT_CONTEXT = "/health";
     private static final String OVERRIDE_CONF_SYSTEM_PARAMETER = "-Dconfig";
@@ -120,8 +119,14 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withConfig(String confPath) {
-        withFileSystemBind(confPath, CONF_DIRECTORY, BindMode.READ_ONLY);
-        initCommand.append(BLANK_SPACE).append(OVERRIDE_CONF_SYSTEM_PARAMETER).append("=").append(CONF_DIRECTORY);
+        File configFile = new File(confPath);
+        if (!configFile.isDirectory()) {
+            withFileSystemBind(confPath, CONF_DIRECTORY, BindMode.READ_ONLY);
+            initCommand.append(BLANK_SPACE).append(OVERRIDE_CONF_SYSTEM_PARAMETER).append("=").append(CONF_DIRECTORY);
+        } else {
+            logger().error("Provided configurations path points to a directory. " +
+                    "Hence, configuration merging is skipped.");
+        }
         return this;
     }
 
@@ -132,42 +137,61 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        withFileSystemBind(deploymentDirectory, DEPLOYMENT_DIRECTORY, BindMode.READ_ONLY);
+        File siddhiApps = new File(deploymentDirectory);
+        String deploymentPath = DEPLOYMENT_DIRECTORY;
+        if (!siddhiApps.isDirectory()) {
+            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(siddhiApps.getName());
+        }
+        withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
         return this;
     }
 
     /**
-     * Mounts the JARs within the provided directory in the Siddhi Runner's classpath.
+     * Mounts the provided JARs in the Siddhi Runner's classpath.
      *
-     * @param jarsDir Absolute path of the extra JARs directory
+     * @param jarPath Absolute path of the extra JAR file/directory
+     * @param isBundle Flag representing whether the file/directory contains bundles
      * @return self
      */
-    public SiddhiRunnerContainer withJars(String jarsDir) {
-        String tempDirName = "thirdPartyJars";
-        int mountMode = 444;
-        try {
-            Path thirdPartyJarsPath = Files.createTempDirectory(tempDirName);
-            BundleUtil.convertFromJarToBundle(jarsDir, thirdPartyJarsPath.toString());
-            File thirdPartyJarsDir = new File(thirdPartyJarsPath.toString());
-            if (thirdPartyJarsDir.exists()) {
-                try {
-                    List<Path> directoryContent  = listFiles(thirdPartyJarsDir.toPath());
+    public SiddhiRunnerContainer withJars(String jarPath, boolean isBundle) {
+        File extendedJarPath = new File(jarPath);
+        if (extendedJarPath.exists() && extendedJarPath.canRead()) {
+            try {
+                if (extendedJarPath.isDirectory()) {
+                    List<Path> directoryContent = listFiles(extendedJarPath.toPath());
                     for (Path aDirectoryItem : directoryContent) {
-                        if (aDirectoryItem.toString().endsWith(".jar")) {
-                            MountableFile mountableFile = MountableFile.forHostPath(aDirectoryItem.toAbsolutePath(),
-                                    mountMode);
-                            withCopyFileToContainer(mountableFile, LIB_DIRECTORY);
-                        }
+                        mountJarFile(aDirectoryItem.toString(), isBundle);
                     }
-                } catch (IOException e) {
-                    logger().error("Exception caught while mounting JARs to Siddhi Runner container.", e);
+                } else {
+                    mountJarFile(extendedJarPath.getPath(), isBundle);
                 }
+            } catch (IOException e) {
+                logger().error("Exception caught while mounting JARs to Siddhi Runner container.", e);
             }
-        } catch (IOException e) {
-            logger().error("Failed to create temporary directory with name:" + tempDirName, e);
+        } else {
+            logger().error("Directory " + jarPath + "does not exist or unreadable.");
         }
         return this;
+    }
+
+    private void mountJarFile(String jarPath, boolean isBundle) {
+        if (jarPath.endsWith(".jar")) {
+            if (!isBundle) {
+                mountFile(jarPath, JARS_DIRECTORY_PATH);
+            } else {
+                mountFile(jarPath, BUNDLES_DIRECTORY_PATH);
+            }
+        } else {
+            logger().warn("File " + jarPath + "is not a valid JAR file. Hence, ignored");
+        }
+    }
+
+    private void mountFile (String sourcePath, String outputPath) {
+        int mountMode = 444;
+        MountableFile mountableFile = MountableFile.forHostPath(sourcePath,
+                mountMode);
+        withCopyFileToContainer(mountableFile, outputPath);
     }
 
     public void withStartupTimeoutSeconds(int startupTimeoutSeconds) {
