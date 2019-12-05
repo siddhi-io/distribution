@@ -46,5 +46,6 @@
         <module>grpc-generic-client</module>
         <module>grpc-generic-server</module>
         <module>grpc-server</module>
+        <module>rabbitmq-client</module>
     </modules>
 </project>
