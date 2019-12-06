@@ -40,6 +40,7 @@
         <module>components/io.siddhi.distribution.msf4j.interceptor.common</module>
         <module>components/io.siddhi.distribution.health.check.core</module>
         <module>components/io.siddhi.parser</module>
+        <module>components/io.siddhi.langserver</module>
 
         <module>features/io.siddhi.distribution.core.feature</module>
         <module>features/io.siddhi.distribution.common.feature</module>

@@ -1,0 +1,821 @@
+#    * Copyright (c) 2019, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#    *
+#    * Licensed under the Apache License, Version 2.0 (the "License");
+#    * you may not use this file except in compliance with the License.
+#    * You may obtain a copy of the License at
+#    *
+#    * http://www.apache.org/licenses/LICENSE-2.0
+#    *
+#    * Unless required by applicable law or agreed to in writing, software
+#    * distributed under the License is distributed on an "AS IS" BASIS,
+#    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    * See the License for the specific language governing permissions and
+#    * limitations under the License.
+#    */
+#    /*
+#    * Copyright (c) 2019, WSO2 Inc. (http://wso2.com) All Rights Reserved.
+#    *
+#    * Licensed under the Apache License, Version 2.0 (the "License");
+#    * you may not use this file except in compliance with the License.
+#    * You may obtain a copy of the License at
+#    *
+#    * http://www.apache.org/licenses/LICENSE-2.0
+#    *
+#    * Unless required by applicable law or agreed to in writing, software
+#    * distributed under the License is distributed on an "AS IS" BASIS,
+#    * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#    * See the License for the specific language governing permissions and
+#    * limitations under the License.
+snippets:
+   APP_NAME_ANNOTATION_DEFINITION:
+     insertText: "@App:description(\"${1:App_Name}\")"
+     label: "annotate-appName"
+     completionItemKind: "Snippet"
+     details: "annotate-AppName\n@App:Name(\"${1:App_Name}\")"
+     filtertext: "@app:name"
+     insertTextFormat: "Snippet"
+   APP_DESCRIPTION_ANNOTATION_DEFINITION:
+     insertText: "@App:description(\"${1:App_Description}\")"
+     label: "annotate-appDescription"
+     completionItemKind: "Snippet"
+     details: "annotate-AppDescription\n@App:description(\"${1:App_Description}\")"
+     filtertext:   "@app:description"
+     insertTextFormat: "Snippet"
+   APP_STATISTICS_ANNOTATION_DEFINITION:
+      insertText: "@App:statistics(\"${1:Is_Enabled}\")"
+      label: "annotate-appStatistics"
+      completionItemKind: "Snippet"
+      details: "annotate-AppStatistics\n@App:description(\"${1:App_Statistics}\")"
+      filtertext: "@app:statistics"
+      insertTextFormat: "Snippet"
+   APP_ANNOTATION_ELEMENT_NAME_DEFINITION:
+      insertText: "\"${1:plan name}\""
+      label: "plan name"
+      completionItemKind: "Snippet"
+      details: "app-annotation-element"
+      filtertext: "@app:name"
+      insertTextFormat: "Snippet"
+   APP_ANNOTATION_ELEMENT_DESCRIPTION_DEFINITION:
+      insertText: "\"${1:plan description}\""
+      label: "plan description"
+      completionItemKind: "Snippet"
+      details: "app-annotation element"
+      filtertext: "@app:description"
+      insertTextFormat: "Snippet"
+   APP_ANNOTATION_ELEMENT_STATISTIC_DEFINITION:
+     insertText: "\"${1:statistics}\""
+     label: "statistics"
+     completionItemKind: "Snippet"
+     details: "app-annotation element"
+     filtertext: "@app:statistics"
+     insertTextFormat: "Snippet"
+   STREAM_DEFINITION:
+     insertText: "define stream ${1:stream_name} (${2:attr1} ${3:Type1}, ${4:attN} ${5:TypeN});"
+     label: "define-stream"
+     completionItemKind: "Snippet"
+     details: "define stream $stream_name ($attrname $Type1, $nextattrname $TypeN)"
+     filtertext: "define stream"
+     insertTextFormat: "Snippet"
+   QUERY_DEFINITION:
+     insertText: "from ${1:stream_name}\nselect ${2:attribute1} , ${3:attribute2}\ninsert into ${4:output_stream};"
+     label: "define-query"
+     completionItemKind: "Snippet"
+     details: "from ${1:stream_name}\nselect ${2:attribute1} , ${3:attribute2}\ninsert into ${4:output_stream}"
+     filtertext: "from"
+     insertTextFormat: "Snippet"
+   FUNCTION_DEFINITION:
+     insertText: "define function ${1:function_name}[${2:lang_name}] return ${3:return_type} { \n\t${4:function_body} \n};"
+     label: "define-function"
+     completionItemKind: "Snippet"
+     details: "define function ${1:function_name}[${2:lang_name}] return ${3:return_type} { \n\t${4:function_body} \n};"
+     filtertext: "define function"
+     insertTextFormat: "Snippet"
+   TABLE_DEFINITION:
+     insertText: "define table ${1:table_name} (${2:attr1} ${3:Type1}, ${4:attN} ${5:TypeN});"
+     label: "define-table"
+     completionItemKind: "Snippet"
+     details: "define table ${1:table_name} (${2:attr1} ${3:Type1}, ${4:attN} ${5:TypeN});"
+     filtertext: "define table"
+     insertTextFormat: "Snippet"
+   AGGREGATION_DEFINITION:
+     insertText: "@Purge(enable = '${1:enable_purge}', interval= '${2:purge_interval}',
+                   \t\t@retentionPeriod(..
+                   .)
+                   )
+                   \ndefine aggregation ${3:aggregator_name}\nfrom ${4:input_stream}
+                   \nselect ${5:attribute1}, ${6:aggregate_function}(${7:attribute2}) as ${8:attribute3},
+                   ${9:aggregate_function}(${10:attribute4}) as ${11:attribute5}\n
+                   \tgroup by ${12:attribute6}\n
+                   \taggregate by ${13:timestamp_attribute} every ${14:time_periods};"
+     label: "define-aggregation"
+     completionItemKind: "Snippet"
+     details: "define aggregation ${1:aggregator_name}\nfrom ${2:input_stream}\n
+                select ${3:attribute1}, ${4:aggregate_function}(${5:attribute2}) as ${6:attribute3},
+                ${7:aggregate_function}(${8:attribute4}) as ${9:attribute5}\n
+                \tgroup by ${10:attribute6}\n
+                \taggregate by ${11:timestamp_attribute} every ${12:time_periods};"
+     filtertext:  "define aggregation"
+     insertTextFormat: "Snippet"
+   PARTITION_DEFINITION:
+     insertText: "partition with (${1:attribute_name} of ${2:stream_name})\n
+                   begin\n
+                   \t${3:queries}\n
+                   end;"
+     label: "define-partition"
+     completionItemKind: "Snippet"
+     details: "partition with (${1:attribute_name} of ${2:stream_name})\n
+                begin\n
+                \t${3:queries}\n
+                end;"
+     filtertext: "define partition"
+     insertTextFormat: "Snippet"
+   TRIGGER_DEFINITION:
+     insertText:  "define trigger ${1:trigger_name} at ${2:time};"
+     label: "define-trigger"
+     completionItemKind: "Snippet"
+     details: "define trigger ${1:trigger_name} at ${2:time};"
+     filtertext: "define trigger"
+     insertTextFormat: "Snippet"
+   WINDOW_DEFINITION:
+     insertText:  "define window ${1:window_name} (${2:attr1} ${3:Type1},
+                    ${4:attN} ${5:TypeN}) ${6:window_type} ${7:output} ${8:event_type} events};"
+     label: "define-window"
+     completionItemKind: "Snippet"
+     details: "define-Window\ndefine window ${1:window_name} (${2:attr1} ${3:Type1},
+               ${4:attN} ${5:TypeN}) ${6:window_type} ${7:output} ${8:event_type} events};"
+     filtertext: "define window"
+     insertTextFormat: "Snippet"
+
+   QUERY_TABLE_JOIN:
+     insertText:  "from ${1:stream_name} as ${2:reference} join ${3:table_name} as ${4:reference}\n
+                    \ton ${5:join_condition}\n
+                    select ${6:attribute1}, ${7:attribute2}\n
+                    limit ${8:limit_value}\n
+                    offset ${9:offset_value}\n
+                    insert into ${10:output_stream}"
+     label: "query-tableJoin"
+     completionItemKind: "Snippet"
+     details: "query-tableJoin\nfrom ${1:stream_name} as ${2:reference} join ${3:table_name} as ${4:reference}\n
+                                  \ton ${5:join_condition}\n
+                                  select ${6:attribute1}, ${7:attribute2}\n
+                                  limit ${8:limit_value}\n
+                                  offset ${9:offset_value}\n
+                                  insert into ${10:output_stream}"
+     filtertext: "from"
+     insertTextFormat: "Snippet"
+   QUERY_PATTERN:
+     insertText:  "from every ${1:stream_reference}=${2:stream_name}[${3:filter_condition}] -> \n
+                    \tevery ${4:stream_reference2}=${5:stream_name2}[${6:filter_condition2}]\n
+                    \twithin ${7: time_gap}\n
+                    select ${8:stream_reference}.${9:attribute1}, ${10:stream_reference}.${11:attribute1}\n
+                    insert into ${12:output_stream}"
+     label: "query-pattern"
+     completionItemKind: "Snippet"
+     details: "\nquery-Pattern\n
+                from every ${1:stream_reference}=${2:stream_name}[${3:filter_condition}] -> \n
+                \tevery ${4:stream_reference2}=${5:stream_name2}[${6:filter_condition2}]\n
+                \twithin ${7: time_gap}\n
+                select ${8:stream_reference}.${9:attribute1}, ${10:stream_reference}.${11:attribute1}\n
+                insert into ${12:output_stream}"
+     filtertext: "from"
+     insertTextFormat: "Snippet"
+
+   QUERY_JOIN:
+     insertText: "from ${1:stream_name}[${2:filter_condition}]#window.${3:window_name}(${4:args}) as ${5:reference}\n
+                    \tjoin ${6:stream_name}[${7:filter_condition}]#window.${8:window_name}(${9:args})
+                    as ${10:reference}\n
+                    \ton ${11:join_condition}\n
+                    \twithin ${12: time_gap}\n
+                    select ${13:attribute1}, ${14:attribute2}\n
+                    insert into ${15:output_stream}"
+     label: "query-join"
+     completionItemKind: "Snippet"
+     details: "\nquery-Join\n
+                from ${1:stream_name}[${2:filter_condition}]#window.${3:window_name}(${4:args})
+                as ${5:reference}\n
+                \tjoin ${6:stream_name}[${7:filter_condition}]#window.${8:window_name}(${9:args})
+                as ${10:reference}\n
+                \ton ${11:join_condition}\n
+                \twithin ${12: time_gap}\n
+                select ${13:attribute1}, ${14:attribute2}\n
+                insert into ${15:output_stream}"
+     filtertext: "from"
+     insertTextFormat: "Snippet"
+   QUERY_WINDOW_FILTER:
+     insertText:  "from ${1:stream_name}[${2:filter_condition}]#window.${3:namespace}:${4:window_name}(${5:args})\n
+                    select ${6:attribute1} , ${7:attribute2}\n
+                    insert into ${8:output_stream}"
+     label: "query-windowFilter"
+     completionItemKind: "Snippet"
+     details: "\nquery-WindowFilter\nfrom ${1:stream_name}[${2:filter_condition}]#window.${3:namespace}:${4:window_name}(${5:args})\n
+                                  select ${6:attribute1} , ${7:attribute2}\n
+                                  insert into ${8:output_stream}"
+     filtertext: "from"
+     insertTextFormat: "Snippet"
+   QUERY_WINDOW:
+     insertText:  "from ${1:stream_name}#window.${2:namespace}:${3:window_name}(${4:args})\n
+                    select ${5:attribute1}, ${6:attribute2}\n
+                    insert into ${7:output_stream}"
+     label: "query-window"
+     completionItemKind: "Snippet"
+     details: "\nquery-Window\n
+                from ${1:stream_name}#window.${2:namespace}:${3:window_name}(${4:args})\n
+                select ${5:attribute1};, ${6:attribute2}\n
+                insert into ${7:output_stream}"
+     filtertext: "from"
+     insertTextFormat: "Snippet"
+   QUERY_FILTER:
+     insertText: "from ${1:stream_name}[${2:filter_condition}]\n
+                    select ${3:attribute1}, ${4:attribute2}\n
+                    insert into ${5:output_stream}"
+     label: "query-filter"
+     completionItemKind: "Snippet"
+     details: "\nquery-Filter\nfrom ${1:stream_name}[${2:filter_condition}]\n
+                                  select ${3:attribute1}, ${4:attribute2}\n
+                                  insert into ${5:output_stream}"
+     filtertext: "from"
+     insertTextFormat: "Snippet"
+   SINK_DEFINITION:
+     insertText: "@sink(type='${1:sink_type}', ${2:option_key}='${3:option_value}',
+                   ${4:dynamic_option_key}='{{${5:dynamic_option_value}}}',\n
+                   \t@map(type='${6:map_type}', ${7:option_key}='${8:option_value}',
+                   ${9:dynamic_option_key}='{{${10:dynamic_option_value}}}',\n
+                   \t\t@payload( '${11:payload_mapping}')\n\t)\n)\n
+                   define stream ${12:stream_name} (${13:attribute1} ${14:Type1}, ${15:attributeN} ${16:TypeN});"
+     label: "define-sink"
+     completionItemKind: "Snippet"
+     details: "\ndefine-Sink\n@sink(type='${1:sink_type}', ${2:option_key}='${3:option_value}',
+                                 ${4:dynamic_option_key}='{{${5:dynamic_option_value}}}',\n
+                                 \t@map(type='${6:map_type}', ${7:option_key}='${8:option_value}',
+                                 ${9:dynamic_option_key}='{{${10:dynamic_option_value}}}',\n
+                                 \t\t@payload( '${11:payload_mapping}')\n\t)\n)\n
+                                 define stream ${12:stream_name} (${13:attribute1} ${14:Type1}, ${15:attributeN} ${16:TypeN});"
+     filtertext: "@sink"
+     insertTextFormat: "Snippet"
+   SOURCE_DEFINITION:
+     insertText: "@source(type='${1:source_type}', ${2:option_key}='${3:option_value}',\n
+                   \t@map(type='${4:map_type}', ${5:option_key}='${6:option_value}',\n
+                   \t\t@attributes('${7:attribute_mapping_1}', '${8:attribute_mapping_N}')\n\t)\n)\n
+                   define stream ${9:stream_name} (${10:attribute1} ${11:Type1}, ${12:attributeN} ${13:TypeN});"
+     label: "define-source"
+     completionItemKind: "Snippet"
+     details: "\ndefine-source\n@source(type='${1:source_type}', ${2:option_key}='${3:option_value}',\n
+                                 \t@map(type='${4:map_type}', ${5:option_key}='${6:option_value}',\n
+                                 \t\t@attributes('${7:attribute_mapping_1}', '${8:attribute_mapping_N}')\n\t)\n)\n
+                                 define stream ${9:stream_name} (${10:attribute1} ${11:Type1}, ${12:attributeN} ${13:TypeN});"
+     filtertext: "@source"
+     insertTextFormat: "Snippet"
+   ANNOTATION_ASYNC_DEFINITION:
+     insertText: "@async(buffer.size=\"${1:64}\", workers='${2:2}', batch.size.max='${3:10}')"
+     label: "annotate-Async"
+     completionItemKind: "Snippet"
+     details:  "\nannotate-Async\n@async(buffer.size=\"${1:64}\", workers='${2:2}', batch.size.max='${3:10}')"
+     filtertext:  "@async"
+     insertTextFormat: "Snippet"
+   ANNOTATION_QUERY_INFO_DEFINITION:
+     insertText: "@info(name = \"${1:Query_Name}\")"
+     label: "annotate-queryInfo"
+     completionItemKind: "Snippet"
+     details:  "@info(name = \"${1:Query_Name}\")"
+     filtertext: "@info"
+     insertTextFormat: "Snippet"
+   ANNOTATION_PRIMARY_KEY_DEFINITION:
+     insertText:  "@primaryKey('${1:attribute_name}')"
+     label: "annotate-primaryKey"
+     completionItemKind: "Snippet"
+     details:  "annotate-PrimaryKey\n@primaryKey('${1:attribute_name}')"
+     filtertext: "@primaryKey"
+     insertTextFormat: "Snippet"
+   ANNOTATION_INDEX_DEFINITION :
+     insertText: "@index('${1:attribute_name}')"
+     label: "annotate-index"
+     completionItemKind: "Snippet"
+     details: "annotate-Index\n@index('${1:attribute_name}')"
+     filtertext: "@index"
+     insertTextFormat: "Snippet"
+   ATTRIBUTE_NAME_AND_TYPE_SNIPPET:
+     insertText: "${1:attr1} ${2:Type1}"
+     label: "${1:attr1} ${2:Type1}"
+     completionItemKind: "Snippet"
+     details: "${1:attr1} ${2:Type1}"
+     filtertext: "attribute"
+     insertTextFormat: "Snippet"
+   ALIAS_SNIPPET:
+     insertText: "${1:alias}"
+     label: "alias"
+     completionItemKind: "Snippet"
+     details: "${1:alias}"
+     filtertext: "alias"
+     insertTextFormat: "Snippet"
+   ATTRIBUTE_LIST_SNIPPET:
+     insertText: "(${1:attr1} ${2:Type1}, ${3:attrN} ${4:TypeN}),(attr1 Type1, attN TypeN)"
+     label: "attribute-list"
+     completionItemKind: "Snippet"
+     details: "(${1:attr1} ${2:Type1}, ${3:attrN} ${4:TypeN}),(attr1 Type1, attN TypeN)"
+     filtertext: "attribute"
+     insertTextFormat: "Snippet"
+   STREAM_NAME_SNIPPET:
+     insertText: "${1:streamName}"
+     label: "streamName"
+     completionItemKind: "Snippet"
+     details: "stream name:source"
+     filtertext: "stream"
+     insertTextFormat: "Snippet"
+   TRIGGER_NAME_SNIPPET:
+     insertText: "${1:triggerName}"
+     label: "triggerName"
+     completionItemKind: "Snippet"
+     details:  "trigger name:source"
+     filtertext: "trigger"
+     insertTextFormat: "Snippet"
+   WINDOW_NAME_SNIPPET:
+     insertText: "${1:windowName}"
+     label: "windowName"
+     completionItemKind: "Snippet"
+     details: "window name:source"
+     filtertext: "windowName"
+     insertTextFormat: "Snippet"
+   TABLE_NAME_SNIPPET:
+     insertText: "${1:tableName}"
+     label: "tableName"
+     completionItemKind: "Snippet"
+     details: "table name:source"
+     filtertext: "table"
+     insertTextFormat: "Snippet"
+   FUNCTION_NAME_SNIPPET:
+     insertText: "${1:functionName}"
+     label: "functionName"
+     completionItemKind: "Snippet"
+     details: "function name:id"
+     filtertext: "function"
+     insertTextFormat: "Snippet"
+   LANGUAGE_NAME_SNIPPET:
+     insertText: "[${1:languageName}]"
+     label: "languageName"
+     completionItemKind: "Snippet"
+     details: "languageName:id"
+     filtertext: "function"
+     insertTextFormat: "Snippet"
+   FUNCTION_BODY_SNIPPET:
+     insertText: "{\n\t\t${1:body}\n};"
+     label: "function-body"
+     completionItemKind: "Snippet"
+     details: "{function-body}"
+     filtertext: "{"
+     insertTextFormat: "Snippet"
+   PARTITION_BLOCK_SNIPPET:
+     insertText: "begin\n\t${3:queries}\nend;"
+     label: "partition-block"
+     completionItemKind: "Snippet"
+     details: "partition-block:\nbegin\nqueries\nend;"
+     filtertext: "begin"
+     insertTextFormat: "Snippet"
+
+   KEYWORD_DEFINE:
+     insertText: "define"
+     label: "define"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "define"
+     insertTextFormat: "PlainText"
+   KEYWORD_STREAM:
+     insertText: "stream"
+     label: "stream"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "stream"
+     insertTextFormat: "PlainText"
+   KEYWORD_AGGREGATION:
+     insertText: "aggregation"
+     label: "aggregation"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "aggregation"
+     insertTextFormat: "PlainText"
+   KEYWORD_TRIGGER:
+     insertText: "trigger"
+     label: "trigger"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "trigger"
+     insertTextFormat: "PlainText"
+   KEYWORD_FUNCTION:
+     insertText: "function"
+     label: "function"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "function"
+     insertTextFormat: "PlainText"
+   KEYWORD_WINDOW:
+     insertText: "window"
+     label: "window"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "window"
+     insertTextFormat: "PlainText"
+   KEYWORD_PARTITION:
+     insertText: "partition"
+     label: "partition"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "partition"
+     insertTextFormat: "PlainText"
+   KEYWORD_TABLE:
+     insertText: "table"
+     label: "table"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "table"
+     insertTextFormat: "PlainText"
+   KEYWORD_FROM:
+     insertText: "from"
+     label: "from"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "from"
+     insertTextFormat: "PlainText"
+   KEYWORD_INSERT_INTO:
+     insertText: "insert into"
+     label: "insert into"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "insert into"
+     insertTextFormat: "PlainText"
+   KEYWORD_UPDATE_OR_INSERT_INTO:
+     insertText: "update or insert into"
+     label: "update or insert into"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "update"
+     insertTextFormat: "PlainText"
+   KEYWORD_INTO:
+     insertText: "into"
+     label: "into"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "into"
+     insertTextFormat: "PlainText"
+   KEYWORD_FOR:
+     insertText: "for"
+     label: "for"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "for"
+     insertTextFormat: "PlainText"
+   KEYWORD_ON:
+     insertText: "on"
+     label: "on"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "on"
+     insertTextFormat: "PlainText"
+   KEYWORD_SET:
+     insertText: "set"
+     label: "set"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "set"
+     insertTextFormat: "PlainText"
+   KEYWORD_ALL_EVENTS:
+     insertText: "all events"
+     label: "all events"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "all events"
+     insertTextFormat: "PlainText"
+   KEYWORD_EXPIRED_EVENTS:
+     insertText: "expired events"
+     label: "expired events"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "expired events"
+     insertTextFormat: "PlainText"
+   KEYWORD_CURRENT_EVENTS:
+     insertText: "current events"
+     label: "current events"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "current events"
+     insertTextFormat: "PlainText"
+   KEYWORD_CURRENT:
+     insertText: "current"
+     label: "current"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "current"
+     insertTextFormat: "PlainText"
+   KEYWORD_EVENTS:
+     insertText: "events"
+     label: "events"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "events"
+     insertTextFormat: "PlainText"
+   TRIPPLE_DOT:
+     insertText: "..."
+     label: "..."
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "..."
+     insertTextFormat: "PlainText"
+   KEYWORD_SELECT:
+     insertText: "select"
+     label: "select"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "select"
+     insertTextFormat: "PlainText"
+   KEYWORD_INSERT:
+     insertText: "insert"
+     label: "insert"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "insert"
+     insertTextFormat: "PlainText"
+   KEYWORD_DELETE:
+     insertText: "delete"
+     label: "delete"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "delete"
+     insertTextFormat: "PlainText"
+   KEYWORD_UPDATE:
+     insertText: "update"
+     label: "update"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "update"
+     insertTextFormat: "PlainText"
+   KEYWORD_RETURN:
+     insertText: "return"
+     label: "return"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "return"
+     insertTextFormat: "PlainText"
+   KEYWORD_OUTPUT:
+     insertText: "output"
+     label: "output"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "output"
+     insertTextFormat: "PlainText"
+   KEYWORD_EVERY:
+     insertText: "every"
+     label: "every"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "every"
+     insertTextFormat: "PlainText"
+   KEYWORD_INT:
+     insertText: "int"
+     label: "int"
+     completionItemKind: "Keyword"
+     details: "attribute-type:int"
+     filtertext: "int"
+     insertTextFormat: "PlainText"
+   KEYWORD_LONG:
+     insertText: "long"
+     label: "long"
+     completionItemKind: "Keyword"
+     details: "attribute-type:long"
+     filtertext: "long"
+     insertTextFormat: "PlainText"
+   KEYWORD_DOUBLE:
+     insertText: "double"
+     label: "doouble"
+     completionItemKind: "Keyword"
+     details: "attribute-type:double"
+     filtertext: "double"
+     insertTextFormat: "PlainText"
+   KEYWORD_FLOAT:
+     insertText: "float"
+     label: "float"
+     completionItemKind: "Keyword"
+     details: "attribute-type:float"
+     filtertext: "float"
+     insertTextFormat: "PlainText"
+   KEYWORD_STRING:
+     insertText: "string"
+     label: "string"
+     completionItemKind: "Keyword"
+     details: "attribute-type:string"
+     filtertext: "string"
+     insertTextFormat: "PlainText"
+   KEYWORD_BOOL:
+     insertText: "bool"
+     label: "bool"
+     completionItemKind: "Keyword"
+     details: "attribute-type:bool"
+     filtertext: "bool"
+     insertTextFormat: "PlainText"
+   KEYWORD_OBJECT:
+     insertText: "object"
+     label: "object"
+     completionItemKind: "Keyword"
+     details: "attribute-type:object"
+     filtertext: "object"
+     insertTextFormat: "PlainText"
+   KEYWORD_HAVING:
+     insertText: "having"
+     label: "having"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "having"
+     insertTextFormat: "PlainText"
+   KEYWORD_ORDER_BY:
+     insertText: "order by"
+     label: "order by"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "order"
+     insertTextFormat: "PlainText"
+   KEYWORD_LIMIT:
+     insertText: "limit"
+     label: "limit"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "limit"
+     insertTextFormat: "PlainText"
+   KEYWORD_OFFSET:
+     insertText: "offset"
+     label: "offset"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "offset"
+     insertTextFormat: "PlainText"
+   KEYWORD_GROUP_BY:
+     insertText: "group by"
+     label: "group by"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "group"
+     insertTextFormat: "PlainText"
+   KEYWORD_AS:
+     insertText: "as"
+     label: "as"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "as"
+     insertTextFormat: "PlainText"
+   KEYWORD_AT:
+     insertText: "at"
+     label: "at"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "at"
+     insertTextFormat: "PlainText"
+   KEYWORD_JOIN:
+     insertText: "join"
+     label: "join"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "join"
+     insertTextFormat: "PlainText"
+   KEYWORD_LEFT:
+     insertText: "left"
+     label: "left"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "left"
+     insertTextFormat: "PlainText"
+   KEYWORD_RIGHT:
+     insertText: "right"
+     label: "right"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "right"
+     insertTextFormat: "PlainText"
+   KEYWORD_OUTER:
+     insertText: "outer"
+     label: "outer"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "outer"
+     insertTextFormat: "PlainText"
+   KEYWORD_FULL:
+     insertText: "full"
+     label: "full"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "full"
+     insertTextFormat: "PlainText"
+   KEYWORD_UNIDIRECTIONAL:
+     insertText: "unidirectional"
+     label: "unidirectional"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "unidirectional"
+     insertTextFormat: "PlainText"
+   CLAUSE_LEFT_OUTER_JOIN:
+     insertText: "left outer join"
+     label: "left outer join"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "left"
+     insertTextFormat: "PlainText"
+   CLAUSE_RIGHT_OUTER_JOIN:
+     insertText: "right outer join"
+     label: "right outer join"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "right"
+     insertTextFormat: "PlainText"
+   CLAUSE_FULL_OUTER_JOIN:
+     insertText: "full outer join"
+     label: "full outer join"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "full"
+     insertTextFormat: "PlainText"
+   KEYWORD_ASC:
+     insertText: "asc"
+     label: "asc"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "asc"
+     insertTextFormat: "PlainText"
+   KEYWORD_DESC:
+     insertText: "desc"
+     label: "desc"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "desc"
+     insertTextFormat: "PlainText"
+   KEYWORD_BEGIN:
+     insertText: "begin"
+     label: "begin"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "begin"
+     insertTextFormat: "PlainText"
+   KEYWORD_END:
+     insertText: "end"
+     label: "end"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "end"
+     insertTextFormat: "PlainText"
+   KEYWORD_MILLISECONDS:
+     insertText: "milliseconds"
+     label: "milliseconds"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "milliseconds"
+     insertTextFormat: "PlainText"
+   KEYWORD_SECONDS:
+     insertText: "seconds"
+     label: "seconds"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "seconds"
+     insertTextFormat: "PlainText"
+   KEYWORD_MINUTES:
+     insertText: "minutes"
+     label: "minutes"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "minutes"
+     insertTextFormat: "PlainText"
+   KEYWORD_HOURS:
+     insertText: "hours"
+     label: "hours"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "hours"
+     insertTextFormat: "PlainText"
+   KEYWORD_DAYS:
+     insertText: "days"
+     label: "days"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "days"
+     insertTextFormat: "PlainText"
+   KEYWORD_MONTHS:
+     insertText: "months"
+     label: "months"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "months"
+     insertTextFormat: "PlainText"
+   KEYWORD_YEARS:
+     insertText: "years"
+     label: "years"
+     completionItemKind: "Keyword"
+     details: "keyword"
+     filtertext: "years"
+     insertTextFormat: "PlainText"
+   CONSTANT_TRUE:
+     insertText: "true"
+     label: "true"
+     completionItemKind: "Constant"
+     details: "constant:boolean"
+     filtertext: "true"
+     insertTextFormat: "PlainText"
+   CONSTANT_FALSE:
+     insertText: "false"
+     label: "false"
+     completionItemKind: "Constant"
+     details: "constant:boolean"
+     filtertext: "false"
+     insertTextFormat: "PlainText"

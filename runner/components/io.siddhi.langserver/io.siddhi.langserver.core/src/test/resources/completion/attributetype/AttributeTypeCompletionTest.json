@@ -1,0 +1,62 @@
+{
+  "jsonrpc": "2.0",
+  "id": 7,
+  "result": [
+    {
+      "label": "string",
+      "kind": 14,
+      "detail": "attribute type:string",
+      "filterText": "string",
+      "insertText": "string",
+      "insertTextFormat": 1
+    },
+    {
+      "label": "int",
+      "kind": 14,
+      "detail": "attribute type:int",
+      "filterText": "int",
+      "insertText": "int",
+      "insertTextFormat": 1
+    },
+    {
+      "label": "float",
+      "kind": 14,
+      "detail": "attribute type:float",
+      "filterText": "float",
+      "insertText": "float",
+      "insertTextFormat": 1
+    },
+    {
+      "label": "double",
+      "kind": 14,
+      "detail": "attribute type:double",
+      "filterText": "double",
+      "insertText": "double",
+      "insertTextFormat": 1
+    },
+    {
+      "label": "long",
+      "kind": 14,
+      "detail": "attribute type:long",
+      "filterText": "long",
+      "insertText": "long",
+      "insertTextFormat": 1
+    },
+    {
+      "label": "bool",
+      "kind": 14,
+      "detail": "attribute type:bool",
+      "filterText": "bool",
+      "insertText": "bool",
+      "insertTextFormat": 1
+    },
+    {
+      "label": "object",
+      "kind": 14,
+      "detail": "attribute type:object",
+      "filterText": "object",
+      "insertText": "object",
+      "insertTextFormat": 1
+    }
+  ]
+}

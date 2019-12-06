@@ -1,0 +1,6 @@
+@App:name("AttributeTypeCompletion-App")
+@App:description("App to demonstrate attribute type completion")
+
+@sink(type='inMemory', topic='ride-request')
+@sink(type='log')
+define stream RideRequestStream (userId );

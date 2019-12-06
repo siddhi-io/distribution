@@ -1,0 +1,17 @@
+{
+  "jsonrpc": "2.0",
+  "id": 3,
+  "method": "textDocument/completion",
+  "params": {
+    "context": {
+      "triggerKind": 1
+    },
+    "textDocument": {
+      "uri": "file:///home/malintha/Documents/wso2/siddhi-modules/siddhi-lang-server/siddhi-plugin-1.0/siddhi-grammar/demo1.siddhi"
+    },
+    "position": {
+      "line": 5,
+      "character": 34
+    }
+  }
+}
