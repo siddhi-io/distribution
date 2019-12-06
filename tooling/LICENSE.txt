@@ -138,7 +138,7 @@ org.wso2.carbon.launcher-5.2.12.jar                                             
 org.wso2.carbon.tools.core-5.2.12.jar                                                               bundle         apache2
 org.wso2.carbon.secvault.ciphertool.5.0.15.jar                                                      bundle         apache2
 SweetProduction-gRPC.jar                                                                            jar            apache2
-siddhi-io-file-2.0.3.jar                                                                            bundle         apache2
+siddhi-io-file-2.0.4.jar                                                                            bundle         apache2
 siddhi-map-csv-2.0.3.jar                                                                            bundle         apache2
 siddhi-io-nats-2.0.10.jar                                                                           bundle         apache2
 siddhi-execution-math-5.0.4.jar                                                                     bundle         apache2
