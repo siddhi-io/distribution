@@ -107,7 +107,6 @@ public class PrometheusReporter extends AbstractReporter {
 
     /**
      * Builds a {@link PrometheusReporter} with the given properties.
-     *
      */
     public static class Builder {
         private final MetricRegistry registry;
