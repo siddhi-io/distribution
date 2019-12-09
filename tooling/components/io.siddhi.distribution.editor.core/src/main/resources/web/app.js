@@ -10,6 +10,7 @@ requirejs.config({
         /////////////////////////
         // third party modules //
         ////////////////////////
+        remarkable:"commons/lib/remarkable/remarkable.min",
         handlebar: "commons/lib/handlebar/handlebars-v4.0.11.min",
         jquery: "commons/lib/jquery_v1.9.1/jquery-1.9.1.min",
         jquery_ui: "commons/lib/jquery-ui_v1.12.1/jquery-ui.min",
@@ -147,7 +148,9 @@ requirejs.config({
         jarsSelectorDialog: "js/export-deployment-artifacts/jars-selector-dialog",
         siddhiAppSelectorDialog: "js/export-deployment-artifacts/siddhiapp-selector-dialog",
         templateConfigDialog: "js/export-deployment-artifacts/template-config-dialog",
+        templateConfigBlocks: "js/export-deployment-artifacts/template-config-blocks",
         dockerConfigDialog: "js/export-deployment-artifacts/docker-config-dialog",
+        dockerImageTypeDialog: "js/export-deployment-artifacts/docker-image-type-dialog",
         fillTemplateValueDialog: "js/export-deployment-artifacts/fill-template-value-dialog",
         kubernetesConfigDialog: "js/export-deployment-artifacts/kubernetes-config-dialog"
     },

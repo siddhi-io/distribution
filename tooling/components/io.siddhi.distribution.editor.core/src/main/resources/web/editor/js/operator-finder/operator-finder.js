@@ -1,8 +1,8 @@
 /**
  * Copyright (c) 2019, WSO2 Inc. (http://www.wso2.org)  Apache License, Version 2.0  http://www.apache.org/licenses/LICENSE-2.0
  */
-define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-editor/completion-engine'],
-    function ($, _, log, Handlebars, DesignViewUtils, CompletionEngine) {
+define(['jquery', 'lodash', 'log','remarkable', 'handlebar', 'designViewUtils', 'app/source-editor/completion-engine'],
+    function ($, _, log,Remarkable, Handlebars, DesignViewUtils, CompletionEngine) {
         /**
          * Load operators from the Completion engine.
          *
@@ -36,44 +36,6 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
             }
             namespaces.sort();
             callback(namespaces, operators);
-        };
-        /**
-         * Builds operator syntax
-         *
-         * @param entry Operator
-         * @returns {string} Syntax
-         */
-        var buildSyntax = function (entry) {
-            var params = '';
-            var isStoreSinkSourceGeneration = false;
-            var namespaceValue = entry.namespace.toLowerCase();
-            if (namespaceValue === constants.STORE || namespaceValue === constants.SINK ||
-                namespaceValue === constants.SOURCE || namespaceValue === constants.SOURCE_MAPPER ||
-                namespaceValue === constants.SINK_MAPPER) {
-                if (namespaceValue === constants.SINK_MAPPER || namespaceValue === constants.SOURCE_MAPPER) {
-                    namespaceValue = constants.MAP;
-                }
-                isStoreSinkSourceGeneration = true;
-            }
-            if (entry.parameters) {
-                entry.parameters.forEach(function (p) {
-                    if (!p.optional) {
-                        if (isStoreSinkSourceGeneration) {
-                            params += ", " + p.name + "=" + "\'option_value\'";
-                        } else {
-                            params += ', ' + p.name;
-                        }
-                    }
-                });
-            }
-
-            if (isStoreSinkSourceGeneration) {
-                return (entry.namespace.length > 0 ? "@" + namespaceValue + "(type=" + "\'" + entry.name + "\'" +
-                    params + ")" : "");
-            } else {
-                return (entry.namespace.length > 0 ? namespaceValue + ':' : '') + entry.name
-                    + '(' + params.substr(2) + ')';
-            }
         };
 
         /**
@@ -111,7 +73,117 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
         };
 
         /**
-         * Flattens the metadata structure into an array ti reduce the search complexity.
+         * replacing the pipeline and newline character for md conversation.
+         * @param data string variable
+         * @returns {""} retrun string data
+         */
+        var sanitiseString = function (data) {
+            return data.replace(/[|]/g, '&#124;').replace(/[\n]/g, '<br/>');
+        };
+
+        /**
+         *Format the backticks according to the remarkable js.
+         * @param data
+         * @returns {string|*}
+         */
+        var preProcessCodeBlocks = function (data) {
+            var dataSplitArray = data.split("```");
+            var output = "";
+            if (dataSplitArray.length > 2 && dataSplitArray.length % 2 === 1) {
+                output = dataSplitArray[0];
+                for (var index = 1; index < dataSplitArray.length; index++) {
+                    if ((index % 2) === 1) {
+                        output += "\n```\n" + dataSplitArray[index].trim() + "\n```\n";
+                    } else {
+                        output += "\n" + dataSplitArray[index].trim() + "\n";
+                    }
+                }
+                return output;
+            }
+            return data;
+        };
+
+        /**
+         * mdconvertion which converst md data into html.
+         * @param operator extension object
+         * @returns return extension object which contains converted md
+         */
+        var createMDFile = function (operator) {
+            //Add remarkable instance to convert md type data into html
+            var markDownConvertor = new Remarkable({
+                html: true, // Enable HTML tags in source
+                xhtmlOut: false, // Use '/' to close single tags (<br />)
+                breaks: false, // Convert '\n' in paragraphs into <br>
+                linkify: true, // Autoconvert URL-like text to links
+                // Enable some language-neutral replacement + quotes beautification
+                typographer: false,
+                // Double + single quotes replacement pairs, when typographer enabled,
+                // and smartquotes on. Set doubles to '«»' for Russian, '„“' for German.
+                quotes: '“”‘’',
+                highlight: function (/*str, lang*/) {
+                    return '';
+                }
+            });
+            if (operator.description) {
+                operator.extensionDescription = markDownConvertor.render(operator.description);
+            }
+            if (operator.examples) {
+                operator.combinedExamples = "";
+                operator.examples.forEach(function (e, i) {
+                    //change the "|" as "," and "\n" as "<br/> in returnAttributes description to avoid md
+                    // conversation bug.
+                    e.syntax = sanitiseString(e.syntax);
+                    //To provide suitable backtick data for remarkable js md conversion.
+                    e.description = preProcessCodeBlocks(e.description);
+                    operator.combinedExamples += "<h5>example " + (++i) + "</h5>" +
+                        "<pre>" + e.syntax + "</pre>" +
+                        "<p>" + e.description + "</p>";
+                });
+                operator.combinedExamples = markDownConvertor.render(operator.combinedExamples);
+            }
+            if (operator.parameters) {
+                operator.parameterTable = "| Name | Possible DataTypes | Description | " +
+                    "Default Value | Optional | Dynamic | " + "\n" +
+                    "| ------| ------| -----------|" +
+                    " ------| ------| ------|\n";
+                operator.parameters.forEach(function (m) {
+                    //change the "|" as "," and "\n" as "<br/> in returnAttributes description to avoid md
+                    // conversation bug.
+                    m.description = sanitiseString(m.description);
+                    operator.parameterTable += " | " + m.name + " | "
+                        + m.type.join('<br/>') + " | " +
+                        m.description + " | "
+                        + m.defaultValue + " | "
+                        + m.optional + " | "
+                        + m.isDynamic + " | " + "\n";
+                });
+                operator.parameterTable = markDownConvertor.render(operator.parameterTable);
+            }
+            if (operator.returnAttributes) {
+
+                operator.returnAttributes.forEach(function (m) {
+                    if(operator.type === "streamProcessors"){
+                        operator.returnTable = "| Name | DataTypes | Description |\n " +
+                            "| ------| ------| -----------|\n";
+                        m.description = sanitiseString(m.description);
+                        operator.returnTable += " | " + m.name + " | "
+                            + m.type.join('<br/>') + " | "
+                            + m.description + " | \n";
+                    }
+                    else{
+                        operator.returnTable = "| DataTypes | Description |\n " +
+                            "| ------| -----------|\n";
+                        m.description = sanitiseString(m.description);
+                        operator.returnTable +=  " | " + m.type.join('<br/>') +
+                            " | " + m.description + " | \n";
+                    }
+                });
+                operator.returnTable = markDownConvertor.render(operator.returnTable);
+            }
+            return operator;
+        }
+        /**
+         * Flattens the metadata structure into an array it reduce the search complexity.
          *
          * @param meta Operator metadata
          * @returns {*[]} Array of operators
@@ -123,10 +195,10 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
             for (type in meta.inBuilt) {
                 if (meta.inBuilt.hasOwnProperty(type)) {
                     meta.inBuilt[type].forEach(function (operator) {
-                        var op = _.clone(operator);
-                        op.fqn = op.name;
-                        op.type = type;
-                        operators.push(op);
+                        var cloneOperator = _.clone(operator);
+                        cloneOperator.fqn = cloneOperator.name;
+                        cloneOperator.type = type;
+                        operators.push(createMDFile(cloneOperator));
                     });
                 }
             }
@@ -135,16 +207,16 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
             });
 
             // Flatten extensions.
-            var extensions = []
+            var extensions = [];
             for (var extension in meta.extensions) {
                 if (meta.extensions.hasOwnProperty(extension)) {
                     for (type in meta.extensions[extension]) {
                         if (meta.extensions[extension].hasOwnProperty(type)) {
                             meta.extensions[extension][type].forEach(function (operator) {
-                                var op = _.clone(operator);
-                                op.fqn = op.namespace + ':' + op.name;
-                                op.type = type;
-                                extensions.push(op)
+                                var cloneOperator = _.clone(operator);
+                                cloneOperator.fqn = cloneOperator.namespace + ':' + cloneOperator.name;
+                                cloneOperator.type = type;
+                                extensions.push(createMDFile(cloneOperator));
                             });
                         }
                     }
@@ -247,14 +319,22 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
                     }
                 });
             }
-            var results = [];
+            var keyResult = [], descriptionResult = [], combineResults;
             this._operators.forEach(function (e, i) {
                 var result = {
                     fqn: hasToken(e.fqn, tokens),
                     description: hasToken(e.description, tokens)
                 };
-                if (result.fqn.status || result.description.status) {
-                    results.push({
+                if (result.fqn.status) {
+                    keyResult.push({
+                        fqn: e.fqn,
+                        htmlFqn: result.fqn.text,
+                        type: e.type,
+                        description: result.description.text,
+                        index: i
+                    });
+                } else if (result.description.status) {
+                    descriptionResult.push({
                         fqn: e.fqn,
                         htmlFqn: result.fqn.text,
                         type: e.type,
@@ -263,9 +343,10 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
                     });
                 }
             });
+            combineResults = keyResult.concat(descriptionResult);
             return {
-                results: results,
-                hasResults: results.length > 0,
+                results: combineResults,
+                hasResults: combineResults.length > 0,
                 hasQuery: tokens.length > 0,
                 namespaces: this._namespaces
             };
@@ -298,21 +379,22 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
          */
         OperatorFinder.prototype.addToSource = function (index) {
             if (this._operators[index]) {
-                var syntax = buildSyntax(this._operators[index]);
+                var syntax = this._operators[index].syntax[0].clipboardSyntax;
                 var aceEditor = this._activeTab.getSiddhiFileEditor().getSourceView().getEditor();
                 aceEditor.session.insert(aceEditor.getCursorPosition(), syntax);
             }
         };
 
         /**
-         * Copies the syntax into the clipboard.
+         * copy the each clipboard syntax of extension.
          *
          * @param index Operator index
-         * @param container Current container to find the context.
+         * @param exIndex clipboard syntax
+         * @param container container Current container to find the context
          */
-        OperatorFinder.prototype.copyToClipboard = function (index, container) {
+        OperatorFinder.prototype.copyToClipboard = function (index, exIndex, container) {
             if (this._operators[index]) {
-                var syntax = buildSyntax(this._operators[index]);
+                var syntax = this._operators[index].syntax[exIndex].clipboardSyntax;
                 container.find('.copyable-text').val(syntax).select();
                 document.execCommand('copy');
             }
@@ -353,10 +435,11 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
                 $('.nano').nanoScroller();
             });
 
-            // Event handler for modal's copy to clipboard event.
-            modalContent.on('click', '#btn-copy-to-clipboard', function () {
+            // Event handler for modal's extension syntax copy to clipboard event.
+            modalContent.on('click', '.copy-to-clipboard', function () {
                 var index = detailsModal.find('#operator-name').data('index');
-                self.copyToClipboard(index, modalContent);
+                var exIndex = $(this).data('clip-index');
+                self.copyToClipboard(index, exIndex, modalContent);
                 alertCopyToClipboardMessage(modalContent.find('.copy-status-msg'));
             });
 
@@ -383,16 +466,9 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
                 e.preventDefault();
                 var index = $(this).closest('.result').data('index');
                 var data = _.clone(self._operators[index]);
-                if (data.parameters) {
-                    data.parameters.forEach(function (p) {
-                        p.dataTypes = p.type.join('<br />');
-                    });
-                }
-                if (data.returnAttributes) {
-                    data.returnAttributes.forEach(function (r) {
-                        r.dataTypes = r.type.join('<br />');
-                    });
-                }
+
+                data.hasSyntax = (data.syntax || []).length > 0;
+                data.hasExamples = (data.examples || []).length > 0;
                 data.hasParameters = (data.parameters || []).length > 0;
                 data.hasReturnAttributes = (data.returnAttributes || []).length > 0;
                 data.index = index;
@@ -428,7 +504,7 @@ define(['jquery', 'lodash', 'log', 'handlebar', 'designViewUtils', 'app/source-e
             resultContent.on('click', 'a.copy-to-clipboard', function (e) {
                 e.preventDefault();
                 var resultElement = $(this).closest('.result');
-                self.copyToClipboard(resultElement.data('index'), $('#operator-finder'));
+                self.copyToClipboard(resultElement.data('index'), 0, $('#operator-finder'));
                 alertCopyToClipboardMessage(resultElement.find('.copy-status-msg'));
             });
 

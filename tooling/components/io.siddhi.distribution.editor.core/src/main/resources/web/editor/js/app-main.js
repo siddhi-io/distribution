@@ -570,6 +570,7 @@ define(['app/main', 'jquery'],
             openConsoleBtn: '.open-console-btn',
             closeConsoleBtn: '.close-console-btn',
             cleanConsoleBtn: '.clear-console-btn',
+            reloadConsoleBtn: '.reload-console-btn',
             headers: {
                 // relative selector within container for tab controller
                 container: ".output-headers",
@@ -766,8 +767,20 @@ define(['app/main', 'jquery'],
         export_dialog: {
             selector: "#openExportModal"
         },
-        export_kube_step: {
-            selector: "#step-7"
+        export_k8s_path_step_5: {
+            selector: "#k8s-path-step-5"
+        },
+        export_k8s_path_step_6: {
+            selector: "#k8s-path-step-6"
+        },
+        export_k8s_path_step_8: {
+            selector: "#k8s-path-step-8"
+        },
+        export_docker_path_step_5: {
+            selector: "#docker-path-step-5"
+        },
+        export_docker_config_common_step: {
+            selector: "#docker-config-common-step"
         }
     };
     app = new Application(config);
