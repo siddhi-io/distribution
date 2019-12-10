@@ -20,7 +20,7 @@ under the License.
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="siddhi-distribution-test-suite">
-    <test name="stream-processor-core" parallel="true">
+    <test name="siddhi-test-framework-sample-tests" parallel="false">
         <classes>
             <class name="io.siddhi.distribution.test.framework.containers.SiddhiRunnerContainerTest"/>
             <class name="io.siddhi.distribution.test.framework.containers.NatsContainerTest"/>

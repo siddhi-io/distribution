@@ -23,8 +23,9 @@
 <suite name="carbon-analytics-metrics-test-suit">
     <test name="carbon-analytics-metrics-tests" preserve-order="true" parallel="false">
         <classes>
+            <class name="io.siddhi.distribution.metrics.core.MetricsConfigTest"/>
+            <class name="io.siddhi.distribution.metrics.core.ReporterTest"/>
             <class name="io.siddhi.distribution.metrics.core.StatisticsTestCase"/>
-
         </classes>
     </test>
 </suite>
