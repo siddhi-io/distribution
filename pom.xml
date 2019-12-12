@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.siddhi.distribution</groupId>
     <artifactId>io.siddhi.distribution.parent</artifactId>
-    <version>5.1.2</version>
+    <version>5.1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
@@ -264,7 +264,7 @@
         <url>https://github.com/siddhi-io/distribution.git</url>
         <developerConnection>scm:git:https://github.com/siddhi-io/distribution.git</developerConnection>
         <connection>scm:git:https://github.com/siddhi-io/distribution.git</connection>
-        <tag>v5.1.2-rc2</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
