@@ -213,7 +213,7 @@ define(["ace/ace", "jquery", "./constants", "./utils", "./completion-engine", ".
                 }
             }
 
-            SiddhiEditor.prototype.onEnvironmentChange = function () {
+            self.resetValidations = function () {
                 clearErrorsAndTriggerOnChange();
             };
 
@@ -250,7 +250,7 @@ define(["ace/ace", "jquery", "./constants", "./utils", "./completion-engine", ".
              *
              * @private
              */
-            SiddhiEditor.prototype.checkForSemanticErrors = function() {
+            self.checkForSemanticErrors = function() {
                 var editorText = aceEditor.getValue();
                 var variableMap = Utils.prototype.retrieveEnvVariables();
 

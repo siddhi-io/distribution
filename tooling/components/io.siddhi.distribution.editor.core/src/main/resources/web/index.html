@@ -67,7 +67,7 @@
 </head>
 
 <body class="sticky-footer">
-
+<div id="mavenVersion" hidden>${project.version}</div>
 <!-- Start: header -->
 <header class="header header-default">
     <!-- Start: header - logo, title & menu-bar -->
@@ -94,9 +94,7 @@
                 <i class="fw fw-undo"></i>
             </a>
         </div>
-        <div id="query-guide-link-container" class="tool-bar pull-right">
-            <a href="https://siddhi.io/en/v5.1/docs/query-guide/" target="_blank"><i class="fw-info"></i> Siddhi Query Guide</a>
-        </div>
+        <div id="query-guide-link-container" class="tool-bar pull-right"></div>
     </div>
     <!-- End: header - logo, title & menu-bar -->
 </header>
@@ -2501,14 +2499,13 @@
                             </div>
                         </div>
                         <div id="step-2">
-                            <div class="step-description-text">Use ${...} format to template siddhi apps</div>
+                            <div class="step-description-text"></div>
                             <div id='siddhi-app-template-container-id'
                                  style='display: block'>
                             </div>
                         </div>
                         <div id="step-3">
-                            <div class="step-description-text">Use ${...} format to template the configurations</div>
-                            <br />
+                            <div class="step-description-text"></div>
                             <div class="dropdown" id="siddhi-config-main-dropdown-id" align="right">
                                 <button class="btn btn-default btn-circle" id="deployment-config-add-button" type="button" data-toggle="dropdown">
                                     <i class="fw fw-add"></i>
@@ -2545,24 +2542,33 @@
             <div id='missing-docker-config-error-message' class='alert alert-danger' hidden>
                 Required to fill Docker configurations
             </div>
+            <div id='missing-docker-file-name-error-message' class='alert alert-danger' hidden>
+                Required to fill the export file name
+            </div>
             <div id='docker-name-upper-error' class='alert alert-danger' hidden>
                 Docker image tag cannot contain uppercase letters.
             </div>
             <input class="docker-checkbox" type="checkbox" name="download-docker-artifacts" id="download-docker-artifacts" value="download"><label class="label-description" id="download-docker-artifacts-label">Download artifacts</label><br>
+            <div class="docker-details-form" id="file-name-for-docker-parent" hidden>
+                <div class="docker-details-row">
+                    <label class="clearfix">Export file name:</label>
+                    <input class="export-file-dialog-form-control" type="text" name="username" id="file-name-for-docker">
+                </div>
+            </div>
             <input class="docker-checkbox" type="checkbox" name="push-docker-image" id="docker-push-checkbox" value="push"><label class="label-description">Push to docker registry</label><br>
             <div class="docker-details-form" id="docker-details" hidden>
                 <div class="docker-details-row">
-                    <label class="clearfix">* Docker Image:</label>
-                    <input class="file-dialog-form-control-mini-input" type="text"  id="docker-img-name-input-field-registry" placeholder="<DOCKER_REGISTRY_NAME>">
+                    <label class="clearfix">* Docker image:</label>
+                    <input class="file-dialog-form-control-mini-input" type="text" id="docker-img-name-input-field-registry" placeholder="<DOCKER_REGISTRY_NAME>">
                     &nbsp; / &nbsp;
-                    <input class="file-dialog-form-control-mini-input" type="text"  id="docker-img-name-input-field-image" placeholder="<IMAGE_NAME>">
+                    <input class="file-dialog-form-control-mini-input" type="text" id="docker-img-name-input-field-image" placeholder="<IMAGE_NAME>">
                 </div>
                 <div class="docker-details-row">
-                    <label class="clearfix">* Docker Username:</label>
+                    <label class="clearfix">* Docker username:</label>
                     <input class="export-file-dialog-form-control" type="text" name="username" id="username">
                 </div>
                 <div class="docker-details-row">
-                    <label class="clearfix">* Docker Password:</label>
+                    <label class="clearfix">* Docker password:</label>
                     <input class="export-file-dialog-form-control" type="password" name="password" id="password">
                 </div>
                 <div class="docker-details-row">

@@ -16,8 +16,8 @@
  * under the License.
  */
 
-define(['require', 'lodash', 'jquery'],
-    function (require, _, $) {
+define(['require', 'lodash', 'jquery', 'version'],
+    function (require, _, $, Version) {
 
         var DockerImageTypeDialog = function (options) {
             this.dockerNameMissingErrorMessage = options.templateHeader.find("#k8s-path-missing-docker-build-type-error-message");
@@ -38,7 +38,7 @@ define(['require', 'lodash', 'jquery'],
                     self.dockerImageNameForm.show();
                     self.templateContainer.find("#docker-image-type-tobuild").prop("checked", false);
                     if (self.dockerImageNameForm.find("#built-docker-image-name-input-field").val() == "") {
-                        self.dockerImageNameForm.find("#built-docker-image-name-input-field").val("siddhiio/siddhi-runner-alpine:5.1.2")
+                        self.dockerImageNameForm.find("#built-docker-image-name-input-field").val("siddhiio/siddhi-runner-alpine:"+Version.DOCKER_VERSION);
                     }
                 } else {
                     self.dockerImageNameForm.hide();

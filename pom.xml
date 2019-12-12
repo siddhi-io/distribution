@@ -1192,7 +1192,7 @@
         <io.siddhi.distribution.version.range>[5.0.0, 6.0.0)</io.siddhi.distribution.version.range>
 
         <!-- Test Dependencies-->
-        <postgresql.version>42.2.8</postgresql.version>
+        <postgresql.version>42.2.9</postgresql.version>
         <mssql-jdbc.version>8.1.0.jre13-preview</mssql-jdbc.version>
         <io.fabric8.version>0.31.0</io.fabric8.version>
         <awaitility.version>3.1.6</awaitility.version>
@@ -1241,7 +1241,7 @@
         <pax.exam.container.native.version>4.13.1</pax.exam.container.native.version>
         <pax.url.aether.version>2.6.1</pax.url.aether.version>
         <org.jacoco.ant.version>0.8.5</org.jacoco.ant.version>
-        <maven.src.version>1.26.2</maven.src.version>
+        <maven.src.version>1.26.4</maven.src.version>
         <apache.commons.text.version>1.7</apache.commons.text.version>
         <org.jacoco.version>0.8.5</org.jacoco.version>
         <findbugs.version>1.0.0</findbugs.version>
@@ -1388,7 +1388,7 @@
         <grpc.version>1.25.0</grpc.version>
 
         <!-- aws sdk version-->
-        <aws.sdk.version>2.10.29</aws.sdk.version>
+        <aws.sdk.version>2.10.30</aws.sdk.version>
 
         <!-- Prometheus dependency version-->
         <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
