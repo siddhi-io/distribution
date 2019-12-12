@@ -1311,7 +1311,7 @@
         <siddhi.io.kafka.version>5.0.7</siddhi.io.kafka.version>
         <siddhi.io.http.version>2.2.0</siddhi.io.http.version>
         <siddhi.io.s3.version>1.0.2</siddhi.io.s3.version>
-        <siddhi.io.file.version>2.0.4</siddhi.io.file.version>
+        <siddhi.io.file.version>2.0.5</siddhi.io.file.version>
         <siddhi.io.tcp.version>3.0.4</siddhi.io.tcp.version>
         <siddhi.io.email.version>2.0.5</siddhi.io.email.version>
         <siddhi.io.jms.version>2.0.3</siddhi.io.jms.version>
