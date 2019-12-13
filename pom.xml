@@ -1184,8 +1184,8 @@
     </dependencyManagement>
 
     <properties>
-        <siddhi.version>5.1.10</siddhi.version>
-        <siddhi.bundle.version>5.1.10</siddhi.bundle.version>
+        <siddhi.version>5.1.11</siddhi.version>
+        <siddhi.bundle.version>5.1.11</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.1.36</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.1.0, 6.2.0)</carbon.analytics-common.version.range>
@@ -1301,7 +1301,7 @@
         <siddhi.execution.math.version>5.0.4</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.5</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.4</siddhi.execution.time.version>
-        <siddhi.execution.json.version>2.0.4</siddhi.execution.json.version>
+        <siddhi.execution.json.version>2.0.5</siddhi.execution.json.version>
         <siddhi.execution.map.version>5.0.5</siddhi.execution.map.version>
         <siddhi.execution.list.version>1.0.0</siddhi.execution.list.version>
         <siddhi.execution.unitconversion.version>2.0.2</siddhi.execution.unitconversion.version>
@@ -1311,7 +1311,7 @@
         <siddhi.io.kafka.version>5.0.7</siddhi.io.kafka.version>
         <siddhi.io.http.version>2.2.0</siddhi.io.http.version>
         <siddhi.io.s3.version>1.0.2</siddhi.io.s3.version>
-        <siddhi.io.file.version>2.0.4</siddhi.io.file.version>
+        <siddhi.io.file.version>2.0.5</siddhi.io.file.version>
         <siddhi.io.tcp.version>3.0.4</siddhi.io.tcp.version>
         <siddhi.io.email.version>2.0.5</siddhi.io.email.version>
         <siddhi.io.jms.version>2.0.3</siddhi.io.jms.version>
