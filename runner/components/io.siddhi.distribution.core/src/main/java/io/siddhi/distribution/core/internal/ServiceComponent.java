@@ -171,17 +171,12 @@ public class ServiceComponent {
                 // Change relative paths to absolute
                 Path siddhiAppsGivenPath = Paths.get(siddhiAppsReference);
                 if (!siddhiAppsGivenPath.isAbsolute()) {
-                    if (System.getProperty(
-                            SiddhiAppProcessorConstants.SYSTEM_PROP_CURRENT_DIRECTORY
-                    ) != null) {
+                    if (System.getProperty(SiddhiAppProcessorConstants.SYSTEM_PROP_CURRENT_DIRECTORY) != null) {
                         Path currentWorkingDirectory = Paths.get(
-                                System.getProperty(
-                                        SiddhiAppProcessorConstants.SYSTEM_PROP_CURRENT_DIRECTORY
-                                )
+                                System.getProperty(SiddhiAppProcessorConstants.SYSTEM_PROP_CURRENT_DIRECTORY)
                         ).toAbsolutePath();
-                        siddhiAppsReference = currentWorkingDirectory.resolve(
-                                siddhiAppsGivenPath.toString()
-                        ).normalize().toString();
+                        siddhiAppsReference = currentWorkingDirectory.resolve(siddhiAppsGivenPath.toString())
+                                .normalize().toString();
                     }
                 }
                 siddhiAppFileReference = new File(siddhiAppsReference);
