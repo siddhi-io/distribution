@@ -1385,7 +1385,7 @@
 
 
         <!-- grpc dependency version-->
-        <grpc.version>1.25.0</grpc.version>
+        <grpc.version>1.26.0</grpc.version>
 
         <!-- aws sdk version-->
         <aws.sdk.version>2.10.36</aws.sdk.version>
