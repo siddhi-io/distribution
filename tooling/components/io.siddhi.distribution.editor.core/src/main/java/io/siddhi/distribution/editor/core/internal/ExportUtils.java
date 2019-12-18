@@ -76,6 +76,7 @@ public class ExportUtils {
     private static final String APPS_BLOCK_TEMPLATE = "\\{\\{APPS_BLOCK}}";
     private static final String EXPOSE_PORTS_BLOCK_TEMPLATE = "\\{\\{EXPORT_PORTS_BLOCK}}";
     private static final String DOCKER_BASE_IMAGE_TEMPLATE = "\\{\\{SIDDHI_RUNNER_BASE_IMAGE}}";
+    private static final String DOCKER_IMAGE_NAME_TEMPLATE = "\\{\\{DOCKER_IMAGE_NAME}}";
     private static final String PORT_BIND_TEMPLATE = "\\{\\{BIND_PORTS}}";
     private static final String CONFIG_BLOCK_VALUE =
             "COPY --chown=siddhi_user:siddhi_io \\$\\{CONFIG_FILE}/ \\$\\{USER_HOME}";
@@ -143,14 +144,15 @@ public class ExportUtils {
      * @return Zip archive file
      * @throws DockerGenerationException if docker generation fails
      */
-    public File createZipFile() throws DockerGenerationException, KubernetesGenerationException {
+    public File createZipFile()
+            throws DockerGenerationException, KubernetesGenerationException {
 
         boolean jarsAdded = false;
         boolean bundlesAdded = false;
         boolean configChanged = false;
         boolean envChanged = false;
         boolean buildDocker = false;
-        if (exportType != null && exportType.equals(EXPORT_TYPE_DOCKER)) {
+        if (EXPORT_TYPE_DOCKER.equals(exportType)) {
             if (exportAppsRequest.getDockerConfiguration() != null) {
                 if (exportAppsRequest.getDockerConfiguration().getImageName() != null &&
                         !exportAppsRequest.getDockerConfiguration().getImageName().equals("")) {
@@ -164,7 +166,7 @@ public class ExportUtils {
                 }
             }
         }
-        if (exportType != null && exportType.equals(EXPORT_TYPE_KUBERNETES)) {
+        if (EXPORT_TYPE_KUBERNETES.equals(exportType)) {
             zipFileName = "siddhi-kubernetes.zip";
             zipFileRoot = "siddhi-kubernetes" +  File.separator;
             if (exportAppsRequest.getKubernetesConfiguration() != null) {
@@ -406,7 +408,7 @@ public class ExportUtils {
             // Write the kubernetes file to the zip file and add README.md
             ZipEntry readmeEntry = new ZipEntry(Paths.get(zipFileRoot, GENERIC_README_FILE_NAME).toString());
             zipOutputStream.putNextEntry(readmeEntry);
-            if (exportType != null && exportType.equals(EXPORT_TYPE_KUBERNETES)) {
+            if (EXPORT_TYPE_KUBERNETES.equals(exportType)) {
                 // Add K8s README.md
                 if (!Files.isReadable(kubernetesReadmeFilePath)) {
                     throw new KubernetesGenerationException(
@@ -445,6 +447,17 @@ public class ExportUtils {
                 byte[] data = Files.readAllBytes(dockerReadmeFilePath);
                 String content = new String(data, StandardCharsets.UTF_8);
                 content = content.replaceAll(PORT_BIND_TEMPLATE, portBindingStr.toString());
+                if (exportAppsRequest.getDockerConfiguration() != null &&
+                        exportAppsRequest.getDockerConfiguration().getImageName() != null) {
+                    content = content.replaceAll(
+                            DOCKER_IMAGE_NAME_TEMPLATE,
+                            exportAppsRequest.getDockerConfiguration().getImageName()
+                    );
+                } else {
+                    content = content.replaceAll(
+                            DOCKER_IMAGE_NAME_TEMPLATE, Constants.DEFAULT_SIDDHI_DOCKER_IMAGE_NAME);
+                }
+
                 byte[] readmeContent = content.getBytes(StandardCharsets.UTF_8);
                 zipOutputStream.write(readmeContent, 0, readmeContent.length);
                 zipOutputStream.closeEntry();
@@ -524,7 +537,7 @@ public class ExportUtils {
         }
         content = content.replaceAll(DOCKER_BASE_IMAGE_TEMPLATE, dockerBaseImgName);
 
-        if (exportType != null && exportType.equals(EXPORT_TYPE_KUBERNETES)) {
+        if (EXPORT_TYPE_KUBERNETES.equals(exportType)) {
             content = content.replaceAll(APPS_BLOCK_TEMPLATE, "");
         } else {
             content = content.replaceAll(APPS_BLOCK_TEMPLATE, APPS_BLOCK_VALUE);

@@ -32,7 +32,7 @@
         <pathelement path="${class.dir}"/>
         <fileset dir="${lib.dir}">
             <include name="siddhi-*.jar"/>
-            <include name="io.grpc.*.jar"/>
+            <include name="protobuf*.jar"/>
         </fileset>
         <fileset dir="${carbon.home}/wso2/lib/plugins">
             <include name="org.apache.commons.logging_*.jar"/>

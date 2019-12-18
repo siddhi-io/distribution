@@ -1,16 +1,15 @@
-wso2.datasources:
-  dataSources:
-  - name: TEST_DB
-    description: The datasource used for testing
-    definition:
-      type: RDBMS
-      configuration:
-        jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/TEST_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
-        username: admin
-        password: admin
-        driverClassName: org.h2.Driver
-        maxPoolSize: 10
-        idleTimeout: 60000
-        connectionTestQuery: SELECT 1
-        validationTimeout: 30000
-        isAutoCommit: false 
+dataSources:
+- name: TEST_DB
+  description: The datasource used for testing
+  definition:
+    type: RDBMS
+    configuration:
+      jdbcUrl: 'jdbc:h2:${sys:carbon.home}/wso2/${sys:wso2.runtime}/database/TEST_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000'
+      username: admin
+      password: admin
+      driverClassName: org.h2.Driver
+      maxPoolSize: 10
+      idleTimeout: 60000
+      connectionTestQuery: SELECT 1
+      validationTimeout: 30000
+      isAutoCommit: false

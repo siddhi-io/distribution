@@ -21,7 +21,7 @@
     <parent>
         <groupId>io.siddhi.distribution</groupId>
         <artifactId>io.siddhi.distribution.parent</artifactId>
-        <version>5.2.0-SNAPSHOT</version>
+        <version>5.1.3-SNAPSHOT</version>
         <relativePath>../../../pom.xml</relativePath>
     </parent>
 
@@ -150,7 +150,72 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <build>
+                <resources>
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <filtering>true</filtering>
+                    </resource>
+                </resources>
                 <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <configuration>
+                            <nonFilteredFileExtensions>
+                                <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>ico</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>js</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>css</nonFilteredFileExtension>
+                                <nonFilteredFileExtension>json</nonFilteredFileExtension>
+                            </nonFilteredFileExtensions>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>node</executable>
+                                    <workingDirectory>${basedir}/src/main/resources/tools</workingDirectory>
+                                    <arguments>
+                                        <argument>r.js</argument>
+                                        <argument>-o</argument>
+                                        <argument>build.js</argument>
+                                        <!--<argument>optimize=none</argument>-->
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <tasks>
+                                        <move file="target/classes/web/editor/commons" todir="target/classes/web" />
+                                        <move file="target/classes/web/editor/css" todir="target/classes/web" />
+                                        <move file="target/classes/web/editor/images" todir="target/classes/web" />
+                                        <move file="target/classes/web/editor/js" todir="target/classes/web" />
+                                        <delete dir="target/classes/web/editor" />
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-dependency-plugin</artifactId>
@@ -162,13 +227,16 @@
                                     <goal>unpack</goal>
                                 </goals>
                                 <configuration>
-                                    <markersDirectory>${project.build.directory}/dependencies/dependency-maven-plugin-markers</markersDirectory>
+                                    <markersDirectory>
+                                        ${project.build.directory}/dependencies/dependency-maven-plugin-markers
+                                    </markersDirectory>
                                     <artifactItems>
                                         <artifactItem>
                                             <groupId>com.spotify</groupId>
                                             <artifactId>docker-client</artifactId>
                                             <classifier>shaded</classifier>
-                                            <outputDirectory>${project.build.directory}/dependencies/docker-client</outputDirectory>
+                                            <outputDirectory>${project.build.directory}/dependencies/docker-client
+                                            </outputDirectory>
                                         </artifactItem>
                                     </artifactItems>
                                 </configuration>

@@ -26,7 +26,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.siddhi.distribution</groupId>
     <artifactId>io.siddhi.distribution.parent</artifactId>
-    <version>5.2.0-SNAPSHOT</version>
+    <version>5.1.3-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Siddhi-IO Distribution - Parent</name>
     <modules>
@@ -51,6 +51,11 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven.resources.plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>${maven.codehaus.exec.plugin.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.wso2.carbon.maven</groupId>
@@ -1179,16 +1184,16 @@
     </dependencyManagement>
 
     <properties>
-        <siddhi.version>5.1.9-SNAPSHOT</siddhi.version>
-        <siddhi.bundle.version>5.1.9.SNAPSHOT</siddhi.bundle.version>
+        <siddhi.version>5.1.12-SNAPSHOT</siddhi.version>
+        <siddhi.bundle.version>5.1.12.SNAPSHOT</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
         <carbon.analytics-common.version>6.1.36</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.1.0, 6.2.0)</carbon.analytics-common.version.range>
         <io.siddhi.distribution.version.range>[5.0.0, 6.0.0)</io.siddhi.distribution.version.range>
 
         <!-- Test Dependencies-->
-        <postgresql.version>42.2.8</postgresql.version>
-        <mssql-jdbc.version>8.1.0.jre13-preview</mssql-jdbc.version>
+        <postgresql.version>42.2.9</postgresql.version>
+        <mssql-jdbc.version>8.1.1.jre13-preview</mssql-jdbc.version>
         <io.fabric8.version>0.31.0</io.fabric8.version>
         <awaitility.version>3.1.6</awaitility.version>
 
@@ -1200,7 +1205,7 @@
         <!-- WSO2 Dependencies -->
         <wso2.slf4j.version>1.5.10.wso2v1</wso2.slf4j.version>
         <carbon.kernel.version>5.2.12</carbon.kernel.version>
-        <org.wso2.transport.http.netty.version>6.2.33</org.wso2.transport.http.netty.version>
+        <org.wso2.transport.http.netty.version>6.2.34</org.wso2.transport.http.netty.version>
         <carbon.messaging.version>3.0.3</carbon.messaging.version>
         <carbon.deployment.version>5.2.2</carbon.deployment.version>
         <carbon.datasources.version>1.1.8</carbon.datasources.version>
@@ -1236,7 +1241,7 @@
         <pax.exam.container.native.version>4.13.1</pax.exam.container.native.version>
         <pax.url.aether.version>2.6.1</pax.url.aether.version>
         <org.jacoco.ant.version>0.8.5</org.jacoco.ant.version>
-        <maven.src.version>1.26.2</maven.src.version>
+        <maven.src.version>1.26.4</maven.src.version>
         <apache.commons.text.version>1.7</apache.commons.text.version>
         <org.jacoco.version>0.8.5</org.jacoco.version>
         <findbugs.version>1.0.0</findbugs.version>
@@ -1288,48 +1293,48 @@
 
         <!-- nats test dependencies -->
         <io.nats.version>2.2.3</io.nats.version>
-        <org.testcontainers.version>1.12.3</org.testcontainers.version>
+        <org.testcontainers.version>1.12.4</org.testcontainers.version>
         <assertj.version>3.14.0</assertj.version>
 
         <!--Siddhi Extension Versions-->
-        <siddhi.execution.string.version>5.0.8-SNAPSHOT</siddhi.execution.string.version>
+        <siddhi.execution.string.version>5.0.10-SNAPSHOT</siddhi.execution.string.version>
         <siddhi.execution.math.version>5.0.5-SNAPSHOT</siddhi.execution.math.version>
         <siddhi.execution.regex.version>5.0.6-SNAPSHOT</siddhi.execution.regex.version>
         <siddhi.execution.time.version>5.0.5-SNAPSHOT</siddhi.execution.time.version>
-        <siddhi.execution.json.version>2.0.5-SNAPSHOT</siddhi.execution.json.version>
+        <siddhi.execution.json.version>2.0.6-SNAPSHOT</siddhi.execution.json.version>
         <siddhi.execution.map.version>5.0.6-SNAPSHOT</siddhi.execution.map.version>
         <siddhi.execution.list.version>1.0.1-SNAPSHOT</siddhi.execution.list.version>
         <siddhi.execution.unitconversion.version>2.0.3-SNAPSHOT</siddhi.execution.unitconversion.version>
         <siddhi.execution.reorder.version>5.0.4-SNAPSHOT</siddhi.execution.reorder.version>
         <siddhi.execution.unique.version>5.0.6-SNAPSHOT</siddhi.execution.unique.version>
 
-        <siddhi.io.kafka.version>5.0.6-SNAPSHOT</siddhi.io.kafka.version>
+        <siddhi.io.kafka.version>5.0.8-SNAPSHOT</siddhi.io.kafka.version>
         <siddhi.io.http.version>2.2.1-SNAPSHOT</siddhi.io.http.version>
         <siddhi.io.s3.version>1.0.3-SNAPSHOT</siddhi.io.s3.version>
-        <siddhi.io.file.version>2.0.4-SNAPSHOT</siddhi.io.file.version>
+        <siddhi.io.file.version>2.0.6-SNAPSHOT</siddhi.io.file.version>
         <siddhi.io.tcp.version>3.0.5-SNAPSHOT</siddhi.io.tcp.version>
         <siddhi.io.email.version>2.0.6-SNAPSHOT</siddhi.io.email.version>
         <siddhi.io.jms.version>2.0.4-SNAPSHOT</siddhi.io.jms.version>
-        <siddhi.io.cdc.version>2.0.5-SNAPSHOT</siddhi.io.cdc.version>
-        <siddhi.io.prometheus.version>2.1.1-SNAPSHOT</siddhi.io.prometheus.version>
-        <siddhi.io.nats.version>2.0.9-SNAPSHOT</siddhi.io.nats.version>
-        <siddhi.io.grpc.version>1.0.6-SNAPSHOT</siddhi.io.grpc.version>
-        <siddhi.io.rabbitmq.version>3.0.3-SNAPSHOT</siddhi.io.rabbitmq.version>
+        <siddhi.io.cdc.version>2.0.6-SNAPSHOT</siddhi.io.cdc.version>
+        <siddhi.io.prometheus.version>2.1.2-SNAPSHOT</siddhi.io.prometheus.version>
+        <siddhi.io.nats.version>2.0.11-SNAPSHOT</siddhi.io.nats.version>
+        <siddhi.io.grpc.version>1.0.9-SNAPSHOT</siddhi.io.grpc.version>
+        <siddhi.io.rabbitmq.version>3.0.5-SNAPSHOT</siddhi.io.rabbitmq.version>
 
-        <siddhi.map.json.version>5.0.6-SNAPSHOT</siddhi.map.json.version>
+        <siddhi.map.json.version>5.0.7-SNAPSHOT</siddhi.map.json.version>
         <siddhi.map.avro.version>2.0.7-SNAPSHOT</siddhi.map.avro.version>
         <siddhi.map.binary.version>2.0.5-SNAPSHOT</siddhi.map.binary.version>
         <siddhi.map.text.version>2.0.5-SNAPSHOT</siddhi.map.text.version>
         <siddhi.map.xml.version>5.0.4-SNAPSHOT</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>2.0.6-SNAPSHOT</siddhi.map.keyvalue.version>
         <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
-        <siddhi.map.protobuf.version>1.0.3-SNAPSHOT</siddhi.map.protobuf.version>
+        <siddhi.map.protobuf.version>1.0.5-SNAPSHOT</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.3-SNAPSHOT</siddhi.store.rdbms.version>
-        <siddhi.store.mongodb.version>2.0.4-SNAPSHOT</siddhi.store.mongodb.version>
+        <siddhi.store.rdbms.version>7.0.6-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.mongodb.version>2.1.1-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
-        <siddhi.script.js.version>5.0.3-SNAPSHOT</siddhi.script.js.version>
+        <siddhi.script.js.version>5.0.4-SNAPSHOT</siddhi.script.js.version>
 
         <!-- Removed due to size constraint -->
         <!--<siddhi.execution.streamingml.version>2.0.4</siddhi.execution.streamingml.version>-->
@@ -1347,6 +1352,7 @@
         <carbon.feature.plugin.version>3.1.4</carbon.feature.plugin.version>
         <maven.resources.plugin.version>3.1.0</maven.resources.plugin.version>
         <com.spotify.docker.plugin.version>1.1.1</com.spotify.docker.plugin.version>
+        <maven.codehaus.exec.plugin.version>1.6.0</maven.codehaus.exec.plugin.version>
         <com.spotify.docker.client.version>8.16.0</com.spotify.docker.client.version>
         <org.glassfish.jersey.connectors.jersey.apache.connector.version>2.22.2</org.glassfish.jersey.connectors.jersey.apache.connector.version>
         <org.apache.httpcomponents.httpclient.version>4.5.10</org.apache.httpcomponents.httpclient.version>
@@ -1382,7 +1388,7 @@
         <grpc.version>1.25.0</grpc.version>
 
         <!-- aws sdk version-->
-        <aws.sdk.version>2.10.18</aws.sdk.version>
+        <aws.sdk.version>2.10.30</aws.sdk.version>
 
         <!-- Prometheus dependency version-->
         <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
