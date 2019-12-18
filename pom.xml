@@ -1316,10 +1316,10 @@
         <siddhi.io.email.version>2.0.6-SNAPSHOT</siddhi.io.email.version>
         <siddhi.io.jms.version>2.0.4-SNAPSHOT</siddhi.io.jms.version>
         <siddhi.io.cdc.version>2.0.6-SNAPSHOT</siddhi.io.cdc.version>
-        <siddhi.io.prometheus.version>2.1.2-SNAPSHOT</siddhi.io.prometheus.version>
+        <siddhi.io.prometheus.version>2.1.3-SNAPSHOT</siddhi.io.prometheus.version>
         <siddhi.io.nats.version>2.0.11-SNAPSHOT</siddhi.io.nats.version>
         <siddhi.io.grpc.version>1.0.9-SNAPSHOT</siddhi.io.grpc.version>
-        <siddhi.io.rabbitmq.version>3.0.5-SNAPSHOT</siddhi.io.rabbitmq.version>
+        <siddhi.io.rabbitmq.version>3.0.6-SNAPSHOT</siddhi.io.rabbitmq.version>
 
         <siddhi.map.json.version>5.0.7-SNAPSHOT</siddhi.map.json.version>
         <siddhi.map.avro.version>2.0.7-SNAPSHOT</siddhi.map.avro.version>
