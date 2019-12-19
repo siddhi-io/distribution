@@ -108,14 +108,15 @@
                         <Bundle-Name>${project.artifactId}</Bundle-Name>
                         <Export-Package>
                             io.siddhi.distribution.metrics.core.*,
-                            io.siddhi.distribution.metrics.prometheus.*,
+                            io.siddhi.distribution.metrics.prometheus.reporter.*,
                             io.prometheus.client.*
                         </Export-Package>
                         <Import-Package>
-                            *;resolution:=optional,
+                            org.yaml.snakeyaml.*; version="${org.yaml.snakeyaml.version.range}",
+                            *;resolution:=optional
                         </Import-Package>
                         <Private-Package>
-                            io.prometheus.client.*
+                            io.prometheus.client.*,
                         </Private-Package>
                     </instructions>
                 </configuration>
@@ -159,5 +160,10 @@
                 </executions>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 </project>

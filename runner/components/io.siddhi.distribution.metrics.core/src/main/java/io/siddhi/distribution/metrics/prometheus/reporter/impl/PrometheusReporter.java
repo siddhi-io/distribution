@@ -19,16 +19,26 @@ package io.siddhi.distribution.metrics.prometheus.reporter.impl;
 
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
+import io.prometheus.client.Collector;
 import io.prometheus.client.CollectorRegistry;
 import io.prometheus.client.dropwizard.DropwizardExports;
+import io.prometheus.client.dropwizard.samplebuilder.CustomMappingSampleBuilder;
+import io.prometheus.client.dropwizard.samplebuilder.MapperConfig;
+import io.prometheus.client.dropwizard.samplebuilder.SampleBuilder;
 import io.prometheus.client.exporter.HTTPServer;
 import org.apache.log4j.Logger;
 import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
+import org.yaml.snakeyaml.introspector.BeanAccess;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,6 +46,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class PrometheusReporter extends AbstractReporter {
 
+    private static final Logger log = Logger.getLogger(PrometheusReporter.class);
+    private static final String MAPPINGS_RESOURCE_FILE = "configuration.yaml";
     private final MetricRegistry metricRegistry;
     private final MetricFilter metricFilter;
     private PrometheusReporter prometheusReporter;
@@ -43,8 +55,6 @@ public class PrometheusReporter extends AbstractReporter {
     private HTTPServer server;
     private String reporterName;
     private String serverURL;
-
-    private static final Logger log = Logger.getLogger(PrometheusReporter.class);
 
     private PrometheusReporter(String reporterName, MetricRegistry metricRegistry,
                                MetricFilter metricFilter, String serverURL) {
@@ -64,10 +74,28 @@ public class PrometheusReporter extends AbstractReporter {
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .build();
 
+        collectorRegistry = new CollectorRegistry();
+
+        try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(MAPPINGS_RESOURCE_FILE)) {
+
+            Yaml yaml = new Yaml(new CustomClassLoaderConstructor(PrometheusMetricsLabelsMapper.class,
+                    PrometheusMetricsLabelsMapper.class.getClassLoader()));
+            yaml.setBeanAccess(BeanAccess.FIELD);
+            PrometheusMetricsLabelsMapper metricsLabelsMapping = yaml.loadAs(inputStream,
+                                                                                PrometheusMetricsLabelsMapper.class);
+            List<MapperConfig> metricsMappings = new ArrayList<>(
+                                                                metricsLabelsMapping.getMetricsLabelMapping().values());
+            SampleBuilder sampleBuilder = new CustomMappingSampleBuilder(metricsMappings);
+            Collector collector = new DropwizardExports(metricRegistry, sampleBuilder);
+            collectorRegistry.register(collector);
+        } catch (IOException e) {
+            log.error("Unable to read the metrics labels mappings for 'Prometheus Reporter'. " +
+                    "Starting reporter without mappings.");
+        }
+
         try {
+
             URL target = new URL(serverURL);
-            collectorRegistry = new CollectorRegistry();
-            collectorRegistry.register(new DropwizardExports(metricRegistry));
             InetSocketAddress address = new InetSocketAddress(target.getHost(), target.getPort());
             server = new HTTPServer(address, collectorRegistry);
             log.info("Prometheus Server has successfully connected at " + serverURL);
