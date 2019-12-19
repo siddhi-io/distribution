@@ -76,7 +76,6 @@ public class PrometheusReporter extends AbstractReporter {
 
         collectorRegistry = new CollectorRegistry();
 
-        List<MapperConfig> mapperConfigList = new ArrayList<>();
         try (InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(MAPPINGS_RESOURCE_FILE)) {
 
             Yaml yaml = new Yaml(new CustomClassLoaderConstructor(PrometheusMetricsLabelsMapper.class,
@@ -84,7 +83,11 @@ public class PrometheusReporter extends AbstractReporter {
             yaml.setBeanAccess(BeanAccess.FIELD);
             PrometheusMetricsLabelsMapper metricsLabelsMapping = yaml.loadAs(inputStream,
                                                                                 PrometheusMetricsLabelsMapper.class);
-            mapperConfigList.addAll(metricsLabelsMapping.getMetricsLabelMapping().values());
+            List<MapperConfig> metricsMappings = new ArrayList<>(
+                                                                metricsLabelsMapping.getMetricsLabelMapping().values());
+            SampleBuilder sampleBuilder = new CustomMappingSampleBuilder(metricsMappings);
+            Collector collector = new DropwizardExports(metricRegistry, sampleBuilder);
+            collectorRegistry.register(collector);
         } catch (IOException e) {
             log.error("Unable to read the metrics labels mappings for 'Prometheus Reporter'. " +
                     "Starting reporter without mappings.");
@@ -93,13 +96,9 @@ public class PrometheusReporter extends AbstractReporter {
         try {
 
             URL target = new URL(serverURL);
-            SampleBuilder sampleBuilder = new CustomMappingSampleBuilder(mapperConfigList);
-            Collector collector = new DropwizardExports(metricRegistry, sampleBuilder);
-            collectorRegistry.register(collector);
             InetSocketAddress address = new InetSocketAddress(target.getHost(), target.getPort());
             server = new HTTPServer(address, collectorRegistry);
             log.info("Prometheus Server has successfully connected at " + serverURL);
-
         } catch (MalformedURLException e) {
             log.error("Invalid server url '" + serverURL + "' configured for '" + reporterName + "'.", e);
         } catch (IOException e) {
