@@ -38,21 +38,24 @@ define(['require', 'lodash', 'jquery', 'log', 'backbone', 'file_browser',
                     }
                 },
 
-                render: function () {
+                render: function (fileName) {
                     var self = this;
                     var fileBrowser;
                     var app = this.app;
+                    var fileTab;
                     var notification_container = this.notification_container;
-                    var workspaceServiceURL = app.config.services.workspace.endpoint;
-                    var activeTab = app.tabController.activeTab;
-                    var siddhiFileEditor = activeTab.getSiddhiFileEditor();
-                    var content = siddhiFileEditor.getContent();
-                    var providedFileName = activeTab.getTitle();
-                    var trimmedSiddhiAppName = providedFileName;
-                    if (checkEndsWithSiddhi(trimmedSiddhiAppName)) {
-                        trimmedSiddhiAppName = trimmedSiddhiAppName.slice(0, -7);
+                    var providedFileName;
+                    var trimmedSiddhiAppName;
+                    // Filename can be null when called through shortcut/file menu
+                    if (!_.isNil(fileName)) {
+                        providedFileName = fileName;
+                        trimmedSiddhiAppName = trimSiddhiAppName(providedFileName);
+                        fileTab = app.tabController.getTabFromTitle(trimmedSiddhiAppName);
+                    } else {
+                        fileTab = app.tabController.activeTab;
+                        providedFileName = fileTab.getTitle();
+                        trimmedSiddhiAppName = trimSiddhiAppName(providedFileName);
                     }
-
                     if (!_.isNil(this._fileDeleteModal)) {
                         this._fileDeleteModal.remove();
                     }
@@ -283,7 +286,6 @@ define(['require', 'lodash', 'jquery', 'log', 'backbone', 'file_browser',
                     }
 
                     function deleteSiddhiApp(options, callback) {
-                        var activeTab = app.tabController.activeTab;
                         var relativePath = options.oldAppName;
                         var workspaceServiceURL = app.config.services.workspace.endpoint;
                         $.ajax({
@@ -293,7 +295,7 @@ define(['require', 'lodash', 'jquery', 'log', 'backbone', 'file_browser',
                             async: false,
                             success: function (data, textStatus, xhr) {
                                 if (xhr.status == 200) {
-                                    app.tabController.removeTab(activeTab, undefined, true);
+                                    app.tabController.removeTab(fileTab, undefined, true);
                                     deleteAppModal.modal('hide');
                                     log.debug('file deleted successfully');
                                     callback(true);
@@ -346,6 +348,12 @@ define(['require', 'lodash', 'jquery', 'log', 'backbone', 'file_browser',
 
                     function checkEndsWithSiddhi(string) {
                         return string.endsWith(".siddhi");
+                    }
+
+                    function trimSiddhiAppName(providedFileName) {
+                        if (checkEndsWithSiddhi(providedFileName)) {
+                            return providedFileName.slice(0, -7);
+                        }
                     }
                 }
             });
