@@ -17,25 +17,27 @@
  */
 package io.siddhi.distribution.metrics.prometheus.reporter.impl;
 
+import io.prometheus.client.dropwizard.samplebuilder.MapperConfig;
+
 import java.util.Map;
 
 /**
  * class which hold metric yaml configuration.
  */
-public class YamlConfig {
+public class PrometheusMetricsLabelsMapper {
 
-    Map<String, MetricMapperConfig> metrics;
+    private Map<String, MapperConfig> metricsLabelMapping;
 
-    public Map<String, MetricMapperConfig> getMetrics() {
-        return metrics;
+    public Map<String, MapperConfig> getMetricsLabelMapping() {
+        return metricsLabelMapping;
     }
 
-    public void setMetrics(Map<String, MetricMapperConfig> metrics) {
-        this.metrics = metrics;
+    public void setMetricsLabelMapping(Map<String, MapperConfig> metricsLabelMapping) {
+        this.metricsLabelMapping = metricsLabelMapping;
     }
 
     @Override
     public String toString() {
-        return "YamlConfig{" + "metrics=" + metrics + '}';
+        return "YamlConfig{" + "metrics=" + metricsLabelMapping + '}';
     }
 }
