@@ -41,6 +41,7 @@ Siddhi maintains two distributions as Siddhi-Runner and Siddhi-Tooling distribut
 * [Oracle JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) or [OpenJDK 8](http://openjdk.java.net/install/) (Java 8 should be used for building in order to support both Java 8 and Java 11 at runtime)
 * [Maven 3.5.x version](https://maven.apache.org/install.html)
 * [Docker 17.09+](https://docs.docker.com/install/) (You enable docker dependent build profiles with `-Dwith-docker` maven property)
+* [Node.js](https://nodejs.org/en/)
 
 ### Steps to Build ###
 1. Get a clone or download source from [Github](https://github.com/siddhi-io/distribution.git)
