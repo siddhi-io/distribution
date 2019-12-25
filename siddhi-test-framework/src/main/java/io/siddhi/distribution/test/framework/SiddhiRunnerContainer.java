@@ -214,8 +214,13 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
                 throw new ContainerLaunchException("Siddhi Runner Container failed to start");
             }
             HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
+            String logs = this.getLogs();
             if (httpResponseMessage.getResponseCode() == 200) {
-                logger().info("Siddhi Runner Health API reached successfully.");
+                if(logs.contains("deployed successfully")){
+                    logger().info("Siddhi Runner Health API reached successfully.");
+                }else{
+                    throw new Exception("Siddhi App AppDeploymentTestResource deployment failed.");
+                }
                 return null;
             } else {
                 throw new ConnectException("Failed to connect with the Siddhi Runner health API");
