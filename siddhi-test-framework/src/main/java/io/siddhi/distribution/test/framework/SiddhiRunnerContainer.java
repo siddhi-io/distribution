@@ -150,7 +150,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     /**
      * Mounts the provided JARs in the Siddhi Runner's classpath.
      *
-     * @param jarPath Absolute path of the extra JAR file/directory
+     * @param jarPath  Absolute path of the extra JAR file/directory
      * @param isBundle Flag representing whether the file/directory contains bundles
      * @return self
      */
@@ -187,7 +187,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         }
     }
 
-    private void mountFile (String sourcePath, String outputPath) {
+    private void mountFile(String sourcePath, String outputPath) {
         int mountMode = 444;
         MountableFile mountableFile = MountableFile.forHostPath(sourcePath,
                 mountMode);
@@ -209,17 +209,51 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     @Override
     protected void waitUntilContainerStarted() {
         logger().info("Waiting for Siddhi Runner Container to start...");
+        String fileName = null;
+        boolean isSiddhiFileExists = false;
+        if (getBinds().size() == 1) {
+            File folder = new File(getBinds().get(0).getPath());
+            String[] siddhiApps = folder.list();
+            if (siddhiApps != null) {
+                for (String siddhiApp : siddhiApps) {
+                    if (siddhiApp.subSequence(siddhiApp.length() - 7, siddhiApp.length()).equals(".siddhi")) {
+                        fileName = siddhiApp.substring(0, siddhiApp.length() - 7);
+                        isSiddhiFileExists = true;
+                        break;
+                    }
+                }
+            }
+        } else if (getBinds().size() > 1) {
+            for (int i = 0; i < getBinds().size(); i++) {
+                File folder = new File(getBinds().get(i).getPath());
+                String[] siddhiApps = folder.list();
+                if (siddhiApps != null) {
+                    for (String siddhiApp : siddhiApps) {
+                        if (siddhiApp.subSequence(siddhiApp.length() - 7, siddhiApp.length()).equals(".siddhi")) {
+                            fileName = siddhiApp.substring(0, siddhiApp.length() - 7);
+                            isSiddhiFileExists = true;
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+        String finalFileName = fileName;
+        boolean finalIsSiddhiFileExists = isSiddhiFileExists;
         retryUntilSuccess(getStartupTimeoutSeconds(), TimeUnit.SECONDS, () -> {
             if (!isRunning()) {
                 throw new ContainerLaunchException("Siddhi Runner Container failed to start");
             }
             HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
-            String logs = this.getLogs();
             if (httpResponseMessage.getResponseCode() == 200) {
-                if(logs.contains("deployed successfully")){
-                    logger().info("Siddhi Runner Health API reached successfully.");
-                }else{
-                    throw new Exception("Siddhi App AppDeploymentTestResource deployment failed.");
+                if (finalIsSiddhiFileExists) {
+                    String logs = this.getLogs();
+                    if (logs.contains("Siddhi App " + finalFileName + " deployed successfully")) {
+                        logger().info("Siddhi Runner Health API reached successfully.");
+                    } else {
+                        throw new Exception("Siddhi App AppDeploymentTestResource deployment failed.");
+                    }
                 }
                 return null;
             } else {
