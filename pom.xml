@@ -1363,7 +1363,7 @@
         <org.glassfish.hk2.hk2.api.version>2.4.0-b34</org.glassfish.hk2.hk2.api.version>
         <org.glassfish.jersey.bundles.repackaged.jersey.guava.version>2.22.2</org.glassfish.jersey.bundles.repackaged.jersey.guava.version>
         <org.glassfish.hk2.external.javax.inject.version>2.4.0-b34</org.glassfish.hk2.external.javax.inject.version>
-        <com.kohlschutter.junixsocket.junixsocket.core.version>2.2.1</com.kohlschutter.junixsocket.junixsocket.core.version>
+        <com.kohlschutter.junixsocket.junixsocket.core.version>2.3.0</com.kohlschutter.junixsocket.junixsocket.core.version>
 
         <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
