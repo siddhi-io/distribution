@@ -200,7 +200,6 @@ public class TemperatureAlertAppTest {
                 "}");
         ResultSet resultSet = null;
         try {
-            Thread.sleep(1000);
             resultSet = DatabaseClient.executeQuery(mySQLContainer, "SELECT * FROM InternalDevicesTempTable");
             Assert.assertNotNull(resultSet);
             Assert.assertEquals("C250i", resultSet.getString(2));

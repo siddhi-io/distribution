@@ -211,19 +211,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         logger().info("Waiting for Siddhi Runner Container to start...");
         String fileName = null;
         boolean isSiddhiFileExists = false;
-        if (getBinds().size() == 1) {
-            File folder = new File(getBinds().get(0).getPath());
-            String[] siddhiApps = folder.list();
-            if (siddhiApps != null) {
-                for (String siddhiApp : siddhiApps) {
-                    if (siddhiApp.subSequence(siddhiApp.length() - 7, siddhiApp.length()).equals(".siddhi")) {
-                        fileName = siddhiApp.substring(0, siddhiApp.length() - 7);
-                        isSiddhiFileExists = true;
-                        break;
-                    }
-                }
-            }
-        } else if (getBinds().size() > 1) {
+        if (getBinds().size() >= 1) {
             for (int i = 0; i < getBinds().size(); i++) {
                 File folder = new File(getBinds().get(i).getPath());
                 String[] siddhiApps = folder.list();
@@ -254,6 +242,8 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
                     } else {
                         throw new Exception("Siddhi App AppDeploymentTestResource deployment failed.");
                     }
+                } else {
+                    logger().info("Siddhi Runner Health API reached successfully.");
                 }
                 return null;
             } else {
