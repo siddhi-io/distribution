@@ -150,7 +150,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     /**
      * Mounts the provided JARs in the Siddhi Runner's classpath.
      *
-     * @param jarPath  Absolute path of the extra JAR file/directory
+     * @param jarPath Absolute path of the extra JAR file/directory
      * @param isBundle Flag representing whether the file/directory contains bundles
      * @return self
      */
