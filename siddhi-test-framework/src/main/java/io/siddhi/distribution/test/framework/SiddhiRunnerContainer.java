@@ -217,6 +217,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
                     String fileName = siddhiApp.substring(0, siddhiApp.length() - ".siddhi".length());
                     retryAppDeploymentSuccess(true, fileName);
                 }
+                logger().info("All Siddhi Apps deployed successfully.");
             }
         } else {
             retryAppDeploymentSuccess(false, null);
@@ -232,14 +233,11 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
             if (httpResponseMessage.getResponseCode() == 200) {
                 if (isDeploymentDirectory) {
                     String logs = this.getLogs();
-                    if (logs.contains("Siddhi App " + fileName + " deployed successfully")) {
-                        logger().info("Siddhi Runner Health API reached successfully.");
-                    } else {
+                    if (!logs.contains("Siddhi App " + fileName + " deployed successfully")) {
                         throw new Exception("Siddhi App " + fileName + " deployment failed.");
                     }
-                } else {
-                    logger().info("Siddhi Runner Health API reached successfully.");
                 }
+                logger().info("Siddhi Runner Health API reached successfully.");
                 return null;
             } else {
                 throw new ConnectException("Failed to connect with the Siddhi Runner health API");
