@@ -63,7 +63,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private static final String OVERRIDE_CONF_SYSTEM_PARAMETER = "-Dconfig";
     private static final String DEPLOY_APP_SYSTEM_PARAMETER = "-Dapps";
     private static final String BLANK_SPACE = " ";
-    private static File SIDDHI_APPS = null;
+    private static File deploymentDirectoryFile = null;
     private List<Integer> portsToExpose = new ArrayList<>(defaultExposePorts);
     private String initScriptPath = "/home/siddhi_user/init.sh";
     private StringBuilder initCommand = new StringBuilder(initScriptPath);
@@ -138,14 +138,18 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        SIDDHI_APPS = new File(deploymentDirectory);
+        setDeploymentDirectory(deploymentDirectory);
         String deploymentPath = DEPLOYMENT_DIRECTORY;
-        if (!SIDDHI_APPS.isDirectory()) {
-            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(SIDDHI_APPS.getName());
+        if (!deploymentDirectoryFile.isDirectory()) {
+            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(deploymentDirectoryFile.getName());
         }
         withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
         return this;
+    }
+
+    public static void setDeploymentDirectory(String deploymentDirectory) {
+        deploymentDirectoryFile = new File(deploymentDirectory);
     }
 
     /**
@@ -210,9 +214,10 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     @Override
     protected void waitUntilContainerStarted() {
         logger().info("Waiting for Siddhi Runner Container to start...");
-        if (SIDDHI_APPS != null) {
-            String[] siddhiApps = SIDDHI_APPS.list();
-            for (String siddhiApp : siddhiApps) {
+        if (deploymentDirectoryFile != null) {
+            String[] siddhiAppsArray = deploymentDirectoryFile.list();
+            assert siddhiAppsArray != null;
+            for (String siddhiApp : siddhiAppsArray) {
                 String fileName = siddhiApp.substring(0, siddhiApp.length() - 7);
                 retryUntilSuccess(getStartupTimeoutSeconds(), TimeUnit.SECONDS, () -> {
                     if (!isRunning()) {
