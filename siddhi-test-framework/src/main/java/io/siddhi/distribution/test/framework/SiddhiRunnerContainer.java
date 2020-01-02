@@ -63,6 +63,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private static final String OVERRIDE_CONF_SYSTEM_PARAMETER = "-Dconfig";
     private static final String DEPLOY_APP_SYSTEM_PARAMETER = "-Dapps";
     private static final String BLANK_SPACE = " ";
+    private static File SIDDHI_APPS = null;
     private List<Integer> portsToExpose = new ArrayList<>(defaultExposePorts);
     private String initScriptPath = "/home/siddhi_user/init.sh";
     private StringBuilder initCommand = new StringBuilder(initScriptPath);
@@ -137,10 +138,10 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        File siddhiApps = new File(deploymentDirectory);
+        SIDDHI_APPS = new File(deploymentDirectory);
         String deploymentPath = DEPLOYMENT_DIRECTORY;
-        if (!siddhiApps.isDirectory()) {
-            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(siddhiApps.getName());
+        if (!SIDDHI_APPS.isDirectory()) {
+            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(SIDDHI_APPS.getName());
         }
         withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
@@ -150,7 +151,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     /**
      * Mounts the provided JARs in the Siddhi Runner's classpath.
      *
-     * @param jarPath Absolute path of the extra JAR file/directory
+     * @param jarPath  Absolute path of the extra JAR file/directory
      * @param isBundle Flag representing whether the file/directory contains bundles
      * @return self
      */
@@ -209,47 +210,42 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     @Override
     protected void waitUntilContainerStarted() {
         logger().info("Waiting for Siddhi Runner Container to start...");
-        String fileName = null;
-        boolean isSiddhiFileExists = false;
-        if (getBinds().size() >= 1) {
-            for (int i = 0; i < getBinds().size(); i++) {
-                File folder = new File(getBinds().get(i).getPath());
-                String[] siddhiApps = folder.list();
-                if (siddhiApps != null) {
-                    for (String siddhiApp : siddhiApps) {
-                        if (siddhiApp.subSequence(siddhiApp.length() - 7, siddhiApp.length()).equals(".siddhi")) {
-                            fileName = siddhiApp.substring(0, siddhiApp.length() - 7);
-                            isSiddhiFileExists = true;
-                            break;
+        if (SIDDHI_APPS != null) {
+            String[] siddhiApps = SIDDHI_APPS.list();
+            for (String siddhiApp : siddhiApps) {
+                String fileName = siddhiApp.substring(0, siddhiApp.length() - 7);
+                retryUntilSuccess(getStartupTimeoutSeconds(), TimeUnit.SECONDS, () -> {
+                    if (!isRunning()) {
+                        throw new ContainerLaunchException("Siddhi Runner Container failed to start");
+                    }
+                    HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
+                    if (httpResponseMessage.getResponseCode() == 200) {
+                        String logs = this.getLogs();
+                        if (logs.contains("Siddhi App " + fileName + " deployed successfully")) {
+                            logger().info("Siddhi Runner Health API reached successfully.");
+                        } else {
+                            throw new Exception("Siddhi App AppDeploymentTestResource deployment failed.");
                         }
-                    }
-                    break;
-                }
-            }
-        }
-        String finalFileName = fileName;
-        boolean finalIsSiddhiFileExists = isSiddhiFileExists;
-        retryUntilSuccess(getStartupTimeoutSeconds(), TimeUnit.SECONDS, () -> {
-            if (!isRunning()) {
-                throw new ContainerLaunchException("Siddhi Runner Container failed to start");
-            }
-            HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
-            if (httpResponseMessage.getResponseCode() == 200) {
-                if (finalIsSiddhiFileExists) {
-                    String logs = this.getLogs();
-                    if (logs.contains("Siddhi App " + finalFileName + " deployed successfully")) {
-                        logger().info("Siddhi Runner Health API reached successfully.");
+                        return null;
                     } else {
-                        throw new Exception("Siddhi App AppDeploymentTestResource deployment failed.");
+                        throw new ConnectException("Failed to connect with the Siddhi Runner health API");
                     }
-                } else {
-                    logger().info("Siddhi Runner Health API reached successfully.");
-                }
-                return null;
-            } else {
-                throw new ConnectException("Failed to connect with the Siddhi Runner health API");
+                });
             }
-        });
+        } else {
+            retryUntilSuccess(getStartupTimeoutSeconds(), TimeUnit.SECONDS, () -> {
+                if (!isRunning()) {
+                    throw new ContainerLaunchException("Siddhi Runner Container failed to start");
+                }
+                HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
+                if (httpResponseMessage.getResponseCode() == 200) {
+                    logger().info("Siddhi Runner Health API reached successfully.");
+                    return null;
+                } else {
+                    throw new ConnectException("Failed to connect with the Siddhi Runner health API");
+                }
+            });
+        }
     }
 
     private HTTPClient.HTTPResponseMessage callHealthAPI() {
