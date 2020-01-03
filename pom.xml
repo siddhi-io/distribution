@@ -1367,7 +1367,7 @@
 
         <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <maven.paxexam.plugin.version>1.2.4</maven.paxexam.plugin.version>
-        <swagger.codegen.maven.plugin.version>2.4.10</swagger.codegen.maven.plugin.version>
+        <swagger.codegen.maven.plugin.version>2.4.11</swagger.codegen.maven.plugin.version>
 
         <!-- Dependency version ranges -->
         <osgi.framework.import.version.range>[1.8.0, 2.0.0)</osgi.framework.import.version.range>
