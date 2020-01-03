@@ -63,7 +63,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private static final String OVERRIDE_CONF_SYSTEM_PARAMETER = "-Dconfig";
     private static final String DEPLOY_APP_SYSTEM_PARAMETER = "-Dapps";
     private static final String BLANK_SPACE = " ";
-    private static File localDeploymentDirectory = null;
+    private File localDeploymentDirectory = null;
     private List<Integer> portsToExpose = new ArrayList<>(defaultExposePorts);
     private String initScriptPath = "/home/siddhi_user/init.sh";
     private StringBuilder initCommand = new StringBuilder(initScriptPath);
@@ -138,7 +138,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        setLocalDeploymentDirectory(deploymentDirectory);
+        localDeploymentDirectory = new File(deploymentDirectory);
         String deploymentPath = DEPLOYMENT_DIRECTORY;
         if (!localDeploymentDirectory.isDirectory()) {
             deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(localDeploymentDirectory.getName());
@@ -146,10 +146,6 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
         return this;
-    }
-
-    public static void setLocalDeploymentDirectory(String deploymentDirectory) {
-        localDeploymentDirectory = new File(deploymentDirectory);
     }
 
     /**
@@ -214,31 +210,23 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     @Override
     protected void waitUntilContainerStarted() {
         logger().info("Waiting for Siddhi Runner Container to start...");
-        if (localDeploymentDirectory != null) {
-            String[] siddhiAppsArray = localDeploymentDirectory.list();
-            if (siddhiAppsArray != null) {
-                for (String siddhiApp : siddhiAppsArray) {
-                    String fileName = siddhiApp.substring(0, siddhiApp.length() - ".siddhi".length());
-                    retryAppDeploymentSuccess(true, fileName);
-                }
-                logger().info("All Siddhi Apps deployed successfully.");
-            }
-        } else {
-            retryAppDeploymentSuccess(false, null);
-        }
-    }
-
-    private void retryAppDeploymentSuccess(boolean isDeploymentDirectory, String fileName) {
         retryUntilSuccess(getStartupTimeoutSeconds(), TimeUnit.SECONDS, () -> {
             if (!isRunning()) {
                 throw new ContainerLaunchException("Siddhi Runner Container failed to start");
             }
             HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
             if (httpResponseMessage.getResponseCode() == 200) {
-                if (isDeploymentDirectory) {
-                    String logs = this.getLogs();
-                    if (!logs.contains("Siddhi App " + fileName + " deployed successfully")) {
-                        throw new Exception("Siddhi App " + fileName + " deployment failed.");
+                if (localDeploymentDirectory != null) {
+                    String[] siddhiAppsArray = localDeploymentDirectory.list();
+                    if (siddhiAppsArray != null) {
+                        for (String siddhiApp : siddhiAppsArray) {
+                            String fileName = siddhiApp.substring(0, siddhiApp.length() - ".siddhi".length());
+                            String logs = this.getLogs();
+                            if (!logs.contains("Siddhi App " + fileName + " deployed successfully")) {
+                                throw new Exception("Siddhi App " + fileName + " deployment failed.");
+                            }
+                        }
+                        logger().info("All Siddhi Apps deployed successfully.");
                     }
                 }
                 logger().info("Siddhi Runner Health API reached successfully.");
