@@ -63,7 +63,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private static final String OVERRIDE_CONF_SYSTEM_PARAMETER = "-Dconfig";
     private static final String DEPLOY_APP_SYSTEM_PARAMETER = "-Dapps";
     private static final String BLANK_SPACE = " ";
-    private File localDeploymentDirectory = null;
+    private File localDeploymentPath = null;
     private List<Integer> portsToExpose = new ArrayList<>(defaultExposePorts);
     private String initScriptPath = "/home/siddhi_user/init.sh";
     private StringBuilder initCommand = new StringBuilder(initScriptPath);
@@ -138,10 +138,10 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        localDeploymentDirectory = new File(deploymentDirectory);
+        localDeploymentPath = new File(deploymentDirectory);
         String deploymentPath = DEPLOYMENT_DIRECTORY;
-        if (!localDeploymentDirectory.isDirectory()) {
-            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(localDeploymentDirectory.getName());
+        if (!localDeploymentPath.isDirectory()) {
+            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(localDeploymentPath.getName());
         }
         withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
@@ -216,12 +216,12 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
             }
             HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
             if (httpResponseMessage.getResponseCode() == 200) {
-                if (localDeploymentDirectory != null) {
-                    String[] siddhiAppsArray = localDeploymentDirectory.list();
+                if (localDeploymentPath != null) {
+                    String[] siddhiAppsArray = localDeploymentPath.list();
                     if (siddhiAppsArray != null) {
+                        String logs = this.getLogs();
                         for (String siddhiApp : siddhiAppsArray) {
                             String fileName = siddhiApp.substring(0, siddhiApp.length() - ".siddhi".length());
-                            String logs = this.getLogs();
                             if (!logs.contains("Siddhi App " + fileName + " deployed successfully")) {
                                 throw new Exception("Siddhi App " + fileName + " deployment failed.");
                             }
