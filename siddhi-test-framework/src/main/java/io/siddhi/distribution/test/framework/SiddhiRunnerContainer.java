@@ -63,12 +63,12 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private static final String OVERRIDE_CONF_SYSTEM_PARAMETER = "-Dconfig";
     private static final String DEPLOY_APP_SYSTEM_PARAMETER = "-Dapps";
     private static final String BLANK_SPACE = " ";
+    private static File localDeploymentDirectory = null;
     private List<Integer> portsToExpose = new ArrayList<>(defaultExposePorts);
     private String initScriptPath = "/home/siddhi_user/init.sh";
     private StringBuilder initCommand = new StringBuilder(initScriptPath);
     private int startupTimeoutSeconds = 120;
     private URI baseURI = null;
-    private File localDeploymentDirectory = null;
 
     public SiddhiRunnerContainer() {
         super(IMAGE + ":" + SIDDHI_RUNNER_VERSION);
@@ -138,7 +138,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        localDeploymentDirectory = new File(deploymentDirectory);
+        setLocalDeploymentDirectory(deploymentDirectory);
         String deploymentPath = DEPLOYMENT_DIRECTORY;
         if (!localDeploymentDirectory.isDirectory()) {
             deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(localDeploymentDirectory.getName());
@@ -146,6 +146,10 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
         return this;
+    }
+
+    public static void setLocalDeploymentDirectory(String deploymentDirectory) {
+        localDeploymentDirectory = new File(deploymentDirectory);
     }
 
     /**
