@@ -73,7 +73,7 @@ public class TemperatureAlertAppTest {
     private NatsClient natsClient;
     private WaitingConsumer siddhiLogConsumer = new WaitingConsumer();
 
-    private static final String DATABSE_NAME = "TemperaureDB";
+    private static final String DATABSE_NAME = "TemperatureDB";
     private static final String DATABSE_HOST = "mysqldb";
     private static final String NATS_CLUSTER_ID = "TemperatureCluster";
     private static final String NATS_CLUSTER_HOST = "nats-streaming";

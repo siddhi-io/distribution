@@ -63,6 +63,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
     private static final String OVERRIDE_CONF_SYSTEM_PARAMETER = "-Dconfig";
     private static final String DEPLOY_APP_SYSTEM_PARAMETER = "-Dapps";
     private static final String BLANK_SPACE = " ";
+    private File localDeploymentPath = null;
     private List<Integer> portsToExpose = new ArrayList<>(defaultExposePorts);
     private String initScriptPath = "/home/siddhi_user/init.sh";
     private StringBuilder initCommand = new StringBuilder(initScriptPath);
@@ -137,10 +138,10 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
      * @return self
      */
     public SiddhiRunnerContainer withSiddhiApps(String deploymentDirectory) {
-        File siddhiApps = new File(deploymentDirectory);
+        localDeploymentPath = new File(deploymentDirectory);
         String deploymentPath = DEPLOYMENT_DIRECTORY;
-        if (!siddhiApps.isDirectory()) {
-            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(siddhiApps.getName());
+        if (!localDeploymentPath.isDirectory()) {
+            deploymentPath = DEPLOYMENT_DIRECTORY.concat(File.pathSeparator).concat(localDeploymentPath.getName());
         }
         withFileSystemBind(deploymentDirectory, deploymentPath, BindMode.READ_ONLY);
         initCommand.append(BLANK_SPACE).append(DEPLOY_APP_SYSTEM_PARAMETER).append("=").append(DEPLOYMENT_DIRECTORY);
@@ -187,7 +188,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
         }
     }
 
-    private void mountFile (String sourcePath, String outputPath) {
+    private void mountFile(String sourcePath, String outputPath) {
         int mountMode = 444;
         MountableFile mountableFile = MountableFile.forHostPath(sourcePath,
                 mountMode);
@@ -215,7 +216,20 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
             }
             HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
             if (httpResponseMessage.getResponseCode() == 200) {
-                logger().info("Siddhi Runner Health API reached successfully.");
+                logger().debug("Siddhi Runner Health API reached successfully.");
+                if (localDeploymentPath != null) {
+                    String[] siddhiAppsArray = localDeploymentPath.list();
+                    if (siddhiAppsArray != null) {
+                        String logs = this.getLogs();
+                        for (String siddhiApp : siddhiAppsArray) {
+                            String fileName = siddhiApp.substring(0, siddhiApp.length() - ".siddhi".length());
+                            if (!logs.contains("Siddhi App " + fileName + " deployed successfully")) {
+                                throw new Exception("Siddhi App " + fileName + " deployment failed.");
+                            }
+                        }
+                        logger().info("All Siddhi Apps deployed successfully.");
+                    }
+                }
                 return null;
             } else {
                 throw new ConnectException("Failed to connect with the Siddhi Runner health API");
