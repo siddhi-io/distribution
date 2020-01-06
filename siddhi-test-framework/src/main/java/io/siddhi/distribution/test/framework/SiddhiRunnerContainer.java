@@ -216,6 +216,7 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
             }
             HTTPClient.HTTPResponseMessage httpResponseMessage = callHealthAPI();
             if (httpResponseMessage.getResponseCode() == 200) {
+                logger().debug("Siddhi Runner Health API reached successfully.");
                 if (localDeploymentPath != null) {
                     String[] siddhiAppsArray = localDeploymentPath.list();
                     if (siddhiAppsArray != null) {
@@ -229,7 +230,6 @@ public class SiddhiRunnerContainer extends GenericContainer<SiddhiRunnerContaine
                         logger().info("All Siddhi Apps deployed successfully.");
                     }
                 }
-                logger().info("Siddhi Runner Health API reached successfully.");
                 return null;
             } else {
                 throw new ConnectException("Failed to connect with the Siddhi Runner health API");
