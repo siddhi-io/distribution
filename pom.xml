@@ -1388,7 +1388,7 @@
         <grpc.version>1.26.0</grpc.version>
 
         <!-- aws sdk version-->
-        <aws.sdk.version>2.10.42</aws.sdk.version>
+        <aws.sdk.version>2.10.43</aws.sdk.version>
 
         <!-- Prometheus dependency version-->
         <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
