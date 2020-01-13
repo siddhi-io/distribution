@@ -50,6 +50,7 @@ public class PersistenceConstants {
     public static final String CREDENTIAL_PROVIDER_CLASS_OLD = "credentialProvideClass";
     public static final String DEFAULT_REGION_ID = "us-west-2";
     public static final int DEFAULT_REVISION_NO = 3;
+    public static final String CREDENTIAL_FILE_PATH = "credentialPath";
 
     private PersistenceConstants() {
     }
