@@ -1187,7 +1187,7 @@
         <siddhi.version>5.1.12-SNAPSHOT</siddhi.version>
         <siddhi.bundle.version>5.1.12.SNAPSHOT</siddhi.bundle.version>
         <siddhi.version.range>[5.0.0, 6.0.0)</siddhi.version.range>
-        <carbon.analytics-common.version>6.1.38</carbon.analytics-common.version>
+        <carbon.analytics-common.version>6.1.39</carbon.analytics-common.version>
         <carbon.analytics-common.version.range>[6.1.0, 6.2.0)</carbon.analytics-common.version.range>
         <io.siddhi.distribution.version.range>[5.0.0, 6.0.0)</io.siddhi.distribution.version.range>
 
