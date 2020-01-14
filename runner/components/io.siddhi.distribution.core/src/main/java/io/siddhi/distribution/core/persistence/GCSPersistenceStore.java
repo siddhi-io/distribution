@@ -54,8 +54,8 @@ public class GCSPersistenceStore implements PersistenceStore {
     public void save(String siddhiAppName, String revision, byte[] snapshot) {
         try {
             byte[] compressedSnapshot = CompressionUtil.compressGZIP(snapshot);
-            BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, revision)).setContentType(
-                    "application/octet-stream").build();
+            BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, siddhiAppName + "/" + revision))
+                    .setContentType("application/octet-stream").build();
             Blob blob = storage.create(blobInfo, compressedSnapshot);
             if (blob != null && log.isDebugEnabled()) {
                 log.debug("object has been uploaded to the bucket successfully." + blob);
@@ -121,7 +121,7 @@ public class GCSPersistenceStore implements PersistenceStore {
     @Override
     public byte[] load(String siddhiAppName, String revision) {
         try {
-            Blob blob = storage.get(this.bucketName, revision);
+            Blob blob = storage.get(BlobId.of(this.bucketName, siddhiAppName + "/" + revision));
             if (blob != null) {
                 byte[] bytes = blob.getContent();
                 return CompressionUtil.decompressGZIP(bytes);
@@ -141,14 +141,16 @@ public class GCSPersistenceStore implements PersistenceStore {
     @Override
     public String getLastRevision(String siddhiAppName) {
         try {
-            Page<Blob> list = storage.list(bucketName, Storage.BlobListOption.fields(Storage.BlobField.NAME));
+            Page<Blob> list = storage.list(bucketName, Storage.BlobListOption.prefix(siddhiAppName + "/"),
+                    Storage.BlobListOption.fields(Storage.BlobField.NAME));
             Iterator<Blob> blobIterator = list.getValues().iterator();
             Blob blobLast = null;
             while (blobIterator.hasNext()) {
                 blobLast = blobIterator.next();
             }
             if (blobLast != null) {
-                return blobLast.getName();
+                // remove folder name from the string and return
+                return blobLast.getName().replace(siddhiAppName + "/", "");
             }
         } catch (StorageException e) {
             log.error("SiddhiAppName: ' " + siddhiAppName + "', Error occurred while loading the last " +
@@ -160,7 +162,8 @@ public class GCSPersistenceStore implements PersistenceStore {
     @Override
     public void clearAllRevisions(String siddhiAppName) {
         try {
-            Page<Blob> list = storage.list(bucketName, Storage.BlobListOption.fields(Storage.BlobField.NAME));
+            Page<Blob> list = storage.list(bucketName,  Storage.BlobListOption.prefix(siddhiAppName + "/"),
+                    Storage.BlobListOption.fields(Storage.BlobField.NAME));
             for (Blob blob : list.iterateAll()) {
                 if (!storage.delete(blob.getBlobId())) {
                     throw new CannotClearSiddhiAppStateException("'" + blob.getName() + "' persistence state was " +
@@ -174,7 +177,8 @@ public class GCSPersistenceStore implements PersistenceStore {
     }
 
     private void cleanOldRevisions(String siddhiAppName) {
-        Page<Blob> list = storage.list(bucketName, Storage.BlobListOption.fields(Storage.BlobField.NAME));
+        Page<Blob> list = storage.list(bucketName,  Storage.BlobListOption.prefix(siddhiAppName + "/"),
+                Storage.BlobListOption.fields(Storage.BlobField.NAME));
         int count = 0;
         Queue<Blob> blobQueue = new LinkedList<>();
         for (Blob blob : list.iterateAll()) {
