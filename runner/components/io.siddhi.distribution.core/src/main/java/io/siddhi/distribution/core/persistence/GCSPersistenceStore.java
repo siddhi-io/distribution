@@ -26,10 +26,9 @@ import com.google.cloud.storage.Storage;
 import com.google.cloud.storage.StorageException;
 import com.google.cloud.storage.StorageOptions;
 import io.siddhi.core.exception.CannotClearSiddhiAppStateException;
-import io.siddhi.core.exception.SiddhiAppCreationException;
-import io.siddhi.core.exception.SiddhiAppRuntimeException;
 import io.siddhi.core.util.persistence.PersistenceStore;
 import io.siddhi.distribution.core.impl.utils.CompressionUtil;
+import io.siddhi.distribution.core.persistence.exception.GCSPersistenceStoreException;
 import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
 import org.apache.log4j.Logger;
 
@@ -52,6 +51,11 @@ public class GCSPersistenceStore implements PersistenceStore {
 
     @Override
     public void save(String siddhiAppName, String revision, byte[] snapshot) {
+        if (bucketName == null) {
+            log.error("'" + PersistenceConstants.BUCKET_NAME + "' cannot be null, Please" +
+                    " set the bucket name and initialize the GCS client before save the persistence");
+            return;
+        }
         try {
             byte[] compressedSnapshot = CompressionUtil.compressGZIP(snapshot);
             BlobInfo blobInfo = BlobInfo.newBuilder(BlobId.of(bucketName, siddhiAppName + "/" + revision))
@@ -81,13 +85,13 @@ public class GCSPersistenceStore implements PersistenceStore {
             numberOfRevisionsToSave = Integer.parseInt(String.valueOf(numberOfRevisionsObject));
         }
         if (configurationMap == null) {
-            throw new SiddhiAppCreationException("Please provide 'config' yaml entry under the 'statePersistence' " +
+            throw new GCSPersistenceStoreException("Please provide 'config' yaml entry under the 'statePersistence' " +
                     "entry.");
         }
         Object bucketNameObject;
         bucketNameObject = configurationMap.get(PersistenceConstants.BUCKET_NAME);
         if (!(bucketNameObject instanceof String)) {
-            throw new SiddhiAppCreationException("'bucketName' should be provided in the configuration");
+            throw new GCSPersistenceStoreException("'bucketName' should be provided in the configuration");
         }
         bucketName = String.valueOf(bucketNameObject);
         Object credentialPathObject;
@@ -97,7 +101,7 @@ public class GCSPersistenceStore implements PersistenceStore {
             try {
                 storage = StorageOptions.getDefaultInstance().getService();
             } catch (StorageException e) {
-                throw new SiddhiAppCreationException("Error occurred while creating the service.", e); //
+                throw new GCSPersistenceStoreException("Error occurred while creating the service.", e); //
             }
         } else {
             try {
@@ -106,15 +110,16 @@ public class GCSPersistenceStore implements PersistenceStore {
                                 .fromStream(new FileInputStream(
                                         new File(String.valueOf(credentialPathObject))))).build().getService();
             } catch (IOException e) {
-                throw new SiddhiAppCreationException("Given credential file path is invalid.");
+                throw new GCSPersistenceStoreException("Given credential file path is invalid.");
             } catch (StorageException e) {
-                throw new SiddhiAppCreationException("Error occurred while creating the service.", e);
+                throw new GCSPersistenceStoreException("Error occurred while creating the service.", e);
             }
         }
         try { //validate the bucket name and bucket ACL
             storage.get(bucketName, Storage.BucketGetOption.fields(Storage.BucketField.NAME));
         } catch (StorageException e) {
-            throw new SiddhiAppCreationException("Error occurred while validating the '" + bucketName + "' bucket.", e);
+            throw new GCSPersistenceStoreException("Error occurred while validating the '" + bucketName + "' bucket.",
+                    e);
         }
     }
 
@@ -130,7 +135,7 @@ public class GCSPersistenceStore implements PersistenceStore {
                     "from '" + bucketName + "' bucket.");
             return null;
         } catch (StorageException e) {
-            throw new SiddhiAppRuntimeException("Unable to load the revision '" + revision + "' of SiddhiApp: '" +
+            throw new GCSPersistenceStoreException("Unable to load the revision '" + revision + "' of SiddhiApp: '" +
                     siddhiAppName + "'" + "from '" + bucketName + "' bucket.", e);
         } catch (IOException e) {
             throw new RuntimeException("Error occurred while trying to decompress the snapshot. Failed to " +
