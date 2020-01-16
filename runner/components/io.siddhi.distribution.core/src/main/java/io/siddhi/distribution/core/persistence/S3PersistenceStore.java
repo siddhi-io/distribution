@@ -64,6 +64,11 @@ public class S3PersistenceStore implements PersistenceStore {
 
     @Override
     public void save(String siddhiAppName, String revision, byte[] snapshot) {
+        if (bucketName == null) {
+            log.error("'" + PersistenceConstants.BUCKET_NAME + "' cannot be null, Please set the bucket name " +
+                    "and initialize the S3 client before save the persistence");
+            return;
+        }
         byte[] compressedSnapshot;
         try {
             compressedSnapshot = CompressionUtil.compressGZIP(snapshot);
