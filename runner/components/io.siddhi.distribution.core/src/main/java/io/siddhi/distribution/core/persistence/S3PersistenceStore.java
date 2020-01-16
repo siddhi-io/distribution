@@ -74,9 +74,9 @@ public class S3PersistenceStore implements PersistenceStore {
         }
         RequestBody requestBody = RequestBody.fromBytes(compressedSnapshot);
         PutObjectResponse putObjectResponse =
-                s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(revision)
+                s3Client.putObject(PutObjectRequest.builder().bucket(bucketName).key(siddhiAppName + "/" + revision)
                         .build(), requestBody);
-        cleanOldRevisions();
+        cleanOldRevisions(siddhiAppName);
         if (log.isDebugEnabled()) {
             log.debug("object has been uploaded to the bucket successfully, ETag: " + putObjectResponse.eTag());
         }
@@ -142,7 +142,7 @@ public class S3PersistenceStore implements PersistenceStore {
     public byte[] load(String siddhiAppName, String revision) {
         try {
             byte[] bytes = s3Client.getObject(GetObjectRequest.builder().bucket(bucketName).key(
-                    revision).build(),
+                    siddhiAppName + "/" + revision).build(),
                     ResponseTransformer.toBytes()).asByteArray();
             log.info("State loaded for " + siddhiAppName + " revision " + revision + " from the s3 bucket.");
             byte[] decompressedSnapshot;
@@ -162,17 +162,20 @@ public class S3PersistenceStore implements PersistenceStore {
 
     @Override
     public String getLastRevision(String siddhiAppName) {
-        ListObjectsV2Request request = ListObjectsV2Request.builder().bucket(bucketName).build();
+        ListObjectsV2Request request = ListObjectsV2Request.builder().bucket(bucketName).prefix(siddhiAppName + "/")
+                .build();
         ListObjectsV2Response listObjectsV2Response = s3Client.listObjectsV2(request);
         if (!listObjectsV2Response.contents().isEmpty()) {
-            return listObjectsV2Response.contents().get(listObjectsV2Response.contents().size() - 1).key();
+            return listObjectsV2Response.contents().get(listObjectsV2Response.contents().size() - 1).key()
+                    .replace(siddhiAppName + "/", "");
         }
         return null;
     }
 
     @Override
     public void clearAllRevisions(String siddhiAppName) {
-        ListObjectsV2Request request = ListObjectsV2Request.builder().bucket(bucketName).build();
+        ListObjectsV2Request request = ListObjectsV2Request.builder().bucket(bucketName).prefix(siddhiAppName + "/")
+                .build();
         ListObjectsV2Response listObjectsV2Response = s3Client.listObjectsV2(request);
         List<S3Object> contents = listObjectsV2Response.contents();
         for (S3Object object : contents) {
@@ -187,8 +190,9 @@ public class S3PersistenceStore implements PersistenceStore {
         }
     }
 
-    private void cleanOldRevisions() {
-        ListObjectsV2Request request = ListObjectsV2Request.builder().bucket(bucketName).build();
+    private void cleanOldRevisions(String siddhiAppName) {
+        ListObjectsV2Request request = ListObjectsV2Request.builder().bucket(bucketName).prefix(siddhiAppName + "/")
+                .build();
 //        only listing out objects detail, not the object content
         List<S3Object> objectList = s3Client.listObjectsV2(request).contents();
         for (int i = 0; i < objectList.size() - numberOfRevisionsToSave; i++) {
