@@ -39,6 +39,15 @@ public class PersistenceStoreConfigs {
     private String credentialProvideClass;
     private String credentialProviderClass;
     // give support for both 'credentialProvideClass' and 'credentialProviderClass' property
+    private String credentialPath;
+
+    public String getCredentialPath() {
+        return credentialPath;
+    }
+
+    public void setCredentialPath(String credentialPath) {
+        this.credentialPath = credentialPath;
+    }
 
     public String getLocation() {
         return location;

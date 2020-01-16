@@ -186,6 +186,27 @@
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>apache-client</artifactId>
         </dependency>
+        <!--google-cloud-storage-dependencies-->
+        <dependency>
+            <groupId>com.google.cloud</groupId>
+            <artifactId>google-cloud-storage</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.threeten</groupId>
+            <artifactId>threetenbp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opencensus</groupId>
+            <artifactId>opencensus-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opencensus</groupId>
+            <artifactId>opencensus-contrib-http-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-context</artifactId>
+        </dependency>
 
     </dependencies>
     <build>
@@ -251,6 +272,14 @@
             org.apache.commons.codec.*,
             software.amazon.awssdk.*,
             org.reactivestreams.*,
+            com.google.cloud.*,
+            com.google.auth.*,
+            com.google.api.gax.*,
+            com.google.api.client.*,
+            com.google.api.services.*,
+            com.google.api.core.*,
+            org.threeten.bp.*,
+            io.opencensus.contrib.http.*
         </private.package>
         <export.package>
             io.siddhi.distribution.core.*
@@ -265,8 +294,6 @@
             org.yaml.snakeyaml.*; version="${org.yaml.snakeyaml.version.range}",
             javax.management.*,
             javax.ws.rs.*;version="0.0.0",
-            software.amazon.awssdk.*;version="${aws.sdk.version.range}",
-            software.amazon.awssdk.http.*;version="${aws.sdk.version.range}",
             *;resolution:=optional
         </import.package>
         <carbon.component>
@@ -275,6 +302,7 @@
             osgi.service; objectClass="org.wso2.carbon.deployment.engine.Deployer",
             osgi.service; objectClass="io.siddhi.distribution.core.SiddhiAppRuntimeService"
         </carbon.component>
+        <DynamicImport-Package>*</DynamicImport-Package>
     </properties>
 
 </project>
