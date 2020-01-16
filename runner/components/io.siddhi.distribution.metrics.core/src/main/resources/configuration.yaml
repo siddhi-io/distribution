@@ -4,7 +4,7 @@ metricsLabelMapping:
     name: "siddhi.query.${2}"
     labels:
       app: "${0}"
-      type: "sink"
+      type: "query"
       element: "${1}"
       metrics: "${2}"
 
