@@ -52,8 +52,9 @@ public class GCSPersistenceStore implements PersistenceStore {
     @Override
     public void save(String siddhiAppName, String revision, byte[] snapshot) {
         if (bucketName == null) {
-            log.error("'" + PersistenceConstants.BUCKET_NAME + "' cannot be null, Please" +
-                    " set the bucket name and initialize the GCS client before save the persistence");
+            log.error("'" + PersistenceConstants.BUCKET_NAME + "'  cannot be null. GCS Persistence Store has not " +
+                    "been initialized correctly. Hence, periodic persistence snapshot will be ignored. Please " +
+                    "reinitialize the Persistence Store.");
             return;
         }
         try {
@@ -91,7 +92,7 @@ public class GCSPersistenceStore implements PersistenceStore {
         Object bucketNameObject;
         bucketNameObject = configurationMap.get(PersistenceConstants.BUCKET_NAME);
         if (!(bucketNameObject instanceof String)) {
-            throw new GCSPersistenceStoreException("'bucketName' should be provided in the configuration");
+            throw new GCSPersistenceStoreException("'bucketName' is mandatory parameter");
         }
         bucketName = String.valueOf(bucketNameObject);
         Object credentialPathObject;
@@ -101,7 +102,8 @@ public class GCSPersistenceStore implements PersistenceStore {
             try {
                 storage = StorageOptions.getDefaultInstance().getService();
             } catch (StorageException e) {
-                throw new GCSPersistenceStoreException("Error occurred while creating the service.", e); //
+                throw new GCSPersistenceStoreException("Error occurred while initializing the gcs service. Please " +
+                        "make sure you have provided the path to the secret key as a environment variable", e);
             }
         } else {
             try {
@@ -110,9 +112,11 @@ public class GCSPersistenceStore implements PersistenceStore {
                                 .fromStream(new FileInputStream(
                                         new File(String.valueOf(credentialPathObject))))).build().getService();
             } catch (IOException e) {
-                throw new GCSPersistenceStoreException("Given credential file path is invalid.");
+                throw new GCSPersistenceStoreException("Secret-key file cannot be found at given credential path, '"
+                        + "given credential path: " + credentialPathObject + "'.", e);
             } catch (StorageException e) {
-                throw new GCSPersistenceStoreException("Error occurred while creating the service.", e);
+                throw new GCSPersistenceStoreException("Error occurred while creating the service using '" +
+                        credentialPathObject + "' file.", e);
             }
         }
         try { //validate the bucket name and bucket ACL
