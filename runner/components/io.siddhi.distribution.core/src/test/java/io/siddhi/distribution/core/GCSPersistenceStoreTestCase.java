@@ -32,6 +32,9 @@ import org.testng.annotations.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Testcase for GCS Siddhi persistence.
+ */
 public class GCSPersistenceStoreTestCase {
 
     @Test
