@@ -18,7 +18,7 @@
 package io.siddhi.distribution.core.persistence.exception;
 
 /**
- * Exception class for GCS persistence
+ * Exception class for GCS persistence.
  */
 public class GCSPersistenceStoreException extends RuntimeException {
 
