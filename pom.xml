@@ -1249,7 +1249,7 @@
         <snakeyaml.version>1.25</snakeyaml.version>
         <slf4j.version>1.7.12</slf4j.version>
         <testng.version>7.1.0</testng.version>
-        <antlr4.runtime.version>4.6.wso2v1</antlr4.runtime.version>
+        <antlr4.runtime.version>4.7.2.wso2v1</antlr4.runtime.version>
         <zkclient.version>0.11</zkclient.version>
         <curator-test.version>4.2.0</curator-test.version>
         <zookeeper.version>3.5.5</zookeeper.version>
