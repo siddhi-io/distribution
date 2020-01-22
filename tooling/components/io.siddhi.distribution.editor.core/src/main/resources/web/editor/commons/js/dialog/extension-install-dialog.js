@@ -4,23 +4,36 @@
  */
 define(['require', 'lodash', 'jquery'],
     function (require, _, $) {
-        /** @lends ExtensionInstallDialog.prototype */
-        var ExtensionInstallDialog = function ()
-             {
+
+        /**
+         * constructor initialize for ExtensionInstallDialog.
+         * @constructor
+         */
+        var ExtensionInstallDialog = function () {
+
+            var constants = {
+                EXTENSION_INSTALLED: "installed",
+                EXTENSION_NOT_INSTALLED: "not-installed",
+                EXTENSION_PARTIALLY_INSTALLED: "partially-installed"
+            };
+
             /**
-             * @constructs
-             * @class ExtensionInstallDialogExtensionInstallDialog
-             * @param {Object} config configuration options for ExtensionInstallDialog
+             * initialize function for ExtensionInstallDialog.
              */
             this.initialize = function (options) {
                 this.dialog_containers = $(_.get(options.config.dialog, 'container'));
-                this.extensionList = getExtensionDetail();
+                this.extensionList = getExtensionDetails();
             },
-
+                /**
+                 * show function for display the ExtensionInstallDialog.
+                 */
                 this.show = function () {
                     this._extensionListModal.modal('show');
                 },
 
+                /**
+                 * render function for rendering all the contents of ExtensionInstallDialog.
+                 */
                 this.render = function () {
                     var self = this;
 
@@ -83,7 +96,7 @@ define(['require', 'lodash', 'jquery'],
 
 
                     //extension array from backend which has details about extensions.
-                    var extensionLists = (!_.isNil(this.extensionList) ? this.extensionList : getExtensionDetail());
+                    var extensionLists = (!_.isNil(this.extensionList) ? this.extensionList : getExtensionDetails());
                     var extensionTable = $('<table class="table table-hover data-table"' +
                         ' id="extensionTableId"><tbody></tbody></table>');
                     //define the map to store Partially extension modal based on key
@@ -121,11 +134,11 @@ define(['require', 'lodash', 'jquery'],
                                 '</div>' +
                                 ' <div class="modal-body">' +
                                 ' <h3>Description</h3>' +
-                                '<div id="partialExtenDescription">'
+                                '<div id="partialExtenDescription" style = "text-align:justify">'
                                 + extension.info.description +
                                 '</div>' +
                                 '<h3>Install</h3>' +
-                                '<div id="partialExtenInstall">'
+                                '<div id="partialExtenInstall" style = "text-align:justify" >'
                                 + extension.info.install +
                                 '</div>' +
                                 '</div>' +
@@ -209,7 +222,7 @@ define(['require', 'lodash', 'jquery'],
                             "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>" +
                             "<i class='fw fw-cancel about-dialog-close'> </i> " +
                             "</button>" +
-                            "<h4 class='modal-title file-dialog-title' id='newConfigModalLabel'>Extension<" +
+                            "<h4 class='modal-title file-dialog-title' id='newConfigModalLabel'>Confirmation<" +
                             "/h4>" +
                             "<hr class='style1'>" +
                             "</div>" +
@@ -223,7 +236,7 @@ define(['require', 'lodash', 'jquery'],
                             "</div>" +
                             "<div class='form-group'>" +
                             "<div class='file-dialog-form-btn'>" +
-                            "<button id='installUninstallId' type='button' class='btn btn-primary'>"+ ((extension.status === 'not-installed') ? 'install' : 'unInstall')+
+                            "<button id='installUninstallId' type='button' class='btn btn-primary'>" + ((extension.status === 'not-installed') ? 'install' : 'unInstall') +
                             "</button>" +
                             "<div class='divider'/>" +
                             "<button type='cancelButton' class='btn btn-default' data-dismiss='modal'>cancel</button>" +
@@ -260,19 +273,13 @@ define(['require', 'lodash', 'jquery'],
 
         };
 
-        var constants = {
-            EXTENSION_INSTALLED: "installed",
-            EXTENSION_NOT_INSTALLED: "not-installed",
-            EXTENSION_PARTIALLY_INSTALLED: "partially-installed"
-        };
-
         return ExtensionInstallDialog;
     });
 
 /**
  * Get the extension details array from back end.
  */
-function getExtensionDetail() {
+function getExtensionDetails() {
     // extension details array need to be retrieve from backend.
     return [{name: "ex1", status: "installed"},
         {name: "ex2fgdfgdfg", status: "installed"},
@@ -289,8 +296,26 @@ function getExtensionDetail() {
             name: "ex4aerertrtrt", status: "partially-installed",
             info: {
                 description: " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app",
-                install: "To install this ex4 extension you have to set  all dependency of it "
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi"
+                ,
+                install: "To install this ex4 extension you have to set  all dependency of it" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
+                    " app.This ex4 extension gives the string conversion features to Siddhi"
+                ,
+
             }
         },
         {name: "ex5rtyyjuju", status: "not-installed"},
