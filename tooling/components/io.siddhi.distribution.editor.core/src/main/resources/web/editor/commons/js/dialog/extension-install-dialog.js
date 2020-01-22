@@ -62,7 +62,7 @@ define(['require', 'lodash', 'jquery'],
                         " id='extensionSearchId' autofocus>" +
                         "</div>" +
                         "<div class='form-group'>" +
-                        "<div class='file-dialog-form-scrollable-block' style='padding: 10px 4px; margin-left:35px;'>" +
+                        "<div class='file-dialog-form-scrollable-block' style='padding:10px4px; margin-left:35px;'>" +
                         "<div id='noResults' style='display:none;'>No extension has found</div>" +
                         "<div id='extensionTableId' class='samples-pane'>" +
                         "</div>" +
@@ -77,7 +77,7 @@ define(['require', 'lodash', 'jquery'],
                         "</div>" +
                         "</form>" +
                         "<div id='extensionInstallErrorId' class='alert alert-danger'>" +
-                        "<strong>Error!</strong> Something went wrong." +
+                        "<strong>Error!</strong>Something went wrong." +
                         "</div>" +
                         "</div>" +
                         "</div>" +
@@ -123,17 +123,17 @@ define(['require', 'lodash', 'jquery'],
                                 '<div class="modal fade" id="' + partialExtensionIndex + '">' +
                                 '<div class="modal-dialog">' +
                                 '<div class="modal-content">' +
-                                '<div class="modal-header"> ' +
+                                '<div class="modal-header">' +
                                 "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>" +
                                 "<i class=\"fw fw-cancel  about-dialog-close\"></i>" +
                                 "</button>" +
                                 '<h3 class="modal-title file-dialog-title" id="partialExtenName">'
                                 + extension.name +
-                                '</h3> ' +
-                                '<hr class="style1"> ' +
+                                '</h3>' +
+                                '<hr class="style1">' +
                                 '</div>' +
-                                ' <div class="modal-body">' +
-                                ' <h3>Description</h3>' +
+                                '<div class="modal-body">' +
+                                '<h3>Description</h3>' +
                                 '<div id="partialExtenDescription" style = "text-align:justify">'
                                 + extension.info.description +
                                 '</div>' +
@@ -142,11 +142,11 @@ define(['require', 'lodash', 'jquery'],
                                 + extension.info.install +
                                 '</div>' +
                                 '</div>' +
-                                ' <div class="modal-footer"> ' +
+                                '<div class="modal-footer"> ' +
                                 '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
-                                ' </div> ' +
                                 '</div>' +
-                                '</div> ' +
+                                '</div>' +
+                                '</div>' +
                                 '</div>');
 
                             partialExtensionDetailModal.set(partialExtensionIndex, partialModel);
