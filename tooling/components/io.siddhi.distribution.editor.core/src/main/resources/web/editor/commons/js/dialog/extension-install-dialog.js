@@ -236,7 +236,7 @@ define(['require', 'lodash', 'jquery'],
                             "</div>" +
                             "<div class='form-group'>" +
                             "<div class='file-dialog-form-btn'>" +
-                            "<button id='installUninstallId' type='button' class='btn btn-primary'>" + ((extension.status === 'not-installed') ? 'install' : 'unInstall') +
+                            "<button id='installUninstallId' type='button' class='btn btn-primary'>" + ((extension.status === constants.EXTENSION_NOT_INSTALLED) ? 'install' : 'unInstall') +
                             "</button>" +
                             "<div class='divider'/>" +
                             "<button type='cancelButton' class='btn btn-default' data-dismiss='modal'>cancel</button>" +
