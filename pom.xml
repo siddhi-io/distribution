@@ -1433,7 +1433,7 @@
         <aws.sdk.version>2.10.49</aws.sdk.version>
 
         <!-- Prometheus dependency version-->
-        <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
+        <prometheus.simpleclient.version>0.8.1</prometheus.simpleclient.version>
         <prometheus.simpleclient.dropwizard.version>0.8.0</prometheus.simpleclient.dropwizard.version>
         <dropwizard.metrics.version>3.1.2</dropwizard.metrics.version>
         <prometheus.simpleclient.httpserver.version>0.8.0</prometheus.simpleclient.httpserver.version>
