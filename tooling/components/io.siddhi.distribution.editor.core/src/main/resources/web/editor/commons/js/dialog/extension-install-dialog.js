@@ -2,27 +2,16 @@
  * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org)  Apache License, Version 2.0
  * http://www.apache.org/licenses/LICENSE-2.0
  */
-define(['require', 'lodash', 'jquery'],
-    function (require, _, $) {
-
-        /**
-         * constructor initialize for ExtensionInstallDialog.
-         * @constructor
-         */
-        var ExtensionInstallDialog = function () {
-
-            var constants = {
-                EXTENSION_INSTALLED: "installed",
-                EXTENSION_NOT_INSTALLED: "not-installed",
-                EXTENSION_PARTIALLY_INSTALLED: "partially-installed"
-            };
+define(['require', 'lodash', 'jquery','constants'],
+    function (require, _, $,Constants) {
+        return function (app) {
 
             /**
              * initialize function for ExtensionInstallDialog.
              */
             this.initialize = function (options) {
                 this.dialog_containers = $(_.get(options.config.dialog, 'container'));
-                this.extensionList = getExtensionDetails();
+                this.extensionList = app.utils.getExtensionDetails();
             },
                 /**
                  * show function for display the ExtensionInstallDialog.
@@ -36,7 +25,6 @@ define(['require', 'lodash', 'jquery'],
                  */
                 this.render = function () {
                     var self = this;
-
                     if (!_.isNil(this._extensionListModal)) {
                         this._extensionListModal.remove();
                     }
@@ -96,21 +84,21 @@ define(['require', 'lodash', 'jquery'],
 
 
                     //extension array from backend which has details about extensions.
-                    var extensionLists = (!_.isNil(this.extensionList) ? this.extensionList : getExtensionDetails());
+                    var extensionLists = app.utils.getExtensionDetails();
                     var extensionTable = $('<table class="table table-hover data-table"' +
                         ' id="extensionTableId"><tbody></tbody></table>');
                     //define the map to store Partially extension modal based on key
                     var partialExtensionDetailModal = new Map();
                     extensionLists.forEach(function (extension) {
                         var extensionTableBodyData;
-                        if (extension.status.trim().toLowerCase() === constants.EXTENSION_INSTALLED) {
+                        if (extension.status.trim().toLowerCase() === Constants.EXTENSION_INSTALLED) {
                             extensionTableBodyData = $('<tr><td>' + extension.name + '</td><td>Installed</td><td><button' +
                                 ' class="btn btn-block btn' +
                                 ' btn-primary">UnInstall</button></td></tr>');
                             extensionTableBodyData.find("button").click(function () {
-                                extensionUpdate(extension);
+                                app.utils.extensionUpdate(extension);
                             });
-                        } else if (extension.status.trim().toLowerCase() === constants.EXTENSION_PARTIALLY_INSTALLED) {
+                        } else if (extension.status.trim().toLowerCase() === Constants.EXTENSION_PARTIALLY_INSTALLED) {
                             var partialExtensionIndex = extensionLists.indexOf(extension);
                             extensionTableBodyData = $('<tr><td>' + extension.name + '</td><td>Partially-Installed' +
                                 '&nbsp; &nbsp;<a data-toggle="modal"' +
@@ -142,7 +130,7 @@ define(['require', 'lodash', 'jquery'],
                                 + extension.info.install +
                                 '</div>' +
                                 '</div>' +
-                                '<div class="modal-footer"> ' +
+                                '<div class="modal-footer">' +
                                 '<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>' +
                                 '</div>' +
                                 '</div>' +
@@ -156,24 +144,23 @@ define(['require', 'lodash', 'jquery'],
                             });
 
                             extensionTableBodyData.find("button").click(function () {
-                                extensionUpdate(extension);
+                                app.utils.extensionUpdate(extension);
                             });
 
-                        } else if (extension.status.trim().toLowerCase() === constants.EXTENSION_NOT_INSTALLED) {
+                        } else if (extension.status.trim().toLowerCase() === Constants.EXTENSION_NOT_INSTALLED) {
                             extensionTableBodyData = $('<tr><td>' + extension.name + '</td><td>Not-Installed</td><td><button' +
                                 ' class="btn btn-block btn' +
                                 ' btn-primary">Install</button></td></tr>');
                             extensionTableBodyData.find("button").click(function () {
-                                extensionUpdate(extension);
+                                app.utils.extensionUpdate(extension);
                             });
                         }
                         extensionTable.append(extensionTableBodyData);
                     });
 
                     extensionContainer.append(extensionTable);
-
                     extensionSearch.keyup(function () {
-                        searchExtension(extensionTable, extensionSearch);
+                        searchExtension(extensionTable, extensionSearch.val());
                     });
 
                     $(this.dialog_containers).append(extensionModelOpen);
@@ -188,7 +175,7 @@ define(['require', 'lodash', 'jquery'],
                     function searchExtension(extensionTable, locationSearch) {
                         var unmatchedCount = 0, filter, table, tr, td, i, txtValue;
                         var noResultsElement = extensionModelOpen.find("div").filter("#noResults");
-                        filter = locationSearch.val().toUpperCase();
+                        filter = locationSearch.toUpperCase();
                         table = extensionTable[0];
                         tr = table.getElementsByTagName("tr");
                         for (i = 0; i < tr.length; i++) {
@@ -208,59 +195,6 @@ define(['require', 'lodash', 'jquery'],
                     }
 
                     /**
-                     * provide the update details about the extension
-                     * @param extension
-                     */
-                    function extensionUpdate(extension) {
-
-                        self.extensionInstallUninstallAlertModal = $(
-                            "<div class='modal fade' id='extensionAlertModal' tabindex='-1' role='dialog'" +
-                            " aria-tydden='true'>" +
-                            "<div class='modal-dialog file-dialog' role='document'>" +
-                            "<div class='modal-content'>" +
-                            "<div class='modal-header'>" +
-                            "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>" +
-                            "<i class='fw fw-cancel about-dialog-close'> </i> " +
-                            "</button>" +
-                            "<h4 class='modal-title file-dialog-title' id='newConfigModalLabel'>Confirmation<" +
-                            "/h4>" +
-                            "<hr class='style1'>" +
-                            "</div>" +
-                            "<div class='modal-body'>" +
-                            "<div class='container-fluid'>" +
-                            "<form class='form-horizontal' onsubmit='return false'>" +
-                            "<div class='form-group'>" +
-                            "<label for='configName' class='col-sm-9 file-dialog-label'>" +
-                            "Are you sure to " + ((extension.status === "not-installed") ? 'install' : 'unInstall') + " " + extension.name +
-                            "</label>" +
-                            "</div>" +
-                            "<div class='form-group'>" +
-                            "<div class='file-dialog-form-btn'>" +
-                            "<button id='installUninstallId' type='button' class='btn btn-primary'>" + ((extension.status === constants.EXTENSION_NOT_INSTALLED) ? 'install' : 'unInstall') +
-                            "</button>" +
-                            "<div class='divider'/>" +
-                            "<button type='cancelButton' class='btn btn-default' data-dismiss='modal'>cancel</button>" +
-                            "</div>" +
-                            "</form>" +
-                            "</div>" +
-                            "</div>" +
-                            "</div>" +
-                            "</div>" +
-                            "</div>"
-                        ).modal('show');
-
-                        self.extensionInstallUninstallAlertModal.find("button").filter("#installUninstallId").click(function () {
-                            self.extensionInstallUninstallAlertModal.modal('hide');
-                            var updateData = {
-                                "name": extension.name,
-                                "action": (extension.status === constants.EXTENSION_NOT_INSTALLED) ? 'install' : 'unInstall'
-                            };
-                            alert(updateData.name + " " + updateData.action);
-                            //this updateData goes to back end.
-                        });
-                    }
-
-                    /**
                      * display the inner modal box for the partially installed extension.
                      * @param extensionPartialModel
                      */
@@ -268,65 +202,6 @@ define(['require', 'lodash', 'jquery'],
                         self._extensionPartialModel = extensionPartialModel;
                         self._extensionPartialModel.modal('show');
                     }
-
                 }
-
         };
-
-        return ExtensionInstallDialog;
     });
-
-/**
- * Get the extension details array from back end.
- */
-function getExtensionDetails() {
-    // extension details array need to be retrieve from backend.
-    return [{name: "ex1", status: "installed"},
-        {name: "ex2fgdfgdfg", status: "installed"},
-        {
-            name: "ex7tyjyjyukuu", status: "partially-installed",
-            info: {
-                description: "this ex7 extension gives the string conversion features to Siddhi" +
-                    " app",
-                install: "To install this ex7 extension you have to set  all dependency of it."
-            }
-        },
-        {name: "ex3ffgfgfgfgfgffgfgfgfgtjj", status: "not-installed"},
-        {
-            name: "ex4aerertrtrt", status: "partially-installed",
-            info: {
-                description: " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi"
-                ,
-                install: "To install this ex4 extension you have to set  all dependency of it" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi" + " this ex4 extension gives the string conversion features to Siddhi" +
-                    " app.This ex4 extension gives the string conversion features to Siddhi"
-                ,
-
-            }
-        },
-        {name: "ex5rtyyjuju", status: "not-installed"},
-        {
-            name: "ex6tyjyjyukuu", status: "partially-installed",
-            info: {
-                description: "this ex6 extension gives the string conversion features to Siddhi" +
-                    " app",
-                install: "To install this ex6 extension you have to set  all dependency of it."
-            }
-        },
-    ];
-
-}

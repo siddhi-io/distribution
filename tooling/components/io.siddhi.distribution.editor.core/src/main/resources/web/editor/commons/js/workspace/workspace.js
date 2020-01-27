@@ -622,7 +622,7 @@ define(['ace/ace', 'jquery', 'lodash', 'log','dialogs','./service-client','welco
             };
 
             this.openExtensionInstallDialog = function openExtensionInstallDialog() {
-                if(_.isNil(this._openSampleFileDialog)){
+                if(_.isNil(this._ExtensionInstallDialog)){
                     this._ExtensionInstallDialog = new Dialogs.ExtensionInstallDialog(app);
                 }
                 this._ExtensionInstallDialog.render();
