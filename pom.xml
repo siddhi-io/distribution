@@ -1430,7 +1430,7 @@
         <rabbitmq.version>3.6.3</rabbitmq.version>
 
         <!-- aws sdk version-->
-        <aws.sdk.version>2.10.49</aws.sdk.version>
+        <aws.sdk.version>2.10.56</aws.sdk.version>
 
         <!-- Prometheus dependency version-->
         <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
