@@ -1424,7 +1424,7 @@
 
 
         <!-- grpc dependency version-->
-        <grpc.version>1.26.0</grpc.version>
+        <grpc.version>1.27.0</grpc.version>
 
         <!-- rabbitmq dependency version-->
         <rabbitmq.version>3.6.3</rabbitmq.version>
