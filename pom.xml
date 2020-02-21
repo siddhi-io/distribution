@@ -1397,7 +1397,7 @@
         <org.apache.httpcomponents.httpclient.version>4.5.10</org.apache.httpcomponents.httpclient.version>
         <commons.lang.commons.lang.version>2.6</commons.lang.commons.lang.version>
         <org.glassfish.jersey.inject.jersey.hk2.version>2.27</org.glassfish.jersey.inject.jersey.hk2.version>
-        <org.glassfish.jersey.core.jersey.client.version>2.22.2</org.glassfish.jersey.core.jersey.client.version>
+        <org.glassfish.jersey.core.jersey.client.version>2.30.1</org.glassfish.jersey.core.jersey.client.version>
         <org.glassfish.jersey.core.jersey.common.version>2.22.2</org.glassfish.jersey.core.jersey.common.version>
         <org.glassfish.hk2.hk2.api.version>2.4.0-b34</org.glassfish.hk2.hk2.api.version>
         <org.glassfish.jersey.bundles.repackaged.jersey.guava.version>2.22.2</org.glassfish.jersey.bundles.repackaged.jersey.guava.version>
