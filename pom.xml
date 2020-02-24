@@ -1366,7 +1366,7 @@
         <siddhi.map.text.version>2.0.5-SNAPSHOT</siddhi.map.text.version>
         <siddhi.map.xml.version>5.0.4-SNAPSHOT</siddhi.map.xml.version>
         <siddhi.map.keyvalue.version>2.0.6-SNAPSHOT</siddhi.map.keyvalue.version>
-        <siddhi.map.csv.version>2.0.4-SNAPSHOT</siddhi.map.csv.version>
+        <siddhi.map.csv.version>2.0.5-SNAPSHOT</siddhi.map.csv.version>
         <siddhi.map.protobuf.version>1.0.5-SNAPSHOT</siddhi.map.protobuf.version>
 
         <siddhi.store.rdbms.version>7.0.6-SNAPSHOT</siddhi.store.rdbms.version>
