@@ -1369,7 +1369,7 @@
         <siddhi.map.csv.version>2.0.5-SNAPSHOT</siddhi.map.csv.version>
         <siddhi.map.protobuf.version>1.0.5-SNAPSHOT</siddhi.map.protobuf.version>
 
-        <siddhi.store.rdbms.version>7.0.7-SNAPSHOT</siddhi.store.rdbms.version>
+        <siddhi.store.rdbms.version>7.0.6-SNAPSHOT</siddhi.store.rdbms.version>
         <siddhi.store.mongodb.version>2.1.1-SNAPSHOT</siddhi.store.mongodb.version>
         <siddhi.store.redis.version>3.1.2-SNAPSHOT</siddhi.store.redis.version>
 
