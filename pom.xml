@@ -1393,7 +1393,7 @@
         <com.spotify.docker.plugin.version>1.1.1</com.spotify.docker.plugin.version>
         <maven.codehaus.exec.plugin.version>1.6.0</maven.codehaus.exec.plugin.version>
         <com.spotify.docker.client.version>8.16.0</com.spotify.docker.client.version>
-        <org.glassfish.jersey.connectors.jersey.apache.connector.version>2.22.2</org.glassfish.jersey.connectors.jersey.apache.connector.version>
+        <org.glassfish.jersey.connectors.jersey.apache.connector.version>2.31</org.glassfish.jersey.connectors.jersey.apache.connector.version>
         <org.apache.httpcomponents.httpclient.version>4.5.10</org.apache.httpcomponents.httpclient.version>
         <commons.lang.commons.lang.version>2.6</commons.lang.commons.lang.version>
         <org.glassfish.jersey.inject.jersey.hk2.version>2.27</org.glassfish.jersey.inject.jersey.hk2.version>
