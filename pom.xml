@@ -1263,7 +1263,7 @@
         <testng.version>7.1.0</testng.version>
         <antlr4.runtime.version>4.6.wso2v1</antlr4.runtime.version>
         <zkclient.version>0.11</zkclient.version>
-        <curator-test.version>4.2.0</curator-test.version>
+        <curator-test.version>5.1.0</curator-test.version>
         <zookeeper.version>3.5.5</zookeeper.version>
         <commons-io.version>2.6</commons-io.version>
         <commons.io.version>2.4.0.wso2v1</commons.io.version>
