@@ -1436,7 +1436,7 @@
         <prometheus.simpleclient.version>0.8.0</prometheus.simpleclient.version>
         <prometheus.simpleclient.dropwizard.version>0.8.0</prometheus.simpleclient.dropwizard.version>
         <dropwizard.metrics.version>3.1.2</dropwizard.metrics.version>
-        <prometheus.simpleclient.httpserver.version>0.8.0</prometheus.simpleclient.httpserver.version>
+        <prometheus.simpleclient.httpserver.version>0.10.0</prometheus.simpleclient.httpserver.version>
 
         <!-- google cloud storage dependency version -->
         <gcs.client.version>1.90.0</gcs.client.version>
