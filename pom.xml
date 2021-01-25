@@ -1333,7 +1333,7 @@
         <!-- nats test dependencies -->
         <io.nats.version>2.2.3</io.nats.version>
         <org.testcontainers.version>1.12.4</org.testcontainers.version>
-        <assertj.version>3.14.0</assertj.version>
+        <assertj.version>3.19.0</assertj.version>
 
         <!--Siddhi Extension Versions-->
         <siddhi.execution.string.version>5.0.9</siddhi.execution.string.version>
