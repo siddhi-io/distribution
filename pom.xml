@@ -1258,7 +1258,7 @@
         <carbon.securevault.version>5.0.15</carbon.securevault.version>
 
         <!-- External Dependencies -->
-        <snakeyaml.version>1.25</snakeyaml.version>
+        <snakeyaml.version>1.26</snakeyaml.version>
         <slf4j.version>1.7.12</slf4j.version>
         <testng.version>7.1.0</testng.version>
         <antlr4.runtime.version>4.6.wso2v1</antlr4.runtime.version>
