@@ -24,9 +24,11 @@ import io.siddhi.core.util.persistence.PersistenceStore;
 import io.siddhi.distribution.core.persistence.GCSPersistenceStore;
 import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
 import io.siddhi.distribution.core.util.UnitTestAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import java.util.HashMap;
@@ -40,9 +42,12 @@ public class GCSPersistenceStoreTestCase {
     @Test
     public void testWithoutSettingConfigs() throws InterruptedException {
         PersistenceStore gcsPersistenceStore = new GCSPersistenceStore();
-        Logger.getRootLogger().setLevel(Level.DEBUG);
-        UnitTestAppender appender = new UnitTestAppender();
-        Logger.getRootLogger().addAppender(appender);
+        UnitTestAppender appender = new UnitTestAppender("UnitTestAppender", null);
+        final Logger logger = (Logger) LogManager.getRootLogger();
+        logger.setLevel(Level.ALL);
+        logger.addAppender(appender);
+        appender.start();
+
         SiddhiManager siddhiManager = new SiddhiManager();
         siddhiManager.setPersistenceStore(gcsPersistenceStore);
         SiddhiAppRuntime siddhiAppRuntime = siddhiManager.createSiddhiAppRuntime("@source(type='inMemory', " +
@@ -51,16 +56,21 @@ public class GCSPersistenceStoreTestCase {
         siddhiAppRuntime.start();
         siddhiAppRuntime.persist();
         Thread.sleep(1000);
-        Assert.assertTrue(appender.getMessages().contains("'bucketName' cannot be null, Please set the bucket name " +
-                "and initialize the GCS client before save the persistence"));
+        AssertJUnit.assertTrue(((UnitTestAppender) logger.getAppenders().
+                get("UnitTestAppender")).getMessages().contains("'bucketName' cannot be null, Please set the bucket " +
+                "name and initialize the GCS client before save the persistence"));
+        logger.removeAppender(appender);
     }
 
     @Test
     public void testToSavePersistence() throws CannotRestoreSiddhiAppStateException, InterruptedException {
         PersistenceStore gcsPersistenceStore = new GCSPersistenceStore();
-        Logger.getRootLogger().setLevel(Level.DEBUG);
-        UnitTestAppender appender = new UnitTestAppender();
-        Logger.getRootLogger().addAppender(appender);
+        UnitTestAppender appender = new UnitTestAppender("UnitTestAppender", null);
+        final Logger logger = (Logger) LogManager.getRootLogger();
+        logger.setLevel(Level.ALL);
+        logger.addAppender(appender);
+        appender.start();
+
         Map<String, Object> properties = new HashMap<>();
         Map<String, Object> config = new HashMap<>();
         config.put("bucketName", "siddhi-persistence");
@@ -79,7 +89,8 @@ public class GCSPersistenceStoreTestCase {
         siddhiAppRuntime.restoreLastRevision();
         siddhiAppRuntime.persist();
         Thread.sleep(3000);
-        Assert.assertTrue(String.join(", ", appender.getMessages()).contains("object has been uploaded to " +
+        Assert.assertTrue(String.join(", ", ((UnitTestAppender) logger.getAppenders().
+                get("UnitTestAppender")).getMessages()).contains("object has been uploaded to " +
                 "the bucket successfully."));
     }
 }

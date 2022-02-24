@@ -20,7 +20,8 @@ package io.siddhi.distribution.sample.grpc.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.wso2.grpc.Event;
 import org.wso2.grpc.EventServiceGrpc;
 
@@ -30,7 +31,7 @@ import java.util.Arrays;
  * This is a sample gRpc client to publish events to gRpc endpoint.
  */
 public class GrpcClient {
-    private static final Logger log = Logger.getLogger(GrpcClient.class);
+    private static final Logger log = LogManager.getLogger(GrpcClient.class);
 
     /**
      * Main method to start the test client.

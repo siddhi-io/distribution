@@ -20,7 +20,8 @@ import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.awaitility.Awaitility;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -51,7 +52,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @ExamFactory(CarbonContainerFactory.class)
 public class FileSystemPersistenceStoreConfigTestcase {
 
-    private static final Logger log = Logger.getLogger(FileSystemPersistenceStoreConfigTestcase.class);
+    private static final Logger log = LogManager.getLogger(FileSystemPersistenceStoreConfigTestcase.class);
     static final String DEPLOYMENT_FILENAME = "deployment.yaml";
     private static final String PERSISTENCE_FOLDER = "siddhi-app-persistence";
     private static final String SIDDHIAPP_NAME = "SiddhiAppPersistence";

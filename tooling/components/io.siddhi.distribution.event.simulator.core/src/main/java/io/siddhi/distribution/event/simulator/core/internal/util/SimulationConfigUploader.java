@@ -23,7 +23,8 @@ import io.siddhi.distribution.event.simulator.core.exception.FileAlreadyExistsEx
 import io.siddhi.distribution.event.simulator.core.exception.FileOperationsException;
 import io.siddhi.distribution.event.simulator.core.exception.InvalidConfigException;
 import io.siddhi.distribution.event.simulator.core.util.LogEncoder;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,7 +39,7 @@ import java.nio.file.Paths;
  * This class is responsible for saving, modifying and deleting the simulation configurations.
  */
 public class SimulationConfigUploader {
-    private static final Logger log = Logger.getLogger(SimulationConfigUploader.class);
+    private static final Logger log = LogManager.getLogger(SimulationConfigUploader.class);
     private static final SimulationConfigUploader configUploader =
             new SimulationConfigUploader();
 

@@ -25,7 +25,8 @@ import io.siddhi.parser.core.topology.SubscriptionStrategyDataHolder;
 import io.siddhi.parser.core.util.TransportStrategy;
 import io.siddhi.parser.service.model.MessagingSystem;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,7 +39,7 @@ import java.util.Map;
  */
 public class NatsSiddhiAppCreator extends AbstractSiddhiAppCreator {
 
-    private static final Logger log = Logger.getLogger(NatsSiddhiAppCreator.class);
+    private static final Logger log = LogManager.getLogger(NatsSiddhiAppCreator.class);
     //App creator constants
     public static final String APP_NAME = "appName";
     public static final String TOPIC_LIST = "topicList";

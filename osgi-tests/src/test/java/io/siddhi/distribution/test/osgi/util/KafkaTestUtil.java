@@ -29,7 +29,8 @@ import org.I0Itec.zkclient.ZkClient;
 import org.I0Itec.zkclient.ZkConnection;
 import org.apache.commons.io.FileUtils;
 import org.apache.curator.test.TestingServer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +40,7 @@ import java.util.Properties;
  * Kafka test util.
  */
 public class KafkaTestUtil {
-    private static final Logger log = Logger.getLogger(KafkaTestUtil.class);
+    private static final Logger log = LogManager.getLogger(KafkaTestUtil.class);
     private static final String kafkaLogDir = "tmp_kafka_dir";
     private static final long CLEANER_BUFFER_SIZE = 2 * 1024 * 1024L;
     private static TestingServer zkTestServer;

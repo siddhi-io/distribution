@@ -18,7 +18,8 @@
 package io.siddhi.distribution.common.common.utils.config;
 
 import io.siddhi.core.util.config.ConfigReader;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Map;
  * Siddhi file configuration reader.
  */
 public class FileConfigReader implements ConfigReader {
-    static final Logger LOGGER = Logger.getLogger(FileConfigReader.class);
+    private static final Logger LOGGER = LogManager.getLogger(FileConfigReader.class);
     Map<String, String> propertyMap;
 
     public FileConfigReader(Map<String, String> propertyMap) {
