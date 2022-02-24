@@ -17,8 +17,15 @@
  */
 package io.siddhi.distribution.core.util;
 
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.LoggingEvent;
+import org.apache.logging.log4j.core.Appender;
+import org.apache.logging.log4j.core.Core;
+import org.apache.logging.log4j.core.Filter;
+import org.apache.logging.log4j.core.LogEvent;
+import org.apache.logging.log4j.core.appender.AbstractAppender;
+import org.apache.logging.log4j.core.config.plugins.Plugin;
+import org.apache.logging.log4j.core.config.plugins.PluginAttribute;
+import org.apache.logging.log4j.core.config.plugins.PluginElement;
+import org.apache.logging.log4j.core.config.plugins.PluginFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,24 +33,38 @@ import java.util.List;
 /**
  * Util class to read the logs of test cases.
  */
-public class UnitTestAppender extends AppenderSkeleton {
+@Plugin(name = "UnitTestAppender",
+        category = Core.CATEGORY_NAME, elementType = Appender.ELEMENT_TYPE)
+public class UnitTestAppender extends AbstractAppender {
+
     private List<String> messages = new ArrayList<>();
 
-    @Override
-    protected void append(LoggingEvent loggingEvent) {
-        messages.add(loggingEvent.getRenderedMessage());
+    public UnitTestAppender(String name, Filter filter) {
+
+        super(name, filter, null);
+    }
+
+    @PluginFactory
+    public static UnitTestAppender createAppender(
+            @PluginAttribute("name") String name,
+            @PluginElement("Filter") Filter filter) {
+
+        return new UnitTestAppender(name, filter);
+    }
+
+    public String getMessages() {
+
+        String results = messages.toString();
+        if (results.isEmpty()) {
+            return null;
+        }
+        return results;
     }
 
     @Override
-    public void close() {
+    public void append(LogEvent event) {
+        messages.add(event.getMessage().getFormattedMessage());
     }
 
-    @Override
-    public boolean requiresLayout() {
-        return false;
-    }
-
-    public List<String> getMessages() {
-        return messages;
-    }
 }
+

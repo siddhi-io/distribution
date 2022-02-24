@@ -26,7 +26,8 @@ import io.prometheus.client.dropwizard.samplebuilder.CustomMappingSampleBuilder;
 import io.prometheus.client.dropwizard.samplebuilder.MapperConfig;
 import io.prometheus.client.dropwizard.samplebuilder.SampleBuilder;
 import io.prometheus.client.exporter.HTTPServer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.wso2.carbon.metrics.core.reporter.impl.AbstractReporter;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.CustomClassLoaderConstructor;
@@ -46,7 +47,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class PrometheusReporter extends AbstractReporter {
 
-    private static final Logger log = Logger.getLogger(PrometheusReporter.class);
+    private static final Logger log = LogManager.getLogger(PrometheusReporter.class);
     private static final String MAPPINGS_RESOURCE_FILE = "configuration.yaml";
     private final MetricRegistry metricRegistry;
     private final MetricFilter metricFilter;

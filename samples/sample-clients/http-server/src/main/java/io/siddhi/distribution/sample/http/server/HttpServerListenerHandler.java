@@ -19,7 +19,8 @@
 package io.siddhi.distribution.sample.http.server;
 
 import com.sun.net.httpserver.HttpServer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -32,7 +33,7 @@ public class HttpServerListenerHandler {
         return sl;
     }
 
-    private static final Logger logger = Logger.getLogger(HttpServerListenerHandler.class);
+    private static final Logger logger = LogManager.getLogger(HttpServerListenerHandler.class);
     private HttpServerListener sl;
     private HttpServer server;
     private int port;

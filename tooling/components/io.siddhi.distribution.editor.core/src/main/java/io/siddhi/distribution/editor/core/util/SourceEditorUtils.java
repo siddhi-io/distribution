@@ -35,7 +35,8 @@ import io.siddhi.distribution.editor.core.util.designview.constants.SiddhiCodeBu
 import io.siddhi.query.api.definition.AbstractDefinition;
 import io.siddhi.query.api.definition.AggregationDefinition;
 import io.siddhi.query.api.definition.StreamDefinition;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -60,7 +61,7 @@ import java.util.regex.Pattern;
  */
 public class SourceEditorUtils {
 
-    static final Logger LOGGER = Logger.getLogger(SourceEditorUtils.class);
+    private static final Logger LOGGER = LogManager.getLogger(SourceEditorUtils.class);
 
     private SourceEditorUtils() {
 

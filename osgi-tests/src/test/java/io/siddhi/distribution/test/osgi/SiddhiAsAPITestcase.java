@@ -20,6 +20,8 @@ import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
 import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
 import io.siddhi.distribution.test.osgi.util.TestUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.awaitility.Duration;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
@@ -49,7 +51,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
 public class SiddhiAsAPITestcase {
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SiddhiAsAPITestcase.class);
+    private static final Logger logger = LogManager.getLogger(SiddhiAsAPITestcase.class);
 
     private static final String DEFAULT_USER_NAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";

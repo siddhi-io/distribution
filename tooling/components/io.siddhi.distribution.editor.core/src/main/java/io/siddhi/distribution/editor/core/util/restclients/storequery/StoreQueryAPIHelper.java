@@ -19,7 +19,8 @@ package io.siddhi.distribution.editor.core.util.restclients.storequery;
 
 import feign.Response;
 import io.siddhi.distribution.editor.core.exception.SiddhiStoreQueryHelperException;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.config.provider.ConfigProvider;
 import org.wso2.transport.http.netty.contract.config.ListenerConfiguration;
@@ -32,7 +33,7 @@ import java.util.HashMap;
  */
 public class StoreQueryAPIHelper {
 
-    private static final Logger logger = Logger.getLogger(StoreQueryAPIHelper.class);
+    private static final Logger logger = LogManager.getLogger(StoreQueryAPIHelper.class);
     private static final String STORE_API_CONFIG = "storeRESTAPI";
     private ConfigProvider configProvider;
 

@@ -28,7 +28,8 @@ import io.siddhi.distribution.event.simulator.core.util.LogEncoder;
 import org.apache.commons.io.FileExistsException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.wso2.msf4j.formparam.FileInfo;
 
 import java.io.File;
@@ -46,7 +47,7 @@ import java.util.stream.Collectors;
  */
 
 public class FileUploader {
-    private static final Logger log = Logger.getLogger(FileUploader.class);
+    private static final Logger log = LogManager.getLogger(FileUploader.class);
     private static final FileUploader fileUploader = new FileUploader(FileStore.getFileStore());
 
     /**

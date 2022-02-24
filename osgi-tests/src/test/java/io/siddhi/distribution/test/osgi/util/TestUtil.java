@@ -20,6 +20,8 @@ import io.netty.handler.codec.http.HttpMethod;
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.distribution.common.common.EventStreamService;
 import io.siddhi.distribution.common.common.SiddhiAppRuntimeService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.awaitility.Duration;
 import org.wso2.msf4j.MicroservicesRegistry;
 
@@ -50,7 +52,7 @@ import static java.net.URLConnection.guessContentTypeFromName;
 public class TestUtil {
     private static final String LINE_FEED = "\r\n";
     private static final String CHARSET = "UTF-8";
-    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TestUtil.class);
+    private static final Logger logger = LogManager.getLogger(TestUtil.class);
     private HttpURLConnection connection = null;
     private OutputStream outputStream = null;
     private PrintWriter writer = null;

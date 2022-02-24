@@ -21,7 +21,8 @@ package io.siddhi.distribution.sample.http.server;
 import com.sun.net.httpserver.HttpsConfigurator;
 import com.sun.net.httpserver.HttpsParameters;
 import com.sun.net.httpserver.HttpsServer;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,7 +33,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLParameters;
@@ -42,7 +42,7 @@ import javax.net.ssl.TrustManagerFactory;
  * Https test sever listener.
  */
 public class HttpsServerListenerHandler {
-    private static final Logger logger = Logger.getLogger(HttpsServerListenerHandler.class);
+    private static final Logger logger = LogManager.getLogger(HttpsServerListenerHandler.class);
     private HttpServerListener sl;
     private int port;
     private KeyStore ks;

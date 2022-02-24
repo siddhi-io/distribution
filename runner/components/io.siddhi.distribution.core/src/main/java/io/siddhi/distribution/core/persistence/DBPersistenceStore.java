@@ -29,7 +29,8 @@ import io.siddhi.distribution.core.persistence.util.DBPersistenceStoreUtils;
 import io.siddhi.distribution.core.persistence.util.ExecutionInfo;
 import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
 import io.siddhi.distribution.core.persistence.util.RDBMSConfiguration;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 
 import java.io.IOException;
@@ -49,7 +50,7 @@ import javax.sql.rowset.serial.SerialBlob;
  */
 public class DBPersistenceStore implements PersistenceStore {
 
-    private static final Logger log = Logger.getLogger(DBPersistenceStore.class);
+    private static final Logger log = LogManager.getLogger(DBPersistenceStore.class);
     private static final String MSSQL_DATABASE_TYPE = "microsoft sql server";
     private static final String POSTGRES_DATABASE_TYPE = "postgresql";
 
