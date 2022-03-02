@@ -23,8 +23,7 @@ import io.siddhi.core.exception.CannotRestoreSiddhiAppStateException;
 import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.test.osgi.util.RDBMSConfig;
 import io.siddhi.distribution.test.osgi.util.SiddhiAppUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.awaitility.Awaitility;
 import org.awaitility.Duration;
 import org.ops4j.pax.exam.Configuration;
@@ -66,7 +65,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @ExamFactory(CarbonContainerFactory.class)
 public class IncrementalDBPersistenceStoreTestcase {
 
-    private static final Logger log = LogManager.getLogger(IncrementalDBPersistenceStoreTestcase.class);
+    private static final Logger log = Logger.getLogger(IncrementalDBPersistenceStoreTestcase.class);
     private static final String CARBON_YAML_FILENAME = "deployment.yaml";
     private static final String TABLE_NAME = "PERSISTENCE_TABLE";
     private static final String SIDDHIAPP_NAME = "SiddhiAppPersistence";

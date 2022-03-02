@@ -22,8 +22,7 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.siddhi.distribution.sample.grpc.Sweet;
 import io.siddhi.distribution.sample.grpc.SweetServiceGrpc;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ import java.util.List;
  * This is a sample generic gRPC client to publish events to gRPC endpoint.
  */
 public class GrpcGenericClient {
-    private static final Logger log = LogManager.getLogger(GrpcGenericClient.class);
+    private static final Logger log = Logger.getLogger(GrpcGenericClient.class);
     private static List<SweetProduct> listOfSweets = new ArrayList<>();
 
     /**

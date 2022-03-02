@@ -18,8 +18,7 @@ package io.siddhi.distribution.test.osgi.util;
 
 import io.siddhi.distribution.test.osgi.DBPersistenceStoreTestcase;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -35,7 +34,7 @@ import java.net.URISyntaxException;
  */
 public class RDBMSConfig {
 
-    private static final Logger log = LogManager.getLogger(RDBMSConfig.class);
+    private static final Logger log = Logger.getLogger(RDBMSConfig.class);
     private static final String YAML_DATASOURCE_CONFIG_JDBC_URL = "          jdbcUrl:";
     private static final String YAML_DATASOURCE_CONFIG_USERNAME = "          username:";
     private static final String YAML_DATASOURCE_CONFIG_PASSWORD = "          password:";

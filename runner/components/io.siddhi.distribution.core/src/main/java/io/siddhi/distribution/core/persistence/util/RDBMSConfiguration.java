@@ -22,6 +22,7 @@ import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.core.persistence.dto.RDBMSQueryConfigurationEntry;
 import io.siddhi.distribution.core.persistence.exception.DatasourceConfigurationException;
 import io.siddhi.distribution.core.persistence.query.QueryManager;
+import org.apache.log4j.Logger;
 import org.wso2.carbon.config.ConfigurationException;
 import org.wso2.carbon.database.query.manager.exception.QueryMappingNotAvailableException;
 
@@ -32,6 +33,7 @@ import java.io.IOException;
  */
 public class RDBMSConfiguration {
 
+    private static final Logger log = Logger.getLogger(RDBMSConfiguration.class);
     private static RDBMSConfiguration config = new RDBMSConfiguration();
 
     private RDBMSConfiguration() {

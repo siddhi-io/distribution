@@ -19,8 +19,6 @@ package io.siddhi.distribution.test.osgi;
 
 import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
 import io.siddhi.distribution.test.osgi.util.TestUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
 import org.ops4j.pax.exam.Option;
@@ -48,7 +46,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
 public class ConfigReaderTestCase {
-    private static final Logger logger = LogManager.getLogger(ConfigReaderTestCase.class);
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(ConfigReaderTestCase.class);
     private static final String DEFAULT_USER_NAME = "admin";
     private static final String DEFAULT_PASSWORD = "admin";
     private static final String CARBON_YAML_FILENAME = "deployment.yaml";

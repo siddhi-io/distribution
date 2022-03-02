@@ -23,8 +23,7 @@ import io.siddhi.core.util.persistence.PersistenceStore;
 import io.siddhi.distribution.core.impl.utils.CompressionUtil;
 import io.siddhi.distribution.core.persistence.exception.S3PersistenceStoreException;
 import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -58,7 +57,7 @@ import java.util.Map;
  * Implementation of Persistence Store that would persist snapshots to the s3 bucket.
  */
 public class S3PersistenceStore implements PersistenceStore {
-    private static final Logger log = LogManager.getLogger(S3PersistenceStore.class);
+    private static final Logger log = Logger.getLogger(S3PersistenceStore.class);
     private S3Client s3Client;
     private String bucketName;
     private int numberOfRevisionsToSave;

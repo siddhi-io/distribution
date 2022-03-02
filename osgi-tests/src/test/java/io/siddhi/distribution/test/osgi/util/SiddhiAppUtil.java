@@ -22,8 +22,7 @@ import io.siddhi.core.event.Event;
 import io.siddhi.core.stream.input.InputHandler;
 import io.siddhi.core.stream.output.StreamCallback;
 import io.siddhi.core.util.EventPrinter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ import java.util.List;
  */
 public class SiddhiAppUtil {
 
-    private static final Logger log = LogManager.getLogger(SiddhiAppUtil.class);
+    private static final Logger log = Logger.getLogger(SiddhiAppUtil.class);
 
     private static final String SIDDHIAPP_STREAM = "@App:name('SiddhiAppPersistence')" +
             "define stream FooStream (symbol string, volume long); ";
