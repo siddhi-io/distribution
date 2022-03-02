@@ -103,7 +103,7 @@ public class IncrementalFileSystemPersistenceStore implements IncrementalPersist
     public byte[] load(IncrementalSnapshotInfo snapshotInfo) {
         File file = new File(folder + File.separator + snapshotInfo.getSiddhiAppId() + File.separator +
                 snapshotInfo.getRevision());
-        byte[] bytes = new byte[]{};
+        byte[] bytes = null;
         try {
             bytes = Files.toByteArray(file);
             if (log.isDebugEnabled()) {
