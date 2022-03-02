@@ -28,4 +28,4 @@ before_install:
   - export PATH=$M2_HOME/bin:$PATH
 
 install: true
-script: mvn clean install -B -V
+script: script: mvn clean install -q -B -V | grep -v DEBUG; exit "${PIPESTATUS[0]}";
