@@ -48,8 +48,7 @@ import io.siddhi.query.api.util.AnnotationHelper;
 import io.siddhi.query.api.util.ExceptionUtil;
 import io.siddhi.query.compiler.SiddhiCompiler;
 import org.apache.commons.lang3.text.StrSubstitutor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -70,7 +69,7 @@ import static io.siddhi.parser.core.util.SiddhiTopologyCreatorConstants.INMEMORY
 
 public class SiddhiTopologyCreatorImpl implements SiddhiTopologyCreator {
 
-    private static final Logger log = LogManager.getLogger(SiddhiTopologyCreatorImpl.class);
+    private static final Logger log = Logger.getLogger(SiddhiTopologyCreatorImpl.class);
     private static final String DEFAULT_MESSAGING_SYSTEM = "nats";
     private SiddhiTopologyDataHolder siddhiTopologyDataHolder;
     private SiddhiApp siddhiApp;

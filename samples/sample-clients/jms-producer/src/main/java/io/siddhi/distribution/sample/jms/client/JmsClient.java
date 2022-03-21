@@ -21,8 +21,7 @@ package io.siddhi.distribution.sample.jms.client;
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
 import io.siddhi.core.stream.input.InputHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,7 +35,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * This is a sample JMS client to publish events to JMS endpoint.
  */
 public class JmsClient {
-    private static final Logger log = LogManager.getLogger(JmsClient.class);
+    private static final Logger log = Logger.getLogger(JmsClient.class);
     private static final String EMPTY_STRING = "EMPTY";
 
     public static void main(String[] args) throws IOException, InterruptedException {

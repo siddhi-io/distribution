@@ -25,8 +25,7 @@ import io.siddhi.distribution.event.simulator.core.exception.EventGenerationExce
 import io.siddhi.distribution.event.simulator.core.exception.SimulatorInitializationException;
 import io.siddhi.distribution.event.simulator.core.model.DBConnectionModel;
 import io.siddhi.distribution.event.simulator.core.util.LogEncoder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -48,7 +47,7 @@ import java.util.Properties;
  */
 public class DatabaseConnector {
 
-    private static final Logger log = LogManager.getLogger(DatabaseConnector.class);
+    private static final Logger log = Logger.getLogger(DatabaseConnector.class);
     private static final String query_attribute_OnlyStartTime = "SELECT %s,%s FROM %s WHERE %s >= %d ORDER BY ABS(%s);";
     private static final String query_attribute_WithBothLimits = "SELECT %s,%s FROM %s WHERE %s >= %d AND %s <= %d " +
             "ORDER BY ABS(%s);";

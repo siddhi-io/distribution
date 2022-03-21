@@ -18,8 +18,7 @@
 
 package io.siddhi.distribution.core.persistence.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,7 +30,7 @@ import javax.sql.DataSource;
  * Util class for DB persistence store.
  */
 public class DBPersistenceStoreUtils {
-    private static final Logger log = LogManager.getLogger(DBPersistenceStoreUtils.class);
+    private static final Logger log = Logger.getLogger(DBPersistenceStoreUtils.class);
 
     /**
      * Method that would create the persistence table.

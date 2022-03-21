@@ -17,9 +17,8 @@
 package io.siddhi.distribution.core;
 
 import io.siddhi.distribution.core.codegen.DynamicHtmlGen;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.Logger;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -31,8 +30,7 @@ public class DynamicHtmlGenTest {
 
     @BeforeTest
     public void setDebugLogLevel() {
-        Logger logger = (Logger) LogManager.getLogger(DynamicHtmlGenTest.class.getName());
-        logger.setLevel(Level.DEBUG);
+        Logger.getLogger(DynamicHtmlGenTest.class.getName()).setLevel(Level.DEBUG);
     }
 
     @Test

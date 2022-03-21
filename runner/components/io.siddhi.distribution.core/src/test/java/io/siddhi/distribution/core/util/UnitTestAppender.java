@@ -17,15 +17,8 @@
  */
 package io.siddhi.distribution.core.util;
 
-import org.apache.logging.log4j.core.Appender;
-import org.apache.logging.log4j.core.Core;
-import org.apache.logging.log4j.core.Filter;
-import org.apache.logging.log4j.core.LogEvent;
-import org.apache.logging.log4j.core.appender.AbstractAppender;
-import org.apache.logging.log4j.core.config.plugins.Plugin;
-import org.apache.logging.log4j.core.config.plugins.PluginAttribute;
-import org.apache.logging.log4j.core.config.plugins.PluginElement;
-import org.apache.logging.log4j.core.config.plugins.PluginFactory;
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.LoggingEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,38 +26,24 @@ import java.util.List;
 /**
  * Util class to read the logs of test cases.
  */
-@Plugin(name = "UnitTestAppender",
-        category = Core.CATEGORY_NAME, elementType = Appender.ELEMENT_TYPE)
-public class UnitTestAppender extends AbstractAppender {
-
+public class UnitTestAppender extends AppenderSkeleton {
     private List<String> messages = new ArrayList<>();
 
-    public UnitTestAppender(String name, Filter filter) {
-
-        super(name, filter, null);
-    }
-
-    @PluginFactory
-    public static UnitTestAppender createAppender(
-            @PluginAttribute("name") String name,
-            @PluginElement("Filter") Filter filter) {
-
-        return new UnitTestAppender(name, filter);
-    }
-
-    public String getMessages() {
-
-        String results = messages.toString();
-        if (results.isEmpty()) {
-            return null;
-        }
-        return results;
+    @Override
+    protected void append(LoggingEvent loggingEvent) {
+        messages.add(loggingEvent.getRenderedMessage());
     }
 
     @Override
-    public void append(LogEvent event) {
-        messages.add(event.getMessage().getFormattedMessage());
+    public void close() {
     }
 
-}
+    @Override
+    public boolean requiresLayout() {
+        return false;
+    }
 
+    public List<String> getMessages() {
+        return messages;
+    }
+}

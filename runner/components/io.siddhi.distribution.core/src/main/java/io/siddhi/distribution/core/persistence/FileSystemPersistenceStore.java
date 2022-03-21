@@ -23,8 +23,7 @@ import io.siddhi.core.exception.CannotClearSiddhiAppStateException;
 import io.siddhi.core.util.persistence.PersistenceStore;
 import io.siddhi.distribution.core.impl.utils.CompressionUtil;
 import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,7 @@ import java.util.Map;
  */
 public class FileSystemPersistenceStore implements PersistenceStore {
 
-    private static final Logger log = LogManager.getLogger(FileSystemPersistenceStore.class);
+    private static final Logger log = Logger.getLogger(FileSystemPersistenceStore.class);
     private int numberOfRevisionsToSave;
     private String folder;
 

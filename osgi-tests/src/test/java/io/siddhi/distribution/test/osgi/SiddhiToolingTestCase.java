@@ -20,8 +20,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.siddhi.distribution.test.osgi.util.HTTPResponseMessage;
 import io.siddhi.distribution.test.osgi.util.TestUtil;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.ExamFactory;
 import org.ops4j.pax.exam.Option;
@@ -52,7 +50,7 @@ import static org.wso2.carbon.container.options.CarbonDistributionOption.copyFil
 @ExamReactorStrategy(PerClass.class)
 @ExamFactory(CarbonContainerFactory.class)
 public class SiddhiToolingTestCase {
-    private static final Logger logger = LogManager.getLogger(
+    private static final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(
             SiddhiToolingTestCase.class);
 
     private static final String DEFAULT_USER_NAME = "admin";

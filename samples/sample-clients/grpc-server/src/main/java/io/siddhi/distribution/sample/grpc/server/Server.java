@@ -20,8 +20,7 @@ package io.siddhi.distribution.sample.grpc.server;
 import io.grpc.BindableService;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.wso2.grpc.Event;
 import org.wso2.grpc.EventServiceGrpc;
@@ -32,7 +31,7 @@ import java.io.IOException;
  * GRPC service class
  */
 public class Server {
-    private static final Logger logger = LogManager.getLogger(Server.class.getName());
+    private static final Logger logger = Logger.getLogger(Server.class.getName());
     private io.grpc.Server server;
     private int port;
 

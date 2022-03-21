@@ -19,8 +19,7 @@
 package io.siddhi.distribution.sample.http.client;
 
 import io.siddhi.core.stream.input.InputHandler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +31,7 @@ import java.util.concurrent.ThreadLocalRandom;
  * Event generating util class for http source.
  */
 public class EventSendingUtil {
-    private static final Logger log = LogManager.getLogger(EventSendingUtil.class);
+    private static final Logger log = Logger.getLogger(EventSendingUtil.class);
     public static void publishEvents(List<String[]> fileEntriesList, boolean sendEventsContinuously,
                                      int noOfEventsToSend, String eventDefinition, String[] sweetName,
                                      InputHandler inputHandler, int delay, boolean isBinaryMessage,

@@ -19,15 +19,14 @@
 package io.siddhi.distribution.editor.core.util.designview.utilities;
 
 import io.siddhi.query.api.SiddhiElement;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 /**
  * Has methods involved in converting Siddhi elements to Design view Config objects.
  */
 public class ConfigBuildingUtilities {
 
-    private static final Logger log = LogManager.getLogger(ConfigBuildingUtilities.class);
+    private static final Logger log = Logger.getLogger(ConfigBuildingUtilities.class);
 
     /**
      * Avoids Instantiation.

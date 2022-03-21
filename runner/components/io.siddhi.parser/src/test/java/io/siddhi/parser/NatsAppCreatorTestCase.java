@@ -30,6 +30,7 @@ import io.siddhi.parser.core.topology.SiddhiTopology;
 import io.siddhi.parser.core.topology.SiddhiTopologyCreatorImpl;
 import io.siddhi.parser.service.model.MessagingConfig;
 import io.siddhi.parser.service.model.MessagingSystem;
+import org.apache.log4j.Logger;
 import org.testcontainers.containers.GenericContainer;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -42,6 +43,7 @@ import java.util.List;
  */
 public class NatsAppCreatorTestCase {
 
+    private static final Logger log = Logger.getLogger(NatsAppCreatorTestCase.class);
     private static final String CLUSTER_ID = "test-cluster";
     private static String NATS_SERVER_URL = "nats://localhost:4222";
     private int port;

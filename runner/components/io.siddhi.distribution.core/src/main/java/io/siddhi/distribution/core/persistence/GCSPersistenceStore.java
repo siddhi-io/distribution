@@ -30,8 +30,7 @@ import io.siddhi.core.util.persistence.PersistenceStore;
 import io.siddhi.distribution.core.impl.utils.CompressionUtil;
 import io.siddhi.distribution.core.persistence.exception.GCSPersistenceStoreException;
 import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,7 +44,7 @@ import java.util.Queue;
  * Implementation of Persistence Store that would persist snapshots to the GCS.
  */
 public class GCSPersistenceStore implements PersistenceStore {
-    private static Logger log = LogManager.getLogger(GCSPersistenceStore.class);
+    private static Logger log = Logger.getLogger(GCSPersistenceStore.class);
     private Storage storage;
     private String bucketName;
     private int numberOfRevisionsToSave;

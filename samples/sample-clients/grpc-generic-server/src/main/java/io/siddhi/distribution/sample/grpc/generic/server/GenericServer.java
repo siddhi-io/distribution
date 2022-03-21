@@ -23,8 +23,7 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import io.siddhi.distribution.sample.grpc.Sweet;
 import io.siddhi.distribution.sample.grpc.SweetServiceGrpc;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -32,7 +31,7 @@ import java.io.IOException;
  * Test Grpc Generic server
  */
 public class GenericServer {
-    private static final Logger logger = LogManager.getLogger(GenericServer.class.getName());
+    private static final Logger logger = Logger.getLogger(GenericServer.class.getName());
     private Server server;
     private int port;
 

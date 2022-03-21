@@ -20,14 +20,13 @@ package org.wso2.sp.sample.jms.consumer;
 
 import io.siddhi.core.SiddhiAppRuntime;
 import io.siddhi.core.SiddhiManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.apache.log4j.Logger;
 
 /**
  * Test client for Jms source.
  */
 public class JmsReceiver {
-    private static final Logger log = LogManager.getLogger(JmsReceiver.class);
+    private static final Logger log = Logger.getLogger(JmsReceiver.class);
 
     /**
      * Main method to start the test client.

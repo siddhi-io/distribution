@@ -21,8 +21,11 @@ import io.siddhi.distribution.core.internal.StreamProcessorDataHolder;
 import io.siddhi.distribution.core.persistence.DBPersistenceStore;
 import io.siddhi.distribution.core.persistence.exception.DatasourceConfigurationException;
 import io.siddhi.distribution.core.persistence.util.PersistenceConstants;
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.testng.PowerMockTestCase;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.wso2.carbon.datasource.core.exception.DataSourceException;
 import org.wso2.carbon.datasource.core.impl.DataSourceServiceImpl;
@@ -41,6 +44,11 @@ import static org.powermock.api.mockito.PowerMockito.when;
  */
 @PrepareForTest(StreamProcessorDataHolder.class)
 public class DBPersistenceStoreTest extends PowerMockTestCase {
+
+    @BeforeTest
+    public void setDebugLogLevel() {
+        Logger.getLogger(DBPersistenceStore.class.getName()).setLevel(Level.DEBUG);
+    }
 
     @Test(expectedExceptions = DatasourceConfigurationException.class)
     public void testDataSourceConfigurationException() {
